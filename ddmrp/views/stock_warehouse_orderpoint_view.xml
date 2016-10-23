@@ -1,0 +1,236 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="view_warehouse_orderpoint_tree" model="ir.ui.view">
+            <field name="name">stock.warehouse.orderpoint.tree</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="inherit_id"
+                   ref="stock.view_warehouse_orderpoint_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="before">
+                    <field name="buffer_profile_id"/>
+                </field>
+                <field name="product_uom" position="after">
+                    <field name="dlt"/>
+                    <field name="adu"/>
+                    <field name="adu_calculation_method"/>
+                    <field name="order_cycle"/>
+                    <field name="green_zone_qty"/>
+                    <field name="red_base_qty"/>
+                    <field name="red_safety_qty"/>
+                    <field name="red_zone_qty"/>
+                    <field name="top_of_green"/>
+                    <field name="top_of_yellow"/>
+                    <field name="top_of_red"/>
+                    <field name="order_cycle"/>
+                    <field name="minimum_order_quantity"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="warehouse_orderpoint_search">
+            <field name="name">stock.warehouse.orderpoint.search</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="inherit_id"
+                   ref="stock.warehouse_orderpoint_search"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="buffer_profile_id"/>
+                </field>
+                <field name="product_id" position="after">
+                    <field name="dlt"/>
+                    <field name="order_cycle"/>
+                    <field name="minimum_order_quantity"/>
+                    <field name="planning_priority_level"/>
+                    <field name="execution_priority_level"/>
+                    <group name="planning_priority"
+                           string="Planning Priority Zones">
+                        <filter name="planning_priority_level"
+                                string="Red"
+                                domain="[('planning_priority_level', '=', 'red')]"/>
+                        <filter name="planning_priority_level_yellow"
+                                string="Yellow"
+                                domain="[('planning_priority_level', '=', 'yellow')]"/>
+                        <filter name="planning_priority_level_green"
+                                string="Green"
+                                domain="[('planning_priority_level', '=', 'green')]"/>
+                    </group>
+                    <group name="execution_priorirt"
+                           string="On Hand Alert Zones">
+                        <filter name="execution_priority_level_red"
+                                string="Red"
+                                domain="[('execution_priority_level', '=', 'red')]"/>
+                        <filter name="execution_priority_level_yellow"
+                                string="Yellow"
+                                domain="[('execution_priority_level', '=', 'yellow')]"/>
+                        <filter name="execution_priority_level_green"
+                                string="Green"
+                                domain="[('execution_priority_level', '=', 'green')]"/>
+                    </group>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_warehouse_orderpoint_form" model="ir.ui.view">
+            <field name="name">stock.warehouse.orderpoint.form</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="inherit_id"
+                   ref="stock.view_warehouse_orderpoint_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[1]" position="inside">
+                    <group name="buffer_size_factors"
+                           string="Buffer size factors">
+                        <field name="buffer_profile_id"/>
+                        <label for="dlt"/>
+                        <div name="dlt">
+                            <field name="dlt" class="oe_inline"/> days
+                        </div>
+                        <label for="order_cycle"/>
+                        <div name="order_cycle">
+                            <field name="order_cycle" class="oe_inline"/> days
+                        </div>
+                        <field name="minimum_order_quantity"/>
+                        <field name="adu"/>
+                        <field name="adu_calculation_method"/>
+                        <field name="adu_fixed"/>
+                        <label for="order_spike_horizon"/>
+                        <div name="order_spike_horizon">
+                            <field name="order_spike_horizon" class="oe_inline"/> days
+                        </div>
+                        <field name="order_spike_threshold"/>
+                    </group>
+                    <group name="buffer_zones_summary" string="Buffer zones">
+                        <field name="top_of_green"/>
+                        <field name="top_of_yellow"/>
+                        <field name="top_of_red"/>
+                    </group>
+                    <group name="net_flow_position"
+                           string="Net Flow Position">
+                        <field name="net_flow_position"/>
+                        <label for="net_flow_position_percent"/>
+                        <div name="net_flow_position_percent">
+                            <field name="net_flow_position_percent"
+                                   class="oe_inline"/> %
+                        </div>
+                    </group>
+                    <group name="green_zone" string="Green zone">
+                        <div class="no_print">
+                            <p class="oe_grey">
+                                The green zone determines the average order frequency and the order size. It
+                                is determined as the maximum of the following three factors: Minimum Order Cycle,
+                                Lead Time Factor and Minimum Order Quantity.
+                            </p>
+                        </div>
+                        <div/>
+                        <field name="green_zone_oc"/>
+                        <field name="green_zone_moq"/>
+                        <field name="green_zone_lt_factor"/>
+                        <field name="green_zone_qty"/>
+                    </group>
+                    <group name="yellow_zone" string="Yellow zone">
+                        <div class="no_print">
+                            <p class="oe_grey">
+                                The yellow zone represents the
+                                stock required to cover a full lead time.
+                            </p>
+                        </div>
+                        <div/>
+                        <field name="yellow_zone_qty"/>
+                    </group>
+                    <group name="red_zone" string="Red zone">
+                        <div class="no_print">
+                            <p class="oe_grey">
+                                The red zone is the embedded safety in
+                                the buffer. The larger the variability
+                                associated with the product, the larger
+                                the red zone will be. It is composed of
+                                two sub-zones: Red base and red safety.
+                            </p>
+                        </div>
+                        <div/>
+                        <field name="red_base_qty"/>
+                        <field name="red_safety_qty"/>
+                        <field name="red_zone_qty"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="stock_warehouse_orderpoint_form_2_view">
+            <field name="name">stock.warehouse.orderpoint.form</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="inherit_id"
+                   ref="stock_warehouse_orderpoint_stock_info.stock_warehouse_orderpoint_form_view" />
+            <field name="arch" type="xml">
+                <field name="product_location_qty" position="after">
+                    <field name="product_location_qty_available_not_res" />
+                </field>
+            </field>
+        </record>
+
+        <!-- Buffer Planning Screen -->
+        <record model="ir.ui.view"
+                id="view_ddmrp_stock_buffer_planning_tree">
+            <field name="name">stock.warehouse.orderpoint.planner.tree</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="priority">50</field>
+            <field name="arch" type="xml">
+                <tree string="Buffer monitor">
+                    <field name="product_id"/>
+                    <field name="product_uom" string="UoM"/>
+                    <field name="warehouse_id"/>
+                    <field name="location_id"/>
+                    <field name="planning_priority_level" invisible="True"/>
+                    <field name="planning_priority"
+                           bg_color="red:planning_priority_level=='red';yellow:planning_priority_level=='yellow';green:planning_priority_level == 'green'"
+                           fg_color="white:planning_priority_level=='red';black:planning_priority_level=='yellow';white:planning_priority_level == 'green'"/>
+                    <field name="product_location_qty" string="On-Hand"/>
+                    <field name="product_location_qty_available_not_res"
+                           string="On-Hand (Unreserved)"/>
+                    <field name="execution_priority_level" invisible="True"/>
+                    <field name="execution_priority"
+                           bg_color="red:execution_priority_level=='red';yellow:execution_priority_level=='yellow';green:execution_priority_level == 'green'"
+                           fg_color="white:execution_priority_level=='red';black:execution_priority_level=='yellow';white:execution_priority_level == 'green'"/>
+                    <button string="Open Moves"
+							name="open_moves"
+							icon="gtk-open" type="object"
+                            context="{'search_default_location_id': [location_id], 'search_default_product_id': [product_id], 'search_default_to_approve': 1}"/>
+                    <field name="incoming_location_qty" string="Incoming"/>
+                    <field name="qualified_demand"/>
+                    <field name="net_flow_position"/>
+                    <field name="procure_recommended_qty"/>
+                    <field name="procure_recommended_date"/>
+                    <button string="Create Procurement"
+                            name="button_create_procurement"
+							icon="gtk-execute" type="object"
+							attrs="{'invisible':[('procure_recommended_qty','==',0.0)]}"/>
+                    <field name="to_approve_qty"/>
+                    <button string="Procurements"
+							name="%(procurement.procurement_action)d"
+							icon="gtk-open" type="action"
+                            context="{'search_default_location_id': [location_id], 'search_default_product_id': [product_id], 'search_default_to_approve': 1}"/>
+                    <field name="top_of_red"/>
+                    <field name="top_of_yellow"/>
+                    <field name="top_of_green"/>
+                    <field name="dlt"/>
+                </tree>
+          </field>
+        </record>
+
+        <record model="ir.actions.act_window"
+                id="action_ddmrp_stock_buffer_planning">
+            <field name="name">Stock Buffer Planning</field>
+            <field name="res_model">stock.warehouse.orderpoint</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_ddmrp_stock_buffer_planning_tree"/>
+            <field name="search_view_id" ref="warehouse_orderpoint_search"/>
+        </record>
+
+        <menuitem name="Stock Buffer Planning"
+                  parent="stock.menu_stock_inventory_control"
+                  action="action_ddmrp_stock_buffer_planning" id="menu_action_ddmrp_stock_buffer_planning"/>
+
+    </data>
+</openerp>
