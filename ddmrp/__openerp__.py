@@ -24,6 +24,7 @@
              "views/stock_buffer_demand_estimate_period_view.xml",
              "views/stock_buffer_demand_estimate_view.xml",
              "wizards/demand_estimate_wizard_view.xml",
+             "wizards/make_procurement_buffer_view.xml",
              "views/stock_buffer_profile_view.xml",
              "views/product_adu_calculation_method_view.xml",
              "views/stock_warehouse_orderpoint_view.xml",
