@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_template_property_form" model="ir.ui.view">
+            <field name="name">product.template.stock.property.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.view_template_property_form"/>
+            <field name="arch" type="xml">
+                <field name="virtual_available" position="after">
+                    <div>
+                        <group><field name="qty_available_not_res"/></group>
+	                </div>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_stock_product_template_tree" model="ir.ui.view">
+            <field name="name">product.template.stock.tree.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id"
+                   ref="stock.view_stock_product_template_tree"/>
+            <field name="arch" type="xml">
+                <field name="qty_available" position="after">
+                    <field name="qty_available_not_res"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="product_template_kanban_stock_view">
+            <field name="name">Product Template Kanban Stock</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id"
+                   ref="stock.product_template_kanban_stock_view"/>
+            <field name="arch" type="xml">
+                <ul position="inside">
+                    <li t-if="record.type.raw_value != 'service'">On hand (Unreserved): <field name="qty_available_not_res"/> <field
+                                name="uom_id"/></li>
+                </ul>
+            </field>
+        </record>
+
+        <record id="view_stock_product_tree" model="ir.ui.view">
+            <field name="name">product.stock.tree.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="stock.view_stock_product_tree"/>
+            <field name="arch" type="xml">
+                <field name="qty_available" position="after">
+                    <field name="qty_available_not_res"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="stock_warehouse_orderpoint_form_view">
+            <field name="name">stock.warehouse.orderpoint.form</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="inherit_id"
+                   ref="stock_warehouse_orderpoint_stock_info.stock_warehouse_orderpoint_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//group[1]" position="inside">
+                    <field name="product_location_qty" />
+                    <field name="incoming_location_qty" />
+                    <field name="outgoing_location_qty" />
+                    <field name="virtual_location_qty" />
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
