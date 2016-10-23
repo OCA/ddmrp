@@ -5,9 +5,8 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from datetime import timedelta
-from openerp.osv import expression
 from openerp import api, fields, models, _
-from openerp.exceptions import Warning
+from openerp.exceptions import Warning as UserError
 
 
 class ProductAduCalculationMethod(models.Model):
@@ -41,7 +40,8 @@ class ProductAduCalculationMethod(models.Model):
     def _check_horizon(self):
         for rec in self:
             if rec.method in ['past', 'future'] and not rec.horizon:
-                raise Warning(_('Please indicate a length-of-period horizon.'))
+                raise UserError(_('Please indicate a length-of-period '
+                                 'horizon.'))
 
     @api.model
     def _compute_adu_past_demand(self, orderpoint):

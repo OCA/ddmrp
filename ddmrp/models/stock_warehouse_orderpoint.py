@@ -346,34 +346,6 @@ class StockWarehouseOrderpoint(models.Model):
             rec.product_max_qty = self.top_of_green
 
     @api.model
-    def _prepare_procurement_context(self):
-        return {
-            'default_date_planned': self.procure_recommended_date,
-            'default_product_qty': self.procure_recommended_qty,
-            'default_product_id': self.product_id.id,
-            'default_product_uom': self.product_id.uom_id.id,
-            'default_location_id': self.location_id.id,
-            'default_warehouse_id': self.warehouse_id.id,
-            'default_name': self.name,
-            'default_origin': self.name,
-        }
-
-    @api.multi
-    def button_create_procurement(self):
-        self.ensure_one()
-        ctx = self._prepare_procurement_context()
-        return {
-
-            'name': _('Procurement Order'),
-            'view_type': 'form',
-            'view_mode': 'form, tree',
-            'res_model': 'procurement.order',
-            'view_id': False,
-            'context': str(ctx),
-            'type': 'ir.actions.act_window'
-        }
-
-    @api.model
     def _search_open_stock_moves_domain(self):
         return [('product_id', '=', self.product_id.id),
                 ('state', 'in', ['draft', 'waiting', 'confirmed',
