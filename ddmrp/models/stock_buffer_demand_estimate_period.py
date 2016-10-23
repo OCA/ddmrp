@@ -29,6 +29,11 @@ class StockBufferDemandEstimatePeriod(models.Model):
         comodel_name="stock.buffer.demand.estimate",
         inverse_name="period_id")
 
+    company_id = fields.Many2one(
+        comodel_name='res.company', string='Company', required=True,
+        default=lambda self: self.env['res.company']._company_default_get(
+            'stock.buffer.demand.estimate.period'))
+
     @api.multi
     @api.constrains('name', 'date_from', 'date_to')
     def _check_period(self):

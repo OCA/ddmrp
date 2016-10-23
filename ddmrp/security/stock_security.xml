@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+<data noupdate="1">
+
+    <record model="ir.rule" id="stock_buffer_profile_comp_rule">
+        <field name="name">Buffer Profile multi-company</field>
+        <field name="model_id" ref="model_stock_buffer_profile"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+    <record model="ir.rule" id="stock_buffer_demand_estimate_comp_rule">
+        <field name="name">Buffer demand estimate multi-company</field>
+        <field name="model_id" ref="model_stock_buffer_demand_estimate"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+    <record model="ir.rule" id="stock_buffer_demand_estimate_period_comp_rule">
+        <field name="name">Buffer demand estimate multi-company</field>
+        <field name="model_id"
+               ref="model_stock_buffer_demand_estimate_period"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+    <record model="ir.rule" id="product_adu_calculation_method_comp_rule">
+        <field name="name">Product ADU calculation method multi-company</field>
+        <field name="model_id"
+               ref="model_product_adu_calculation_method"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+</data>
+</openerp>
