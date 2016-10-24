@@ -41,7 +41,7 @@
             <field name="name">product.adu.calculation.method.search</field>
             <field name="model">product.adu.calculation.method</field>
             <field name="arch" type="xml">
-                <search string="Search Demand Estimates">
+                <search string="Search ADU Calculatiion methods">
                     <field name="name"/>
                 </search>
             </field>
@@ -49,7 +49,7 @@
 
         <record model="ir.actions.act_window"
                 id="product_adu_calculation_method_form_action">
-            <field name="name">Demand Estimates</field>
+            <field name="name">ADU calculation methods</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">product.adu.calculation.method</field>
             <field name="view_type">form</field>
@@ -58,12 +58,9 @@
                    ref="view_product_adu_calculation_method_search"/>
         </record>
 
-        <menuitem id="menu_stock_demand_planning" name="Demand Planning"
-                  parent="stock.menu_stock_root" sequence="10"/>
-
         <menuitem
             id="menu_product_adu_calculation_method"
-            parent="menu_stock_demand_planning"
+            parent="stock.menu_stock_configuration"
             action="product_adu_calculation_method_form_action"/>
 
     </data>
