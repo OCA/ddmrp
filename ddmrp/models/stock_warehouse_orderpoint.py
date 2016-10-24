@@ -232,7 +232,14 @@ class StockWarehouseOrderpoint(models.Model):
                     procure_recommended_qty = qty
                     rec.procure_recommended_date = \
                         fields.date.today() + timedelta(days=int(rec.dlt))
-            rec.procure_recommended_qty = procure_recommended_qty
+            if rec.procure_uom_id:
+                product_qty = rec.procure_uom_id._compute_qty(
+                    rec.product_id.uom_id.id, procure_recommended_qty,
+                    rec.procure_uom_id.id)
+            else:
+                product_qty = procure_recommended_qty
+
+            rec.procure_recommended_qty = product_qty
 
     @api.multi
     @api.depends("red_zone_qty")
