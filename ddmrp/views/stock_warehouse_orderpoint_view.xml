@@ -200,6 +200,7 @@
                     <field name="qualified_demand"/>
                     <field name="net_flow_position"/>
                     <field name="procure_recommended_qty"/>
+                    <field name="procure_uom_id"/>
                     <field name="procure_recommended_date"/>
                     <button string="Create Procurement"
                             name="%(act_make_procurement_buffer)d"
