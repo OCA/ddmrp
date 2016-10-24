@@ -4,7 +4,7 @@
 #   (http://www.eficent.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, fields, api
+from openerp import api, fields, models, _
 from openerp.tools.float_utils import float_round
 from openerp.addons import decimal_precision as dp
 
@@ -15,17 +15,23 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     qty_available_not_res = fields.Float(
-        string='Qty Available Not Reserved', digits=UNIT,
-        compute='_get_product_available_not_res', company_dependent=True)
+        string='Quantity On Hand Unreserved', digits=UNIT,
+        compute='_compute_product_available_not_res')
+
+    qty_available_stock_text = fields.Char(
+        compute='_compute_product_available_not_res',
+        string='Unreserved stock quantity')
 
     @api.multi
-    def _get_product_available_not_res(self):
+    def _compute_product_available_not_res(self):
         no_new = self.filtered(
             lambda x: not isinstance(x.id, models.NewId))
         res = no_new._product_available()
         for tmpl in no_new:
             qty = res[tmpl.id]['qty_available_not_res']
             tmpl.qty_available_not_res = qty
+            text = res[tmpl.id]['qty_available_stock_text']
+            tmpl.qty_available_stock_text = text
 
     @api.multi
     def _product_available(self, name=None, arg=False):
@@ -41,29 +47,47 @@ class ProductTemplate(models.Model):
             if isinstance(product.id, models.NewId):
                 continue
             qty_available_not_res = 0.0
+            text = ''
             for p in product.product_variant_ids:
                 qty = variant_available[p.id]["qty_available_not_res"]
                 qty_available_not_res += qty
+                text = variant_available[p.id]["qty_available_stock_text"]
             prod_available[product.id].update({
-                "qty_available_not_res": qty_available_not_res
+                "qty_available_not_res": qty_available_not_res,
+                "qty_available_stock_text": text,
             })
         return prod_available
+
+    @api.multi
+    def action_open_quants_unreserved(self):
+        products = self._get_products()
+        result = self._get_act_window_dict('stock.product_open_quants')
+        result['domain'] = "[('product_id','in',[" + ','.join(
+            map(str, products)) + "]), ('reservation_id', '=', False)]"
+        result[
+            'context'] = "{'search_default_locationgroup': 1, " \
+                         "'search_default_internal_loc': 1}"
+        return result
 
 
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    qty_available_not_res = fields.Float(string='Qty Available Not Reserved',
-                                         digits=UNIT,
-                                         compute='_get_qty_available_not_res',
-                                         company_dependent=True)
+    qty_available_not_res = fields.Float(
+        string='Qty Available Not Reserved', digits=UNIT,
+        compute='_compute_qty_available_not_res')
+
+    qty_available_stock_text = fields.Char(
+        compute='_compute_qty_available_not_res', string='Available per stock')
 
     @api.multi
-    def _get_qty_available_not_res(self):
+    def _compute_qty_available_not_res(self):
         res = self._product_available()
         for prod in self:
             qty = res[prod.id]['qty_available_not_res']
+            text = res[prod.id]['qty_available_stock_text']
             prod.qty_available_not_res = qty
+            prod.qty_available_stock_text = text
 
     @api.model
     def _prepare_domain_available_not_res(self, products):
@@ -80,6 +104,11 @@ class ProductProduct(models.Model):
         return domain_quant
 
     @api.multi
+    def _product_available_not_res_hook(self, quants):
+        """Hook used to introduce possible variations"""
+        return False
+
+    @api.multi
     def _product_available(self, field_names=None, arg=False):
 
         res = super(ProductProduct, self).\
@@ -94,16 +123,10 @@ class ProductProduct(models.Model):
             ['product_id', 'location_id'],
             lazy=False)
         values_prod = {}
-        values_loc = {}
         for quant in quants:
             # create a dictionary with the total value per products
             values_prod.setdefault(quant['product_id'][0], 0)
             values_prod[quant['product_id'][0]] += quant['qty']
-            # create a dictionnary per product containing the qty detailled
-            # per location
-            values_loc.setdefault(quant['product_id'][0], {}).update(
-                {quant['location_id'][0]: quant['qty']})
-
         for product in self:
             # get total qty for the product
             qty = float_round(values_prod.get(product.id, 0.0),
@@ -111,5 +134,8 @@ class ProductProduct(models.Model):
             qty_available_not_res = qty
             res[product.id].update({'qty_available_not_res':
                                     qty_available_not_res})
+            text = str(qty_available_not_res) + _(" On Hand")
+            res[product.id].update({'qty_available_stock_text': text})
+        self._product_available_not_res_hook(quants)
 
         return res

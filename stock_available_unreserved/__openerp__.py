@@ -12,7 +12,9 @@
     "website": "https://www.odoo-community.org",
     "category": "Warehouse Management",
     "depends": ["stock"],
-    "data": ["views/product_view.xml"],
+    "data": ["views/stock_quant_view.xml",
+             "views/product_view.xml"
+             ],
     "license": "AGPL-3",
     'installable': True,
     'application': True,
