@@ -203,8 +203,7 @@
                     <field name="procure_recommended_date"/>
                     <button string="Create Procurement"
                             name="%(act_make_procurement_buffer)d"
-							icon="gtk-execute" type="action"
-							attrs="{'invisible':[('procure_recommended_qty','==',0.0)]}"/>
+							icon="gtk-execute" type="action"/>
                     <field name="to_approve_qty"/>
                     <button string="Procurements"
 							name="%(procurement.procurement_action)d"

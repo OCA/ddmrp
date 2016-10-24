@@ -16,6 +16,7 @@
                         order or a transfer picking.
                     </p>
                     <group>
+                        <field name="buffer_id" invisible="True"/>
                         <field name="warehouse_id" groups="stock.group_locations"/>
                         <field name="location_id"
                                groups="stock.group_locations"/>
