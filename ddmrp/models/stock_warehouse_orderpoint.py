@@ -224,14 +224,14 @@ class StockWarehouseOrderpoint(models.Model):
     @api.depends("qualified_demand", "top_of_green")
     def _compute_procure_recommended(self):
         for rec in self:
+            rec.procure_recommended_date = \
+                fields.date.today() + timedelta(days=int(rec.dlt))
             procure_recommended_qty = 0.0
             if rec.net_flow_position < rec.top_of_green:
                 qty = rec.top_of_green - rec.net_flow_position\
                       - rec.to_approve_qty
                 if qty >= 0.0:
                     procure_recommended_qty = qty
-                    rec.procure_recommended_date = \
-                        fields.date.today() + timedelta(days=int(rec.dlt))
             procure_recommended_qty -= rec.subtract_procurements(rec)
 
             if rec.procure_uom_id:
