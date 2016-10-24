@@ -5,4 +5,4 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from . import demand_estimate_wizard
-from . import make_procurement_buffer
+from . import schedulers_all
