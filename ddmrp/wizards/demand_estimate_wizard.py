@@ -115,7 +115,7 @@ class DemandEstimateSheet(models.TransientModel):
                     data)
                 res.append(estimate.id)
         res = {
-            'domain': [('id','in', res)],
+            'domain': [('id', 'in', res)],
             'name': _('Stock Buffer Demand Estimates'),
             'src_model': 'stock.buffer.demand.estimate.wizard',
             'view_type': 'form',
