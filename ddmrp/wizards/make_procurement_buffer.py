@@ -38,9 +38,9 @@ class MakeProcurementBuffer(models.TransientModel):
         return defaults
 
     qty = fields.Float(string='Quantity', required=True)
+
     uom_id = fields.Many2one(string='Unit of Measure',
-                             comodel_name='product.uom',
-                             required=True, readonly=True)
+                             comodel_name='product.uom', required=True)
     date_planned = fields.Date(string='Planned Date', required=True)
 
     buffer_id = fields.Many2one(string='Stock Buffer',
@@ -55,6 +55,15 @@ class MakeProcurementBuffer(models.TransientModel):
     location_id = fields.Many2one(string='Location',
                                   comodel_name='stock.location',
                                   readonly=True)
+
+    @api.multi
+    @api.onchange('uom_id')
+    def onchange_uom_id(self):
+        for rec in self:
+            rec.qty = rec.uom_id._compute_qty(
+                rec.product_id.uom_id.id,
+                rec.buffer_id.procure_recommended_qty,
+                rec.uom_id.id)
 
     @api.multi
     def _prepare_procurement(self):

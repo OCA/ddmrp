@@ -7,6 +7,8 @@
 from openerp import api, fields, models, _
 from datetime import timedelta
 from openerp.addons import decimal_precision as dp
+from openerp.tools import float_compare, float_round
+
 
 UNIT = dp.get_precision('Product Unit of Measure')
 
@@ -34,10 +36,12 @@ class StockWarehouseOrderpoint(models.Model):
                  "buffer_profile_id.variability_factor")
     def _compute_red_zone(self):
         for rec in self:
-            rec.red_base_qty = rec.dlt * rec.adu * \
-                rec.buffer_profile_id.lead_time_factor
-            rec.red_safety_qty = rec.red_base_qty * \
-                rec.buffer_profile_id.variability_factor
+            rec.red_base_qty = float_round(
+                rec.dlt * rec.adu * rec.buffer_profile_id.lead_time_factor,
+                precision_rounding=rec.product_uom.rounding)
+            rec.red_safety_qty = float_round(
+                rec.red_base_qty * rec.buffer_profile_id.variability_factor,
+                precision_rounding=rec.product_uom.rounding)
             rec.red_zone_qty = rec.red_base_qty + rec.red_safety_qty
 
     @api.multi
@@ -46,12 +50,17 @@ class StockWarehouseOrderpoint(models.Model):
     def _compute_green_zone(self):
         for rec in self:
             # Using imposed or desired minimum order cycle
-            rec.green_zone_oc = rec.order_cycle * rec.adu
+            rec.green_zone_oc = float_round(
+                rec.order_cycle * rec.adu,
+                precision_rounding=rec.product_uom.rounding)
             # Using lead time factor
-            rec.green_zone_lt_factor = \
-                rec.dlt*rec.adu*rec.buffer_profile_id.lead_time_factor
+            rec.green_zone_lt_factor = float_round(
+                rec.dlt*rec.adu*rec.buffer_profile_id.lead_time_factor,
+                precision_rounding=rec.product_uom.rounding)
             # Using minimum order quantity
-            rec.green_zone_moq = rec.minimum_order_quantity
+            rec.green_zone_moq = float_round(
+                rec.minimum_order_quantity,
+                precision_rounding=rec.product_uom.rounding)
 
             # The biggest option of the above will be used as the green zone
             #  value
@@ -70,7 +79,9 @@ class StockWarehouseOrderpoint(models.Model):
             if rec.buffer_profile_id.replenish_method == 'min_max':
                 rec.yellow_zone_qty = 0
             else:
-                rec.yellow_zone_qty = rec.dlt * rec.adu
+                rec.yellow_zone_qty = float_round(
+                    rec.dlt * rec.adu,
+                    precision_rounding=rec.product_uom.rounding)
             rec.top_of_yellow = rec.yellow_zone_qty + rec.red_zone_qty
 
     @api.multi
@@ -259,48 +270,56 @@ class StockWarehouseOrderpoint(models.Model):
     dlt = fields.Float(string="Decoupled Lead Time (days)")
     adu = fields.Float(string="Average Daily Usage (ADU)",
                        compute="_compute_adu",
-                       default=0.0)
+                       default=0.0, digits=UNIT)
     adu_calculation_method = fields.Many2one(
         comodel_name="product.adu.calculation.method",
         string="ADU calculation method")
     adu_fixed = fields.Float(string="Fixed ADU",
-                             default=1.0)
+                             default=1.0, digits=UNIT)
     order_cycle = fields.Float(string="Minimum Order Cycle (days)")
-    minimum_order_quantity = fields.Float(string="Minimum Order Quantity")
+    minimum_order_quantity = fields.Float(string="Minimum Order Quantity",
+                                          digits=UNIT)
     red_base_qty = fields.Float(string="Red Base Qty",
-                                compute="_compute_red_zone")
+                                compute="_compute_red_zone",
+                                digits=UNIT)
     red_safety_qty = fields.Float(string="Red Safety Qty",
-                                  compute="_compute_red_zone")
+                                  compute="_compute_red_zone",
+                                  digits=UNIT)
     red_zone_qty = fields.Float(string="Red Zone Qty",
-                                compute="_compute_red_zone")
+                                compute="_compute_red_zone",
+                                digits=UNIT)
     top_of_red = fields.Float(string="Top of Red",
                               related="red_zone_qty")
     green_zone_qty = fields.Float(string="Green Zone Qty",
-                                  compute="_compute_green_zone")
+                                  compute="_compute_green_zone",
+                                  digits=UNIT)
     green_zone_lt_factor = fields.Float(string="Green Zone Lead Time Factor",
                                         compute="_compute_green_zone",
                                         help="Green zone Lead Time Factor")
     green_zone_moq = fields.Float(string="Green Zone Minimum Order Quantity",
                                   compute="_compute_green_zone",
-                                  help="Green zone minimum order quantity")
+                                  help="Green zone minimum order quantity",
+                                  digits=UNIT)
     green_zone_oc = fields.Float(string="Green Zone Order Cycle",
                                  compute="_compute_green_zone",
                                  help="Green zone order cycle")
     yellow_zone_qty = fields.Float(string="Yellow Zone Qty",
-                                   compute="_compute_yellow_zone")
+                                   compute="_compute_yellow_zone", digits=UNIT)
     top_of_yellow = fields.Float(string="Top of Yellow",
-                                 compute="_compute_yellow_zone")
+                                 compute="_compute_yellow_zone", digits=UNIT)
     top_of_green = fields.Float(string="Top of Green",
-                                compute="_compute_green_zone")
+                                compute="_compute_green_zone", digits=UNIT)
     order_spike_horizon = fields. Float(string="Order Spike Horizon")
     order_spike_threshold = fields.Float(
         string="Order Spike Threshold",
-        compute="_compute_order_spike_threshold")
+        compute="_compute_order_spike_threshold", digits=UNIT)
     qualified_demand = fields.Float(string="Qualified demand",
-                                    compute="_compute_qualified_demand")
+                                    compute="_compute_qualified_demand",
+                                    digits=UNIT)
     net_flow_position = fields.Float(
         string="Net flow position",
-        compute="_compute_net_flow_position")
+        compute="_compute_net_flow_position",
+        digits=UNIT)
     net_flow_position_percent = fields.Float(
         string="Net flow position (% of TOG)",
         compute="_compute_net_flow_position")
@@ -322,13 +341,15 @@ class StockWarehouseOrderpoint(models.Model):
         compute="_compute_execution_priority")
     procure_recommended_qty = fields.Float(
         string='Procure recommendation',
-        compute="_compute_procure_recommended")
+        compute="_compute_procure_recommended",
+        digits=UNIT)
     procure_recommended_date = fields.Date(
         string='Request Date',
         compute="_compute_procure_recommended")
     to_approve_qty = fields.Float(
         string='Procured pending approval',
-        compute="_compute_procured_pending_approval_qty")
+        compute="_compute_procured_pending_approval_qty",
+        digits=UNIT)
     product_location_qty_available_not_res = fields.Float(
         string='Quantity On Location (Unreserved)', digits=UNIT,
         compute='_product_available_qty')
