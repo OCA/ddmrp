@@ -66,7 +66,9 @@ class MakeProcurementBuffer(models.TransientModel):
             'product_uom': self.uom_id.id,
             'warehouse_id': self.warehouse_id.id,
             'location_id': self.location_id.id,
-            'company_id': self.buffer_id.company_id.id
+            'company_id': self.buffer_id.company_id.id,
+            'orderpoint_id': self.buffer_id.id,
+            'origin': self.buffer_id.name
         }
 
     @api.multi
