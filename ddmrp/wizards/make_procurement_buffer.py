@@ -27,8 +27,14 @@ class MakeProcurementBuffer(models.TransientModel):
         assert active_model == 'stock.warehouse.orderpoint', \
             'Bad context propagation'
         buffer = self.env['stock.warehouse.orderpoint'].browse(record_id)
+
+        if buffer.procure_uom_id:
+            product_uom = buffer.procure_uom_id
+        else:
+            product_uom = buffer.product_uom_id
+
         defaults['qty'] = buffer.procure_recommended_qty
-        defaults['uom_id'] = buffer.product_id.uom_id.id
+        defaults['uom_id'] = product_uom.id
         defaults['date_planned'] = buffer.procure_recommended_date
         defaults['buffer_id'] = buffer.id
         defaults['product_id'] = buffer.product_id.id
@@ -60,8 +66,9 @@ class MakeProcurementBuffer(models.TransientModel):
     @api.onchange('uom_id')
     def onchange_uom_id(self):
         for rec in self:
+            uom = rec.buffer_id.procure_uom_id or rec.buffer_id.product_uom
             rec.qty = rec.uom_id._compute_qty(
-                rec.product_id.uom_id.id,
+                uom.id,
                 rec.buffer_id.procure_recommended_qty,
                 rec.uom_id.id)
 
@@ -77,7 +84,8 @@ class MakeProcurementBuffer(models.TransientModel):
             'location_id': self.location_id.id,
             'company_id': self.buffer_id.company_id.id,
             'orderpoint_id': self.buffer_id.id,
-            'origin': self.buffer_id.name
+            'origin': self.buffer_id.name,
+            'group_id': self.buffer_id.group_id.id,
         }
 
     @api.multi
