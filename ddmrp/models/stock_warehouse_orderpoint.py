@@ -232,6 +232,8 @@ class StockWarehouseOrderpoint(models.Model):
                     procure_recommended_qty = qty
                     rec.procure_recommended_date = \
                         fields.date.today() + timedelta(days=int(rec.dlt))
+            procure_recommended_qty -= rec.subtract_procurements(rec)
+
             if rec.procure_uom_id:
                 product_qty = rec.procure_uom_id._compute_qty(
                     rec.product_id.uom_id.id, procure_recommended_qty,
@@ -346,13 +348,13 @@ class StockWarehouseOrderpoint(models.Model):
     execution_priority = fields.Char(
         string="On-Hand Alert",
         compute="_compute_execution_priority")
+
+    # We override the calculation method for the procure recommended qty
     procure_recommended_qty = fields.Float(
-        string='Procure recommendation',
-        compute="_compute_procure_recommended",
-        digits=UNIT)
-    procure_recommended_date = fields.Date(
-        string='Request Date',
         compute="_compute_procure_recommended")
+    procure_recommended_date = fields.Date(
+        compute="_compute_procure_recommended")
+
     to_approve_qty = fields.Float(
         string='Procured pending approval',
         compute="_compute_procured_pending_approval_qty",
