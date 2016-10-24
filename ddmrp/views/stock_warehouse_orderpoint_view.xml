@@ -56,7 +56,7 @@
                                 string="Green"
                                 domain="[('planning_priority_level', '=', 'green')]"/>
                     </group>
-                    <group name="execution_priorirt"
+                    <group name="execution_priority"
                            string="On Hand Alert Zones">
                         <filter name="execution_priority_level_red"
                                 string="Red"
@@ -203,13 +203,14 @@
                     <field name="procure_uom_id"/>
                     <field name="procure_recommended_date"/>
                     <button string="Create Procurement"
-                            name="%(act_make_procurement_buffer)d"
+                            name="%(stock_orderpoint_manual_procurement.act_make_procurement_from_orderpoint)d"
 							icon="gtk-execute" type="action"/>
                     <field name="to_approve_qty"/>
                     <button string="Procurements"
 							name="%(procurement.procurement_action)d"
 							icon="gtk-open" type="action"
-                            context="{'search_default_location_id': [location_id], 'search_default_product_id': [product_id], 'search_default_to_approve': 1}"/>
+                            domain="[('orderpoint_id','=', active_id)]"
+                            context="{'search_default_orderpoint_id': [active_id], 'search_default_to_approve': 1}"/>
                     <field name="top_of_red"/>
                     <field name="top_of_yellow"/>
                     <field name="top_of_green"/>
