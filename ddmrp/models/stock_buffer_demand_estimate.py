@@ -12,13 +12,6 @@ class StockBufferDemandEstimate(models.Model):
     _name = 'stock.buffer.demand.estimate'
     _description = 'Stock Buffer Demand Estimate Line'
 
-    @api.one
-    @api.depends('product_id', 'product_uom', 'product_uom_qty')
-    def _compute_product_qty(self):
-        if self.product_uom:
-            self.product_qty = self.product_uom._compute_quantity(
-                self.product_uom_qty, self.product_id.uom_id)
-
     period_id = fields.Many2one(
         comodel_name="stock.buffer.demand.estimate.period",
         string="Estimating Period",
