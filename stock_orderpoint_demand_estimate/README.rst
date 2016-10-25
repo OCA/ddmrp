@@ -6,18 +6,30 @@
 Stock Orderpoint Demand Estimate
 ================================
 
-This module allows to create demand estimates associated to orderpoints.
+This module allows to create demand estimates associated to orderpoints. It
+does not provide in itself any specific usage of the estimates.
+
+Installation
+============
+
+This module relies on the OCA module '2D matrix for x2many fields', and can
+be downloaded from:
+* Github: https://github.com/OCA/web/tree/8.0/web_widget_x2many_2d_matrix
 
 
 Usage
 =====
 
-Go to 'Configuration / Reordering Rules' and review the quantity recommended
-to be procured. You can now start the procurement for a single or a list of
-reordering rules.
+Go to 'Warehouse / Configuration / Demand Estimate Periods' and define your
+estimating periods (monthly or weekly).
 
-The recommended quantity to procure is adjusted to the procurement unit of
-measure indicated in the reordering rule.
+
+Go to 'Warehouse / Demand Planning / Create Demand Estimates' to create or
+update your demand estimates.
+
+Go to 'Warehouse / Demand Planning / Demand Estimates' to review the
+estimates created.
+
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
