@@ -10,6 +10,7 @@ from datetime import timedelta
 from openerp.addons import decimal_precision as dp
 from openerp.tools import float_compare, float_round
 import operator as py_operator
+from openerp.osv.orm import browse_record, browse_record_list
 
 
 OPERATORS = {
@@ -419,6 +420,8 @@ class StockWarehouseOrderpoint(models.Model):
             recs = super(StockWarehouseOrderpoint, self).search(
                 args2, offset, False, order, count=count)
             recs2 = self.env['stock.warehouse.orderpoint']
+            if not isinstance(recs, browse_record_list):
+                return recs
             for rec in recs:
                 for arg in args1:
                     operator = arg[1]
