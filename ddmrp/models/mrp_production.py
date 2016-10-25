@@ -37,8 +37,8 @@ class MrpProduction(models.Model):
 
     def _search_execution_priority(self, operator, value):
         """Search on the execution priority by evaluating on all
-        records"""
-        all_records = self.search([])
+        open manufacturing orders."""
+        all_records = self.search([('state', 'not in', ['done', 'cancel'])])
 
         if operator == '=':
             found_ids = [a.id for a in all_records
