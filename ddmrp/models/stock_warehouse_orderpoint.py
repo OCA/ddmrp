@@ -420,8 +420,6 @@ class StockWarehouseOrderpoint(models.Model):
             recs = super(StockWarehouseOrderpoint, self).search(
                 args2, offset, False, order, count=count)
             recs2 = self.env['stock.warehouse.orderpoint']
-            if not isinstance(recs, browse_record_list):
-                return recs
             for rec in recs:
                 for arg in args1:
                     operator = arg[1]
@@ -429,7 +427,7 @@ class StockWarehouseOrderpoint(models.Model):
                         operator = '=='
                     if OPERATORS[operator](rec[arg[0]], arg[2]):
                         recs2 += rec
-            args2.append(['id', 'in', recs2.ids])
-
-        return super(StockWarehouseOrderpoint, self).search(
-            args2, offset, limit, order, count=count)
+            return recs2
+        else:
+            return super(StockWarehouseOrderpoint, self).search(
+                args2, offset, limit, order, count=count)
