@@ -5,9 +5,21 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from openerp import api, fields, models, _
+from openerp.exceptions import Warning as UserError
 from datetime import timedelta
 from openerp.addons import decimal_precision as dp
 from openerp.tools import float_compare, float_round
+import operator as py_operator
+
+
+OPERATORS = {
+    '<': py_operator.lt,
+    '>': py_operator.gt,
+    '<=': py_operator.le,
+    '>=': py_operator.ge,
+    '==': py_operator.eq,
+    '!=': py_operator.ne
+}
 
 
 UNIT = dp.get_precision('Product Unit of Measure')
@@ -99,30 +111,6 @@ class StockWarehouseOrderpoint(models.Model):
                 rec.planning_priority_level.title(),
                 rec.net_flow_position_percent)
 
-    def _search_planning_priority_level(self, operator, value):
-        """Search on the planning priority by evaluating on all
-        records"""
-        all_records = self.search([])
-
-        if operator == '=':
-            found_ids = [a.id for a in all_records
-                         if a.planning_priority_level == value]
-        elif operator == 'in' and isinstance(value, list):
-            found_ids = [a.id for a in all_records
-                         if a.planning_priority_level in value]
-        elif operator in ("!=", "<>"):
-            found_ids = [a.id for a in all_records
-                         if a.planning_priority_level != value]
-        elif operator == 'not in' and isinstance(value, list):
-            found_ids = [a.id for a in all_records
-                         if a.planning_priority_level not in value]
-        else:
-            raise NotImplementedError(
-                'Search operator %s not implemented for value %s'
-                % (operator, value)
-            )
-        return [('id', 'in', found_ids)]
-
     @api.multi
     @api.depends("product_location_qty",
                  "top_of_yellow", "top_of_red")
@@ -142,30 +130,6 @@ class StockWarehouseOrderpoint(models.Model):
                 on_hand_percent = 0.0
             rec.execution_priority = '%s (%s %%)' % (
                 rec.execution_priority_level.title(), on_hand_percent)
-
-    def _search_execution_priority_level(self, operator, value):
-        """Search on the execution priority by evaluating on all
-        records"""
-        all_records = self.search([])
-
-        if operator == '=':
-            found_ids = [a.id for a in all_records
-                         if a.execution_priority_level == value]
-        elif operator == 'in' and isinstance(value, list):
-            found_ids = [a.id for a in all_records
-                         if a.execution_priority_level in value]
-        elif operator in ("!=", "<>"):
-            found_ids = [a.id for a in all_records
-                         if a.execution_priority_level != value]
-        elif operator == 'not in' and isinstance(value, list):
-            found_ids = [a.id for a in all_records
-                         if a.execution_priority_level not in value]
-        else:
-            raise NotImplementedError(
-                'Search operator %s not implemented for value %s'
-                % (operator, value)
-            )
-        return [('id', 'in', found_ids)]
 
     @api.multi
     def _search_stock_moves_qualified_demand_domain(self):
@@ -335,16 +299,14 @@ class StockWarehouseOrderpoint(models.Model):
     planning_priority_level = fields.Selection(
         string="Planning Priority Level",
         selection=_PRIORITY_LEVEL,
-        compute="_compute_planning_priority",
-        search="_search_planning_priority_level")
+        compute="_compute_planning_priority")
     planning_priority = fields.Char(
         string="Planning priority",
         compute="_compute_planning_priority")
     execution_priority_level = fields.Selection(
         string="On-Hand Alert Level",
         selection=_PRIORITY_LEVEL,
-        compute="_compute_execution_priority",
-        search="_search_execution_priority_level")
+        compute="_compute_execution_priority")
     execution_priority = fields.Char(
         string="On-Hand Alert",
         compute="_compute_execution_priority")
@@ -435,3 +397,36 @@ class StockWarehouseOrderpoint(models.Model):
             )._product_available()[rec.product_id.id]
             rec.product_location_qty_available_not_res = product_available[
                 'qty_available_not_res']
+
+    @api.model
+    def search(self, args, offset=0, limit=None, order=None, count=False):
+        args1 = []
+        args2 = []
+        contains_or = False
+        for arg in args:
+            if arg[0] == '|':
+                contains_or = True
+            if arg[0] in ['planning_priority_level',
+                          'execution_priority_level']:
+                if contains_or:
+                    raise UserError(_('Searches including priority levels '
+                                      'and OR operands is not supported.'))
+                args1.append(arg)
+            else:
+                args2.append(arg)
+
+        recs = super(StockWarehouseOrderpoint, self).search(
+            args2, offset, limit, order, count=count)
+        if args1:
+            recs2 = self.env['stock.warehouse.orderpoint']
+            for rec in recs:
+                for arg in args1:
+                    operator = arg[1]
+                    if operator == '=':
+                        operator = '=='
+                    if OPERATORS[operator](rec[arg[0]], arg[2]):
+                        recs2 += rec
+            return recs2
+        else:
+            return recs
+
