@@ -58,8 +58,8 @@
                         </group>
                     </group>
                     <div/>
-                    <group name="buffers" string="Stock Buffers">
-                        <field name="buffer_ids" nolabel="1"/>
+                    <group name="orderpoints" string="Stock orderpoints">
+                        <field name="orderpoint_ids" nolabel="1"/>
                     </group>
                     <footer>
                         <button name="create_sheet" string="Prepare"

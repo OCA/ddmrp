@@ -16,7 +16,7 @@ _PERIOD_SELECTION = [
 
 class DemandEstimateSheet(models.TransientModel):
     _name = 'demand.estimate.sheet'
-    _description = 'Stock Buffer Demand Estimate'
+    _description = 'Stock Orderpoint Demand Estimate'
 
     def _default_date_from(self):
         return self.env.context.get('date_from', False)
@@ -38,31 +38,31 @@ class DemandEstimateSheet(models.TransientModel):
         period_type = self.env.context.get('period_type', False)
         date_from = self.env.context.get('date_from', False)
         date_to = self.env.context.get('date_to', False)
-        buffer_ids = self.env.context.get('buffer_ids', False)
+        orderpoint_ids = self.env.context.get('orderpoint_ids', False)
         domain = [('period_type', '=', period_type),
                   ('date_from', '>=', date_from),
                   ('date_to', '<=', date_to)]
-        periods = self.env['stock.buffer.demand.estimate.period'].search(
+        periods = self.env['stock.orderpoint.demand.estimate.period'].search(
             domain)
-        buffers = self.env['stock.warehouse.orderpoint'].browse(buffer_ids)
+        orderpoints = self.env['stock.warehouse.orderpoint'].browse(orderpoint_ids)
 
         lines = []
-        for buffer in buffers:
+        for orderpoint in orderpoints:
             name_y = ''
-            if buffer.product_id.default_code:
-                name_y += '[%s] ' % buffer.product_id.default_code
-            name_y += buffer.product_id.name
-            name_y += ' - %s' % buffer.product_id.uom_id.name
+            if orderpoint.product_id.default_code:
+                name_y += '[%s] ' % orderpoint.product_id.default_code
+            name_y += orderpoint.product_id.name
+            name_y += ' - %s' % orderpoint.product_id.uom_id.name
             for period in periods:
-                estimates = self.env['stock.buffer.demand.estimate'].search(
-                    [('buffer_id', '=', buffer.id),
+                estimates = self.env['stock.orderpoint.demand.estimate'].search(
+                    [('orderpoint_id', '=', orderpoint.id),
                      ('period_id', '=', period.id)])
                 if estimates:
                     lines.append((0, 0, {
                         'value_x': period.name,
                         'value_y': name_y,
                         'period_id': period.id,
-                        'buffer_id': buffer.id,
+                        'orderpoint_id': orderpoint.id,
                         'estimate_id': estimates[0].id,
                         'product_uom_qty': estimates[0].product_uom_qty
                     }))
@@ -71,7 +71,7 @@ class DemandEstimateSheet(models.TransientModel):
                         'value_x': period.name,
                         'value_y': name_y,
                         'period_id': period.id,
-                        'buffer_id': buffer.id,
+                        'orderpoint_id': orderpoint.id,
                         'product_uom_qty': 0.0
                     }))
         return lines
@@ -98,7 +98,7 @@ class DemandEstimateSheet(models.TransientModel):
     def _prepare_estimate_data(self, line):
         return {
             'period_id': line.period_id.id,
-            'buffer_id': line.buffer_id.id,
+            'orderpoint_id': line.orderpoint_id.id,
             'product_uom_qty': line.product_uom_qty
         }
 
@@ -111,16 +111,16 @@ class DemandEstimateSheet(models.TransientModel):
                 res.append(line.estimate_id.id)
             else:
                 data = self._prepare_estimate_data(line)
-                estimate = self.env['stock.buffer.demand.estimate'].create(
+                estimate = self.env['stock.orderpoint.demand.estimate'].create(
                     data)
                 res.append(estimate.id)
         res = {
             'domain': [('id', 'in', res)],
-            'name': _('Stock Buffer Demand Estimates'),
-            'src_model': 'stock.buffer.demand.estimate.wizard',
+            'name': _('Stock orderpoint Demand Estimates'),
+            'src_model': 'stock.orderpoint.demand.estimate.wizard',
             'view_type': 'form',
             'view_mode': 'tree',
-            'res_model': 'stock.buffer.demand.estimate',
+            'res_model': 'stock.orderpoint.demand.estimate',
             'type': 'ir.actions.act_window'
         }
         return res
@@ -130,19 +130,19 @@ class DemandEstimateSheetLine(models.TransientModel):
     _name = 'demand.estimate.sheet.line'
     _description = 'Demand Estimate Sheet Line'
 
-    estimate_id = fields.Many2one(comodel_name='stock.buffer.demand.estimate')
+    estimate_id = fields.Many2one(comodel_name='stock.orderpoint.demand.estimate')
     period_id = fields.Many2one(
-        comodel_name='stock.buffer.demand.estimate.period')
-    buffer_id = fields.Many2one(comodel_name='stock.warehouse.orderpoint')
+        comodel_name='stock.orderpoint.demand.estimate.period')
+    orderpoint_id = fields.Many2one(comodel_name='stock.warehouse.orderpoint')
     value_x = fields.Char(string='Period')
-    value_y = fields.Char(string='Buffer')
+    value_y = fields.Char(string='orderpoint')
     product_uom_qty = fields.Float(
         string="Quantity", digits_compute=dp.get_precision('Product UoM'))
 
 
 class DemandEstimateWizard(models.TransientModel):
     _name = 'demand.estimate.wizard'
-    _description = 'Stock Buffer Demand Estimate Wizard'
+    _description = 'Stock orderpoint Demand Estimate Wizard'
 
     def _default_period_type(self):
         return 'monthly'
@@ -155,9 +155,9 @@ class DemandEstimateWizard(models.TransientModel):
                                    default=_default_period_type)
     location_id = fields.Many2one(comodel_name="stock.location",
                                   string="Location", required=True)
-    buffer_ids = fields.Many2many(comodel_name="stock.warehouse.orderpoint",
-                                  relation='demand_estimate_wiz_buffer_rel',
-                                  string="Stock Buffers",
+    orderpoint_ids = fields.Many2many(comodel_name="stock.warehouse.orderpoint",
+                                  relation='demand_estimate_wiz_orderpoint_rel',
+                                  string="Stock orderpoints",
                                   domain="[('location_id', '=', location_id)]")
 
     @api.multi
@@ -173,15 +173,15 @@ class DemandEstimateWizard(models.TransientModel):
     @api.multi
     def create_sheet(self):
         self.ensure_one()
-        if not self.buffer_ids:
-            raise UserError(_('You must select at lease one Stock Buffer.'))
+        if not self.orderpoint_ids:
+            raise UserError(_('You must select at lease one Stock orderpoint.'))
 
         context = {
             'date_from': self.date_from,
             'date_to': self.date_to,
             'period_type': self.period_type,
             'location_id': self.location_id.id,
-            'buffer_ids': self.buffer_ids.ids
+            'orderpoint_ids': self.orderpoint_ids.ids
         }
         res = {
             'context': context,

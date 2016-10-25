@@ -3,13 +3,13 @@
     <data>
 
         <record model="ir.ui.view"
-                id="view_stock_buffer_demand_estimate_tree">
-            <field name="name">stock.buffer.demand.estimate.tree</field>
-            <field name="model">stock.buffer.demand.estimate</field>
+                id="view_stock_orderpoint_demand_estimate_tree">
+            <field name="name">stock.orderpoint.demand.estimate.tree</field>
+            <field name="model">stock.orderpoint.demand.estimate</field>
             <field name="arch" type="xml">
                 <tree string="Demand Estimate" editable="top">
                     <field name="period_id"/>
-                    <field name="buffer_id"/>
+                    <field name="orderpoint_id"/>
                     <field name="product_id"/>
                     <field name="location_id"/>
                     <field name="product_uom_qty"/>
@@ -18,10 +18,10 @@
           </field>
         </record>
 
-        <record id="view_stock_buffer_demand_estimate_search"
+        <record id="view_stock_orderpoint_demand_estimate_search"
                 model="ir.ui.view">
-            <field name="name">stock.buffer.demand.estimate.search</field>
-            <field name="model">stock.buffer.demand.estimate</field>
+            <field name="name">stock.orderpoint.demand.estimate.search</field>
+            <field name="model">stock.orderpoint.demand.estimate</field>
             <field name="arch" type="xml">
                 <search string="Search Demand Estimates">
                     <field name="period_id"/>
@@ -33,23 +33,23 @@
         </record>
 
         <record model="ir.actions.act_window"
-                id="stock_buffer_demand_estimate_form_action">
+                id="stock_orderpoint_demand_estimate_form_action">
             <field name="name">Demand Estimates</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">stock.buffer.demand.estimate</field>
+            <field name="res_model">stock.orderpoint.demand.estimate</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" 
-                   ref="view_stock_buffer_demand_estimate_search"/>
+                   ref="view_stock_orderpoint_demand_estimate_search"/>
         </record>
 
         <menuitem id="menu_stock_demand_planning" name="Demand Planning"
                   parent="stock.menu_stock_root" sequence="10"/>
 
         <menuitem
-            id="menu_stock_buffer_demand_estimate"
+            id="menu_stock_orderpoint_demand_estimate"
             parent="menu_stock_demand_planning"
-            action="stock_buffer_demand_estimate_form_action"/>
+            action="stock_orderpoint_demand_estimate_form_action"/>
 
     </data>
 </openerp>
