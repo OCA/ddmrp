@@ -415,9 +415,9 @@ class StockWarehouseOrderpoint(models.Model):
             else:
                 args2.append(arg)
 
-        recs = super(StockWarehouseOrderpoint, self).search(
-            args2, offset, limit, order, count=count)
         if args1:
+            recs = super(StockWarehouseOrderpoint, self).search(
+                args2, offset, False, order, count=count)
             recs2 = self.env['stock.warehouse.orderpoint']
             for rec in recs:
                 for arg in args1:
@@ -426,7 +426,7 @@ class StockWarehouseOrderpoint(models.Model):
                         operator = '=='
                     if OPERATORS[operator](rec[arg[0]], arg[2]):
                         recs2 += rec
-            return recs2
-        else:
-            return recs
+            args2.append(['id', 'in', recs2.ids])
 
+        return super(StockWarehouseOrderpoint, self).search(
+            args2, offset, limit, order, count=count)
