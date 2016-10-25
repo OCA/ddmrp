@@ -58,7 +58,7 @@ class ProductAduCalculationMethod(models.Model):
         locations += self.env['stock.location'].search(
             [('id', 'child_of', [orderpoint.location_id.id])])
         if self.use_estimates:
-            estimates = self.env['stock.buffer.demand.estimate'].search(
+            estimates = self.env['stock.orderpoint.demand.estimate'].search(
                 [('location_id', 'in', locations.ids),
                  ('product_id', '=', orderpoint.product_id.id),
                  ('period_id.date_from', '>=', date_from),
@@ -94,7 +94,7 @@ class ProductAduCalculationMethod(models.Model):
         locations += self.env['stock.location'].search(
             [('id', 'child_of', [orderpoint.location_id.id])])
         if self.use_estimates:
-            estimates = self.env['stock.demand.estimate'].search(
+            estimates = self.env['stock.orderpoint.demand.estimate'].search(
                 [('location_id', 'in', locations.ids),
                  ('product_id', '=', orderpoint.product_id.id),
                  ('period_id.date_from', '>=', date_from),
