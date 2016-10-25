@@ -421,12 +421,15 @@ class StockWarehouseOrderpoint(models.Model):
                 args2, offset, False, order, count=count)
             recs2 = self.env['stock.warehouse.orderpoint']
             for rec in recs:
+                fail = False
                 for arg in args1:
                     operator = arg[1]
                     if operator == '=':
                         operator = '=='
-                    if OPERATORS[operator](rec[arg[0]], arg[2]):
-                        recs2 += rec
+                    if not OPERATORS[operator](rec[arg[0]], arg[2]):
+                        fail = True
+                if not fail:
+                    recs2 += rec
             return recs2
         else:
             return super(StockWarehouseOrderpoint, self).search(
