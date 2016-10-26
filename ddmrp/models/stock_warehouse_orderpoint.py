@@ -10,7 +10,6 @@ from datetime import timedelta
 from openerp.addons import decimal_precision as dp
 from openerp.tools import float_compare, float_round
 import operator as py_operator
-from openerp.osv.orm import browse_record, browse_record_list
 
 
 OPERATORS = {
@@ -38,11 +37,15 @@ class StockWarehouseOrderpoint(models.Model):
     _description = "Stock Buffer"
 
     @api.multi
-    @api.depends("adu_calculation_method")
+    @api.depends("adu_calculation_method", "adu_fixed")
     def _compute_adu(self):
         for rec in self:
-            if rec.adu_calculation_method:
-                rec.adu = rec.adu_calculation_method.compute_adu(rec)
+            if rec.adu_calculation_method.method == 'fixed':
+                rec.adu = rec.adu_fixed
+            elif rec.adu_calculation_method.method == 'past':
+                rec.adu = rec._compute_adu_past_demand()
+            elif rec.adu_calculation_method.method == 'future':
+                rec.adu = rec._compute_adu_future_demand()
 
     @api.multi
     @api.depends("dlt", "adu", "buffer_profile_id.lead_time_factor",
@@ -434,3 +437,74 @@ class StockWarehouseOrderpoint(models.Model):
         else:
             return super(StockWarehouseOrderpoint, self).search(
                 args2, offset, limit, order, count=count)
+
+    @api.model
+    def _compute_adu_past_demand(self):
+        horizon = 1
+        if not self.adu_calculation_method:
+            date_from = fields.Date.today()
+        else:
+            horizon = self.adu_calculation_method.horizon
+            date_from = fields.Date.to_string(
+                fields.date.today() - timedelta(days=horizon))
+        date_to = fields.Date.today()
+        locations = self.location_id
+        locations += self.env['stock.location'].search(
+            [('id', 'child_of', [self.location_id.id])])
+        if self.adu_calculation_method.use_estimates:
+            estimates = self.env['stock.demand.estimate'].search(
+                [('location_id', 'in', locations.ids),
+                 ('product_id', '=', self.product_id.id),
+                 ('period_id.date_from', '>=', date_from),
+                 ('period_id.date_to', '<=', date_to)])
+            if estimates:
+                return sum([estimate.product_uom_qty
+                            for estimate in estimates]) / horizon
+            else:
+                return 0.0
+        else:
+            moves = self.env['stock.move'].search(
+                [('state', '=', 'done'),
+                 ('location_id', 'in', locations.ids),
+                 ('product_id', '=', self.product_id.id),
+                 ('date', '>=', date_from)])
+            if moves:
+                return sum([move.product_uom_qty for move in moves]) / horizon
+            else:
+                return 0.0
+
+    @api.multi
+    def _compute_adu_future_demand(self):
+        self.ensure_one()
+        horizon = 1
+        if not self.adu_calculation_method:
+            date_to = fields.Date.today()
+        else:
+            horizon = self.adu_calculation_method.horizon
+            date_to = fields.Date.to_string(
+                fields.date.today() + timedelta(days=horizon))
+        date_from = fields.Date.today()
+        locations = self.location_id
+        locations += self.env['stock.location'].search(
+            [('id', 'child_of', [self.location_id.id])])
+        if self.adu_calculation_method.use_estimates:
+            estimates = self.env['stock.demand.estimate'].search(
+                [('location_id', 'in', locations.ids),
+                 ('product_id', '=', self.product_id.id),
+                 ('period_id.date_from', '>=', date_from),
+                 ('period_id.date_to', '<=', date_to)])
+            if estimates:
+                return sum([estimate.product_uom_qty
+                            for estimate in estimates]) / horizon
+            else:
+                return 0.0
+        else:
+            moves = self.env['stock.move'].search(
+                [('state', 'not in', ['done', 'cancel']),
+                 ('location_id', 'in', locations.ids),
+                 ('product_id', '=', self.product_id.id),
+                 ('date', '<=', date_to)])
+            if moves:
+                return sum([move.product_qty for move in moves]) / horizon
+            else:
+                return 0.0
