@@ -20,7 +20,7 @@
                 "stock_available_unreserved",
                 "stock_orderpoint_uom",
                 "stock_orderpoint_manual_procurement",
-                "stock_orderpoint_demand_estimate"],
+                "stock_demand_estimate"],
     "data": ["data/product_adu_calculation_method_data.xml",
              "data/stock_buffer_profile_data.xml",
              "security/ir.model.access.csv",
