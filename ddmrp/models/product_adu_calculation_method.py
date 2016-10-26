@@ -4,7 +4,6 @@
 # © 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from datetime import timedelta
 from openerp import api, fields, models, _
 from openerp.exceptions import Warning as UserError
 
@@ -41,88 +40,4 @@ class ProductAduCalculationMethod(models.Model):
         for rec in self:
             if rec.method in ['past', 'future'] and not rec.horizon:
                 raise UserError(_('Please indicate a length-of-period '
-                                 'horizon.'))
-
-    @api.model
-    def _compute_adu_past_demand(self, orderpoint):
-        horizon = 1
-        if not self.horizon:
-            date_from = fields.Date.to_string(fields.date.today())
-
-        else:
-            horizon = self.horizon
-            date_from = fields.Date.to_string(fields.date.today() - timedelta(
-                days=self.horizon))
-        date_to = fields.Date.to_string(fields.date.today())
-        locations = orderpoint.location_id
-        locations += self.env['stock.location'].search(
-            [('id', 'child_of', [orderpoint.location_id.id])])
-        if self.use_estimates:
-            estimates = self.env['stock.orderpoint.demand.estimate'].search(
-                [('location_id', 'in', locations.ids),
-                 ('product_id', '=', orderpoint.product_id.id),
-                 ('period_id.date_from', '>=', date_from),
-                 ('period_id.date_to', '<=', date_to)])
-            if estimates:
-                return sum([estimate.product_uom_qty
-                            for estimate in estimates]) / horizon
-            else:
-                return 0.0
-        else:
-            moves = self.env['stock.move'].search(
-                [('state', '=', 'done'),
-                 ('location_id', 'in', locations.ids),
-                 ('product_id', '=', orderpoint.product_id.id),
-                 ('date', '>=', date_from)])
-            if moves:
-                return sum([move.product_uom_qty for move in moves]) / horizon
-            else:
-                return 0.0
-
-    @api.model
-    def _compute_adu_future_demand(self, orderpoint):
-        horizon = 1
-        if not self.horizon:
-            date_to = fields.Date.to_string(fields.date.today())
-
-        else:
-            horizon = self.horizon
-            date_to = fields.Date.to_string(fields.date.today() + timedelta(
-                days=self.horizon)).date()
-        date_from = fields.Date.to_string(fields.date.today())
-        locations = orderpoint.location_id
-        locations += self.env['stock.location'].search(
-            [('id', 'child_of', [orderpoint.location_id.id])])
-        if self.use_estimates:
-            estimates = self.env['stock.orderpoint.demand.estimate'].search(
-                [('location_id', 'in', locations.ids),
-                 ('product_id', '=', orderpoint.product_id.id),
-                 ('period_id.date_from', '>=', date_from),
-                 ('period_id.date_to', '<=', date_to)])
-            if estimates:
-                return sum([estimate.product_uom_qty
-                            for estimate in estimates]) / horizon
-            else:
-                return 0.0
-        else:
-            moves = self.env['stock.move'].search(
-                [('state', 'not in', ['done', 'cancel']),
-                 ('location_id', 'in', locations.ids),
-                 ('product_id', '=', orderpoint.product_id.id),
-                 ('date', '<=', date_to)])
-            if moves:
-                return sum([move.product_qty for move in moves]) / horizon
-            else:
-                return 0.0
-
-    @api.model
-    def compute_adu(self, orderpoint):
-        """Main method used to compute the ADU using the method selected.
-        You can override this method when you define new calculation methods.
-        """
-        if self.method == 'fixed':
-            return orderpoint.adu_fixed
-        elif self.method == 'past':
-            return self._compute_adu_past_demand(orderpoint)
-        elif self.method == 'future':
-            return self._compute_adu_future_demand(orderpoint)
+                                  'horizon.'))
