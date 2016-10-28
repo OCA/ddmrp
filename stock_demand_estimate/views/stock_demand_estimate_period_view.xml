@@ -12,6 +12,7 @@
                     <field name="period_type"/>
                     <field name="date_from"/>
                     <field name="date_to"/>
+                    <field name="days"/>
                 </tree>
           </field>
         </record>

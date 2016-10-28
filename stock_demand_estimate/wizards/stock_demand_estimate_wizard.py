@@ -106,7 +106,8 @@ class StockDemandEstimateSheet(models.TransientModel):
             'period_id': line.period_id.id,
             'product_id': line.product_id.id,
             'location_id': line.location_id.id,
-            'product_uom_qty': line.product_uom_qty
+            'product_uom_qty': line.product_uom_qty,
+            'product_uom': line.product_id.uom_id.id,
         }
 
     @api.multi
