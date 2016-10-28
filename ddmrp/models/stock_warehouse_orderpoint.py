@@ -439,6 +439,19 @@ class StockWarehouseOrderpoint(models.Model):
                 args2, offset, limit, order, count=count)
 
     @api.model
+    def _past_demand_estimate_domain(self, date_from, date_to, locations):
+        return [('location_id', 'in', locations.ids),
+                ('product_id', '=', self.product_id.id),
+                '|', ('period_id.date_from', '>=', date_from),
+                ('period_id.date_to', '<=', date_to)]
+
+    @api.model
+    def _past_moves_domain(self, date_from, locations):
+        return [('state', '=', 'done'), ('location_id', 'in', locations.ids),
+                ('product_id', '=', self.product_id.id),
+                ('date', '>=', date_from)]
+
+    @api.model
     def _compute_adu_past_demand(self):
         horizon = 1
         if not self.adu_calculation_method:
@@ -452,26 +465,37 @@ class StockWarehouseOrderpoint(models.Model):
         locations += self.env['stock.location'].search(
             [('id', 'child_of', [self.location_id.id])])
         if self.adu_calculation_method.use_estimates:
-            estimates = self.env['stock.demand.estimate'].search(
-                [('location_id', 'in', locations.ids),
-                 ('product_id', '=', self.product_id.id),
-                 ('period_id.date_from', '>=', date_from),
-                 ('period_id.date_to', '<=', date_to)])
-            if estimates:
-                return sum([estimate.product_uom_qty
-                            for estimate in estimates]) / horizon
-            else:
-                return 0.0
+            qty = 0.0
+            domain = self._past_demand_estimate_domain(date_from, date_to,
+                                                       locations)
+            for estimate in self.env['stock.demand.estimate'].search(domain):
+                qty += estimate.get_quantity_by_date_range(
+                    fields.Date.from_string(date_from),
+                    fields.Date.from_string(date_to))
+            return float_round(qty / horizon,
+                               precision_rounding=self.product_uom.rounding)
         else:
-            moves = self.env['stock.move'].search(
-                [('state', '=', 'done'),
-                 ('location_id', 'in', locations.ids),
-                 ('product_id', '=', self.product_id.id),
-                 ('date', '>=', date_from)])
-            if moves:
-                return sum([move.product_uom_qty for move in moves]) / horizon
-            else:
-                return 0.0
+            qty = 0.0
+            domain = self._past_moves_domain(date_from, locations)
+            for group in self.env['stock.move'].read_group(
+                    domain, ['product_id', 'product_qty'], ['product_id']):
+                qty += group['product_qty']
+            return float_round(qty / horizon,
+                               precision_rounding=self.product_uom.rounding)
+
+    @api.model
+    def _future_demand_estimate_domain(self, date_from, date_to, locations):
+        return [('location_id', 'in', locations.ids),
+                ('product_id', '=', self.product_id.id),
+                '|', ('period_id.date_from', '>=', date_from),
+                ('period_id.date_to', '<=', date_to)]
+
+    @api.model
+    def _future_moves_domain(self, date_to, locations):
+        return [('state', 'not in', ['done', 'cancel']),
+                ('location_id', 'in', locations.ids),
+                ('product_id', '=', self.product_id.id),
+                ('date', '<=', date_to)]
 
     @api.multi
     def _compute_adu_future_demand(self):
@@ -484,27 +508,23 @@ class StockWarehouseOrderpoint(models.Model):
             date_to = fields.Date.to_string(
                 fields.date.today() + timedelta(days=horizon))
         date_from = fields.Date.today()
-        locations = self.location_id
-        locations += self.env['stock.location'].search(
+        locations = self.env['stock.location'].search(
             [('id', 'child_of', [self.location_id.id])])
         if self.adu_calculation_method.use_estimates:
-            estimates = self.env['stock.demand.estimate'].search(
-                [('location_id', 'in', locations.ids),
-                 ('product_id', '=', self.product_id.id),
-                 ('period_id.date_from', '>=', date_from),
-                 ('period_id.date_to', '<=', date_to)])
-            if estimates:
-                return sum([estimate.product_uom_qty
-                            for estimate in estimates]) / horizon
-            else:
-                return 0.0
+            qty = 0.0
+            domain = self._future_demand_estimate_domain(date_from, date_to,
+                                                         locations)
+            for estimate in self.env['stock.demand.estimate'].search(domain):
+                qty += estimate.get_quantity_by_date_range(
+                    fields.Date.from_string(date_from),
+                    fields.Date.from_string(date_to))
+            return float_round(qty / horizon,
+                               precision_rounding=self.product_uom.rounding)
         else:
-            moves = self.env['stock.move'].search(
-                [('state', 'not in', ['done', 'cancel']),
-                 ('location_id', 'in', locations.ids),
-                 ('product_id', '=', self.product_id.id),
-                 ('date', '<=', date_to)])
-            if moves:
-                return sum([move.product_qty for move in moves]) / horizon
-            else:
-                return 0.0
+            qty = 0.0
+            domain = self._future_moves_domain(date_from, locations)
+            for group in self.env['stock.move'].read_group(
+                    domain, ['product_id', 'product_qty'], ['product_id']):
+                qty += group['product_qty']
+            return float_round(qty / horizon,
+                               precision_rounding=self.product_uom.rounding)
