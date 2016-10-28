@@ -17,8 +17,7 @@ class TestDdmrp(common.TransactionCase):
         data = {
             'name': name,
             'date_from': fields.Date.to_string(date_from),
-            'date_to': fields.Date.to_string(date_to),
-            'period_type': 'monthly'
+            'date_to': fields.Date.to_string(date_to)
         }
         res = self.estimatePeriodModel.create(data)
         return res
@@ -137,8 +136,16 @@ class TestDdmrp(common.TransactionCase):
             'method': 'future',
             'use_estimates': False,
             'horizon': 120,
-            'company_id': self.main_company
+            'company_id': self.main_company.id
         })
+
+        pickingOuts = self.pickingModel
+        date_move = datetime.today() + timedelta(days=30)
+        pickingOuts += self.create_pickingoutA(date_move, 60)
+        date_move = datetime.today() + timedelta(days=60)
+        pickingOuts += self.create_pickingoutA(date_move, 60)
+
+        pickingOuts.action_confirm()
 
         orderpointA = self.orderpointModel.create({
             'buffer_profile_id': self.buffer_profile_pur.id,
@@ -151,16 +158,6 @@ class TestDdmrp(common.TransactionCase):
             'dlt': 10,
             'adu_calculation_method': method.id
         })
-
-        self.assertEqual(orderpointA.adu, 0)
-
-        pickingOuts = self.pickingModel
-        date_move = datetime.today() + timedelta(days=30)
-        pickingOuts += self.create_pickingoutA(date_move, 60)
-        date_move = datetime.today() + timedelta(days=60)
-        pickingOuts += self.create_pickingoutA(date_move, 60)
-
-        pickingOuts.action_confirm()
 
         to_assert_value = (60 + 60) / 120
         self.assertEqual(orderpointA.adu, to_assert_value)
@@ -175,9 +172,9 @@ class TestDdmrp(common.TransactionCase):
     def test_adu_calculation_future_120_days_estimated(self):
 
         method = self.env.ref('ddmrp.adu_calculation_method_future_120')
-        # Records
+        # Create a period of 120 days.
         date_from = datetime.now().date()
-        date_to = (datetime.now() + timedelta(days=120)).date()
+        date_to = (datetime.now() + timedelta(days=119)).date()
         estimate_period_next_120 = self.createEstimatePeriod(
             'test_next_120', date_from, date_to)
 
