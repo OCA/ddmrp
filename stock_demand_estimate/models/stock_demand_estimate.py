@@ -76,7 +76,7 @@ class StockDemandEstimate(models.Model):
         if date_from <= period_date_to and period_date_from <= date_to:
             overlap_date_from = max(period_date_from, date_from)
             overlap_date_to = min(period_date_to, date_to)
-            days = (abs(overlap_date_to-overlap_date_from)).days
+            days = (abs(overlap_date_to-overlap_date_from)).days + 1
             return days * self.daily_qty
         return 0.0
 

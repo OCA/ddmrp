@@ -31,17 +31,12 @@ class StockDemandEstimateSheet(models.TransientModel):
         else:
             return False
 
-    def _default_period_type(self):
-        return self.env.context.get('period_type', False)
-
     def _default_estimate_ids(self):
-        period_type = self.env.context.get('period_type', False)
         date_from = self.env.context.get('date_from', False)
         date_to = self.env.context.get('date_to', False)
         location_id = self.env.context.get('location_id', False)
         product_ids = self.env.context.get('product_ids', False)
-        domain = [('period_type', '=', period_type),
-                  ('date_from', '>=', date_from),
+        domain = [('date_from', '>=', date_from),
                   ('date_to', '<=', date_to)]
         periods = self.env['stock.demand.estimate.period'].search(
             domain)
@@ -89,11 +84,6 @@ class StockDemandEstimateSheet(models.TransientModel):
     location_id = fields.Many2one(comodel_name="stock.location",
                                   string="Location", readonly=True,
                                   default=_default_location_id)
-    period_type = fields.Selection(string="Period Type",
-                                   selection=_PERIOD_SELECTION,
-                                   default=_default_period_type,
-                                   readonly=True)
-
     line_ids = fields.Many2many(
         string="Estimates",
         comodel_name='stock.demand.estimate.sheet.line',
@@ -156,15 +146,8 @@ class DemandEstimateWizard(models.TransientModel):
     _name = 'stock.demand.estimate.wizard'
     _description = 'Stock Demand Estimate Wizard'
 
-    def _default_period_type(self):
-        return 'monthly'
-
     date_from = fields.Date(string="Date From", required=True)
     date_to = fields.Date(string="Date To", required=True)
-    period_type = fields.Selection(string="Period Type",
-                                   selection=_PERIOD_SELECTION,
-                                   required=True,
-                                   default=_default_period_type)
     location_id = fields.Many2one(comodel_name="stock.location",
                                   string="Location", required=True)
     product_ids = fields.Many2many(
@@ -177,7 +160,6 @@ class DemandEstimateWizard(models.TransientModel):
         return {
             'date_from': self.date_from,
             'date_to': self.date_to,
-            'period_type': self.period_type,
             'location_id': self.location_id.id,
         }
 
@@ -190,7 +172,6 @@ class DemandEstimateWizard(models.TransientModel):
         context = {
             'date_from': self.date_from,
             'date_to': self.date_to,
-            'period_type': self.period_type,
             'location_id': self.location_id.id,
             'product_ids': self.product_ids.ids
         }

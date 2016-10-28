@@ -9,7 +9,6 @@
             <field name="arch" type="xml">
                 <tree string="Stock Demand Estimate Period" editable="top">
                     <field name="name"/>
-                    <field name="period_type"/>
                     <field name="date_from"/>
                     <field name="date_to"/>
                     <field name="days"/>
@@ -24,7 +23,6 @@
             <field name="arch" type="xml">
                 <search string="Search Stock Demand Estimates">
                     <field name="name"/>
-                    <field name="period_type"/>
                     <field name="date_from"/>
                     <field name="date_to"/>
                 </search>

@@ -7,11 +7,6 @@
 from openerp import api, fields, models, _
 from openerp.exceptions import Warning as UserError
 
-_PERIOD_SELECTION = [
-    ('monthly', 'Monthly'),
-    ('weekly', 'Weekly')
-]
-
 
 class StockDemandEstimatePeriod(models.Model):
     _name = 'stock.demand.estimate.period'
@@ -27,9 +22,6 @@ class StockDemandEstimatePeriod(models.Model):
                             fields.Date.from_string(rec.date_from)).days + 1
 
     name = fields.Char(string="Name", required=True)
-    period_type = fields.Selection(string="Type",
-                                   selection=_PERIOD_SELECTION,
-                                   required=True)
     date_from = fields.Date(string="Date From", required=True)
     date_to = fields.Date(string="Date To", required=True)
     days = fields.Float(string="Days between dates",
@@ -54,5 +46,4 @@ class StockDemandEstimatePeriod(models.Model):
                 AND id <> %s', (period.date_to, period.date_from, period.id))
             res = self.env.cr.fetchall()
             if res:
-                raise UserError(_('Two periods of the same type '
-                                'cannot overlap.'))
+                raise UserError(_('Two periods cannot overlap.'))
