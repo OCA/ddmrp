@@ -506,7 +506,7 @@ class StockWarehouseOrderpoint(models.Model):
         else:
             horizon = self.adu_calculation_method.horizon
             date_to = fields.Date.to_string(
-                fields.date.today() + timedelta(days=horizon))
+                fields.date.today() + timedelta(days=horizon-1))
         date_from = fields.Date.today()
         locations = self.env['stock.location'].search(
             [('id', 'child_of', [self.location_id.id])])
@@ -522,7 +522,7 @@ class StockWarehouseOrderpoint(models.Model):
                                precision_rounding=self.product_uom.rounding)
         else:
             qty = 0.0
-            domain = self._future_moves_domain(date_from, locations)
+            domain = self._future_moves_domain(date_to, locations)
             for group in self.env['stock.move'].read_group(
                     domain, ['product_id', 'product_qty'], ['product_id']):
                 qty += group['product_qty']
