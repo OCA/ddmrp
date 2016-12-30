@@ -42,7 +42,7 @@
 
         <menuitem
             id="menu_stock_demand_estimate_period"
-            parent="stock.menu_stock_configuration"
+            parent="stock.menu_stock_config_settings"
             action="stock_demand_estimate_period_form_action"/>
 
     </data>
