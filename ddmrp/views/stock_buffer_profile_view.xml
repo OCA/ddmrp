@@ -88,7 +88,7 @@
 
         <menuitem
             id="menu_stock_buffer_profile_mgt"
-            parent="stock.menu_stock_configuration"
+            parent="stock.menu_stock_config_settings"
             action="stock_buffer_profile_form_action"/>
 
     </data>
