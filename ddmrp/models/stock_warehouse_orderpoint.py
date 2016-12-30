@@ -191,6 +191,7 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     @api.depends("qualified_demand", "top_of_green")
     def _compute_procure_recommended(self):
+        subtract_qty = self.subtract_procurements_from_orderpoints(self.ids)
         for rec in self:
             rec.procure_recommended_date = \
                 fields.date.today() + timedelta(days=int(rec.dlt))
@@ -200,7 +201,7 @@ class StockWarehouseOrderpoint(models.Model):
                       - rec.to_approve_qty
                 if qty >= 0.0:
                     procure_recommended_qty = qty
-            procure_recommended_qty -= rec.subtract_procurements(rec)
+            procure_recommended_qty -= subtract_qty[rec.id]
 
             if rec.procure_uom_id:
                 product_qty = rec.procure_uom_id._compute_qty(
