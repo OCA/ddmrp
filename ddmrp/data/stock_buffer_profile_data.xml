@@ -6,20 +6,20 @@
                 model="stock.buffer.profile">
             <field name="replenish_method">replenish</field>
             <field name="item_type">purchased</field>
-            <field name="lead_time">short</field>
-            <field name="lead_time_factor">0.5</field>
-            <field name="variability">low</field>
-            <field name="variability_factor">0.5</field>
+            <field name="lead_time_id"
+                   ref="ddmrp.stock_buffer_profile_lead_time_medium"/>
+            <field name="variability_id"
+                   ref="ddmrp.stock_buffer_profile_variability_medium"/>
         </record>
 
         <record id="stock_buffer_profile_replenish_manufactured_short_low"
                 model="stock.buffer.profile">
             <field name="replenish_method">replenish</field>
             <field name="item_type">manufactured</field>
-            <field name="lead_time">short</field>
-            <field name="lead_time_factor">0.5</field>
-            <field name="variability">low</field>
-            <field name="variability_factor">0.5</field>
+            <field name="lead_time_id"
+                   ref="ddmrp.stock_buffer_profile_lead_time_medium"/>
+            <field name="variability_id"
+                   ref="ddmrp.stock_buffer_profile_variability_medium"/>
         </record>
 
     </data>
