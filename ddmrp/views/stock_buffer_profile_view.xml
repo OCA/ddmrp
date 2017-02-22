@@ -19,12 +19,10 @@
                                 <field name="item_type"/>
                             </group>
                             <group name="lead_time">
-                                <field name="lead_time"/>
-                                <field name="lead_time_factor"/>
+                                <field name="lead_time_id"/>
                             </group>
                             <group name="variability">
-                                <field name="variability"/>
-                                <field name="variability_factor"/>
+                                <field name="variability_id"/>
                             </group>
                             <group name="organization">
                                 <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
@@ -44,10 +42,8 @@
                     <field name="name"/>
                     <field name="replenish_method"/>
                     <field name="item_type"/>
-                    <field name="lead_time"/>
-                    <field name="lead_time_factor"/>
-                    <field name="variability"/>
-                    <field name="variability_factor"/>
+                    <field name="lead_time_id"/>
+                    <field name="variability_id"/>
                 </tree>
           </field>
         </record>
@@ -61,10 +57,8 @@
                     <field name="name"/>
                     <separator/>
                     <field name="item_type"/>
-                    <field name="lead_time"/>
-                    <field name="lead_time_factor"/>
-                    <field name="variability"/>
-                    <field name="variability_factor"/>
+                    <field name="lead_time_id"/>
+                    <field name="variability_id"/>
                     <field name="company_id" groups="base.group_multi_company"/>
                 </search>
             </field>

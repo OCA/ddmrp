@@ -48,25 +48,31 @@
                            string="Planning Priority Zones">
                         <filter name="planning_priority_level"
                                 string="Red"
-                                domain="[('planning_priority_level', '=', 'red')]"/>
+                                domain="[('planning_priority_level', '=', '1_red')]"/>
                         <filter name="planning_priority_level_yellow"
                                 string="Yellow"
-                                domain="[('planning_priority_level', '=', 'yellow')]"/>
+                                domain="[('planning_priority_level', '=', '2_yellow')]"/>
                         <filter name="planning_priority_level_green"
                                 string="Green"
-                                domain="[('planning_priority_level', '=', 'green')]"/>
+                                domain="[('planning_priority_level', '=', '3_green')]"/>
                     </group>
                     <group name="execution_priority"
                            string="On Hand Alert Zones">
                         <filter name="execution_priority_level_red"
                                 string="Red"
-                                domain="[('execution_priority_level', '=', 'red')]"/>
+                                domain="[('execution_priority_level', '=', '1_red')]"/>
                         <filter name="execution_priority_level_yellow"
                                 string="Yellow"
-                                domain="[('execution_priority_level', '=', 'yellow')]"/>
+                                domain="[('execution_priority_level', '=', '2_yellow')]"/>
                         <filter name="execution_priority_level_green"
                                 string="Green"
-                                domain="[('execution_priority_level', '=', 'green')]"/>
+                                domain="[('execution_priority_level', '=', '3_green')]"/>
+                    </group>
+                    <group name="procure_recommendation"
+                           string="Procurement">
+                        <filter name="procure_recommended"
+                                string="Procurement recommended"
+                                domain="[('procure_recommended_qty', '>', 0.0)]"/>
                     </group>
                 </field>
             </field>
@@ -157,18 +163,6 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="stock_warehouse_orderpoint_form_2_view">
-            <field name="name">stock.warehouse.orderpoint.form</field>
-            <field name="model">stock.warehouse.orderpoint</field>
-            <field name="inherit_id"
-                   ref="stock_warehouse_orderpoint_stock_info.stock_warehouse_orderpoint_form_view" />
-            <field name="arch" type="xml">
-                <field name="product_location_qty" position="after">
-                    <field name="product_location_qty_available_not_res" />
-                </field>
-            </field>
-        </record>
-
         <!-- Buffer Planning Screen -->
         <record model="ir.ui.view"
                 id="view_ddmrp_stock_buffer_planning_tree">
@@ -176,22 +170,25 @@
             <field name="model">stock.warehouse.orderpoint</field>
             <field name="priority">50</field>
             <field name="arch" type="xml">
-                <tree string="Buffer monitor">
+                <tree string="Buffer monitor"
+                      colors="red:procure_recommended_qty &gt; 0">
                     <field name="product_id"/>
                     <field name="product_uom" string="UoM"/>
                     <field name="warehouse_id"/>
                     <field name="location_id"/>
-                    <field name="planning_priority_level" invisible="True"/>
-                    <field name="planning_priority"
-                           bg_color="red:planning_priority_level=='red';yellow:planning_priority_level=='yellow';green:planning_priority_level == 'green'"
-                           fg_color="white:planning_priority_level=='red';black:planning_priority_level=='yellow';white:planning_priority_level == 'green'"/>
+                    <field name="planning_priority_level"
+                           bg_color="red:planning_priority_level=='1_red';yellow:planning_priority_level=='2_yellow';green:planning_priority_level == '3_green'"
+                           fg_color="white:planning_priority_level=='1_red';black:planning_priority_level=='2_yellow';white:planning_priority_level == '3_green'"/>
+                    <field name="net_flow_position_percent"
+                           bg_color="red:planning_priority_level=='1_red';yellow:planning_priority_level=='2_yellow';green:planning_priority_level == '3_green'"
+                           fg_color="white:planning_priority_level=='1_red';black:planning_priority_level=='2_yellow';white:planning_priority_level == '3_green'"/>
                     <field name="product_location_qty" string="On-Hand"/>
-                    <field name="product_location_qty_available_not_res"
-                           string="On-Hand (Unreserved)"/>
-                    <field name="execution_priority_level" invisible="True"/>
-                    <field name="execution_priority"
-                           bg_color="red:execution_priority_level=='red';yellow:execution_priority_level=='yellow';green:execution_priority_level == 'green'"
-                           fg_color="white:execution_priority_level=='red';black:execution_priority_level=='yellow';white:execution_priority_level == 'green'"/>
+                    <field name="execution_priority_level"
+                           bg_color="red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'"
+                           fg_color="white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'"/>
+                    <field name="on_hand_percent"
+                           bg_color="red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'"
+                           fg_color="white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'"/>
                     <button string="Open Non-completed Moves"
 							name="open_moves"
 							icon="gtk-open" type="object"/>
@@ -204,12 +201,11 @@
                     <button string="Create Procurement"
                             name="%(stock_orderpoint_manual_procurement.act_make_procurement_from_orderpoint)d"
 							icon="gtk-execute" type="action"/>
-                    <field name="to_approve_qty"/>
                     <button string="Procurements"
 							name="%(procurement.procurement_action)d"
 							icon="gtk-open" type="action"
                             domain="[('orderpoint_id','=', active_id)]"
-                            context="{'search_default_orderpoint_id': [active_id], 'search_default_to_approve': 1}"/>
+                            context="{'search_default_orderpoint_id': [active_id]}"/>
                     <field name="top_of_red"/>
                     <field name="top_of_yellow"/>
                     <field name="top_of_green"/>
