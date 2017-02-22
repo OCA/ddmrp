@@ -8,10 +8,12 @@
             <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
             <field name="arch" type="xml">
                 <field name="date_planned" position="before">
-                    <field name="execution_priority_level" invisible="1"/>
-                    <field name="execution_priority"
-                           bg_color="red:execution_priority_level=='red';yellow:execution_priority_level=='yellow';green:execution_priority_level == 'green'"
-                           fg_color="white:execution_priority_level=='red';black:execution_priority_level=='yellow';white:execution_priority_level == 'green'"/>
+                    <field name="execution_priority_level"
+                           bg_color="red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'"
+                           fg_color="white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'"/>
+                    <field name="on_hand_percent"
+                           bg_color="red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'"
+                           fg_color="white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'"/>
                 </field>
             </field>
         </record>
