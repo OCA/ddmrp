@@ -162,7 +162,7 @@ class StockWarehouseOrderpoint(models.Model):
         string="Buffer Profile")
     dlt = fields.Float(string="Decoupled Lead Time (days)")
     adu = fields.Float(string="Average Daily Usage (ADU)",
-                       default=0.0, digits=UNIT)
+                       default=0.0, digits=UNIT, readonly=True)
     adu_calculation_method = fields.Many2one(
         comodel_name="product.adu.calculation.method",
         string="ADU calculation method")
@@ -335,16 +335,14 @@ class StockWarehouseOrderpoint(models.Model):
                 qty += estimate.get_quantity_by_date_range(
                     fields.Date.from_string(date_from),
                     fields.Date.from_string(date_to))
-            return float_round(qty / horizon,
-                               precision_rounding=self.product_uom.rounding)
+            return qty / horizon
         else:
             qty = 0.0
             domain = self._past_moves_domain(date_from, locations)
             for group in self.env['stock.move'].read_group(
                     domain, ['product_id', 'product_qty'], ['product_id']):
                 qty += group['product_qty']
-            return float_round(qty / horizon,
-                               precision_rounding=self.product_uom.rounding)
+            return qty / horizon
 
     @api.model
     def _future_demand_estimate_domain(self, date_from, date_to, locations):
@@ -381,16 +379,14 @@ class StockWarehouseOrderpoint(models.Model):
                 qty += estimate.get_quantity_by_date_range(
                     fields.Date.from_string(date_from),
                     fields.Date.from_string(date_to))
-            return float_round(qty / horizon,
-                               precision_rounding=self.product_uom.rounding)
+            return qty / horizon
         else:
             qty = 0.0
             domain = self._future_moves_domain(date_to, locations)
             for group in self.env['stock.move'].read_group(
                     domain, ['product_id', 'product_qty'], ['product_id']):
                 qty += group['product_qty']
-            return float_round(qty / horizon,
-                               precision_rounding=self.product_uom.rounding)
+            return qty / horizon
 
     @api.multi
     def _calc_adu(self):
