@@ -19,6 +19,12 @@ class MrpProduction(models.Model):
     def _search_orderpoints(self):
         return [('name', '=', self.move_prod_id.origin)]
 
+    @api.model
+    def _find_orderpoint_from_procurement(self, procurement):
+        orderpoint = procurement.move_dest_id.procurement_id.orderpoint_id
+        procurement = procurement.move_dest_id.procurement_id
+        return procurement, orderpoint
+
     @api.multi
     @api.depends('move_prod_id')
     def _compute_orderpoint_id(self):
@@ -30,11 +36,17 @@ class MrpProduction(models.Model):
             if orderpoints:
                 rec.orderpoint_id = orderpoints[0]
             else:
-                domain = rec._search_orderpoints()
-                orderpoints = rec.env['stock.warehouse.orderpoint'].search(
-                    domain)
-                if orderpoints:
-                    rec.orderpoint_id = orderpoints[0]
+                for procurement in procurements:
+                    orderpoint = False
+                    originating_procurement = procurement
+                    while not orderpoint:
+                        originating_procurement, orderpoint = \
+                            self._find_orderpoint_from_procurement(
+                                originating_procurement)
+                        if orderpoint:
+                            rec.orderpoint_id = orderpoint
+                        if not originating_procurement:
+                            break
 
     @api.multi
     @api.depends("orderpoint_id")
