@@ -312,6 +312,7 @@ class StockWarehouseOrderpoint(models.Model):
     @api.model
     def _past_moves_domain(self, date_from, locations):
         return [('state', '=', 'done'), ('location_id', 'in', locations.ids),
+                ('location_dest_id', 'not in', locations.ids),
                 ('product_id', '=', self.product_id.id),
                 ('date', '>=', date_from)]
 
@@ -355,6 +356,7 @@ class StockWarehouseOrderpoint(models.Model):
     def _future_moves_domain(self, date_to, locations):
         return [('state', 'not in', ['done', 'cancel']),
                 ('location_id', 'in', locations.ids),
+                ('location_dest_id', 'not in', locations.ids),
                 ('product_id', '=', self.product_id.id),
                 ('date', '<=', date_to)]
 
@@ -415,6 +417,7 @@ class StockWarehouseOrderpoint(models.Model):
                 ('state', 'in', ['draft', 'waiting', 'confirmed',
                                  'assigned']),
                 ('location_id', 'in', locations.ids),
+                ('location_dest_id', 'not in', locations.ids),
                 ('date', '<=', date_to)]
 
     @api.multi
