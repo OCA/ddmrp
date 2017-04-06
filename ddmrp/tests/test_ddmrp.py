@@ -70,6 +70,14 @@ class TestDdmrp(common.TransactionCase):
             'location_id': self.location_shelf1.id,
             'company_id': self.main_company.id
         })
+
+        self.binB = self.locationModel.create({
+            'usage': 'internal',
+            'name': 'Bin B',
+            'location_id': self.location_shelf1.id,
+            'company_id': self.main_company.id
+        })
+
         self.locationModel._parent_store_compute()
 
         self.quant = self.quantModel.create(
@@ -124,6 +132,24 @@ class TestDdmrp(common.TransactionCase):
                     'product_uom_qty': qty,
                     'location_id': self.supplier_location.id,
                     'location_dest_id': self.binA.id,
+                })]
+        })
+
+    def create_pickinginternalA(self, date_move, qty):
+        return self.pickingModel.sudo(self.user).create({
+            'picking_type_id': self.ref('stock.picking_type_internal'),
+            'location_id': self.binA.id,
+            'location_dest_id': self.binB.id,
+            'move_lines': [
+                (0, 0, {
+                    'name': 'Test move',
+                    'product_id': self.productA.id,
+                    'date_expected': date_move,
+                    'date': date_move,
+                    'product_uom': self.productA.uom_id.id,
+                    'product_uom_qty': qty,
+                    'location_id': self.binA.id,
+                    'location_dest_id': self.binB.id
                 })]
         })
 
@@ -189,8 +215,43 @@ class TestDdmrp(common.TransactionCase):
             picking.action_done()
 
         self.orderpointModel.cron_ddmrp()
-
         to_assert_value = (60 + 60) / 120
+        self.assertEqual(orderpointA.adu, to_assert_value)
+
+    def test_adu_calculation_internal_past_120_days(self):
+        """
+        Test that internal moves will not affect ADU calculation         
+        """
+        method = self.env.ref('ddmrp.adu_calculation_method_past_120')
+        orderpointA = self.orderpointModel.create({
+            'buffer_profile_id': self.buffer_profile_pur.id,
+            'product_id': self.productA.id,
+            'location_id': self.stock_location.id,
+            'warehouse_id': self.warehouse.id,
+            'product_min_qty': 0.0,
+            'product_max_qty': 0.0,
+            'qty_multiple': 0.0,
+            'dlt': 10,
+            'adu_calculation_method': method.id,
+            'adu_fixed': 4
+        })
+        self.orderpointModel.cron_ddmrp()
+
+        self.assertEqual(orderpointA.adu, 0)
+
+        pickingInternals = self.pickingModel
+        date_move = datetime.today() - timedelta(days=30)
+        pickingInternals += self.create_pickinginternalA(date_move, 60)
+        date_move = datetime.today() - timedelta(days=60)
+        pickingInternals += self.create_pickinginternalA(date_move, 60)
+        for picking in pickingInternals:
+            picking.action_confirm()
+            picking.action_assign()
+            picking.action_done()
+
+        self.orderpointModel.cron_ddmrp()
+
+        to_assert_value = 0
         self.assertEqual(orderpointA.adu, to_assert_value)
 
     def test_adu_calculation_future_120_days_actual(self):
@@ -371,6 +432,33 @@ class TestDdmrp(common.TransactionCase):
         self.orderpointModel.cron_ddmrp()
 
         expected_result = 0.0
+        self.assertEqual(orderpointA.qualified_demand, expected_result)
+
+    def test_qualified_demand_5(self):
+        """Internal moves within the zone designated by the buffer 
+        should not be considered demand."""
+        method = self.env.ref('ddmrp.adu_calculation_method_fixed')
+        orderpointA = self.orderpointModel.create({
+            'buffer_profile_id': self.buffer_profile_pur.id,
+            'product_id': self.productA.id,
+            'location_id': self.stock_location.id,
+            'warehouse_id': self.warehouse.id,
+            'product_min_qty': 0.0,
+            'product_max_qty': 0.0,
+            'qty_multiple': 0.0,
+            'dlt': 10,
+            'adu_calculation_method': method.id,
+            'adu_fixed': 4,
+            'adu': 4,
+            'order_spike_horizon': 40
+        })
+
+        date_move = datetime.today()
+        expected_result = 0
+        pickingInternal = self.create_pickinginternalA(
+            date_move, expected_result)
+        pickingInternal.action_confirm()
+        self.orderpointModel.cron_ddmrp()
         self.assertEqual(orderpointA.qualified_demand, expected_result)
 
     def _check_red_zone(self, orderpoint, red_base_qty=0.0, red_safety_qty=0.0,
