@@ -13,7 +13,9 @@
     "website": "https://www.odoo-community.org",
     "category": "Warehouse Management",
     "depends": ["ddmrp"],
-    "data": ["views/stock_move_view.xml"],
+    "data": [
+        "views/stock_move_view.xml",
+        "views/stock_location_view.xml"],
     "license": "AGPL-3",
     'installable': True,
     'application': False,
