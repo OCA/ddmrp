@@ -118,7 +118,7 @@ class StockWarehouseOrderpoint(models.Model):
         subtract_qty = self.subtract_procurements_from_orderpoints(self.ids)
         for rec in self:
             procure_recommended_qty = 0.0
-            if rec.net_flow_position < rec.top_of_green:
+            if rec.net_flow_position < rec.top_of_yellow:
                 qty = rec.top_of_green - rec.net_flow_position\
                     - subtract_qty[rec.id]
                 if qty >= 0.0:
