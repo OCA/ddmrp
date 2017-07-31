@@ -592,6 +592,7 @@ class TestDdmrp(common.TransactionCase):
             'adu_calculation_method': method.id,
             'adu_fixed': 4
         })
+
         self.orderpointModel.cron_ddmrp()
         # Now we prepare the shipment of 150
         date_move = datetime.today()
@@ -600,6 +601,7 @@ class TestDdmrp(common.TransactionCase):
         pickingOut.action_assign()
         pickingOut.action_done()
         self.orderpointModel.cron_ddmrp()
+
         expected_value = 40.0
         self.assertEqual(orderpointA.procure_recommended_qty, expected_value)
 
@@ -646,7 +648,7 @@ class TestDdmrp(common.TransactionCase):
         # green_zone_qty = max(green_zone_oc, green_zone_lt_factor,
         # green_zone_moq) = max(0, 20, 0) = 20
         # Top Of Green (TOG) = TOY + green_zone_qty = 50 + 20 = 70
-        expected_value = 10
+        expected_value = 0
         self.assertEqual(orderpointA.procure_recommended_qty, expected_value)
 
         orderpointA.minimum_order_quantity = 40
@@ -663,7 +665,7 @@ class TestDdmrp(common.TransactionCase):
         # green_zone_qty = max(green_zone_oc, green_zone_lt_factor,
         # green_zone_moq) = max(0, 20, 40) = 40
         # Top Of Green (TOG) = TOY + green_zone_qty = 50 + 40 = 90
-        expected_value = 30
+        expected_value = 0
         self.assertEqual(orderpointA.procure_recommended_qty, expected_value)
 
     def test_buffer_zones_all(self):
