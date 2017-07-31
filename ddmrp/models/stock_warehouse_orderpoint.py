@@ -124,7 +124,8 @@ class StockWarehouseOrderpoint(models.Model):
                 if qty >= 0.0:
                     procure_recommended_qty = qty
             else:
-                procure_recommended_qty -= subtract_qty[rec.id]
+                if subtract_qty[rec.id] > 0.0:
+                    procure_recommended_qty -= subtract_qty[rec.id]
             if procure_recommended_qty > 0.0:
                 reste = rec.qty_multiple > 0 and \
                     procure_recommended_qty % rec.qty_multiple or 0.0
