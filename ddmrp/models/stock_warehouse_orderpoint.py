@@ -229,6 +229,9 @@ class StockWarehouseOrderpoint(models.Model):
         compute="_compute_procure_recommended_qty", store=True)
     procure_recommended_date = fields.Date(
         compute="_compute_procure_recommended_date")
+    mrp_production_ids = fields.One2many(
+        string='Manufacturing Orders', comodel_name='mrp.production',
+        inverse_name='orderpoint_id')
 
     _order = 'planning_priority_level asc, net_flow_position asc'
 
@@ -501,6 +504,7 @@ class StockWarehouseOrderpoint(models.Model):
                 op._calc_net_flow_position()
                 op._calc_planning_priority()
                 op._calc_execution_priority()
+                op.mrp_production_ids._compute_execution_priority()
                 if automatic:
                     self.env.cr.commit()
             except Exception:
