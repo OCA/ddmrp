@@ -29,13 +29,13 @@
                            string="On Hand Alert Zones">
                         <filter name="execution_priority_level_red"
                                 string="Red"
-                                domain="[('execution_priority_level', '=', 'red')]"/>
+                                domain="[('execution_priority_level', '=', '1_red')]"/>
                         <filter name="execution_priority_level_yellow"
                                 string="Yellow"
-                                domain="[('execution_priority_level', '=', 'yellow')]"/>
+                                domain="[('execution_priority_level', '=', '2_yellow')]"/>
                         <filter name="execution_priority_level_green"
                                 string="Green"
-                                domain="[('execution_priority_level', '=', 'green')]"/>
+                                domain="[('execution_priority_level', '=', '3_green')]"/>
                     </group>
                 </field>
             </field>
