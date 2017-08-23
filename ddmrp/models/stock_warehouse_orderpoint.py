@@ -490,6 +490,20 @@ class StockWarehouseOrderpoint(models.Model):
             else:
                 rec.on_hand_percent = 0.0
 
+    @api.multi
+    def cron_actions(self):
+        """This method is meant to be inherited by other modules in order to
+        enhance extensibility."""
+        self.ensure_one()
+        self._calc_adu()
+        self._calc_qualified_demand()
+        self._calc_net_flow_position()
+        self._calc_planning_priority()
+        self._calc_execution_priority()
+        self.mrp_production_ids._compute_execution_priority()
+        return True
+
+
     @api.model
     def cron_ddmrp(self, automatic=False):
         """calculate key DDMRP parameters for each orderpoint
@@ -499,12 +513,7 @@ class StockWarehouseOrderpoint(models.Model):
         orderpoints = self.search([])
         for op in orderpoints:
             try:
-                op._calc_adu()
-                op._calc_qualified_demand()
-                op._calc_net_flow_position()
-                op._calc_planning_priority()
-                op._calc_execution_priority()
-                op.mrp_production_ids._compute_execution_priority()
+                op.cron_actions()
                 if automatic:
                     self.env.cr.commit()
             except Exception:
