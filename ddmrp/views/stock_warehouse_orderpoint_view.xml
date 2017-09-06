@@ -97,7 +97,7 @@
                             <field name="order_cycle" class="oe_inline"/> days
                         </div>
                         <field name="minimum_order_quantity"/>
-                        <field name="adu"/>
+                        <field name="adu" widget="gauge"/>
                         <field name="adu_calculation_method"/>
                         <field name="adu_fixed"/>
                         <label for="order_spike_horizon"/>
@@ -105,6 +105,12 @@
                             <field name="order_spike_horizon" class="oe_inline"/> days
                         </div>
                         <field name="order_spike_threshold"/>
+                    </group>
+                    <group name="ddmrp_chart" string="Buffer summary">
+                        <div colspan="2">
+                        <field name="ddmrp_chart" widget="bokeh_chart"
+                               nolabel="1"/>
+                        </div>
                     </group>
                     <group name="buffer_zones_summary" string="Buffer zones">
                         <field name="top_of_green"/>
@@ -160,6 +166,12 @@
                         <field name="red_zone_qty"/>
                     </group>
                 </xpath>
+                <sheet position="inside">
+                    <notebook>
+                        <page name="chart">
+                        </page>
+                    </notebook>
+                </sheet>
             </field>
         </record>
 
@@ -214,6 +226,52 @@
           </field>
         </record>
 
+
+        <!--<record id="view_ddmrp_stock_buffer_planning_kanban" model="ir.ui.view">-->
+            <!--<field name="name">stock.warehouse.orderpoint.kanban</field>-->
+            <!--<field name="model">stock.warehouse.orderpoint</field>-->
+            <!--<field name="arch" type="xml">-->
+                 <!--<kanban class="oe_background_grey">-->
+                     <!--<field name="adu"/>-->
+                     <!--<field name="name"/>-->
+                     <!--<templates>-->
+                            <!--<t t-name="kanban-box">-->
+                                <!--<div>-->
+                                    <!--<div class="o_kanban_card_header">-->
+                                        <!--<div class="o_kanban_card_header_title">-->
+                                            <!--<div class="o_primary"><field name="name"/></div>-->
+                                        <!--</div>-->
+                                        <!--<div class="o_kanban_manage_button_section">-->
+                                            <!--<a class="o_kanban_manage_toggle_button" href="#">More <i class="fa fa-caret-down"/></a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="container o_kanban_card_content o_visible">-->
+                                        <!--<div class="row">-->
+                                            <!--<div class="o_kanban_attachment_image">-->
+                                                <!--<field name="ddmrp_chart" widget="ddmrp"/>-->
+                                            <!--</div>-->
+
+                                        <!--</div>-->
+                                    <!--</div>-->
+
+                                    <!--<div class="container o_kanban_card_manage_pane o_invisible">-->
+                                        <!--<div class="row">-->
+                                        <!--</div>-->
+                                        <!--<div t-if="widget.editable" class="o_kanban_card_manage_settings row">-->
+                                            <!--<div class="col-xs-8">-->
+                                                <!--<ul class="oe_kanban_colorpicker" data-field="color"/>-->
+                                            <!--</div>-->
+                                            <!--<div class="col-xs-4 text-right">-->
+                                                <!--<a type="edit">Settings</a>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</t>-->
+                     <!--</templates>-->
+                 <!--</kanban>-->
+            <!--</field>-->
+        <!--</record>-->
         <record model="ir.actions.act_window"
                 id="action_ddmrp_stock_buffer_planning">
             <field name="name">Stock Buffer Planning</field>
