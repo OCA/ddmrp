@@ -7,7 +7,7 @@
 {
     "name": "DDMRP",
     "summary": "Demand-driven MRP",
-    "version": "9.0.2.0.0",
+    "version": "9.0.2.1.0",
     "author": "Eficent,"
               "Aleph Objects, Inc.,"
               "Odoo Community Association (OCA)",
