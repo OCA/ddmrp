@@ -166,6 +166,11 @@
                         <field name="red_zone_qty"/>
                     </group>
                 </xpath>
+                <sheet position="inside">
+                    <notebook>
+                        <!--Meant to be inherited by other modules.-->
+                    </notebook>
+                </sheet>
             </field>
         </record>
 
