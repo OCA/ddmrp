@@ -10,6 +10,11 @@ from openerp.addons import decimal_precision as dp
 from openerp.tools import float_compare, float_round
 import operator as py_operator
 import logging
+from bokeh.plotting import figure
+from bokeh.embed import components
+from bokeh.models import Legend
+from bokeh.models import ColumnDataSource, LabelSet
+
 
 _logger = logging.getLogger(__name__)
 
@@ -151,6 +156,58 @@ class StockWarehouseOrderpoint(models.Model):
 
             rec.procure_recommended_qty = product_qty
 
+    def _compute_ddmrp_chart(self):
+
+        for rec in self:
+            p = figure(plot_width=300, plot_height=400,
+                       y_axis_label='Quantity')
+
+            p.xaxis.visible = False
+
+            red = p.vbar(x=1, bottom=0, top=rec.top_of_red, width=1,
+                         color='red', legend=False)
+            yellow = p.vbar(x=1, bottom=rec.top_of_red, top=rec.top_of_yellow,
+                            width=1, color='yellow', legend=False)
+            green = p.vbar(x=1, bottom=rec.top_of_yellow, top=rec.top_of_green,
+                           width=1, color='green', legend=False)
+            nflow = p.line([0, 2], [rec.net_flow_position,
+                                      rec.net_flow_position], line_width=2)
+            onhand = p.line([0, 2], [rec.product_location_qty,
+                                       rec.product_location_qty],
+                            line_width=2, line_dash='dotted')
+
+            legend = Legend(items=[
+                ("Red zone", [red]),
+                ("Yellow zone", [yellow]),
+                ("Green zone", [green]),
+                ("Net Flow Position", [nflow]),
+                ("On-Hand Position", [onhand]),
+            ])
+            source = ColumnDataSource(
+                data=dict(height=[rec.net_flow_position,
+                                  rec.product_location_qty,
+                                  rec.top_of_red,
+                                  rec.top_of_yellow,
+                                  rec.top_of_green],
+                          weight=[0.25, 1.75, 1, 1, 1],
+                          names=[rec.net_flow_position,
+                                 rec.product_location_qty,
+                                 rec.top_of_red,
+                                 rec.top_of_yellow,
+                                 rec.top_of_green]))
+            labels = LabelSet(x="weight", y="height", text="names",
+                              y_offset=1, render_mode='canvas',
+                              text_font_size="8pt",
+                              source=source, text_align='center')
+            p.add_layout(labels)
+            p.add_layout(legend, 'below')
+
+            script, div = components(p)
+
+            res = '%s%s' % (div, script)
+
+            rec.ddmrp_chart = res
+
     @api.multi
     @api.depends("red_zone_qty")
     def _compute_order_spike_threshold(self):
@@ -232,6 +289,8 @@ class StockWarehouseOrderpoint(models.Model):
     mrp_production_ids = fields.One2many(
         string='Manufacturing Orders', comodel_name='mrp.production',
         inverse_name='orderpoint_id')
+    ddmrp_chart = fields.Text(string='DDMRP Chart',
+                              compute=_compute_ddmrp_chart)
 
     _order = 'planning_priority_level asc, net_flow_position asc'
 
