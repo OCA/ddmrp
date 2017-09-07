@@ -106,6 +106,12 @@
                         </div>
                         <field name="order_spike_threshold"/>
                     </group>
+                    <group name="ddmrp_chart" string="Buffer summary">
+                        <div colspan="2">
+                        <field name="ddmrp_chart" widget="bokeh_chart"
+                               nolabel="1"/>
+                        </div>
+                    </group>
                     <group name="buffer_zones_summary" string="Buffer zones">
                         <field name="top_of_green"/>
                         <field name="top_of_yellow"/>
