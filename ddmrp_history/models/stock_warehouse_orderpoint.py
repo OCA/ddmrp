@@ -3,17 +3,22 @@
 #   (http://www.eficent.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import logging
+from math import pi
+
 from openerp import api, fields, models, _
 from datetime import datetime
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
-import numpy as np
-from math import pi
-import pandas as pd
-
-from bokeh.plotting import figure
-from bokeh.models import HoverTool, DatetimeTickFormatter
-from bokeh.embed import components
+_logger = logging.getLogger(__name__)
+try:
+    import numpy as np
+    import pandas as pd
+    from bokeh.plotting import figure
+    from bokeh.embed import components
+    from bokeh.models import HoverTool, DatetimeTickFormatter
+except (ImportError, IOError) as err:
+    _logger.debug(err)
 
 
 class StockWarehouseOrderpoint(models.Model):
