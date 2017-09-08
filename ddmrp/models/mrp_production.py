@@ -26,7 +26,7 @@ class MrpProduction(models.Model):
         return procurement, orderpoint
 
     @api.multi
-    @api.depends('move_prod_id')
+    @api.depends('move_prod_id', 'procurement_ids')
     def _compute_orderpoint_id(self):
         for rec in self:
             domain = rec._search_procurements()
@@ -49,7 +49,7 @@ class MrpProduction(models.Model):
                             break
 
     @api.multi
-    @api.depends("orderpoint_id")
+    @api.depends('orderpoint_id', 'procurement_ids', 'move_prod_id')
     def _compute_execution_priority(self):
         for rec in self.filtered(lambda r: r.orderpoint_id):
             if rec.state in ['done', 'cancel']:
@@ -87,6 +87,10 @@ class MrpProduction(models.Model):
     orderpoint_id = fields.Many2one(
         comodel_name='stock.warehouse.orderpoint', store=True, index=True,
         string="Reordering rule", compute='_compute_orderpoint_id')
+    procurement_ids = fields.One2many(comodel_name='procurement.order',
+                                      inverse_name='production_id',
+                                      string='Procurements')
+
     execution_priority_level = fields.Selection(
         string="Buffer On-Hand Alert Level",
         selection=_PRIORITY_LEVEL,
