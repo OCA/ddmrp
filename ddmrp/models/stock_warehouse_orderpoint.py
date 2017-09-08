@@ -4,18 +4,21 @@
 # © 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import logging
+
 from openerp import api, fields, models
 from datetime import timedelta
 from openerp.addons import decimal_precision as dp
 from openerp.tools import float_compare, float_round
 import operator as py_operator
-import logging
-from bokeh.plotting import figure
-from bokeh.embed import components
-from bokeh.models import Legend, ColumnDataSource, LabelSet
-
 
 _logger = logging.getLogger(__name__)
+try:
+    from bokeh.plotting import figure
+    from bokeh.embed import components
+    from bokeh.models import Legend, ColumnDataSource, LabelSet
+except (ImportError, IOError) as err:
+    _logger.debug(err)
 
 
 OPERATORS = {
