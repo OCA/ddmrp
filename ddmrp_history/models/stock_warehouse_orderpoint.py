@@ -57,8 +57,8 @@ class StockWarehouseOrderpoint(models.Model):
         for rec in self:
             history = self.env['ddmrp.history'].search([
                 ('orderpoint_id', '=', rec.id)], order='date')
-            if not history:
-                rec.history_chart = _("No data available")
+            if len(history) < 2:
+                rec.history_chart = _("Not enough data available.")
                 continue
 
             N = len(history)
