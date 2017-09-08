@@ -9,7 +9,7 @@ class MrpProduction(models.Model):
     _inherit = 'mrp.production'
 
     @api.multi
-    @api.depends('move_prod_id')
+    @api.depends('move_prod_id', 'mrp_production_request_id')
     def _compute_orderpoint_id(self):
         from_request = self.filtered(lambda mo: mo.mrp_production_request_id)
         super(MrpProduction, self - from_request)._compute_orderpoint_id()
