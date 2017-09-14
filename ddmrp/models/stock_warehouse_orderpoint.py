@@ -278,7 +278,7 @@ class StockWarehouseOrderpoint(models.Model):
     execution_priority_level = fields.Selection(
         string="On-Hand Alert Level",
         selection=_PRIORITY_LEVEL, store=True, readonly=True)
-    on_hand_percent = fields.Float(string="On Hand/TOG (%)",
+    on_hand_percent = fields.Float(string="On Hand/TOR (%)",
                                    store=True, readonly=True)
     # We override the calculation method for the procure recommended qty
     procure_recommended_qty = fields.Float(
@@ -541,10 +541,10 @@ class StockWarehouseOrderpoint(models.Model):
                 rec.execution_priority_level = '2_yellow'
             else:
                 rec.execution_priority_level = '1_red'
-            if rec.top_of_green:
+            if rec.top_of_red:
                 rec.on_hand_percent = round((
                     (rec.product_location_qty_available_not_res /
-                     rec.top_of_green)*100), 2)
+                     rec.top_of_red)*100), 2)
             else:
                 rec.on_hand_percent = 0.0
 
