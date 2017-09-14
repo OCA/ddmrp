@@ -84,6 +84,15 @@
             <field name="inherit_id"
                    ref="stock.view_warehouse_orderpoint_form"/>
             <field name="arch" type="xml">
+                <button name="%(stock.do_view_procurement_op)d"
+                        position="after">
+                    <button string="Refresh Buffer" name="cron_actions" class="oe_stat_button"
+							icon="fa-refresh" type="object"/>
+                </button>
+                <button name="%(stock.do_view_procurement_op)d"
+                        position="attributes">
+                    <attribute name="icon">fa-cogs</attribute>
+                </button>
                 <xpath expr="//group[1]" position="inside">
                     <group name="buffer_size_factors"
                            string="Buffer size factors">
@@ -200,10 +209,13 @@
                     <field name="on_hand_percent"
                            bg_color="red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'"
                            fg_color="white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'"/>
+                    <button string="Refresh Buffer"
+							name="cron_actions"
+							icon="fa-refresh" type="object"/>
+                    <field name="incoming_location_qty" string="Incoming"/>
                     <button string="Open Non-completed Moves"
 							name="open_moves"
 							icon="gtk-open" type="object"/>
-                    <field name="incoming_location_qty" string="Incoming"/>
                     <field name="qualified_demand"/>
                     <field name="net_flow_position"/>
                     <field name="procure_recommended_qty"/>
