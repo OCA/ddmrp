@@ -548,19 +548,42 @@ class StockWarehouseOrderpoint(models.Model):
             else:
                 rec.on_hand_percent = 0.0
 
+    @api.model
+    def cron_ddmrp_adu(self, automatic=False):
+        """calculate ADU for each DDMRP buffer. Called by cronjob.
+        """
+        _logger.info("Start cron_ddmrp_adu.")
+        orderpoints = self.search([])
+        i = 0
+        j = len(orderpoints)
+        for op in orderpoints:
+            try:
+                i += 1
+                _logger.debug("ddmrp cron_adu: %s. (%s/%s)" % (op.name, i, j))
+                op._calc_adu()
+                if automatic:
+                    self.env.cr.commit()
+            except Exception:
+                if automatic:
+                    self.env.cr.rollback()
+                    _logger.exception(
+                        'Fail to compute ADU for orderpoint %s', op.name)
+                else:
+                    raise
+        _logger.info("End cron_ddmrp_adu.")
+        return True
+
     @api.multi
     def cron_actions(self):
         """This method is meant to be inherited by other modules in order to
         enhance extensibility."""
         self.ensure_one()
-        self._calc_adu()
         self._calc_qualified_demand()
         self._calc_net_flow_position()
         self._calc_planning_priority()
         self._calc_execution_priority()
         self.mrp_production_ids._compute_execution_priority()
         return True
-
 
     @api.model
     def cron_ddmrp(self, automatic=False):
@@ -569,7 +592,11 @@ class StockWarehouseOrderpoint(models.Model):
         """
         _logger.info("Start cron_ddmrp.")
         orderpoints = self.search([])
+        i = 0
+        j = len(orderpoints)
         for op in orderpoints:
+            i += 1
+            _logger.debug("ddmrp cron: %s. (%s/%s)" % (op.name, i, j))
             try:
                 op.cron_actions()
                 if automatic:
