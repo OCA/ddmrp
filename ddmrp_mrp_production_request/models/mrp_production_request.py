@@ -14,10 +14,6 @@ _PRIORITY_LEVEL = [
 class MrpProductionRequest(models.Model):
     _inherit = "mrp.production.request"
 
-    def _search_procurements(self):
-        self.ensure_one()
-        return [('mrp_production_request_id', '=', self.id)]
-
     def _search_orderpoints(self):
         self.ensure_one()
         return [('name', '=', self.move_prod_id.origin)]
@@ -32,23 +28,20 @@ class MrpProductionRequest(models.Model):
     @api.depends('procurement_id')
     def _compute_orderpoint_id(self):
         for rec in self:
-            domain = rec._search_procurements()
-            procurements = rec.env['procurement.order'].search(domain)
-            orderpoints = procurements.mapped('orderpoint_id')
-            if orderpoints:
-                rec.orderpoint_id = orderpoints[0]
+            orderpoint = rec.procurement_id.orderpoint_id
+            if orderpoint:
+                rec.orderpoint_id = orderpoint
             else:
-                for procurement in procurements:
-                    orderpoint = False
-                    originating_procurement = procurement
-                    while not orderpoint:
-                        originating_procurement, orderpoint = \
-                            self._find_orderpoint_from_procurement(
-                                originating_procurement)
-                        if orderpoint:
-                            rec.orderpoint_id = orderpoint
-                        if not originating_procurement:
-                            break
+                orderpoint = False
+                originating_procurement = rec.procurement_id
+                while not orderpoint:
+                    originating_procurement, orderpoint = \
+                        self._find_orderpoint_from_procurement(
+                            originating_procurement)
+                    if orderpoint:
+                        rec.orderpoint_id = orderpoint
+                    if not originating_procurement:
+                        break
 
     @api.multi
     @api.depends("orderpoint_id")
