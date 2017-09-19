@@ -41,7 +41,7 @@ class StockWarehouseOrderpoint(models.Model):
     def cron_actions(self):
         res = super(StockWarehouseOrderpoint, self).cron_actions()
         data = self._prepare_history_data()
-        self.env['ddmrp.history'].create(data)
+        self.env['ddmrp.history'].sudo().create(data)
         return res
 
     def _compute_history_chart(self):
