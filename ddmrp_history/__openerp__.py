@@ -16,6 +16,9 @@
         "views/ddmrp_history_view.xml",
         "views/stock_warehouse_orderpoint_view.xml",
     ],
+    "demo": [
+        'demo/ddmrp.history.csv',
+    ],
     "license": "AGPL-3",
     'installable': True,
 }
