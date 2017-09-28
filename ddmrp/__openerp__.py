@@ -38,6 +38,12 @@
              "views/mrp_production_view.xml",
              "data/ir_cron.xml"
              ],
+    "demo": [
+        "demo/ddmrp_product_category_demo.xml",
+        "demo/ddmrp_product_product_demo.xml",
+        "demo/ddmrp_mrp_bom_demo.xml",
+        "demo/ddmrp_stock_warehouse_orderpoint_demo.xml",
+    ],
     "license": "AGPL-3",
     'installable': True,
     'application': True,
