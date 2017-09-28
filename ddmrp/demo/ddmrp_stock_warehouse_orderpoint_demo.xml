@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="stock_warehouse_orderpoint_fpa"
+                model="stock.warehouse.orderpoint">
+            <field name="product_id" ref="product_product_fpa"/>
+            <field name="buffer_profile_id" ref="stock_buffer_profile_replenish_manufactured_short_low"/>
+            <field name="adu_calculation_method" ref="adu_calculation_method_fixed"/>
+            <field name="adu_fixed">10</field>
+            <field name="order_spike_horizon">10</field>
+            <field name="product_min_qty">0</field>
+            <field name="product_max_qty">0</field>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <record id="stock_warehouse_orderpoint_302p"
+                model="stock.warehouse.orderpoint">
+            <field name="product_id" ref="product_product_302p"/>
+            <field name="buffer_profile_id" ref="stock_buffer_profile_replenish_purchased_short_low"/>
+            <field name="adu_calculation_method" ref="adu_calculation_method_fixed"/>
+            <field name="adu_fixed">10</field>
+            <field name="order_spike_horizon">10</field>
+            <field name="product_min_qty">0</field>
+            <field name="product_max_qty">0</field>
+            <field name="lead_days">12</field>
+            <field name="lead_type">supplier</field>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <record id="stock_warehouse_orderpoint_402p"
+                model="stock.warehouse.orderpoint">
+            <field name="product_id" ref="product_product_402p"/>
+            <field name="buffer_profile_id" ref="stock_buffer_profile_replenish_purchased_short_low"/>
+            <field name="adu_calculation_method" ref="adu_calculation_method_fixed"/>
+            <field name="adu_fixed">10</field>
+            <field name="order_spike_horizon">10</field>
+            <field name="product_min_qty">0</field>
+            <field name="product_max_qty">0</field>
+            <field name="lead_days">30</field>
+            <field name="lead_type">supplier</field>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <record id="stock_warehouse_orderpoint_403p"
+                model="stock.warehouse.orderpoint">
+            <field name="product_id" ref="product_product_403p"/>
+            <field name="buffer_profile_id" ref="stock_buffer_profile_replenish_purchased_short_low"/>
+            <field name="adu_calculation_method" ref="adu_calculation_method_fixed"/>
+            <field name="adu_fixed">10</field>
+            <field name="order_spike_horizon">10</field>
+            <field name="product_min_qty">0</field>
+            <field name="product_max_qty">0</field>
+            <field name="lead_days">30</field>
+            <field name="lead_type">supplier</field>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <record id="stock_warehouse_orderpoint_410p"
+                model="stock.warehouse.orderpoint">
+            <field name="product_id" ref="product_product_410p"/>
+            <field name="buffer_profile_id" ref="stock_buffer_profile_replenish_purchased_short_low"/>
+            <field name="adu_calculation_method" ref="adu_calculation_method_fixed"/>
+            <field name="adu_fixed">10</field>
+            <field name="order_spike_horizon">10</field>
+            <field name="product_min_qty">0</field>
+            <field name="product_max_qty">0</field>
+            <field name="lead_days">30</field>
+            <field name="lead_type">supplier</field>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <record id="stock_warehouse_orderpoint_411p"
+                model="stock.warehouse.orderpoint">
+            <field name="product_id" ref="product_product_411p"/>
+            <field name="buffer_profile_id" ref="stock_buffer_profile_replenish_purchased_short_low"/>
+            <field name="adu_calculation_method" ref="adu_calculation_method_fixed"/>
+            <field name="adu_fixed">10</field>
+            <field name="order_spike_horizon">10</field>
+            <field name="product_min_qty">0</field>
+            <field name="product_max_qty">0</field>
+            <field name="lead_days">30</field>
+            <field name="lead_type">supplier</field>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <record id="stock_warehouse_orderpoint_404p"
+                model="stock.warehouse.orderpoint">
+            <field name="product_id" ref="product_product_404p"/>
+            <field name="buffer_profile_id" ref="stock_buffer_profile_replenish_purchased_short_low"/>
+            <field name="adu_calculation_method" ref="adu_calculation_method_fixed"/>
+            <field name="adu_fixed">10</field>
+            <field name="order_spike_horizon">10</field>
+            <field name="product_min_qty">0</field>
+            <field name="product_max_qty">0</field>
+            <field name="lead_days">90</field>
+            <field name="lead_type">supplier</field>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <record id="stock_warehouse_orderpoint_305p"
+                model="stock.warehouse.orderpoint">
+            <field name="product_id" ref="product_product_305p"/>
+            <field name="buffer_profile_id" ref="stock_buffer_profile_replenish_purchased_short_low"/>
+            <field name="adu_calculation_method" ref="adu_calculation_method_fixed"/>
+            <field name="adu_fixed">10</field>
+            <field name="order_spike_horizon">10</field>
+            <field name="product_min_qty">0</field>
+            <field name="product_max_qty">0</field>
+            <field name="lead_days">30</field>
+            <field name="lead_type">supplier</field>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <record id="stock_warehouse_orderpoint_901p"
+                model="stock.warehouse.orderpoint">
+            <field name="product_id" ref="product_product_901p"/>
+            <field name="buffer_profile_id" ref="stock_buffer_profile_replenish_purchased_short_low"/>
+            <field name="adu_calculation_method" ref="adu_calculation_method_fixed"/>
+            <field name="adu_fixed">10</field>
+            <field name="order_spike_horizon">10</field>
+            <field name="product_min_qty">0</field>
+            <field name="product_max_qty">0</field>
+            <field name="lead_days">30</field>
+            <field name="lead_type">supplier</field>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+    </data>
+</odoo>
