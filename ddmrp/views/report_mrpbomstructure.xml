@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_mrpbomstructure_ddmrp"
+              inherit_id="mrp_bom_location.report_mrpbomstructure_location">
+
+        <xpath expr="//span[@t-field='o.display_name']" position="after">
+            <span t-if="o.buffered">
+                <img src='/ddmrp/static/description/icon.png'
+                     style="width:30px;height:30px;padding:5px"/>
+            </span>
+        </xpath>
+
+        <xpath expr="//td[@style='padding-left: 20px;']" position="inside">
+            <span t-if="l['buffered']">
+                <img src='/ddmrp/static/description/icon.png'
+                     style="width:30px;height:30px;padding:5px"/>
+            </span>
+        </xpath>
+
+        <xpath expr="//thead/tr" position="inside">
+            <th>LT</th>
+            <th>DLT</th>
+        </xpath>
+
+        <xpath expr="//tbody/t/tr[1]" position="inside">
+            <td>
+                <span t-if="o.orderpoint_id.buffer_profile_id.item_type in ['purchased', 'distributed']"
+                      t-field="o.orderpoint_id.lead_days"/>
+                <span t-if="o.orderpoint_id.buffer_profile_id.item_type == 'manufactured'"
+                      t-field="o.orderpoint_id.product_id.produce_delay"/>
+            </td>
+            <td>
+                <span t-if="o.orderpoint_id"
+                      t-field="o.orderpoint_id.dlt"/>
+            </td>
+        </xpath>
+
+        <xpath expr="//tbody/t/tr[2]" position="inside">
+            <td>
+                <span t-esc="l['lead_time']"/>
+            </td>
+            <td>
+                <span t-esc="l['dlt']"/>
+            </td>
+        </xpath>
+
+    </template>
+</odoo>
