@@ -20,14 +20,11 @@ class bom_structure(report_sxw.rml_parse):
         def _get_rec(object, level, qty=1.0):
             for l in object:
                 res = {}
-                lead_time = 0.0
-                if l.orderpoint_id:
-                    if l.orderpoint_id.buffer_profile_id.item_type in [
-                            'purchased', 'distributed']:
-                        lead_time = l.orderpoint_id.lead_days
-                    elif l.orderpoint_id.buffer_profile_id.item_type == \
-                            'manufactured':
-                        lead_time = l.orderpoint_id.product_id.produce_delay
+                if l.product_id.bom_ids:
+                    lead_time = l.product_id.produce_delay
+                else:
+                    lead_time = l.product_id.seller_ids and \
+                                l.product_id.seller_ids[0].delay or 0.0
 
                 res['pname'] = l.product_id.name_get()[0][1]
                 res['pcode'] = l.product_id.default_code
@@ -38,7 +35,7 @@ class bom_structure(report_sxw.rml_parse):
                 res['location_name'] = l.location_id.complete_name or ''
                 res['buffered'] = l.buffered
                 res['lead_time'] = lead_time or ''
-                res['dlt'] = l.orderpoint_id.dlt or ''
+                res['dlt'] = l.dlt
                 result.append(res)
                 if l.child_line_ids:
                     if level<6:

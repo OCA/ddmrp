@@ -214,61 +214,23 @@ class StockWarehouseOrderpoint(models.Model):
         for rec in self:
             rec.order_spike_threshold = 0.5 * rec.red_zone_qty
 
-    def _get_manufactured_dlt(self):
-        """Computes the Decoupled Lead Time exploding all the branches of the
-        BOM until a buffered position and then selecting the greatest."""
-        init_bom = self.env['mrp.bom'].search([
-            '|',
-            ('product_id', '=', self.product_id.id),
-            ('product_tmpl_id', '=', self.product_id.product_tmpl_id.id),
-            '|',
-            ('location_id', '=', self.location_id.id),
-            ('location_id', '=', False)], limit=1)
-        dlt = self.product_id.produce_delay
-
-        def get_longest_path(bom):
-            paths = [0] * len(bom.bom_line_ids)
-            i = 0
-            for line in bom.bom_line_ids:
-                if line.buffered:
-                    i += 1
-                elif line.product_id.bom_ids:
-                    # If the a component is manufactured we continue exploding.
-                    location = line.location_id
-                    line_boms = line.product_id.bom_ids
-                    bom = line_boms.filtered(
-                        lambda bom: bom.location_id == location) or \
-                          line_boms.filtered(lambda bom: not bom.location_id)
-                    if bom:
-                        produce_delay = bom[0].product_id.produce_delay or \
-                                        bom[0].product_tmpl_id.produce_delay
-                        paths[i] += produce_delay
-                        paths[i] += get_longest_path(bom[0])
-                    else:
-                        _logger.info(
-                            "ddmrp (dlt): Product %s has no BOM for location "
-                            "%s." % (line.product_id.name, location.name))
-                    i += 1
-                else:
-                    # assuming they are purchased, TODO: maybe distributed?
-                    if line.product_id.seller_ids:
-                        paths[i] = line.product_id.seller_ids[0].delay
-                    else:
-                        _logger.info(
-                            "ddmrp (dlt): Product %s has no seller set." %
-                            line.product_id.name)
-                    i += 1
-            return max(paths)
-
-        dlt += get_longest_path(init_bom)
-        return dlt
+    def _get_manufactured_bom(self):
+        return self.env['mrp.bom'].search(
+            ['|',
+             ('product_id', '=', self.product_id.id),
+             ('product_tmpl_id', '=', self.product_id.product_tmpl_id.id),
+             '|',
+             ('location_id', '=', self.location_id.id),
+             ('location_id', '=', False)], limit=1)
 
     def _compute_dlt(self):
         for rec in self:
             if rec.buffer_profile_id.item_type == 'manufactured':
-                rec.dlt = rec._get_manufactured_dlt()
+                bom = rec._get_manufactured_bom()
+                rec.dlt = bom.dlt
             else:
-                rec.dlt = rec.lead_days
+                rec.dlt = rec.product_id.seller_ids and \
+                          rec.product_id.seller_ids[0].delay or rec.lead_days
 
     buffer_profile_id = fields.Many2one(
         comodel_name='stock.buffer.profile',
