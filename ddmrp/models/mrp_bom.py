@@ -20,13 +20,18 @@ class MrpBom(models.Model):
     def _compute_buffered(self):
         for bom in self:
             domain = bom._get_search_buffer_domain()
-            buffer = self.env['stock.warehouse.orderpoint'].search(
+            orderpoint = self.env['stock.warehouse.orderpoint'].search(
                 domain, limit=1)
-            bom.buffered = True if buffer else False
+            bom.orderpoint_id = orderpoint
+            bom.buffered = True if orderpoint else False
 
     buffered = fields.Boolean(
         string="Buffered?", compute="_compute_buffered",
         help="True when the product has an DDMRP buffer associated.")
+
+    orderpoint_id = fields.Many2one(
+        comodel_name='stock.warehouse.orderpoint', string='Orderpoint',
+        compute="_compute_buffered")
 
 
 class MrpBom(models.Model):
@@ -44,10 +49,15 @@ class MrpBom(models.Model):
     def _compute_buffered(self):
         for line in self:
             domain = line._get_search_buffer_domain()
-            buffer = self.env['stock.warehouse.orderpoint'].search(
+            orderpoint = self.env['stock.warehouse.orderpoint'].search(
                 domain, limit=1)
-            line.buffered = True if buffer else False
+            line.orderpoint_id = orderpoint
+            line.buffered = True if orderpoint else False
 
     buffered = fields.Boolean(
         string="Buffered?", compute="_compute_buffered",
         help="True when the product has an DDMRP buffer associated.")
+
+    orderpoint_id = fields.Many2one(
+        comodel_name='stock.warehouse.orderpoint', string='Orderpoint',
+        compute="_compute_buffered")
