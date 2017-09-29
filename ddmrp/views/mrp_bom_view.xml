@@ -11,10 +11,12 @@
             <label for="routing_id" position="before">
                 <field name="buffered"/>
                 <field name="orderpoint_id"/>
+                <field name="dlt"/>
             </label>
             <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_rounding']" position="before">
                 <field name="buffered"/>
                 <field name="orderpoint_id"/>
+                <field name="dlt"/>
             </xpath>
         </field>
     </record>
