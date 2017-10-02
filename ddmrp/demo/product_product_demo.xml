@@ -206,7 +206,7 @@
         </record>
 
         <record id="product_product_901p" model="product.product">
-            <field name="name">901</field>
+            <field name="name">901P</field>
             <field name="categ_id" ref="product_category_ddmrp"/>
             <field name="type">product</field>
             <field name="uom_id" ref="product.product_uom_unit"/>

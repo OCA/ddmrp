@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="product_supplierinfo_302p" model="product.supplierinfo">
+            <field name="product_tmpl_id" ref="product_product_302p_product_template"/>
+            <field name="name" ref="res_partner_eficent"/>
+            <field name="delay">12</field>
+            <field name="min_qty">0</field>
+            <field name="price">100</field>
+        </record>
+
+        <record id="product_supplierinfo_305p" model="product.supplierinfo">
+            <field name="product_tmpl_id" ref="product_product_305p_product_template"/>
+            <field name="name" ref="res_partner_eficent"/>
+            <field name="delay">30</field>
+            <field name="min_qty">0</field>
+            <field name="price">100</field>
+        </record>
+
+        <record id="product_supplierinfo_401p" model="product.supplierinfo">
+            <field name="product_tmpl_id" ref="product_product_401p_product_template"/>
+            <field name="name" ref="res_partner_eficent"/>
+            <field name="delay">10</field>
+            <field name="min_qty">0</field>
+            <field name="price">100</field>
+        </record>
+
+        <record id="product_supplierinfo_402p" model="product.supplierinfo">
+            <field name="product_tmpl_id" ref="product_product_402p_product_template"/>
+            <field name="name" ref="res_partner_eficent"/>
+            <field name="delay">30</field>
+            <field name="min_qty">0</field>
+            <field name="price">100</field>
+        </record>
+
+        <record id="product_supplierinfo_403p" model="product.supplierinfo">
+            <field name="product_tmpl_id" ref="product_product_403p_product_template"/>
+            <field name="name" ref="res_partner_eficent"/>
+            <field name="delay">30</field>
+            <field name="min_qty">0</field>
+            <field name="price">100</field>
+        </record>
+
+        <record id="product_supplierinfo_404p" model="product.supplierinfo">
+            <field name="product_tmpl_id" ref="product_product_404p_product_template"/>
+            <field name="name" ref="res_partner_eficent"/>
+            <field name="delay">90</field>
+            <field name="min_qty">0</field>
+            <field name="price">100</field>
+        </record>
+
+        <record id="product_supplierinfo_410p" model="product.supplierinfo">
+            <field name="product_tmpl_id" ref="product_product_410p_product_template"/>
+            <field name="name" ref="res_partner_eficent"/>
+            <field name="delay">30</field>
+            <field name="min_qty">0</field>
+            <field name="price">100</field>
+        </record>
+
+        <record id="product_supplierinfo_411p" model="product.supplierinfo">
+            <field name="product_tmpl_id" ref="product_product_411p_product_template"/>
+            <field name="name" ref="res_partner_eficent"/>
+            <field name="delay">30</field>
+            <field name="min_qty">0</field>
+            <field name="price">100</field>
+        </record>
+
+        <record id="product_supplierinfo_901p" model="product.supplierinfo">
+            <field name="product_tmpl_id" ref="product_product_901p_product_template"/>
+            <field name="name" ref="res_partner_eficent"/>
+            <field name="delay">10</field>
+            <field name="min_qty">0</field>
+            <field name="price">100</field>
+        </record>
+
+    </data>
+
+</odoo>

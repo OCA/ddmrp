@@ -24,8 +24,6 @@
             <field name="order_spike_horizon">10</field>
             <field name="product_min_qty">0</field>
             <field name="product_max_qty">0</field>
-            <field name="lead_days">12</field>
-            <field name="lead_type">supplier</field>
             <field name="warehouse_id" ref="stock.warehouse0"/>
             <field name="location_id" ref="stock.stock_location_stock"/>
         </record>
@@ -39,8 +37,6 @@
             <field name="order_spike_horizon">10</field>
             <field name="product_min_qty">0</field>
             <field name="product_max_qty">0</field>
-            <field name="lead_days">30</field>
-            <field name="lead_type">supplier</field>
             <field name="warehouse_id" ref="stock.warehouse0"/>
             <field name="location_id" ref="stock.stock_location_stock"/>
         </record>
@@ -54,8 +50,6 @@
             <field name="order_spike_horizon">10</field>
             <field name="product_min_qty">0</field>
             <field name="product_max_qty">0</field>
-            <field name="lead_days">30</field>
-            <field name="lead_type">supplier</field>
             <field name="warehouse_id" ref="stock.warehouse0"/>
             <field name="location_id" ref="stock.stock_location_stock"/>
         </record>
@@ -69,8 +63,6 @@
             <field name="order_spike_horizon">10</field>
             <field name="product_min_qty">0</field>
             <field name="product_max_qty">0</field>
-            <field name="lead_days">30</field>
-            <field name="lead_type">supplier</field>
             <field name="warehouse_id" ref="stock.warehouse0"/>
             <field name="location_id" ref="stock.stock_location_stock"/>
         </record>
@@ -84,8 +76,6 @@
             <field name="order_spike_horizon">10</field>
             <field name="product_min_qty">0</field>
             <field name="product_max_qty">0</field>
-            <field name="lead_days">30</field>
-            <field name="lead_type">supplier</field>
             <field name="warehouse_id" ref="stock.warehouse0"/>
             <field name="location_id" ref="stock.stock_location_stock"/>
         </record>
@@ -99,8 +89,6 @@
             <field name="order_spike_horizon">10</field>
             <field name="product_min_qty">0</field>
             <field name="product_max_qty">0</field>
-            <field name="lead_days">90</field>
-            <field name="lead_type">supplier</field>
             <field name="warehouse_id" ref="stock.warehouse0"/>
             <field name="location_id" ref="stock.stock_location_stock"/>
         </record>
@@ -114,8 +102,6 @@
             <field name="order_spike_horizon">10</field>
             <field name="product_min_qty">0</field>
             <field name="product_max_qty">0</field>
-            <field name="lead_days">30</field>
-            <field name="lead_type">supplier</field>
             <field name="warehouse_id" ref="stock.warehouse0"/>
             <field name="location_id" ref="stock.stock_location_stock"/>
         </record>
@@ -129,8 +115,6 @@
             <field name="order_spike_horizon">10</field>
             <field name="product_min_qty">0</field>
             <field name="product_max_qty">0</field>
-            <field name="lead_days">30</field>
-            <field name="lead_type">supplier</field>
             <field name="warehouse_id" ref="stock.warehouse0"/>
             <field name="location_id" ref="stock.stock_location_stock"/>
         </record>
