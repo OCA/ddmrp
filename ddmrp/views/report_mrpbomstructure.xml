@@ -4,15 +4,23 @@
               inherit_id="mrp_bom_location.report_mrpbomstructure_location">
 
         <xpath expr="//span[@t-field='o.display_name']" position="after">
-            <span t-if="o.buffered">
-                <img src='/ddmrp/static/description/icon.png'
+            <span t-if="o.is_buffered">
+                <img src='/ddmrp/static/img/is_buffered.png'
+                     style="width:30px;height:30px;padding:5px"/>
+            </span>
+            <span t-if="o.has_mto_rule">
+                <img src='/ddmrp/static/img/has_mto_rule.png'
                      style="width:30px;height:30px;padding:5px"/>
             </span>
         </xpath>
 
         <xpath expr="//td[@style='padding-left: 20px;']" position="inside">
-            <span t-if="l['buffered']">
-                <img src='/ddmrp/static/description/icon.png'
+            <span t-if="l['is_buffered']">
+                <img src='/ddmrp/static/img/is_buffered.png'
+                     style="width:30px;height:30px;padding:5px"/>
+            </span>
+            <span t-if="l['has_mto_rule']">
+                <img src='/ddmrp/static/img/has_mto_rule.png'
                      style="width:30px;height:30px;padding:5px"/>
             </span>
         </xpath>

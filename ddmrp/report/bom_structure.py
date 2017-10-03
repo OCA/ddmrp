@@ -33,7 +33,8 @@ class bom_structure(report_sxw.rml_parse):
                 res['level'] = level
                 res['code'] = l.bom_id.code
                 res['location_name'] = l.location_id.complete_name or ''
-                res['buffered'] = l.buffered
+                res['is_buffered'] = l.is_buffered
+                res['has_mto_rule'] = l.has_mto_rule
                 res['lead_time'] = lead_time or ''
                 res['dlt'] = l.dlt
                 result.append(res)
