@@ -23,6 +23,7 @@
                 "stock_orderpoint_manual_procurement",
                 "stock_demand_estimate",
                 "web_widget_bokeh_chart",
+                "mrp_mto_with_stock",
                 ],
     "data": ["data/product_adu_calculation_method_data.xml",
              "data/stock_buffer_profile_variability_data.xml",
