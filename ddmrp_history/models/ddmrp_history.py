@@ -14,7 +14,7 @@ class DdmrpHistory(models.Model):
 
     orderpoint_id = fields.Many2one(
         comodel_name="stock.warehouse.orderpoint", string="Buffer",
-        readonly=True)
+        readonly=True, ondelete='cascade')
     date = fields.Datetime(
         string="Date", readonly=True)
     top_of_red = fields.Float(
