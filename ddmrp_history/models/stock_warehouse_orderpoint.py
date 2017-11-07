@@ -69,8 +69,10 @@ class StockWarehouseOrderpoint(models.Model):
                 r.date, DEFAULT_SERVER_DATETIME_FORMAT) for r in history]
             data['date'] = dates
             data[categories[0]] = [r.top_of_red for r in history]
-            data[categories[1]] = [r.top_of_yellow for r in history]
-            data[categories[2]] = [r.top_of_green for r in history]
+            data[categories[1]] = [r.top_of_yellow -
+                                   r.top_of_red for r in history]
+            data[categories[2]] = [r.top_of_green -
+                                   r.top_of_yellow for r in history]
             data['net_flow_position'] = [r.net_flow_position for r in history]
             data['on_hand_position'] = [r.on_hand_position for r in history]
 
