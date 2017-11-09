@@ -500,7 +500,8 @@ class StockWarehouseOrderpoint(models.Model):
                 demand_by_days[move_date] = 0.0
             for move in moves:
                 date = fields.Datetime.from_string(move.date).date()
-                demand_by_days[date] += move.product_qty
+                demand_by_days[date] += \
+                    move.product_qty - move.reserved_availability
             for date in demand_by_days.keys():
                 if demand_by_days[date] >= rec.order_spike_threshold \
                         or date <= fields.date.today():
@@ -511,7 +512,8 @@ class StockWarehouseOrderpoint(models.Model):
     def _calc_net_flow_position(self):
         for rec in self:
             rec.refresh()
-            rec.net_flow_position = rec.product_location_qty + \
+            rec.net_flow_position = \
+                rec.product_location_qty_available_not_res + \
                 rec.incoming_location_qty - rec.qualified_demand
             usage = 0.0
             if rec.top_of_green:
