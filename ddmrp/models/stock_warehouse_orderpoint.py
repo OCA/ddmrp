@@ -514,9 +514,9 @@ class StockWarehouseOrderpoint(models.Model):
                 usage = round((rec.net_flow_position /
                               rec.top_of_green*100), 2)
             rec.net_flow_position_percent = usage
-            for procurement in rec.procurement_ids:
-                if procurement.state not in ('draft', 'cancel'):
-                    procurement.add_to_net_flow_equation = False
+            procurements_to_update = rec.procurement_ids.filtered(
+                    lambda p: p.state not in ('draft', 'cancel'))
+            procurements_to_update.write({'add_to_net_flow_equation': False})
         return True
 
     @api.multi
@@ -582,7 +582,7 @@ class StockWarehouseOrderpoint(models.Model):
         self._calc_net_flow_position()
         self._calc_planning_priority()
         self._calc_execution_priority()
-        self.mrp_production_ids._compute_execution_priority()
+        self.mrp_production_ids._calc_execution_priority()
         return True
 
     @api.model
