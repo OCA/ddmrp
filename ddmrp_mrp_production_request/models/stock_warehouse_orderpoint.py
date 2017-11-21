@@ -15,5 +15,5 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     def cron_actions(self):
         res = super(StockWarehouseOrderpoint, self).cron_actions()
-        self.mrp_production_request_ids._compute_execution_priority()
+        self.mrp_production_request_ids._calc_execution_priority()
         return res
