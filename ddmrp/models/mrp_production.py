@@ -49,8 +49,9 @@ class MrpProduction(models.Model):
                             break
 
     @api.multi
-    @api.depends('orderpoint_id', 'procurement_ids', 'move_prod_id')
     def _calc_execution_priority(self):
+        """Technical note: this method cannot be decorated with api.depends,
+        otherwise it would generate a infinite recursion."""
         prods = self.filtered(
             lambda r: r.orderpoint_id and r.state not in ['done', 'cancel'])
         for rec in prods:
@@ -99,5 +100,5 @@ class MrpProduction(models.Model):
         selection=_PRIORITY_LEVEL, readonly=True,
     )
     on_hand_percent = fields.Float(
-        string="On Hand/TOG (%)", compute="_calc_execution_priority",
-        store=True)  # TODO: remove compute and store.
+        string="On Hand/TOG (%)",
+    )

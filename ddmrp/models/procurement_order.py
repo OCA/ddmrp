@@ -35,3 +35,13 @@ class ProcurementOrder(models.Model):
         With DDMRP it is in the hands of the planner to manually
         create procurements, based on the procure recommendations."""
         return {}
+
+    @api.multi
+    def write(self, vals):
+        """Needed to calculate the execution priority of MOs originated from
+        a DDMRP buffer just after the creation."""
+        res = super(ProcurementOrder, self).write(vals)
+        mo_id = vals.get('production_id')
+        if mo_id:
+            self.env['mrp.production'].browse(mo_id)._calc_execution_priority()
+        return res
