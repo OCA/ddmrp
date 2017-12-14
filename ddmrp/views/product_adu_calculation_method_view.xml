@@ -60,7 +60,7 @@
 
         <menuitem
             id="menu_product_adu_calculation_method"
-            parent="stock.menu_stock_config_settings"
+            parent="ddmrp.menu_ddmrp_config"
             action="product_adu_calculation_method_form_action"/>
 
     </data>
