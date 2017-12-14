@@ -32,14 +32,14 @@
              "data/stock_buffer_profile_data.xml",
              "security/ir.model.access.csv",
              "security/stock_security.xml",
+             "views/stock_buffer_profile_view.xml",
              "views/stock_buffer_profile_variability_view.xml",
              "views/stock_buffer_profile_lead_time_view.xml",
-             "views/stock_buffer_profile_view.xml",
              "views/product_adu_calculation_method_view.xml",
              "views/stock_warehouse_orderpoint_view.xml",
              "views/procurement_order_view.xml",
              "views/mrp_production_view.xml",
-             "data/ir_cron.xml"
+             "data/ir_cron.xml",
              ],
     "demo": [
         "demo/res_partner_demo.xml",
