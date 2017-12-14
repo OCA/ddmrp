@@ -80,9 +80,13 @@
             </field>
         </record>
 
+        <menuitem id="menu_ddmrp_config"
+                  name="DDMRP"
+                  parent="stock.menu_stock_config_settings"/>
+
         <menuitem
             id="menu_stock_buffer_profile_mgt"
-            parent="stock.menu_stock_config_settings"
+            parent="ddmrp.menu_ddmrp_config"
             action="stock_buffer_profile_form_action"/>
 
     </data>
