@@ -394,8 +394,9 @@ class StockWarehouseOrderpoint(models.Model):
                 '|', ('date_range_id.date_start', '>=', date_from),
                 ('date_range_id.date_end', '<=', date_to)]
 
-    @api.model
+    @api.multi
     def _past_moves_domain(self, date_from, locations):
+        self.ensure_one()
         return [('state', '=', 'done'), ('location_id', 'in', locations.ids),
                 ('location_dest_id', 'not in', locations.ids),
                 ('product_id', '=', self.product_id.id),
