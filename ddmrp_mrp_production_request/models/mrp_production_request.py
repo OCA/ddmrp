@@ -88,5 +88,5 @@ class MrpProductionRequest(models.Model):
         readonly=True,
     )
     on_hand_percent = fields.Float(
-        string="On Hand/TOG (%)", compute="_calc_execution_priority",
+        string="On Hand/TOR (%)", compute="_calc_execution_priority",
         store=True) # TODO: remove compute and store.
