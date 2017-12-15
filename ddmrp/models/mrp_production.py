@@ -15,9 +15,10 @@ class MrpProduction(models.Model):
     def _search_procurements(self):
         return [('production_id', '=', self.id)]
 
-    @api.model
-    def _search_orderpoints(self):
-        return [('name', '=', self.move_prod_id.origin)]
+    # TODO: remove this
+    # @api.model
+    # def _search_orderpoints(self):
+    #     return [('name', '=', self.move_prod_id.origin)]
 
     @api.model
     def _find_orderpoint_from_procurement(self, procurement):
@@ -100,5 +101,5 @@ class MrpProduction(models.Model):
         selection=_PRIORITY_LEVEL, readonly=True,
     )
     on_hand_percent = fields.Float(
-        string="On Hand/TOG (%)",
+        string="On Hand/TOR (%)",
     )
