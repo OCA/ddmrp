@@ -288,6 +288,10 @@ class StockWarehouseOrderpoint(models.Model):
     mrp_production_ids = fields.One2many(
         string='Manufacturing Orders', comodel_name='mrp.production',
         inverse_name='orderpoint_id')
+    purchase_lines_ids = fields.One2many(
+        string="Purchase Order Lines", comodel_name="purchase.order.line",
+        inverse_name="orderpoint_id",
+    )
     ddmrp_chart = fields.Text(string='DDMRP Chart',
                               compute=_compute_ddmrp_chart)
 
@@ -583,6 +587,7 @@ class StockWarehouseOrderpoint(models.Model):
         self._calc_planning_priority()
         self._calc_execution_priority()
         self.mrp_production_ids._calc_execution_priority()
+        self.purchase_lines_ids._calc_execution_priority()
         return True
 
     @api.model

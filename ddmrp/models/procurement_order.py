@@ -44,4 +44,8 @@ class ProcurementOrder(models.Model):
         mo_id = vals.get('production_id')
         if mo_id:
             self.env['mrp.production'].browse(mo_id)._calc_execution_priority()
+        pol_id = vals.get('purchase_line_id')
+        if pol_id:
+            self.env['purchase.order.line'].browse(
+                pol_id)._calc_execution_priority()
         return res
