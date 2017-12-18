@@ -25,6 +25,7 @@
                 "web_widget_bokeh_chart",
                 "mrp_mto_with_stock",
                 "base_cron_exclusion",
+                "web_tree_many2one_clickable",
                 ],
     "data": ["data/product_adu_calculation_method_data.xml",
              "data/stock_buffer_profile_variability_data.xml",
