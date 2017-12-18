@@ -23,7 +23,7 @@
         <field name="model">purchase.order.line</field>
         <field name="arch" type="xml">
             <tree default_order='execution_priority_level,on_hand_percent'>
-                <field name="order_id"/>
+                <field name="order_id" widget="many2one_clickable"/>
                 <field name="partner_id" string="Vendor"/>
                 <field name="execution_priority_level"
                            bg_color="red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'"
