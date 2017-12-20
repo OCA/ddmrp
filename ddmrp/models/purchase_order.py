@@ -6,6 +6,12 @@ from openerp import api, fields, models
 from .stock_warehouse_orderpoint import _PRIORITY_LEVEL
 
 
+class PurchaseOrder(models.Model):
+    _inherit = "purchase.order"
+
+    ddmrp_comment = fields.Text(string="Follow-up Notes")
+
+
 class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
@@ -65,5 +71,6 @@ class PurchaseOrderLine(models.Model):
         selection=_PRIORITY_LEVEL, readonly=True,
     )
     on_hand_percent = fields.Float(
-        string="On Hand/TOR (%)",
+        string="On Hand/TOR (%)", readonly=True,
     )
+    ddmrp_comment = fields.Text(related="order_id.ddmrp_comment")

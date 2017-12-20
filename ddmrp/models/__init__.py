@@ -8,4 +8,4 @@ from . import procurement_order
 from . import product_adu_calculation_method
 from . import stock_warehouse_orderpoint
 from . import mrp_production
-from . import purchase_order_line
+from . import purchase_order
