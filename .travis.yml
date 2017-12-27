@@ -1,0 +1,43 @@
+language: python
+sudo: false
+cache:
+  apt: true
+  directories:
+    - $HOME/.cache/pip
+
+python:
+  - "2.7"
+
+addons:
+  apt:
+    packages:
+      - expect-dev  # provides unbuffer utility
+      - python-lxml  # because pip installation is slow
+      - python-simplejson
+      - python-serial
+      - python-yaml
+
+env:
+  global:
+  - VERSION="9.0" TESTS="0" LINT_CHECK="0" TRANSIFEX="0"
+  - TRANSIFEX_USER='transbot@odoo-community.org'
+  - secure: HgKcIRHgUR14+T9TRJvGAd2jn9cSChN87zrYPSZ2p63i/6+MU+WaK3lFf6T0NIjHQUvMMpZ1Cu+OFymvjbIEtvPeglaBVUA9ZED5vrW6ED2p24c09ADdQa3LeBoqLxholaYtbbaQrLNWEnZF0pY4Qk9ZQsHkj2LTpV+M+tOYwpM=
+  matrix:
+  - LINT_CHECK="1"
+  - TRANSIFEX="1"
+  - TESTS="0" ODOO_REPO="odoo/odoo"
+  - TESTS="0" ODOO_REPO="OCA/OCB"
+
+virtualenv:
+  system_site_packages: true
+
+install:
+  - git clone https://github.com/OCA/maintainer-quality-tools.git $HOME/maintainer-quality-tools
+  - export PATH=$HOME/maintainer-quality-tools/travis:$PATH
+  - travis_install_nightly
+
+script:
+  - travis_run_tests
+
+after_success:
+  - travis_after_tests_success
