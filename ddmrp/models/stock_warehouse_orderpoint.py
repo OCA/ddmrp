@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-# © 2016 Eficent Business and IT Consulting Services S.L.
+# Copyright 2016-18 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
-# © 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
+# Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import logging
 
-from openerp import api, fields, models
+from odoo import api, fields, models, _
 from datetime import timedelta
-from openerp.addons import decimal_precision as dp
-from openerp.tools import float_compare, float_round
+from odoo.addons import decimal_precision as dp
+from odoo.tools import float_compare, float_round
 import operator as py_operator
 
 _logger = logging.getLogger(__name__)
@@ -122,7 +122,7 @@ class StockWarehouseOrderpoint(models.Model):
                  "procurement_ids.product_qty",
                  "procurement_ids.add_to_net_flow_equation")
     def _compute_procure_recommended_qty(self):
-        subtract_qty = self.subtract_procurements_from_orderpoints(self.ids)
+        subtract_qty = self.subtract_procurements_from_orderpoints()
         for rec in self:
             procure_recommended_qty = 0.0
             if rec.net_flow_position < rec.top_of_yellow:
@@ -334,13 +334,15 @@ class StockWarehouseOrderpoint(models.Model):
         if form_view:
             views += [(form_view.id, 'form')]
 
-        return {'type': 'ir.actions.act_window',
-                'res_model': 'stock.move',
-                'view_type': 'form',
-                'views': views,
-                'view_mode': 'tree,form',
-                'domain': str([('id', 'in', lines.ids)])
-                }
+        return {
+            'name': _('Non-completed Moves'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'stock.move',
+            'view_type': 'form',
+            'views': views,
+            'view_mode': 'tree,form',
+            'domain': str([('id', 'in', lines.ids)]),
+        }
 
     @api.multi
     def open_moves(self):
@@ -521,7 +523,7 @@ class StockWarehouseOrderpoint(models.Model):
                               rec.top_of_green*100), 2)
             rec.net_flow_position_percent = usage
             procurements_to_update = rec.procurement_ids.filtered(
-                    lambda p: p.state not in ('draft', 'cancel'))
+                lambda p: p.state not in ('draft', 'cancel'))
             procurements_to_update.write({'add_to_net_flow_equation': False})
         return True
 
