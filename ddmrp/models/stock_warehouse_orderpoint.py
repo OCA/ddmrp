@@ -503,7 +503,7 @@ class StockWarehouseOrderpoint(models.Model):
                 demand_by_days[date] += move.product_qty
             for date in demand_by_days.keys():
                 if demand_by_days[date] >= rec.order_spike_threshold \
-                        or date == fields.date.today():
+                        or date <= fields.date.today():
                     rec.qualified_demand += demand_by_days[date]
         return True
 
