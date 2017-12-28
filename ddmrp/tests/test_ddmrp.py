@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# © 2016 Eficent Business and IT Consulting Services S.L.
+# Copyright 2016-18 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
-# © 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
+# Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-import openerp.tests.common as common
-from openerp import fields
+import odoo.tests.common as common
+from odoo import fields
 from datetime import datetime, timedelta
 
 
@@ -220,7 +220,7 @@ class TestDdmrp(common.TransactionCase):
 
     def test_adu_calculation_internal_past_120_days(self):
         """
-        Test that internal moves will not affect ADU calculation         
+        Test that internal moves will not affect ADU calculation.
         """
         method = self.env.ref('ddmrp.adu_calculation_method_past_120')
         orderpointA = self.orderpointModel.create({
@@ -435,7 +435,7 @@ class TestDdmrp(common.TransactionCase):
         self.assertEqual(orderpointA.qualified_demand, expected_result)
 
     def test_qualified_demand_5(self):
-        """Internal moves within the zone designated by the buffer 
+        """Internal moves within the zone designated by the buffer
         should not be considered demand."""
         method = self.env.ref('ddmrp.adu_calculation_method_fixed')
         orderpointA = self.orderpointModel.create({
