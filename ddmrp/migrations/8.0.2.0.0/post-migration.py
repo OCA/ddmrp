@@ -4,8 +4,8 @@
 # © 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from openerp import pooler
-from openerp import SUPERUSER_ID
+from odoo import pooler
+from odoo import SUPERUSER_ID
 import logging
 
 
@@ -68,4 +68,3 @@ def migrate(cr, version):
         return
     migrate_variability(cr)
     migrate_lead_time(cr)
-

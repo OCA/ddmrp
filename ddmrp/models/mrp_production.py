@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-# © 2016 Eficent Business and IT Consulting Services S.L.
+# Copyright 2016-18 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
-# © 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
+# Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 from .stock_warehouse_orderpoint import _PRIORITY_LEVEL
 
 
@@ -15,11 +15,6 @@ class MrpProduction(models.Model):
     def _search_procurements(self):
         return [('production_id', '=', self.id)]
 
-    # TODO: remove this
-    # @api.model
-    # def _search_orderpoints(self):
-    #     return [('name', '=', self.move_prod_id.origin)]
-
     @api.model
     def _find_orderpoint_from_procurement(self, procurement):
         orderpoint = procurement.move_dest_id.procurement_id.orderpoint_id
@@ -27,7 +22,7 @@ class MrpProduction(models.Model):
         return procurement, orderpoint
 
     @api.multi
-    @api.depends('move_prod_id', 'procurement_ids')
+    @api.depends('move_finished_ids', 'procurement_ids')
     def _compute_orderpoint_id(self):
         for rec in self:
             domain = rec._search_procurements()

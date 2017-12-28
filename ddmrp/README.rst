@@ -73,6 +73,7 @@ Modules from http://github.com/OCA/web :
 
 * 'web_tree_dynamic_colored_field'
 * 'web_widget_bokeh_chart'
+* 'web_tree_many2one_clickable'
 
 Modules from http://github.com/OCA/stock-logistics-warehouse :
 
@@ -100,10 +101,9 @@ Configuration
 Scheduled actions
 -----------------
 
-* Go to *Settings / Technical / 
-
+* Go to *Settings > Technical*.
 * 'DDMRP Buffer ADU calculation'. Computes the Average Daily Usage for all
-   Buffers.
+  Buffers.
 * 'Reordering Rule DDMRP calculation'. Computes the Qualified Demand, Net
    Flow Position, Planning and Execution priorities for all Buffers.
 
