@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
-# Copyright 2017 Eficent Business and IT Consulting Services S.L.
+# Copyright 2017-18 Eficent Business and IT Consulting Services S.L.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 {
     "name": "DDMRP Manufacturing Request",
     "summary": "Allows to prioritize Manufacturing Requests in a DDMRP "
                "strategy.",
-    "version": "9.0.1.0.0",
+    "version": "10.0.1.0.0",
     "category": "Manufacturing",
     "website": "https://github.com/OCA/manufacture",
-    "author": "Eficent,"
+    "author": "Eficent, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,
