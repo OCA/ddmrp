@@ -6,8 +6,8 @@
 {
     "name": "DDMRP History",
     "summary": "Allow to store historical data of DDMRP buffers.",
-    "version": "9.0.1.0.0",
-    "author": "Eficent",
+    "version": "10.0.1.0.0",
+    "author": "Eficent, Odoo Community Association (OCA)",
     "website": "http://www.eficent.com",
     "category": "Warehouse Management",
     "depends": ["ddmrp"],
@@ -19,6 +19,9 @@
     "demo": [
         'demo/ddmrp.history.csv',
     ],
+    "external_dependencies": {
+        "python": ['pandas'],
+    },
     "license": "AGPL-3",
     'installable': True,
 }

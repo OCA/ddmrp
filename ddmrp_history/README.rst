@@ -5,7 +5,21 @@
 DDMRP History
 =============
 
-Allow to extend DDMRP App to store history data buffers.
+Allow to extend DDMRP App to store historical data of buffers.
+
+Installation
+============
+
+You need to install the python pandas library::
+
+    pip install pandas==0.20.0
+
+Usage
+=====
+
+You can access, as a inventory manager, to all the DDMRP historical data
+throught *Inventory > Reports > DDMRP Buffer History*. Additionally you can
+see a historical evolution chart of any buffer at the bottom of its form view.
 
 Bug Tracker
 ===========
