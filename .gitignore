@@ -56,7 +56,7 @@ coverage.xml
 .settings
 
 # Visual Studio cache/options directory
-.vs/
+.vs
 
 # Django stuff:
 *.log
