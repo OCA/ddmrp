@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-# © 2016 Eficent Business and IT Consulting Services S.L.
+# Copyright 2016-18 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
-# © 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
+# Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-import openerp.tests.common as common
-from openerp import fields
+import odoo.tests.common as common
 from datetime import datetime, timedelta
 
 

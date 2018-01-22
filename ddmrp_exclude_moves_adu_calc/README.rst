@@ -12,23 +12,22 @@ Average Dailiy Usage on an Orderpoint (Buffer), based on:
 * Locations
 * Specific stock moves
 
-
 Usage
 =====
 
-Go to 'Configuration / Reordering Rules' and indicate a Procurement UoM.
+You can exclude specific moves or all moves towards a specific location:
 
-
-.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
-   :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/153/8.0
-
+* Go to *Inventory > Reports > Stock Moves* and check the box *Exclude this
+  move from ADU calculation* for a specific move.
+* Go to *Inventory > Configuration > WH Management > Locations* and check the
+  flag *Exclude this location from ADU calculation* for the desired locations.
 
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/OCA/stock-logistics-warehouse/issues>`_. In case of trouble, please
+<https://github.com/Eficent/ddmrp/issues>`_. In case of
+trouble, please
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed feedback.
 
@@ -44,7 +43,7 @@ Contributors
 ------------
 
 * Jordi Ballester Alomar <jordi.ballester@eficent.com>
-
+* Lois Rilo Antelo <lois.rilo@eficent.com>
 
 Maintainer
 ----------
