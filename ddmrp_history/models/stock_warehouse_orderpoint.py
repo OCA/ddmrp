@@ -114,7 +114,6 @@ class StockWarehouseOrderpoint(models.Model):
             script, div = components(p)
             rec.history_chart = '%s%s' % (div, script)
 
-
-    # TODO: store false and computed through a button?
+    # TODO: computed through a button? able to select period.
     history_chart = fields.Text(
         string='Historical Chart', compute='_compute_history_chart')
