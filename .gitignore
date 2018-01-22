@@ -49,6 +49,12 @@ coverage.xml
 *.mo
 *.pot
 
+# Pycharm
+.idea
+
+# Visual Studio cache/options directory
+.vs
+
 # Django stuff:
 *.log
 local_settings.py
