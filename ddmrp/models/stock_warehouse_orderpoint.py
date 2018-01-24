@@ -148,9 +148,8 @@ class StockWarehouseOrderpoint(models.Model):
                     procure_recommended_qty += rec.qty_multiple - reste
 
                 if rec.procure_uom_id:
-                    product_qty = rec.procure_uom_id._compute_qty(
-                        rec.product_id.uom_id.id, procure_recommended_qty,
-                        rec.procure_uom_id.id)
+                    product_qty = rec.product_id.uom_id._compute_quantity(
+                        procure_recommended_qty, rec.procure_uom_id)
                 else:
                     product_qty = procure_recommended_qty
             else:
@@ -380,10 +379,8 @@ class StockWarehouseOrderpoint(models.Model):
         for procurement in orderpoint.procurement_ids:
             if procurement.state not in ('draft', 'cancel') and \
                     procurement.add_to_net_flow_equation:
-                qty += uom_obj._compute_qty_obj(
-                    procurement.product_uom,
-                    procurement.product_qty,
-                    procurement.product_id.uom_id)
+                qty += procurement.product_uom._compute_quantity(
+                    procurement.product_qty, procurement.product_id.uom_id)
         if qty >= 0.0:
             return qty
         else:
