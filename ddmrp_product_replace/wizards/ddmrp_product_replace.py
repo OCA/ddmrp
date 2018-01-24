@@ -3,7 +3,7 @@
 #   (http://www.eficent.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from openerp import api, fields, models, _
+from odoo import api, fields, models, _
 
 
 class DdmrpProductReplace(models.TransientModel):
@@ -13,8 +13,8 @@ class DdmrpProductReplace(models.TransientModel):
     @api.depends("old_product_id")
     def _compute_orderpoint_ids(self):
         for rec in self:
-            rec.orderpoint_ids = self.env['stock.warehouse.orderpoint'].search([
-                ('product_id', '=', rec.old_product_id.id)])
+            rec.orderpoint_ids = self.env['stock.warehouse.orderpoint'].search(
+                [('product_id', '=', rec.old_product_id.id)])
 
     old_product_id = fields.Many2one(
         comodel_name="product.product", string="Replaced Product",
