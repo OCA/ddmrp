@@ -372,8 +372,8 @@ class StockWarehouseOrderpoint(models.Model):
     def _past_demand_estimate_domain(self, date_from, date_to, locations):
         return [('location_id', 'in', locations.ids),
                 ('product_id', '=', self.product_id.id),
-                '|', ('period_id.date_from', '>=', date_from),
-                ('period_id.date_to', '<=', date_to)]
+                '|', ('date_range_id.date_start', '>=', date_from),
+                ('date_range_id.date_end', '<=', date_to)]
 
     @api.model
     def _past_moves_domain(self, date_from, locations):
@@ -415,8 +415,8 @@ class StockWarehouseOrderpoint(models.Model):
     def _future_demand_estimate_domain(self, date_from, date_to, locations):
         return [('location_id', 'in', locations.ids),
                 ('product_id', '=', self.product_id.id),
-                '|', ('period_id.date_from', '>=', date_from),
-                ('period_id.date_to', '<=', date_to)]
+                '|', ('date_range_id.date_start', '>=', date_from),
+                ('date_range_id.date_end', '<=', date_to)]
 
     @api.model
     def _future_moves_domain(self, date_to, locations):
