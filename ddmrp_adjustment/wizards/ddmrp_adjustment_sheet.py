@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-# Copyright 2017 Eficent Business and IT Consulting Services S.L.
-#                (http://www.eficent.com)
+# Copyright 2017-18 Eficent Business and IT Consulting Services S.L.
+#                   (http://www.eficent.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from openerp import api, fields, models, _
 from openerp.exceptions import ValidationError
 
-DAF_string = u"DAF"
-LTF_string = u"LTF,test"  # TODO: finish this
+from ..models.ddmrp_adjustment import DAF_string, LTAF_string
+
 
 class DdmrpAdjustmentSheet(models.TransientModel):
     _name = 'ddmrp.adjustment.sheet'
@@ -18,7 +18,7 @@ class DdmrpAdjustmentSheet(models.TransientModel):
         if self.apply_daf:
             factors.append(DAF_string)
         if self.apply_ltf:
-            factors.append(LTF_string)
+            factors.append(LTAF_string)
         return factors
 
     def _prepare_line(self, period, factor):
