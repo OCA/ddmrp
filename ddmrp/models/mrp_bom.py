@@ -10,6 +10,24 @@ _logger = logging.getLogger(__name__)
 class MrpBom(models.Model):
     _inherit = "mrp.bom"
 
+    is_buffered = fields.Boolean(
+        string="Buffered?", compute="_compute_is_buffered",
+        help="True when the product has an DDMRP buffer associated.",
+    )
+    orderpoint_id = fields.Many2one(
+        comodel_name='stock.warehouse.orderpoint', string='Orderpoint',
+        compute="_compute_is_buffered",
+    )
+    dlt = fields.Float(
+        string="Decoupled Lead Time (days)",
+        compute="_compute_dlt",
+    )
+    has_mto_rule = fields.Boolean(
+        string="MTO",
+        help="Follows an MTO Pull Rule",
+        compute="_compute_mto_rule",
+    )
+
     def _get_search_buffer_domain(self):
         product = self.product_id or \
                   self.product_tmpl_id.product_variant_ids[0]
@@ -36,6 +54,8 @@ class MrpBom(models.Model):
 
     @api.multi
     def _get_longest_path(self):
+        if not self.bom_line_ids:
+            return 0.0
         paths = [0] * len(self.bom_line_ids)
         i = 0
         for line in self.bom_line_ids:
@@ -83,24 +103,27 @@ class MrpBom(models.Model):
         for rec in self:
             rec.dlt = rec._get_manufactured_dlt()
 
-    is_buffered = fields.Boolean(
-        string="Buffered?", compute="_compute_is_buffered",
-        help="True when the product has an DDMRP buffer associated.")
-
-    orderpoint_id = fields.Many2one(
-        comodel_name='stock.warehouse.orderpoint', string='Orderpoint',
-        compute="_compute_is_buffered")
-
-    dlt = fields.Float(string="Decoupled Lead Time (days)",
-                       compute="_compute_dlt")
-
-    has_mto_rule = fields.Boolean(string="MTO",
-                                  help="Follows an MTO Pull Rule",
-                                  compute="_compute_mto_rule")
-
 
 class MrpBomLine(models.Model):
     _inherit = "mrp.bom.line"
+
+    is_buffered = fields.Boolean(
+        string="Buffered?", compute="_compute_is_buffered",
+        help="True when the product has an DDMRP buffer associated.",
+    )
+    orderpoint_id = fields.Many2one(
+        comodel_name='stock.warehouse.orderpoint', string='Orderpoint',
+        compute="_compute_is_buffered",
+    )
+    dlt = fields.Float(
+        string="Decoupled Lead Time (days)",
+        compute="_compute_dlt",
+    )
+    has_mto_rule = fields.Boolean(
+        string="MTO",
+        help="Follows an MTO Pull Rule",
+        compute="_compute_mto_rule",
+    )
 
     def _get_search_buffer_domain(self):
         product = self.product_id or \
@@ -133,18 +156,3 @@ class MrpBomLine(models.Model):
                 rec.has_mto_rule = True if (
                     rec.location_id in
                     rec.product_id.mrp_mts_mto_location_ids) else False
-            
-    is_buffered = fields.Boolean(
-        string="Buffered?", compute="_compute_is_buffered",
-        help="True when the product has an DDMRP buffer associated.")
-
-    orderpoint_id = fields.Many2one(
-        comodel_name='stock.warehouse.orderpoint', string='Orderpoint',
-        compute="_compute_is_buffered")
-
-    dlt = fields.Float(string="Decoupled Lead Time (days)",
-                       compute="_compute_dlt")
-
-    has_mto_rule = fields.Boolean(string="MTO",
-                                  help="Follows an MTO Pull Rule",
-                                  compute="_compute_mto_rule")
