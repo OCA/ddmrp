@@ -214,10 +214,29 @@ class StockWarehouseOrderpoint(models.Model):
         for rec in self:
             rec.order_spike_threshold = 0.5 * rec.red_zone_qty
 
+    def _get_manufactured_bom(self):
+        return self.env['mrp.bom'].search(
+            ['|',
+             ('product_id', '=', self.product_id.id),
+             ('product_tmpl_id', '=', self.product_id.product_tmpl_id.id),
+             '|',
+             ('location_id', '=', self.location_id.id),
+             ('location_id', '=', False)], limit=1)
+
+    def _compute_dlt(self):
+        for rec in self:
+            if rec.buffer_profile_id.item_type == 'manufactured':
+                bom = rec._get_manufactured_bom()
+                rec.dlt = bom.dlt
+            else:
+                rec.dlt = rec.product_id.seller_ids and \
+                          rec.product_id.seller_ids[0].delay or rec.lead_days
+
     buffer_profile_id = fields.Many2one(
         comodel_name='stock.buffer.profile',
         string="Buffer Profile")
-    dlt = fields.Float(string="Decoupled Lead Time (days)")
+    dlt = fields.Float(string="Decoupled Lead Time (days)",
+                       compute="_compute_dlt")
     adu = fields.Float(string="Average Daily Usage (ADU)",
                        default=0.0, digits=UNIT, readonly=True)
     adu_calculation_method = fields.Many2one(
