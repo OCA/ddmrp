@@ -7,8 +7,8 @@ import logging
 from datetime import timedelta as td
 from datetime import datetime
 
-from openerp.tools import ustr, DEFAULT_SERVER_DATE_FORMAT
-from openerp import api, fields, models, _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+from odoo import api, fields, models, _
 
 _logger = logging.getLogger(__name__)
 
@@ -54,7 +54,8 @@ class StockWarehouseOrderpoint(models.Model):
                 daf, increased_demand, self.product_uom)
         return res
 
-    def explode_demand_to_components(self, daf, demand, uom_id): # TODO: use daf and dlt
+    def explode_demand_to_components(self, daf, demand, uom_id):
+        # TODO: use daf and dlt
         uom_obj = self.env['product.uom']
         demand_obj = self.env['ddmrp.adjustment.demand']
         init_bom = self._get_manufactured_bom()
