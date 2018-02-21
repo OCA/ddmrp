@@ -3,8 +3,8 @@
 #                   (http://www.eficent.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from openerp import api, fields, models, _
-from openerp.exceptions import ValidationError
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 from ..models.ddmrp_adjustment import DAF_string, LTAF_string
 
