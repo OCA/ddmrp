@@ -6,7 +6,7 @@
 {
     "name": "DDMRP Adjustment",
     "summary": "Allow to apply factor adjustments to buffers.",
-    "version": "9.0.2.0.0",
+    "version": "10.0.1.0.0",
     "author": "Eficent",
     "website": "http://www.eficent.com",
     "category": "Warehouse Management",
