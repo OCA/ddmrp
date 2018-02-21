@@ -6,9 +6,9 @@
 import logging
 from math import pi
 
-from openerp import api, fields, models, _
+from odoo import api, fields, models, _
 from datetime import datetime
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 _logger = logging.getLogger(__name__)
 try:
