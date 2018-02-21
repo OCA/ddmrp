@@ -14,7 +14,7 @@
                 <newline/>
                 <group name="factor" string="Factors to Apply:">
                     <field name="apply_daf"/>
-                    <field name="apply_ltf"/>
+                    <field name="apply_ltaf"/>
                 </group>
                 <group name="buffers" string="Buffers">
                     <field name="buffer_ids" nolabel="1">

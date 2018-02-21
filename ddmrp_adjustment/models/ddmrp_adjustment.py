@@ -6,7 +6,7 @@
 from openerp import api, fields, models
 
 DAF_string = u"DAF"
-LTAF_string = u"LTAF"  # TODO: finish this
+LTAF_string = u"LTAF"
 
 
 class DdmrpAdjustment(models.Model):
