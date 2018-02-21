@@ -124,6 +124,27 @@ class StockWarehouseOrderpoint(models.Model):
                     "DAFs-originated demand applied. %s: ADU += %s"
                     % (op.name, to_add))
 
+    def _compute_dlt(self):
+        """Apply Lead Time Adj Factor if existing"""
+        res = super(StockWarehouseOrderpoint, self)._compute_dlt()
+        today = fields.Date.today()
+        for rec in self:
+            ltaf_to_apply = self.env['ddmrp.adjustment'].search([
+                ('buffer_id', '=', rec.id), ('ltaf', '>', 0.0),
+                ('date_range_id.date_start', '<=', today),
+                ('date_range_id.date_end', '>=', today)])
+            if ltaf_to_apply:
+                ltaf = 1
+                values = ltaf_to_apply.mapped('ltaf')
+                for val in values:
+                    ltaf *= val
+                prev = rec.dlt
+                rec.dlt *= ltaf
+                _logger.debug(
+                    "LTAF=%s applied to %s. DLT: %s -> %s" %
+                    (ltaf, rec.name, prev, rec.dlt))
+        return res
+
     @api.multi
     def action_view_demand_to_components(self):
         demand_ids = self.env["ddmrp.adjustment.demand"].search([
