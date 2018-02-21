@@ -13,6 +13,7 @@
                 <field name="location_id"/>
                 <field name="date_range_id"/>
                 <field name="daf"/>
+                <field name="ltaf"/>
                 <field name="company_id" groups="base.group_multi_company"/>
             </tree>
         </field>
@@ -29,6 +30,8 @@
                 <field name="company_id" groups="base.group_multi_company"/>
                 <filter name="daf_set" string="DAF"
                         domain="[('daf','>',0.0)]"/>
+                <filter name="ltaf_set" string="LTAF"
+                        domain="[('ltaf','>',0.0)]"/>
                 <group  expand="1" string="Group By">
                     <filter string="Buffer" name="group_buffer"
                             context="{'group_by':'buffer_id'}" />
