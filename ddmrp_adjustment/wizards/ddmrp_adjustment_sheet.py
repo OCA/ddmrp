@@ -17,7 +17,7 @@ class DdmrpAdjustmentSheet(models.TransientModel):
         factors = []
         if self.apply_daf:
             factors.append(DAF_string)
-        if self.apply_ltf:
+        if self.apply_ltaf:
             factors.append(LTAF_string)
         return factors
 
@@ -76,8 +76,7 @@ class DdmrpAdjustmentSheet(models.TransientModel):
         string="Adjustments",
         comodel_name='ddmrp.adjustment.sheet.line')
     apply_daf = fields.Boolean(string="Demand Adjustment Factor")
-    apply_ltf = fields.Boolean(string="Zone Adjustment Factor, "
-                                      "(not implemented yet.)") # TODO: finish this
+    apply_ltaf = fields.Boolean(string="Lead Time Adjustment Factor")
 
     # HACK: https://github.com/OCA/server-tools/pull/492#issuecomment-237594285
     @api.multi
@@ -89,13 +88,12 @@ class DdmrpAdjustmentSheet(models.TransientModel):
             values, field_name, field_onchange)
 
     @api.onchange('date_range_type_id', 'date_start', 'date_end', 'apply_daf',
-                  'apply_ltf')
+                  'apply_ltaf')
     def _onchange_sheet(self):
         self.line_ids = [(6, 0, [])]
         lines = self.create_lines()
         self.line_ids = lines
 
-    # TODO: validation
     @api.multi
     def button_validate(self):
         self.ensure_one()
@@ -142,4 +140,6 @@ class DdmrpAdjustmentSheetLine(models.TransientModel):
         }
         if self.factor == DAF_string:
             data['daf'] = self.value
+        if self.factor == LTAF_string:
+            data['ltaf'] = self.value
         return data
