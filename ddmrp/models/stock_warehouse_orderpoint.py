@@ -229,7 +229,7 @@ class StockWarehouseOrderpoint(models.Model):
                 rec.dlt = bom.dlt
             else:
                 rec.dlt = rec.product_id.seller_ids and \
-                          rec.product_id.seller_ids[0].delay or rec.lead_days
+                    rec.product_id.seller_ids[0].delay or rec.lead_days
 
     buffer_profile_id = fields.Many2one(
         comodel_name='stock.buffer.profile',
@@ -375,7 +375,6 @@ class StockWarehouseOrderpoint(models.Model):
     def subtract_procurements(self, orderpoint):
         qty = super(StockWarehouseOrderpoint, self).subtract_procurements(
             orderpoint)
-        uom_obj = self.env["product.uom"]
         for procurement in orderpoint.procurement_ids:
             if procurement.state not in ('draft', 'cancel') and \
                     procurement.add_to_net_flow_equation:
