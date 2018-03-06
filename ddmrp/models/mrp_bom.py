@@ -30,7 +30,7 @@ class MrpBom(models.Model):
 
     def _get_search_buffer_domain(self):
         product = self.product_id or \
-                  self.product_tmpl_id.product_variant_ids[0]
+            self.product_tmpl_id.product_variant_ids[0]
         domain = [('product_id', '=', product.id),
                   ('buffer_profile_id', '!=', False)]
         if self.location_id:
@@ -67,10 +67,10 @@ class MrpBom(models.Model):
                 line_boms = line.product_id.bom_ids
                 bom = line_boms.filtered(
                     lambda bom: bom.location_id == location) or \
-                      line_boms.filtered(lambda bom: not bom.location_id)
+                    line_boms.filtered(lambda bom: not bom.location_id)
                 if bom:
                     produce_delay = bom[0].product_id.produce_delay or \
-                                    bom[0].product_tmpl_id.produce_delay
+                        bom[0].product_tmpl_id.produce_delay
                     paths[i] += produce_delay
                     paths[i] += bom[0]._get_longest_path()
                 else:
@@ -127,7 +127,7 @@ class MrpBomLine(models.Model):
 
     def _get_search_buffer_domain(self):
         product = self.product_id or \
-                  self.product_tmpl_id.product_variant_ids[0]
+            self.product_tmpl_id.product_variant_ids[0]
         domain = [('product_id', '=', product.id),
                   ('buffer_profile_id', '!=', False)]
         if self.location_id:
@@ -148,7 +148,7 @@ class MrpBomLine(models.Model):
                 rec.dlt = rec.product_id.bom_ids[0].dlt
             else:
                 rec.dlt = rec.product_id.seller_ids and \
-                          rec.product_id.seller_ids[0].delay or 0.0
+                    rec.product_id.seller_ids[0].delay or 0.0
 
     def _compute_mto_rule(self):
         for rec in self:

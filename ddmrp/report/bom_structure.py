@@ -19,7 +19,7 @@ class BomStructureReport(models.AbstractModel):
                     lead_time = l.product_id.produce_delay
                 else:
                     lead_time = l.product_id.seller_ids and \
-                                l.product_id.seller_ids[0].delay or 0.0
+                        l.product_id.seller_ids[0].delay or 0.0
                 res['pname'] = l.product_id.name_get()[0][1]
                 res['pcode'] = l.product_id.default_code
                 qty_per_bom = l.bom_id.product_qty
