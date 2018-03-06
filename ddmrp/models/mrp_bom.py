@@ -152,7 +152,6 @@ class MrpBomLine(models.Model):
 
     def _compute_mto_rule(self):
         for rec in self:
-            if rec.product_id.bom_ids:
-                rec.has_mto_rule = True if (
-                    rec.location_id in
-                    rec.product_id.mrp_mts_mto_location_ids) else False
+            rec.has_mto_rule = True if (
+                rec.location_id in
+                rec.product_id.mrp_mts_mto_location_ids) else False
