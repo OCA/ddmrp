@@ -4,7 +4,7 @@
     origin: 'incoming_shipment'
     partner_id: res_partner_eficent
     date: !eval "(datetime.now()-timedelta(days=6)).strftime('%Y-%m-%d 08:00:00')"
-    min_date: !eval "(datetime.now()+timedelta(days=1)).strftime('%Y-%m-%d 08:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=1)).strftime('%Y-%m-%d 08:00:00')"
     location_id: stock.stock_location_suppliers
     location_dest_id: stock.stock_location_stock
     state: 'assigned'
@@ -22,7 +22,7 @@
     origin: 'incoming_shipment'
     partner_id: res_partner_eficent
     date: !eval "(datetime.now()-timedelta(days=2)).strftime('%Y-%m-%d 08:00:00')"
-    min_date: !eval "(datetime.now()+timedelta(days=5)).strftime('%Y-%m-%d 08:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=5)).strftime('%Y-%m-%d 08:00:00')"
     location_id: stock.stock_location_suppliers
     location_dest_id: stock.stock_location_stock
     state: 'assigned'
@@ -39,7 +39,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "datetime.now().strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "datetime.now().strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -56,7 +56,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=1)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=1)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -73,7 +73,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=2)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=2)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -90,7 +90,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=3)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=3)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -107,7 +107,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=4)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=4)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -124,7 +124,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=5)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=5)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -141,7 +141,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=6)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=6)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -158,7 +158,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=7)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=7)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -175,7 +175,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=8)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=8)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -192,7 +192,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=9)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=9)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -209,7 +209,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=10)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=10)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -226,7 +226,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=11)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=11)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -243,7 +243,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=12)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=12)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -260,7 +260,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=13)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=13)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -277,7 +277,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=14)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=14)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -294,7 +294,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=15)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=15)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -311,7 +311,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=16)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=16)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -328,7 +328,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=17)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=17)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -345,7 +345,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=18)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=18)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -362,7 +362,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=19)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=19)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -379,7 +379,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=20)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=20)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -396,7 +396,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=21)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=21)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -413,7 +413,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=22)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=22)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -430,7 +430,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=23)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=23)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -447,7 +447,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=24)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=24)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -464,7 +464,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=25)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=25)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -481,7 +481,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=26)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=26)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
@@ -498,7 +498,7 @@
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
     partner_id: base.res_partner_1
-    min_date: !eval "(datetime.now()+timedelta(days=27)).strftime('%Y-%m-%d 20:00:00')"
+    scheduled_date: !eval "(datetime.now()+timedelta(days=27)).strftime('%Y-%m-%d 20:00:00')"
     location_id: stock.stock_location_stock
     location_dest_id: stock.stock_location_customers
     move_lines:
