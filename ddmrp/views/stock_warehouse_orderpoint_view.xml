@@ -205,18 +205,22 @@
                 <field name="warehouse_id"/>
                 <field name="location_id"/>
                 <field name="planning_priority_level"
-                       bg_color="red:planning_priority_level=='1_red';yellow:planning_priority_level=='2_yellow';green:planning_priority_level == '3_green'"
-                       fg_color="white:planning_priority_level=='1_red';black:planning_priority_level=='2_yellow';white:planning_priority_level == '3_green'"/>
+                       options="{
+                       &quot;bg_color&quot;: &quot;red:planning_priority_level=='1_red';yellow:planning_priority_level=='2_yellow';green:planning_priority_level == '3_green'&quot;,
+                       &quot;fg_color&quot;: &quot;white:planning_priority_level=='1_red';black:planning_priority_level=='2_yellow';white:planning_priority_level == '3_green'&quot;}"/>
                 <field name="net_flow_position_percent"
-                       bg_color="red:planning_priority_level=='1_red';yellow:planning_priority_level=='2_yellow';green:planning_priority_level == '3_green'"
-                       fg_color="white:planning_priority_level=='1_red';black:planning_priority_level=='2_yellow';white:planning_priority_level == '3_green'"/>
+                       options="{
+                       &quot;bg_color&quot;: &quot;red:planning_priority_level=='1_red';yellow:planning_priority_level=='2_yellow';green:planning_priority_level == '3_green'&quot;,
+                       &quot;fg_color&quot;: &quot;white:planning_priority_level=='1_red';black:planning_priority_level=='2_yellow';white:planning_priority_level == '3_green'&quot;}"/>
                 <field name="product_location_qty_available_not_res" string="On-Hand"/>
                 <field name="execution_priority_level"
-                       bg_color="red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'"
-                       fg_color="white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'"/>
+                       options="{
+                       &quot;bg_color&quot;: &quot;red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'&quot;,
+                       &quot;fg_color&quot;: &quot;white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'&quot;}"/>
                 <field name="on_hand_percent"
-                       bg_color="red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'"
-                       fg_color="white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'"/>
+                       options="{
+                       &quot;bg_color&quot;: &quot;red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'&quot;,
+                       &quot;fg_color&quot;: &quot;white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'&quot;}"/>
                 <button string="Refresh Buffer"
                         name="cron_actions"
                         icon="fa-refresh" type="object"/>
