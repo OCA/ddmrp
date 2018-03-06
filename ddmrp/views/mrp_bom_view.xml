@@ -8,13 +8,13 @@
         <field name="model">mrp.bom</field>
         <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
         <field name="arch" type="xml">
-            <label for="routing_id" position="before">
+            <field name="routing_id" position="before">
                 <field name="is_buffered"/>
                 <field name="has_mto_rule"/>
                 <field name="orderpoint_id"/>
                 <field name="dlt"/>
-            </label>
-            <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_rounding']" position="before">
+            </field>
+            <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_uom_id']" position="after">
                 <field name="is_buffered"/>
                 <field name="has_mto_rule"/>
                 <field name="orderpoint_id"/>
