@@ -15,7 +15,7 @@
     "category": "Warehouse Management",
     "depends": [
         "purchase",
-        "mrp",
+        "mrp_bom_location",
         "web_tree_dynamic_colored_field",
         "stock_warehouse_orderpoint_stock_info",
         "stock_warehouse_orderpoint_stock_info_unreserved",
@@ -43,6 +43,8 @@
         "views/procurement_order_view.xml",
         "views/mrp_production_view.xml",
         "views/purchase_order_line_view.xml",
+        "views/mrp_bom_view.xml",
+        "views/report_mrpbomstructure.xml",
         "data/ir_cron.xml",
     ],
     "demo": [

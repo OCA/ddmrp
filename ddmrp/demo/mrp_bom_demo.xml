@@ -7,6 +7,7 @@
             <field name="product_tmpl_id"
                    ref="product_product_fpa_product_template"/>
             <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="sequence">5</field>
         </record>
 
@@ -15,6 +16,7 @@
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="bom_id" ref="mrp_bom_fpa"/>
         </record>
 
@@ -23,6 +25,7 @@
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">10</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="bom_id" ref="mrp_bom_fpa"/>
         </record>
 
@@ -31,6 +34,7 @@
             <field name="product_tmpl_id"
                    ref="product_product_201_product_template"/>
             <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="sequence">5</field>
         </record>
 
@@ -39,6 +43,7 @@
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="bom_id" ref="mrp_bom_201"/>
         </record>
 
@@ -47,6 +52,7 @@
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">10</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="bom_id" ref="mrp_bom_201"/>
         </record>
 
@@ -55,6 +61,7 @@
             <field name="product_tmpl_id"
                    ref="product_product_301_product_template"/>
             <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="sequence">5</field>
         </record>
 
@@ -63,6 +70,7 @@
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="bom_id" ref="mrp_bom_301"/>
         </record>
 
@@ -71,6 +79,7 @@
             <field name="product_tmpl_id"
                    ref="product_product_203_product_template"/>
             <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="sequence">5</field>
         </record>
 
@@ -79,6 +88,7 @@
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="bom_id" ref="mrp_bom_203"/>
         </record>
 
@@ -87,6 +97,7 @@
             <field name="product_tmpl_id"
                    ref="product_product_303_product_template"/>
             <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="sequence">5</field>
         </record>
 
@@ -95,6 +106,7 @@
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="bom_id" ref="mrp_bom_303"/>
         </record>
 
@@ -103,6 +115,7 @@
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">10</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="bom_id" ref="mrp_bom_303"/>
         </record>
 
@@ -111,6 +124,7 @@
             <field name="product_tmpl_id"
                    ref="product_product_fpb_product_template"/>
             <field name="product_uom" ref="product.product_uom_unit"/>
+             <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="sequence">5</field>
         </record>
 
@@ -118,6 +132,7 @@
             <field name="product_id" ref="product_product_101"/>
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="sequence">5</field>
             <field name="bom_id" ref="mrp_bom_fpb"/>
         </record>
@@ -127,6 +142,7 @@
             <field name="product_tmpl_id"
                    ref="product_product_101_product_template"/>
             <field name="product_uom" ref="product.product_uom_unit"/>
+             <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="sequence">5</field>
         </record>
 
@@ -134,6 +150,7 @@
             <field name="product_id" ref="product_product_201"/>
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="sequence">5</field>
             <field name="bom_id" ref="mrp_bom_101"/>
         </record>
@@ -142,6 +159,7 @@
             <field name="product_id" ref="product_product_207"/>
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="sequence">10</field>
             <field name="bom_id" ref="mrp_bom_101"/>
         </record>
@@ -152,6 +170,7 @@
             <field name="product_tmpl_id"
                    ref="product_product_207_product_template"/>
             <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="sequence">5</field>
         </record>
 
@@ -159,6 +178,7 @@
             <field name="product_id" ref="product_product_310"/>
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="sequence">5</field>
             <field name="bom_id" ref="mrp_bom_101"/>
         </record>
@@ -168,6 +188,7 @@
             <field name="product_tmpl_id"
                    ref="product_product_310_product_template"/>
             <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="sequence">5</field>
         </record>
 
@@ -176,6 +197,7 @@
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="bom_id" ref="mrp_bom_310"/>
         </record>
 
@@ -184,6 +206,7 @@
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">10</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="bom_id" ref="mrp_bom_310"/>
         </record>
 
@@ -193,6 +216,7 @@
             <field name="product_tmpl_id"
                    ref="product_product_fpc_product_template"/>
             <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="sequence">5</field>
         </record>
 
@@ -201,6 +225,7 @@
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="bom_id" ref="mrp_bom_fpc"/>
         </record>
 
@@ -210,6 +235,7 @@
                    ref="product_product_102_product_template"/>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
         </record>
 
         <record id="mrp_bom_102_line_201" model="mrp.bom.line">
@@ -217,6 +243,7 @@
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="bom_id" ref="mrp_bom_102"/>
         </record>
 
@@ -225,6 +252,7 @@
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="bom_id" ref="mrp_bom_102"/>
         </record>
 
@@ -234,6 +262,7 @@
                    ref="product_product_202_product_template"/>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
         </record>
 
         <record id="mrp_bom_202_line_306" model="mrp.bom.line">
@@ -241,6 +270,7 @@
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="bom_id" ref="mrp_bom_202"/>
         </record>
 
@@ -249,6 +279,7 @@
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="bom_id" ref="mrp_bom_202"/>
         </record>
 
@@ -258,6 +289,7 @@
                    ref="product_product_306_product_template"/>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
         </record>
 
         <record id="mrp_bom_306_line_404p" model="mrp.bom.line">
@@ -265,6 +297,7 @@
             <field name="product_qty">1</field>
             <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="bom_id" ref="mrp_bom_306"/>
         </record>
 

@@ -9,7 +9,7 @@
             <tree string="ADU Calculation Method">
                 <field name="name"/>
             </tree>
-      </field>
+        </field>
     </record>
     <record model="ir.ui.view"
             id="view_product_adu_calculation_method_form">

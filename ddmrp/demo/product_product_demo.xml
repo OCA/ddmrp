@@ -167,8 +167,8 @@
             <field name="type">product</field>
             <field name="uom_id" ref="product.product_uom_unit"/>
             <field name="uom_po_id" ref="product.product_uom_unit"/>
-            <field name="route_ids"
-                   eval="[(6, 0, [ref('purchase.route_warehouse0_buy'), ref('stock.route_warehouse0_mto')])]"/>
+            <field name="route_ids" eval="[(6, 0, [ref('purchase.route_warehouse0_buy')])]"/>
+            <field name="mrp_mts_mto_location_ids" eval="[(6, 0, [ref('stock.stock_location_stock')])]"/>
 
         </record>
 

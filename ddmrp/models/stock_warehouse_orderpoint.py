@@ -148,9 +148,8 @@ class StockWarehouseOrderpoint(models.Model):
                     procure_recommended_qty += rec.qty_multiple - reste
 
                 if rec.procure_uom_id:
-                    product_qty = rec.procure_uom_id._compute_qty(
-                        rec.product_id.uom_id.id, procure_recommended_qty,
-                        rec.procure_uom_id.id)
+                    product_qty = rec.product_id.uom_id._compute_quantity(
+                        procure_recommended_qty, rec.procure_uom_id)
                 else:
                     product_qty = procure_recommended_qty
             else:
@@ -214,10 +213,29 @@ class StockWarehouseOrderpoint(models.Model):
         for rec in self:
             rec.order_spike_threshold = 0.5 * rec.red_zone_qty
 
+    def _get_manufactured_bom(self):
+        return self.env['mrp.bom'].search(
+            ['|',
+             ('product_id', '=', self.product_id.id),
+             ('product_tmpl_id', '=', self.product_id.product_tmpl_id.id),
+             '|',
+             ('location_id', '=', self.location_id.id),
+             ('location_id', '=', False)], limit=1)
+
+    def _compute_dlt(self):
+        for rec in self:
+            if rec.buffer_profile_id.item_type == 'manufactured':
+                bom = rec._get_manufactured_bom()
+                rec.dlt = bom.dlt
+            else:
+                rec.dlt = rec.product_id.seller_ids and \
+                    rec.product_id.seller_ids[0].delay or rec.lead_days
+
     buffer_profile_id = fields.Many2one(
         comodel_name='stock.buffer.profile',
         string="Buffer Profile")
-    dlt = fields.Float(string="Decoupled Lead Time (days)")
+    dlt = fields.Float(string="Decoupled Lead Time (days)",
+                       compute="_compute_dlt")
     adu = fields.Float(string="Average Daily Usage (ADU)",
                        default=0.0, digits=UNIT, readonly=True)
     adu_calculation_method = fields.Many2one(
@@ -357,14 +375,11 @@ class StockWarehouseOrderpoint(models.Model):
     def subtract_procurements(self, orderpoint):
         qty = super(StockWarehouseOrderpoint, self).subtract_procurements(
             orderpoint)
-        uom_obj = self.env["product.uom"]
         for procurement in orderpoint.procurement_ids:
             if procurement.state not in ('draft', 'cancel') and \
                     procurement.add_to_net_flow_equation:
-                qty += uom_obj._compute_qty_obj(
-                    procurement.product_uom,
-                    procurement.product_qty,
-                    procurement.product_id.uom_id)
+                qty += procurement.product_uom._compute_quantity(
+                    procurement.product_qty, procurement.product_id.uom_id)
         if qty >= 0.0:
             return qty
         else:
@@ -374,11 +389,12 @@ class StockWarehouseOrderpoint(models.Model):
     def _past_demand_estimate_domain(self, date_from, date_to, locations):
         return [('location_id', 'in', locations.ids),
                 ('product_id', '=', self.product_id.id),
-                '|', ('period_id.date_from', '>=', date_from),
-                ('period_id.date_to', '<=', date_to)]
+                ('date_range_id.date_start', '<=', date_to),
+                ('date_range_id.date_end', '>=', date_from)]
 
-    @api.model
+    @api.multi
     def _past_moves_domain(self, date_from, locations):
+        self.ensure_one()
         return [('state', '=', 'done'), ('location_id', 'in', locations.ids),
                 ('location_dest_id', 'not in', locations.ids),
                 ('product_id', '=', self.product_id.id),
@@ -417,8 +433,8 @@ class StockWarehouseOrderpoint(models.Model):
     def _future_demand_estimate_domain(self, date_from, date_to, locations):
         return [('location_id', 'in', locations.ids),
                 ('product_id', '=', self.product_id.id),
-                '|', ('period_id.date_from', '>=', date_from),
-                ('period_id.date_to', '<=', date_to)]
+                ('date_range_id.date_start', '<=', date_to),
+                ('date_range_id.date_end', '>=', date_from)]
 
     @api.model
     def _future_moves_domain(self, date_to, locations):
