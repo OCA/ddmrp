@@ -55,8 +55,6 @@ class StockWarehouseOrderpoint(models.Model):
         return res
 
     def explode_demand_to_components(self, daf, demand, uom_id):
-        # TODO: use daf and dlt
-        uom_obj = self.env['product.uom']
         demand_obj = self.env['ddmrp.adjustment.demand']
         init_bom = self._get_manufactured_bom()
         if not init_bom:
@@ -64,8 +62,8 @@ class StockWarehouseOrderpoint(models.Model):
 
         def _get_extra_demand(bom, line, buffer_id, factor):
             qty = factor * line.product_qty / bom.product_qty
-            extra = uom_obj._compute_qty_obj(
-                line.product_uom, qty, buffer_id.product_uom)
+            extra = line.product_uom_id._compute_quantity(
+                qty, buffer_id.product_uom)
             return extra
 
         def _create_demand(bom, factor=1, level=0, clt=0):
@@ -97,14 +95,13 @@ class StockWarehouseOrderpoint(models.Model):
                     lambda bom: bom.location_id == location) or \
                     line_boms.filtered(lambda b: not b.location_id)
                 if child_bom:
-                    line_qty = uom_obj._compute_qty_obj(
-                        line.product_uom, line.product_qty,
-                        child_bom.product_uom)
+                    line_qty = line.product_uom_id._compute_quantity(
+                        line.product_qty, child_bom.product_uom_id)
                     new_factor = factor * line_qty / bom.product_qty
                     _create_demand(child_bom[0], new_factor, level, clt)
 
-        initial_factor = uom_obj._compute_qty_obj(
-            uom_id, demand, init_bom.product_uom)
+        initial_factor = uom_id._compute_quantity(
+            demand, init_bom.product_uom_id)
         _create_demand(init_bom, factor=initial_factor)
         return True
 
