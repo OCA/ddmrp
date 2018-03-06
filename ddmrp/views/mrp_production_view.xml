@@ -8,11 +8,13 @@
         <field name="arch" type="xml">
             <field name="date_planned_start" position="before">
                 <field name="execution_priority_level"
-                       bg_color="red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'"
-                       fg_color="white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'"/>
+                       options="{
+                       &quot;bg_color&quot;: &quot;red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'&quot;,
+                       &quot;fg_color&quot;: &quot;white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'&quot;}"/>
                 <field name="on_hand_percent"
-                       bg_color="red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'"
-                       fg_color="white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'"/>
+                       options="{
+                       &quot;bg_color&quot;: &quot;red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'&quot;,
+                       &quot;fg_color&quot;: &quot;white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'&quot;}"/>
             </field>
         </field>
     </record>
