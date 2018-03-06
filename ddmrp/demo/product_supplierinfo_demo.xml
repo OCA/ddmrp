@@ -74,6 +74,14 @@
             <field name="price">100</field>
         </record>
 
+        <record id="product_supplierinfo_example" model="product.supplierinfo">
+            <field name="product_tmpl_id" ref="product_product_example_product_template"/>
+            <field name="name" ref="res_partner_eficent"/>
+            <field name="delay">7</field>
+            <field name="min_qty">20</field>
+            <field name="price">100</field>
+        </record>
+
     </data>
 
 </odoo>

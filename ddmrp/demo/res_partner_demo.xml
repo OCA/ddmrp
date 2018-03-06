@@ -7,7 +7,7 @@
             <field name="is_company">1</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="customer" eval="False"/>
-            <field name="supplier" eval="False"/>
+            <field name="supplier" eval="True"/>
             <field name="email">eficent@yourcompany.example.com</field>
             <field name="street">Rambla de Catalunya</field>
             <field name="city">Barcelona</field>
