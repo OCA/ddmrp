@@ -102,7 +102,7 @@ class DdmrpAdjustmentSheet(models.TransientModel):
 
         if not self.line_ids.mapped('factor'):
             raise ValidationError(_('You must apply at least one factor'))
-        
+
         res = []
         for b in self.buffer_ids:
             for line in self.line_ids:
@@ -131,7 +131,7 @@ class DdmrpAdjustmentSheetLine(models.TransientModel):
         comodel_name='date.range', string='Period')
     factor = fields.Char(string='Factors')
     value = fields.Float(string="Value")
-    
+
     @api.model
     def _prepare_adjustment_data(self, buf):
         data = {
