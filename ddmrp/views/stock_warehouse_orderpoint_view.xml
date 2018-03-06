@@ -140,6 +140,8 @@
                         <field name="net_flow_position_percent"
                                class="oe_inline"/> %
                     </div>
+                    <field name="incoming_dlt_qty"/>
+                    <field name="qualified_demand"/>
                 </group>
                 <group name="green_zone" string="Green zone">
                     <div class="no_print">
@@ -218,7 +220,9 @@
                 <button string="Refresh Buffer"
                         name="cron_actions"
                         icon="fa-refresh" type="object"/>
-                <field name="incoming_location_qty" string="Incoming"/>
+                <field name="incoming_dlt_qty" string="Incoming within DLT"/>
+                <field name="incoming_location_qty"
+                       string="Total Incoming"/>
                 <button string="Open Non-completed Moves"
                         name="open_moves"
                         icon="fa fa-exchange" type="object"/>
