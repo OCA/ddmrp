@@ -16,39 +16,6 @@ class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
     @api.multi
-    def _get_procurements_domain(self):
-        self.ensure_one()
-        return [('purchase_line_id', '=', self.id)]
-
-    @api.model
-    def _find_orderpoint_from_procurement(self, procurement):
-        procurement = procurement.move_dest_id.procurement_id
-        orderpoint = procurement.orderpoint_id
-        return procurement, orderpoint
-
-    @api.multi
-    @api.depends("product_id")
-    def _compute_orderpoint_id(self):
-        for rec in self:
-            domain = rec._get_procurements_domain()
-            procurements = rec.env['procurement.order'].search(domain)
-            orderpoints = procurements.mapped('orderpoint_id')
-            if orderpoints:
-                rec.orderpoint_id = orderpoints[0]
-            else:
-                for procurement in procurements:
-                    orderpoint = False
-                    originating_procurement = procurement
-                    while not orderpoint:
-                        originating_procurement, orderpoint = \
-                            self._find_orderpoint_from_procurement(
-                                originating_procurement)
-                        if orderpoint:
-                            rec.orderpoint_id = orderpoint
-                        if not originating_procurement:
-                            break
-
-    @api.multi
     def _calc_execution_priority(self):
         prods = self.filtered(
             lambda r: r.orderpoint_id and r.state not in ['done', 'cancel'])
@@ -61,11 +28,7 @@ class PurchaseOrderLine(models.Model):
             'on_hand_percent': None,
         })
 
-    orderpoint_id = fields.Many2one(
-        comodel_name='stock.warehouse.orderpoint',
-        string="Reordering rule",
-        compute='_compute_orderpoint_id', store=True, index=True,
-    )
+    orderpoint_id = fields.Many2one(index=True)
     execution_priority_level = fields.Selection(
         string="Buffer On-Hand Status Level",
         selection=_PRIORITY_LEVEL, readonly=True,
