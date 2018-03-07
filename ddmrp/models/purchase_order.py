@@ -15,6 +15,11 @@ class PurchaseOrder(models.Model):
 class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
+    def create(self, vals):
+        record = super(PurchaseOrderLine, self).create(vals)
+        record._calc_execution_priority()
+        return record
+
     @api.multi
     def _calc_execution_priority(self):
         prods = self.filtered(
