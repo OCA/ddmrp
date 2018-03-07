@@ -11,6 +11,11 @@ from .stock_warehouse_orderpoint import _PRIORITY_LEVEL
 class MrpProduction(models.Model):
     _inherit = 'mrp.production'
 
+    def create(self, vals):
+        record = super(MrpProduction, self).create(vals)
+        record._calc_execution_priority()
+        return record
+
     @api.multi
     def _calc_execution_priority(self):
         """Technical note: this method cannot be decorated with api.depends,
