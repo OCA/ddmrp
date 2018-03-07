@@ -48,7 +48,8 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     @api.depends("dlt", "adu", "buffer_profile_id.lead_time_id.factor",
                  "buffer_profile_id.variability_id.factor",
-                 "product_uom.rounding", "red_override")
+                 "product_uom.rounding", "red_override",
+                 "lead_days", "product_id.seller_ids.delay")
     def _compute_red_zone(self):
         for rec in self:
             if rec.replenish_method in ['replenish', 'min_max']:
@@ -99,7 +100,8 @@ class StockWarehouseOrderpoint(models.Model):
                  "buffer_profile_id.variability_id.factor",
                  "buffer_profile_id.replenish_method",
                  "order_cycle", "minimum_order_quantity",
-                 "product_uom.rounding", "yellow_override")
+                 "product_uom.rounding", "yellow_override",
+                 "red_zone_qty")
     def _compute_yellow_zone(self):
         for rec in self:
             if rec.replenish_method == 'min_max':
@@ -221,6 +223,7 @@ class StockWarehouseOrderpoint(models.Model):
              ('location_id', '=', self.location_id.id),
              ('location_id', '=', False)], limit=1)
 
+    @api.depends('lead_days', 'product_id.seller_ids.delay')
     def _compute_dlt(self):
         for rec in self:
             if rec.buffer_profile_id.item_type == 'manufactured':
@@ -529,7 +532,6 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     def _calc_qualified_demand(self):
         for rec in self:
-            rec.refresh()
             rec.qualified_demand = 0.0
             domain = rec._search_stock_moves_qualified_demand_domain()
             moves = self.env['stock.move'].search(domain)
@@ -560,7 +562,6 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     def _calc_net_flow_position(self):
         for rec in self:
-            rec.refresh()
             rec.net_flow_position = \
                 rec.product_location_qty_available_not_res + \
                 rec.incoming_dlt_qty - rec.qualified_demand
@@ -574,7 +575,6 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     def _calc_planning_priority(self):
         for rec in self:
-            rec.refresh()
             if rec.net_flow_position >= rec.top_of_yellow:
                 rec.planning_priority_level = '3_green'
             elif rec.net_flow_position >= rec.top_of_red:
@@ -585,7 +585,6 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     def _calc_execution_priority(self):
         for rec in self:
-            rec.refresh()
             if rec.product_location_qty_available_not_res >= rec.top_of_red:
                 rec.execution_priority_level = '3_green'
             elif rec.product_location_qty_available_not_res >= \
@@ -648,6 +647,7 @@ class StockWarehouseOrderpoint(models.Model):
         orderpoints = self.search([])
         i = 0
         j = len(orderpoints)
+        orderpoints.refresh()
         for op in orderpoints:
             i += 1
             _logger.debug("ddmrp cron: %s. (%s/%s)" % (op.name, i, j))
