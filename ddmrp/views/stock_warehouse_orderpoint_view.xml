@@ -83,14 +83,10 @@
         <field name="inherit_id"
                ref="stock.view_warehouse_orderpoint_form"/>
         <field name="arch" type="xml">
-            <button name="%(stock.do_view_procurement_op)d"
-                    position="after">
+            <button name="toggle_active"
+                    position="before">
                 <button string="Refresh Buffer" name="cron_actions" class="oe_stat_button"
                         icon="fa-refresh" type="object"/>
-            </button>
-            <button name="%(stock.do_view_procurement_op)d"
-                    position="attributes">
-                <attribute name="icon">fa-cogs</attribute>
             </button>
             <xpath expr="//group[1]" position="inside">
                 <group name="buffer_size_factors"
@@ -238,11 +234,6 @@
                 <button string="Create Procurement"
                         name="%(stock_orderpoint_manual_procurement.act_make_procurement_from_orderpoint)d"
                         icon="fa fa-cogs" type="action"/>
-                <button string="Procurements"
-                        name="%(procurement.procurement_action)d"
-                        icon="fa fa-folder-open" type="action"
-                        domain="[('orderpoint_id','=', active_id)]"
-                        context="{'search_default_orderpoint_id': [active_id]}"/>
                 <field name="top_of_red"/>
                 <field name="top_of_yellow"/>
                 <field name="top_of_green"/>
