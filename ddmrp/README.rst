@@ -28,8 +28,8 @@ This method has five sequential components:
    individual part trait changes over time through the use of several types
    of adjustments.
 
-#. *Demand Driven Planning*. Allow to lauch purchase orders (POs),
-   manufacturing ordrers (MOs) and Transfer Orders (TOs) based on the priority
+#. *Demand Driven Planning*. Allow to launch purchase orders (POs),
+   manufacturing orders (MOs) and Transfer Orders (TOs) based on the priority
    dictated by the buffers.
 
 #. *Visible and Collaborative Execution*. These POs, MOs and TOs have to be
@@ -54,7 +54,7 @@ by a wide variety of leading companies across the world.
 Some of the benefits reported by the DDMRP method include:
 
 * High fill rate performance
-* Lead time reductions.
+* Lead time reductions
 * Inventory reductions, while improving customer service
 * Eliminate costs related to expedite
 * Planners see priorities instead of constantly fighting the conflicting
@@ -195,10 +195,10 @@ certain location.
 
 #. Go to *Inventory / Configuration / ADU calculation methods*.
 #. To create new, indicate a name, calculation method (fixed, past-looking,
-   future-looking), and the lengh of period consideration (in days).
+   future-looking), and the length of period consideration (in days).
 
 If you do not have prior history of stock moves in your system, it is advised
-to usefixed method. If you have past-history of stock moves, best use
+to use fixed method. If you have past-history of stock moves, best use
 past-looking method.
 
 
@@ -224,6 +224,7 @@ Contributors
 
 * Jordi Ballester Alomar <jordi.ballester@eficent.com>
 * Lois Rilo Antelo <lois.rilo@eficent.com>
+* Guewen Baconnier <guewen.baconnier@camptocamp.com>
 
 
 Maintainer
