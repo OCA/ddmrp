@@ -40,7 +40,6 @@
         "views/stock_buffer_profile_lead_time_view.xml",
         "views/product_adu_calculation_method_view.xml",
         "views/stock_warehouse_orderpoint_view.xml",
-        "views/procurement_order_view.xml",
         "views/mrp_production_view.xml",
         "views/purchase_order_line_view.xml",
         "views/mrp_bom_view.xml",

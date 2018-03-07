@@ -124,24 +124,14 @@ class StockWarehouseOrderpoint(models.Model):
                  "buffer_profile_id.lead_time_id.factor",
                  "red_zone_qty", "order_cycle", "minimum_order_quantity",
                  "qty_multiple", "product_uom", "procure_uom_id",
-                 "product_uom.rounding",
-                 "procurement_ids",
-                 "procurement_ids.product_id",
-                 "procurement_ids.state", "procurement_ids.product_uom",
-                 "procurement_ids.product_qty",
-                 "procurement_ids.add_to_net_flow_equation")
+                 "product_uom.rounding")
     def _compute_procure_recommended_qty(self):
-        subtract_qty = self.subtract_procurements_from_orderpoints()
         for rec in self:
             procure_recommended_qty = 0.0
             if rec.net_flow_position < rec.top_of_yellow:
-                qty = rec.top_of_green - rec.net_flow_position\
-                    - subtract_qty[rec.id]
+                qty = rec.top_of_green - rec.net_flow_position
                 if qty >= 0.0:
                     procure_recommended_qty = qty
-            else:
-                if subtract_qty[rec.id] > 0.0:
-                    procure_recommended_qty -= subtract_qty[rec.id]
             if procure_recommended_qty > 0.0:
                 reste = rec.qty_multiple > 0 and \
                     procure_recommended_qty % rec.qty_multiple or 0.0
@@ -401,20 +391,6 @@ class StockWarehouseOrderpoint(models.Model):
         return self._stock_move_tree_view(records)
 
     @api.model
-    def subtract_procurements(self, orderpoint):
-        qty = super(StockWarehouseOrderpoint, self).subtract_procurements(
-            orderpoint)
-        for procurement in orderpoint.procurement_ids:
-            if procurement.state not in ('draft', 'cancel') and \
-                    procurement.add_to_net_flow_equation:
-                qty += procurement.product_uom._compute_quantity(
-                    procurement.product_qty, procurement.product_id.uom_id)
-        if qty >= 0.0:
-            return qty
-        else:
-            return 0.0
-
-    @api.model
     def _past_demand_estimate_domain(self, date_from, date_to, locations):
         return [('location_id', 'in', locations.ids),
                 ('product_id', '=', self.product_id.id),
@@ -566,7 +542,7 @@ class StockWarehouseOrderpoint(models.Model):
                 date = fields.Datetime.from_string(move.date).date()
                 demand_by_days[date] += \
                     move.product_qty - move.reserved_availability
-            for date in demand_by_days.keys():
+            for date in demand_by_days:
                 if demand_by_days[date] >= rec.order_spike_threshold \
                         or date <= fields.date.today():
                     rec.qualified_demand += demand_by_days[date]
@@ -593,9 +569,6 @@ class StockWarehouseOrderpoint(models.Model):
                 usage = round((rec.net_flow_position /
                               rec.top_of_green*100), 2)
             rec.net_flow_position_percent = usage
-            procurements_to_update = rec.procurement_ids.filtered(
-                lambda p: p.state not in ('draft', 'cancel'))
-            procurements_to_update.write({'add_to_net_flow_equation': False})
         return True
 
     @api.multi
