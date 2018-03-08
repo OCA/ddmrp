@@ -57,6 +57,7 @@
                 <field name="name"/>
                 <separator/>
                 <field name="item_type"/>
+                <field name="replenish_method"/>
                 <field name="lead_time_id"/>
                 <field name="variability_id"/>
                 <field name="company_id" groups="base.group_multi_company"/>
