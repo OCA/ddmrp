@@ -9,7 +9,7 @@
         <field name="inherit_id"
                ref="stock.view_warehouse_orderpoint_form"/>
         <field name="arch" type="xml">
-            <button name="%(stock.do_view_procurement_op)d"
+            <button name="toggle_active"
                     position="after">
                 <button string="DAF Demand Allocation" name="action_view_demand_to_components"
                         class="oe_stat_button"
