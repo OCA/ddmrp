@@ -8,7 +8,7 @@ from odoo import api, fields, models
 
 _REPLENISH_METHODS = [
     ('replenish', 'Replenished'),
-    ('replenish_override', 'Replenished override'),
+    ('replenish_override', 'Replenished Override'),
     ('min_max', 'Min-max')
 ]
 _ITEM_TYPES = [

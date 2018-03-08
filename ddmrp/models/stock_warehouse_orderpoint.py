@@ -48,42 +48,49 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     @api.depends("dlt", "adu", "buffer_profile_id.lead_time_id.factor",
                  "buffer_profile_id.variability_id.factor",
-                 "product_uom.rounding")
+                 "product_uom.rounding", "red_override")
     def _compute_red_zone(self):
         for rec in self:
-            rec.red_base_qty = float_round(
-                rec.dlt * rec.adu * rec.buffer_profile_id.lead_time_id.factor,
-                precision_rounding=rec.product_uom.rounding)
-            rec.red_safety_qty = float_round(
-                rec.red_base_qty * rec.buffer_profile_id.variability_id.factor,
-                precision_rounding=rec.product_uom.rounding)
-            rec.red_zone_qty = rec.red_base_qty + rec.red_safety_qty
+            if rec.replenish_method in ['replenish', 'min_max']:
+                rec.red_base_qty = float_round(
+                    rec.dlt * rec.adu *
+                    rec.buffer_profile_id.lead_time_id.factor,
+                    precision_rounding=rec.product_uom.rounding)
+                rec.red_safety_qty = float_round(
+                    rec.red_base_qty *
+                    rec.buffer_profile_id.variability_id.factor,
+                    precision_rounding=rec.product_uom.rounding)
+                rec.red_zone_qty = rec.red_base_qty + rec.red_safety_qty
+            else:
+                rec.red_zone_qty = rec.red_override
 
     @api.multi
     @api.depends("dlt", "adu", "buffer_profile_id.lead_time_id.factor",
                  "order_cycle", "minimum_order_quantity",
-                 "product_uom.rounding")
+                 "product_uom.rounding", "green_override")
     def _compute_green_zone(self):
         for rec in self:
-            # Using imposed or desired minimum order cycle
-            rec.green_zone_oc = float_round(
-                rec.order_cycle * rec.adu,
-                precision_rounding=rec.product_uom.rounding)
-            # Using lead time factor
-            rec.green_zone_lt_factor = float_round(
-                rec.dlt*rec.adu*rec.buffer_profile_id.lead_time_id.factor,
-                precision_rounding=rec.product_uom.rounding)
-            # Using minimum order quantity
-            rec.green_zone_moq = float_round(
-                rec.minimum_order_quantity,
-                precision_rounding=rec.product_uom.rounding)
+            if rec.replenish_method in ['replenish', 'min_max']:
+                # Using imposed or desired minimum order cycle
+                rec.green_zone_oc = float_round(
+                    rec.order_cycle * rec.adu,
+                    precision_rounding=rec.product_uom.rounding)
+                # Using lead time factor
+                rec.green_zone_lt_factor = float_round(
+                    rec.dlt*rec.adu*rec.buffer_profile_id.lead_time_id.factor,
+                    precision_rounding=rec.product_uom.rounding)
+                # Using minimum order quantity
+                rec.green_zone_moq = float_round(
+                    rec.minimum_order_quantity,
+                    precision_rounding=rec.product_uom.rounding)
 
-            # The biggest option of the above will be used as the green zone
-            #  value
-            rec.green_zone_qty = max(rec.green_zone_oc,
-                                     rec.green_zone_lt_factor,
-                                     rec.green_zone_moq)
-
+                # The biggest option of the above will be used as the green
+                # zone value
+                rec.green_zone_qty = max(rec.green_zone_oc,
+                                         rec.green_zone_lt_factor,
+                                         rec.green_zone_moq)
+            else:
+                rec.green_zone_qty = rec.green_override
             rec.top_of_green = \
                 rec.green_zone_qty + rec.yellow_zone_qty + rec.red_zone_qty
 
@@ -92,15 +99,17 @@ class StockWarehouseOrderpoint(models.Model):
                  "buffer_profile_id.variability_id.factor",
                  "buffer_profile_id.replenish_method",
                  "order_cycle", "minimum_order_quantity",
-                 "product_uom.rounding")
+                 "product_uom.rounding", "yellow_override")
     def _compute_yellow_zone(self):
         for rec in self:
-            if rec.buffer_profile_id.replenish_method == 'min_max':
+            if rec.replenish_method == 'min_max':
                 rec.yellow_zone_qty = 0
-            else:
+            elif rec.replenish_method == 'replenish':
                 rec.yellow_zone_qty = float_round(
                     rec.dlt * rec.adu,
                     precision_rounding=rec.product_uom.rounding)
+            else:
+                rec.yellow_zone_qty = rec.yellow_override
             rec.top_of_yellow = rec.yellow_zone_qty + rec.red_zone_qty
 
     @api.multi
@@ -233,7 +242,21 @@ class StockWarehouseOrderpoint(models.Model):
 
     buffer_profile_id = fields.Many2one(
         comodel_name='stock.buffer.profile',
-        string="Buffer Profile")
+        string="Buffer Profile",
+    )
+    replenish_method = fields.Selection(
+        related="buffer_profile_id.replenish_method",
+        readonly=True,
+    )
+    green_override = fields.Float(
+        string="Green Zone (Override)",
+    )
+    yellow_override = fields.Float(
+        string="Yellow Zone (Override)",
+    )
+    red_override = fields.Float(
+        string="Red Zone (Override)",
+    )
     dlt = fields.Float(string="Decoupled Lead Time (days)",
                        compute="_compute_dlt")
     adu = fields.Float(string="Average Daily Usage (ADU)",
