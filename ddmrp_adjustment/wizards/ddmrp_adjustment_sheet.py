@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017-18 Eficent Business and IT Consulting Services S.L.
 #                   (http://www.eficent.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
@@ -31,7 +30,7 @@ class DdmrpAdjustmentSheet(models.TransientModel):
         return vals
 
     @api.multi
-    def create_lines(self):
+    def _prepare_lines(self):
         self.ensure_one()
         periods = self.env['date.range'].search([
             ('type_id', '=', self.date_range_type_id.id), '|',
@@ -52,7 +51,7 @@ class DdmrpAdjustmentSheet(models.TransientModel):
         for period in periods:
             for factor in factors:
                 vals = self._prepare_line(period, factor)
-                items.append([0, 0, vals])
+                items.append((0, 0, vals))
         return items
 
     @api.multi
@@ -78,21 +77,16 @@ class DdmrpAdjustmentSheet(models.TransientModel):
     apply_daf = fields.Boolean(string="Demand Adjustment Factor")
     apply_ltaf = fields.Boolean(string="Lead Time Adjustment Factor")
 
-    # HACK: https://github.com/OCA/server-tools/pull/492#issuecomment-237594285
-    @api.multi
-    def onchange(self, values, field_name, field_onchange):  # pragma: no cover
-        if "line_ids" in field_onchange:
-            for sub in ("date_range_id", "value", "factor"):
-                field_onchange.setdefault("line_ids." + sub, u"")
-        return super(DdmrpAdjustmentSheet, self).onchange(
-            values, field_name, field_onchange)
-
     @api.onchange('date_range_type_id', 'date_start', 'date_end', 'apply_daf',
                   'apply_ltaf')
     def _onchange_sheet(self):
         self.line_ids = [(6, 0, [])]
-        lines = self.create_lines()
-        self.line_ids = lines
+        if not (self.date_range_type_id and self.date_start and
+                self.date_end and len(self.buffer_ids) > 0):
+            return
+        if self.apply_daf or self.apply_ltaf:
+            lines = self._prepare_lines()
+            self.line_ids = lines
 
     @api.multi
     def button_validate(self):
