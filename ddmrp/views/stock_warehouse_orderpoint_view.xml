@@ -96,6 +96,13 @@
                 <group name="buffer_size_factors"
                        string="Buffer size factors">
                     <field name="buffer_profile_id"/>
+                    <field name="replenish_method" invisible="1"/>
+                    <field name="green_override"
+                           attrs="{'invisible': [('replenish_method', '!=', 'replenish_override')]}"/>
+                    <field name="yellow_override"
+                           attrs="{'invisible': [('replenish_method', '!=', 'replenish_override')]}"/>
+                    <field name="red_override"
+                           attrs="{'invisible': [('replenish_method', '!=', 'replenish_override')]}"/>
                     <label for="dlt"/>
                     <div name="dlt">
                         <field name="dlt" class="oe_inline"/> days
