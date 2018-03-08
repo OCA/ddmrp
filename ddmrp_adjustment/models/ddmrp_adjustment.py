@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017-18 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import fields, models
 
-DAF_string = u"DAF"
-LTAF_string = u"LTAF"
+DAF_string = "DAF"
+LTAF_string = "LTAF"
 
 
 class DdmrpAdjustment(models.Model):

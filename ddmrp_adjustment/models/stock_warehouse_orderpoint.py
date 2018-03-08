@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017-18 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
@@ -26,7 +25,7 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     def _calc_adu(self):
         """Apply DAFs if existing for the buffer."""
-        res = super(StockWarehouseOrderpoint, self)._calc_adu()
+        res = super()._calc_adu()
         self.ensure_one()
         today = fields.Date.today()
         dafs_to_apply = self.env['ddmrp.adjustment'].search([
@@ -39,7 +38,7 @@ class StockWarehouseOrderpoint(models.Model):
             for val in values:
                 daf *= val
             prev = self.adu
-            self.adu *= daf
+            self.with_context(__no_adu_calc=True).adu *= daf
             _logger.debug(
                 "DAF=%s applied to %s. ADU: %s -> %s" %
                 (daf, self.name, prev, self.adu))
@@ -110,7 +109,7 @@ class StockWarehouseOrderpoint(models.Model):
         """Apply extra demand originated by Demand Adjustment Factors to
         components after the cron update of all the buffers."""
         self.env['ddmrp.adjustment.demand'].search([]).unlink()
-        super(StockWarehouseOrderpoint, self).cron_ddmrp_adu(automatic)
+        super().cron_ddmrp_adu(automatic)
         today = fields.Date.today()
         for op in self.search([]).filtered('extra_demand_ids'):
             to_add = sum(op.extra_demand_ids.filtered(
@@ -124,7 +123,7 @@ class StockWarehouseOrderpoint(models.Model):
 
     def _compute_dlt(self):
         """Apply Lead Time Adj Factor if existing"""
-        res = super(StockWarehouseOrderpoint, self)._compute_dlt()
+        res = super()._compute_dlt()
         today = fields.Date.today()
         for rec in self:
             ltaf_to_apply = self.env['ddmrp.adjustment'].search([
