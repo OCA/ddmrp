@@ -236,6 +236,8 @@ class StockWarehouseOrderpoint(models.Model):
             if rec.buffer_profile_id.item_type == 'manufactured':
                 bom = rec._get_manufactured_bom()
                 rec.dlt = bom.dlt
+            elif rec.buffer_profile_id.item_type == 'distributed':
+                rec.dlt = rec.lead_days
             else:
                 rec.dlt = rec.product_id.seller_ids and \
                     rec.product_id.seller_ids[0].delay or rec.lead_days
