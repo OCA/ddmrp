@@ -10,9 +10,17 @@
                ref="ddmrp.view_warehouse_orderpoint_form"/>
         <field name="arch" type="xml">
             <notebook position="inside">
-                <page name="ddmrp_history" string="DDMRP Buffer History">
-                    <div>
-                        <field name="history_chart" widget="bokeh_chart" nolabel="1"/>
+                <page name="planning_history"
+                      string="Planning Chart">
+                    <div style="margin: 3em">
+                        <field name="planning_history_chart"
+                               widget="bokeh_chart" nolabel="1"/>
+                    </div>
+                </page>
+                <page name="execution_history" string="Execution Chart">
+                    <div style="margin: 3em">
+                        <field name="execution_history_chart"
+                               widget="bokeh_chart" nolabel="1"/>
                     </div>
                 </page>
             </notebook>
