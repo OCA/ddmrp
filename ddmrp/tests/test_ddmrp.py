@@ -51,7 +51,7 @@ class TestDdmrp(common.SavepointCase):
         cls.customer_location = cls.env.ref('stock.stock_location_customers')
         cls.uom_unit = cls.env.ref('product.product_uom_unit')
         cls.buffer_profile_pur = cls.env.ref(
-            'ddmrp.stock_buffer_profile_replenish_purchased_short_low')
+            'ddmrp.stock_buffer_profile_replenish_purchased_medium_low')
         cls.group_stock_manager = cls.env.ref('stock.group_stock_manager')
         cls.group_mrp_user = cls.env.ref('mrp.group_mrp_user')
         cls.group_change_procure_qty = cls.env.ref(
