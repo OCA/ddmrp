@@ -358,10 +358,8 @@ class StockWarehouseOrderpoint(models.Model):
 
     @api.multi
     @api.onchange("adu_fixed", "adu_calculation_method")
-    def onchange_adu_fixed(self):
-        for rec in self:
-            if rec.adu_calculation_method.method == 'fixed':
-                rec.adu = self.adu_fixed
+    def onchange_adu(self):
+        self._calc_adu()
 
     @api.multi
     @api.onchange("top_of_green")
@@ -422,7 +420,7 @@ class StockWarehouseOrderpoint(models.Model):
                 ('date', '>=', date_from)]
 
     @api.model
-    def _compute_adu_past_demand(self):
+    def _calc_adu_past_demand(self):
         horizon = 1
         if not self.adu_calculation_method:
             date_from = fields.Date.today()
@@ -466,7 +464,7 @@ class StockWarehouseOrderpoint(models.Model):
                 ('date_expected', '<=', date_to)]
 
     @api.multi
-    def _compute_adu_future_demand(self):
+    def _calc_adu_future_demand(self):
         self.ensure_one()
         horizon = 1
         if not self.adu_calculation_method:
@@ -501,9 +499,9 @@ class StockWarehouseOrderpoint(models.Model):
             if orderpoint.adu_calculation_method.method == 'fixed':
                 orderpoint.adu = orderpoint.adu_fixed
             elif orderpoint.adu_calculation_method.method == 'past':
-                orderpoint.adu = orderpoint._compute_adu_past_demand()
+                orderpoint.adu = orderpoint._calc_adu_past_demand()
             elif orderpoint.adu_calculation_method.method == 'future':
-                orderpoint.adu = orderpoint._compute_adu_future_demand()
+                orderpoint.adu = orderpoint._calc_adu_future_demand()
         return True
 
     @api.multi
