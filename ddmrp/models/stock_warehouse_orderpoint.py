@@ -367,8 +367,9 @@ class StockWarehouseOrderpoint(models.Model):
         for rec in self:
             rec.product_max_qty = self.top_of_green
 
-    @api.model
+    @api.multi
     def _search_open_stock_moves_domain(self):
+        self.ensure_one()
         return [('product_id', '=', self.product_id.id),
                 ('state', 'in', ['draft', 'waiting', 'confirmed',
                                  'assigned']),
@@ -404,8 +405,9 @@ class StockWarehouseOrderpoint(models.Model):
         records = self.env['stock.move'].search(domain)
         return self._stock_move_tree_view(records)
 
-    @api.model
+    @api.multi
     def _past_demand_estimate_domain(self, date_from, date_to, locations):
+        self.ensure_one()
         return [('location_id', 'in', locations.ids),
                 ('product_id', '=', self.product_id.id),
                 ('date_range_id.date_start', '<=', date_to),
@@ -419,8 +421,9 @@ class StockWarehouseOrderpoint(models.Model):
                 ('product_id', '=', self.product_id.id),
                 ('date', '>=', date_from)]
 
-    @api.model
+    @api.multi
     def _calc_adu_past_demand(self):
+        self.ensure_one()
         horizon = 1
         if not self.adu_calculation_method:
             date_from = fields.Date.today()
@@ -448,15 +451,17 @@ class StockWarehouseOrderpoint(models.Model):
                 qty += group['product_qty']
             return qty / horizon
 
-    @api.model
+    @api.multi
     def _future_demand_estimate_domain(self, date_from, date_to, locations):
+        self.ensure_one()
         return [('location_id', 'in', locations.ids),
                 ('product_id', '=', self.product_id.id),
                 ('date_range_id.date_start', '<=', date_to),
                 ('date_range_id.date_end', '>=', date_from)]
 
-    @api.model
+    @api.multi
     def _future_moves_domain(self, date_to, locations):
+        self.ensure_one()
         return [('state', 'not in', ['done', 'cancel']),
                 ('location_id', 'in', locations.ids),
                 ('location_dest_id', 'not in', locations.ids),
