@@ -348,20 +348,20 @@ class StockWarehouseOrderpoint(models.Model):
     @api.onchange("red_zone_qty")
     def onchange_red_zone_qty(self):
         for rec in self:
-            rec.product_min_qty = self.red_zone_qty
+            rec.product_min_qty = rec.red_zone_qty
 
     @api.multi
     @api.onchange("adu_fixed", "adu_calculation_method")
     def onchange_adu_fixed(self):
         for rec in self:
             if rec.adu_calculation_method.method == 'fixed':
-                rec.adu = self.adu_fixed
+                rec.adu = rec.adu_fixed
 
     @api.multi
     @api.onchange("top_of_green")
     def onchange_green_zone_qty(self):
         for rec in self:
-            rec.product_max_qty = self.top_of_green
+            rec.product_max_qty = rec.top_of_green
 
     @api.model
     def _search_open_stock_moves_domain(self):
