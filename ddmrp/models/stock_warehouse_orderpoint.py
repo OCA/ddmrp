@@ -554,7 +554,7 @@ class StockWarehouseOrderpoint(models.Model):
             for move_date in move_dates:
                 demand_by_days[move_date] = 0.0
             for move in moves:
-                date = fields.Datetime.from_string(move.date).date()
+                date = fields.Datetime.from_string(move.date_expected).date()
                 demand_by_days[date] += \
                     move.product_qty - move.reserved_availability
             for date in demand_by_days:
