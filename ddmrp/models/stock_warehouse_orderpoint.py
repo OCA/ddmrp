@@ -354,7 +354,7 @@ class StockWarehouseOrderpoint(models.Model):
     @api.onchange("red_zone_qty")
     def onchange_red_zone_qty(self):
         for rec in self:
-            rec.product_min_qty = self.red_zone_qty
+            rec.product_min_qty = rec.red_zone_qty
 
     @api.multi
     @api.onchange("adu_fixed", "adu_calculation_method")
@@ -365,7 +365,7 @@ class StockWarehouseOrderpoint(models.Model):
     @api.onchange("top_of_green")
     def onchange_green_zone_qty(self):
         for rec in self:
-            rec.product_max_qty = self.top_of_green
+            rec.product_max_qty = rec.top_of_green
 
     @api.multi
     def _search_open_stock_moves_domain(self):
@@ -557,7 +557,7 @@ class StockWarehouseOrderpoint(models.Model):
             for move_date in move_dates:
                 demand_by_days[move_date] = 0.0
             for move in moves:
-                date = fields.Datetime.from_string(move.date).date()
+                date = fields.Datetime.from_string(move.date_expected).date()
                 demand_by_days[date] += \
                     move.product_qty - move.reserved_availability
             for date in demand_by_days:
