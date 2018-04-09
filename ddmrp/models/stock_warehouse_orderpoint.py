@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016-18 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
