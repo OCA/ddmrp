@@ -190,7 +190,6 @@ class TestDdmrp(common.SavepointCase):
             'product_min_qty': 0.0,
             'product_max_qty': 0.0,
             'qty_multiple': 0.0,
-            'dlt': 10,
             'adu_calculation_method': method.id,
             'adu_fixed': 4
         })
@@ -210,7 +209,6 @@ class TestDdmrp(common.SavepointCase):
             'product_min_qty': 0.0,
             'product_max_qty': 0.0,
             'qty_multiple': 0.0,
-            'dlt': 10,
             'adu_calculation_method': method.id,
             'adu_fixed': 4
         })
@@ -246,7 +244,6 @@ class TestDdmrp(common.SavepointCase):
             'product_min_qty': 0.0,
             'product_max_qty': 0.0,
             'qty_multiple': 0.0,
-            'dlt': 10,
             'adu_calculation_method': method.id,
             'adu_fixed': 4
         })
@@ -294,7 +291,6 @@ class TestDdmrp(common.SavepointCase):
             'product_min_qty': 0.0,
             'product_max_qty': 0.0,
             'qty_multiple': 0.0,
-            'dlt': 10,
             'adu_calculation_method': method.id
         })
         self.orderpointModel.cron_ddmrp_adu()
@@ -334,7 +330,6 @@ class TestDdmrp(common.SavepointCase):
             'product_min_qty': 0.0,
             'product_max_qty': 0.0,
             'qty_multiple': 0.0,
-            'dlt': 10,
             'adu_calculation_method': method.id
         })
         self.orderpointModel.cron_ddmrp_adu()
@@ -354,7 +349,6 @@ class TestDdmrp(common.SavepointCase):
             'product_min_qty': 0.0,
             'product_max_qty': 0.0,
             'qty_multiple': 0.0,
-            'dlt': 10,
             'adu_calculation_method': method.id,
             'adu_fixed': 4,
             'adu': 4,
@@ -381,7 +375,6 @@ class TestDdmrp(common.SavepointCase):
             'product_min_qty': 0.0,
             'product_max_qty': 0.0,
             'qty_multiple': 0.0,
-            'dlt': 10,
             'adu_calculation_method': method.id,
             'adu_fixed': 4,
             'adu': 4,
@@ -407,7 +400,6 @@ class TestDdmrp(common.SavepointCase):
             'product_min_qty': 0.0,
             'product_max_qty': 0.0,
             'qty_multiple': 0.0,
-            'dlt': 10,
             'adu_calculation_method': method.id,
             'adu_fixed': 4,
             'adu': 4,
@@ -434,7 +426,6 @@ class TestDdmrp(common.SavepointCase):
             'product_min_qty': 0.0,
             'product_max_qty': 0.0,
             'qty_multiple': 0.0,
-            'dlt': 10,
             'adu_calculation_method': method.id,
             'adu_fixed': 4,
             'adu': 4,
@@ -461,7 +452,6 @@ class TestDdmrp(common.SavepointCase):
             'product_min_qty': 0.0,
             'product_max_qty': 0.0,
             'qty_multiple': 0.0,
-            'dlt': 10,
             'adu_calculation_method': method.id,
             'adu_fixed': 4,
             'adu': 4,
