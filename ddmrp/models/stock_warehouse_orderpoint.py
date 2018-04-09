@@ -345,7 +345,7 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     def write(self, vals):
         super(StockWarehouseOrderpoint, self).write(vals)
-        if not self.env.context.get('__calc_adu'):
+        if not self.env.context.get('__no_adu_calc'):
             self._calc_adu()
         return True
 
@@ -499,7 +499,7 @@ class StockWarehouseOrderpoint(models.Model):
 
     @api.multi
     def _calc_adu(self):
-        for orderpoint in self.with_context(__calc_adu=True):
+        for orderpoint in self.with_context(__no_adu_calc=True):
             if orderpoint.adu_calculation_method.method == 'fixed':
                 orderpoint.adu = orderpoint.adu_fixed
             elif orderpoint.adu_calculation_method.method == 'past':
