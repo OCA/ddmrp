@@ -32,7 +32,7 @@ class PurchaseOrderLine(models.Model):
             'on_hand_percent': None,
         })
 
-    orderpoint_id = fields.Many2one(index=True)
+    orderpoint_id = fields.Many2one(index=True, readonly=True)
     execution_priority_level = fields.Selection(
         string="Buffer On-Hand Status Level",
         selection=_PRIORITY_LEVEL, readonly=True,
