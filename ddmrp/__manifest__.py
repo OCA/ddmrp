@@ -6,7 +6,7 @@
 {
     "name": "DDMRP",
     "summary": "Demand Driven Material Requirements Planning",
-    "version": "10.0.1.0.0",
+    "version": "11.0.1.0.0",
     "author": "Eficent, "
               "Aleph Objects, Inc., "
               "Odoo Community Association (OCA)",
@@ -25,7 +25,6 @@
         "web_widget_bokeh_chart",
         "mrp_mto_with_stock",
         "base_cron_exclusion",
-        "web_tree_many2one_clickable",
     ],
     "data": [
         "data/product_adu_calculation_method_data.xml",
