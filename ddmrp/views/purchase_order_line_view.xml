@@ -28,7 +28,7 @@
         <field name="arch" type="xml">
             <tree default_order='execution_priority_level,on_hand_percent'
                   create="false" editable="top" delete="false">
-                <field name="order_id" widget="many2one_clickable" readonly="True"/>
+                <field name="order_id" widget="many2one" readonly="True"/>
                 <field name="partner_id" string="Vendor"/>
                 <field name="execution_priority_level"
                        options="{

@@ -127,12 +127,17 @@ class StockWarehouseOrderpoint(models.Model):
                  "qty_multiple", "product_uom", "procure_uom_id",
                  "product_uom.rounding")
     def _compute_procure_recommended_qty(self):
+        subtract_qty = self._quantity_in_progress()
         for rec in self:
             procure_recommended_qty = 0.0
             if rec.net_flow_position < rec.top_of_yellow:
-                qty = rec.top_of_green - rec.net_flow_position
+                qty = rec.top_of_green - rec.net_flow_position\
+                      - subtract_qty[rec.id]
                 if qty >= 0.0:
                     procure_recommended_qty = qty
+            else:
+                if subtract_qty[rec.id] > 0.0:
+                    procure_recommended_qty -= subtract_qty[rec.id]
             if procure_recommended_qty > 0.0:
                 reste = rec.qty_multiple > 0 and \
                     procure_recommended_qty % rec.qty_multiple or 0.0
