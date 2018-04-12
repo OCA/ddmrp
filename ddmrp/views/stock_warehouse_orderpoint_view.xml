@@ -195,7 +195,7 @@
         <field name="priority">50</field>
         <field name="arch" type="xml">
             <tree string="Buffer monitor"
-                  colors="red:procure_recommended_qty &gt; 0">
+                  decoration-danger="procure_recommended_qty &gt; 0">
                 <field name="product_id"/>
                 <field name="product_uom" string="UoM"/>
                 <field name="warehouse_id"/>
