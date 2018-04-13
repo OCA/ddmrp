@@ -31,7 +31,7 @@
         "data/product_adu_calculation_method_data.xml",
         "data/stock_buffer_profile_variability_data.xml",
         "data/stock_buffer_profile_lead_time_data.xml",
-        "data/stock_buffer_profile_data.xml",
+        "data/stock.buffer.profile.csv",
         "security/ir.model.access.csv",
         "security/stock_security.xml",
         "views/stock_buffer_profile_view.xml",
