@@ -131,8 +131,9 @@ class StockWarehouseOrderpoint(models.Model):
         for rec in self:
             procure_recommended_qty = 0.0
             if rec.net_flow_position < rec.top_of_yellow:
-                qty = rec.top_of_green - rec.net_flow_position\
-                      - subtract_qty[rec.id]
+                qty = (rec.top_of_green -
+                       rec.net_flow_position -
+                       subtract_qty[rec.id])
                 if qty >= 0.0:
                     procure_recommended_qty = qty
             else:
