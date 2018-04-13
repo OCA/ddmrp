@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016-18 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
@@ -48,42 +47,50 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     @api.depends("dlt", "adu", "buffer_profile_id.lead_time_id.factor",
                  "buffer_profile_id.variability_id.factor",
-                 "product_uom.rounding")
+                 "product_uom.rounding", "red_override",
+                 "lead_days", "product_id.seller_ids.delay")
     def _compute_red_zone(self):
         for rec in self:
-            rec.red_base_qty = float_round(
-                rec.dlt * rec.adu * rec.buffer_profile_id.lead_time_id.factor,
-                precision_rounding=rec.product_uom.rounding)
-            rec.red_safety_qty = float_round(
-                rec.red_base_qty * rec.buffer_profile_id.variability_id.factor,
-                precision_rounding=rec.product_uom.rounding)
-            rec.red_zone_qty = rec.red_base_qty + rec.red_safety_qty
+            if rec.replenish_method in ['replenish', 'min_max']:
+                rec.red_base_qty = float_round(
+                    rec.dlt * rec.adu *
+                    rec.buffer_profile_id.lead_time_id.factor,
+                    precision_rounding=rec.product_uom.rounding)
+                rec.red_safety_qty = float_round(
+                    rec.red_base_qty *
+                    rec.buffer_profile_id.variability_id.factor,
+                    precision_rounding=rec.product_uom.rounding)
+                rec.red_zone_qty = rec.red_base_qty + rec.red_safety_qty
+            else:
+                rec.red_zone_qty = rec.red_override
 
     @api.multi
     @api.depends("dlt", "adu", "buffer_profile_id.lead_time_id.factor",
                  "order_cycle", "minimum_order_quantity",
-                 "product_uom.rounding")
+                 "product_uom.rounding", "green_override")
     def _compute_green_zone(self):
         for rec in self:
-            # Using imposed or desired minimum order cycle
-            rec.green_zone_oc = float_round(
-                rec.order_cycle * rec.adu,
-                precision_rounding=rec.product_uom.rounding)
-            # Using lead time factor
-            rec.green_zone_lt_factor = float_round(
-                rec.dlt*rec.adu*rec.buffer_profile_id.lead_time_id.factor,
-                precision_rounding=rec.product_uom.rounding)
-            # Using minimum order quantity
-            rec.green_zone_moq = float_round(
-                rec.minimum_order_quantity,
-                precision_rounding=rec.product_uom.rounding)
+            if rec.replenish_method in ['replenish', 'min_max']:
+                # Using imposed or desired minimum order cycle
+                rec.green_zone_oc = float_round(
+                    rec.order_cycle * rec.adu,
+                    precision_rounding=rec.product_uom.rounding)
+                # Using lead time factor
+                rec.green_zone_lt_factor = float_round(
+                    rec.dlt*rec.adu*rec.buffer_profile_id.lead_time_id.factor,
+                    precision_rounding=rec.product_uom.rounding)
+                # Using minimum order quantity
+                rec.green_zone_moq = float_round(
+                    rec.minimum_order_quantity,
+                    precision_rounding=rec.product_uom.rounding)
 
-            # The biggest option of the above will be used as the green zone
-            #  value
-            rec.green_zone_qty = max(rec.green_zone_oc,
-                                     rec.green_zone_lt_factor,
-                                     rec.green_zone_moq)
-
+                # The biggest option of the above will be used as the green
+                # zone value
+                rec.green_zone_qty = max(rec.green_zone_oc,
+                                         rec.green_zone_lt_factor,
+                                         rec.green_zone_moq)
+            else:
+                rec.green_zone_qty = rec.green_override
             rec.top_of_green = \
                 rec.green_zone_qty + rec.yellow_zone_qty + rec.red_zone_qty
 
@@ -92,15 +99,18 @@ class StockWarehouseOrderpoint(models.Model):
                  "buffer_profile_id.variability_id.factor",
                  "buffer_profile_id.replenish_method",
                  "order_cycle", "minimum_order_quantity",
-                 "product_uom.rounding")
+                 "product_uom.rounding", "yellow_override",
+                 "red_zone_qty")
     def _compute_yellow_zone(self):
         for rec in self:
-            if rec.buffer_profile_id.replenish_method == 'min_max':
+            if rec.replenish_method == 'min_max':
                 rec.yellow_zone_qty = 0
-            else:
+            elif rec.replenish_method == 'replenish':
                 rec.yellow_zone_qty = float_round(
                     rec.dlt * rec.adu,
                     precision_rounding=rec.product_uom.rounding)
+            else:
+                rec.yellow_zone_qty = rec.yellow_override
             rec.top_of_yellow = rec.yellow_zone_qty + rec.red_zone_qty
 
     @api.multi
@@ -115,19 +125,15 @@ class StockWarehouseOrderpoint(models.Model):
                  "buffer_profile_id.lead_time_id.factor",
                  "red_zone_qty", "order_cycle", "minimum_order_quantity",
                  "qty_multiple", "product_uom", "procure_uom_id",
-                 "product_uom.rounding",
-                 "procurement_ids",
-                 "procurement_ids.product_id",
-                 "procurement_ids.state", "procurement_ids.product_uom",
-                 "procurement_ids.product_qty",
-                 "procurement_ids.add_to_net_flow_equation")
+                 "product_uom.rounding")
     def _compute_procure_recommended_qty(self):
-        subtract_qty = self.subtract_procurements_from_orderpoints()
+        subtract_qty = self._quantity_in_progress()
         for rec in self:
             procure_recommended_qty = 0.0
             if rec.net_flow_position < rec.top_of_yellow:
-                qty = rec.top_of_green - rec.net_flow_position\
-                    - subtract_qty[rec.id]
+                qty = (rec.top_of_green -
+                       rec.net_flow_position -
+                       subtract_qty[rec.id])
                 if qty >= 0.0:
                     procure_recommended_qty = qty
             else:
@@ -222,18 +228,35 @@ class StockWarehouseOrderpoint(models.Model):
              ('location_id', '=', self.location_id.id),
              ('location_id', '=', False)], limit=1)
 
+    @api.depends('lead_days', 'product_id.seller_ids.delay')
     def _compute_dlt(self):
         for rec in self:
             if rec.buffer_profile_id.item_type == 'manufactured':
                 bom = rec._get_manufactured_bom()
                 rec.dlt = bom.dlt
+            elif rec.buffer_profile_id.item_type == 'distributed':
+                rec.dlt = rec.lead_days
             else:
                 rec.dlt = rec.product_id.seller_ids and \
                     rec.product_id.seller_ids[0].delay or rec.lead_days
 
     buffer_profile_id = fields.Many2one(
         comodel_name='stock.buffer.profile',
-        string="Buffer Profile")
+        string="Buffer Profile",
+    )
+    replenish_method = fields.Selection(
+        related="buffer_profile_id.replenish_method",
+        readonly=True,
+    )
+    green_override = fields.Float(
+        string="Green Zone (Override)",
+    )
+    yellow_override = fields.Float(
+        string="Yellow Zone (Override)",
+    )
+    red_override = fields.Float(
+        string="Red Zone (Override)",
+    )
     dlt = fields.Float(string="Decoupled Lead Time (days)",
                        compute="_compute_dlt")
     adu = fields.Float(string="Average Daily Usage (ADU)",
@@ -286,6 +309,10 @@ class StockWarehouseOrderpoint(models.Model):
         compute="_compute_order_spike_threshold", digits=UNIT, store=True)
     qualified_demand = fields.Float(string="Qualified demand", digits=UNIT,
                                     readonly=True)
+    incoming_dlt_qty = fields.Float(
+        string="Incoming (Within DLT)",
+        readonly=True,
+    )
     net_flow_position = fields.Float(string="Net flow position", digits=UNIT,
                                      readonly=True)
     net_flow_position_percent = fields.Float(
@@ -315,27 +342,39 @@ class StockWarehouseOrderpoint(models.Model):
 
     _order = 'planning_priority_level asc, net_flow_position asc'
 
+    @api.model
+    def create(self, vals):
+        record = super(StockWarehouseOrderpoint, self).create(vals)
+        record._calc_adu()
+        return record
+
+    @api.multi
+    def write(self, vals):
+        super(StockWarehouseOrderpoint, self).write(vals)
+        if not self.env.context.get('__no_adu_calc'):
+            self._calc_adu()
+        return True
+
     @api.multi
     @api.onchange("red_zone_qty")
     def onchange_red_zone_qty(self):
         for rec in self:
-            rec.product_min_qty = self.red_zone_qty
+            rec.product_min_qty = rec.red_zone_qty
 
     @api.multi
     @api.onchange("adu_fixed", "adu_calculation_method")
-    def onchange_adu_fixed(self):
-        for rec in self:
-            if rec.adu_calculation_method.method == 'fixed':
-                rec.adu = self.adu_fixed
+    def onchange_adu(self):
+        self._calc_adu()
 
     @api.multi
     @api.onchange("top_of_green")
     def onchange_green_zone_qty(self):
         for rec in self:
-            rec.product_max_qty = self.top_of_green
+            rec.product_max_qty = rec.top_of_green
 
-    @api.model
+    @api.multi
     def _search_open_stock_moves_domain(self):
+        self.ensure_one()
         return [('product_id', '=', self.product_id.id),
                 ('state', 'in', ['draft', 'waiting', 'confirmed',
                                  'assigned']),
@@ -371,22 +410,9 @@ class StockWarehouseOrderpoint(models.Model):
         records = self.env['stock.move'].search(domain)
         return self._stock_move_tree_view(records)
 
-    @api.model
-    def subtract_procurements(self, orderpoint):
-        qty = super(StockWarehouseOrderpoint, self).subtract_procurements(
-            orderpoint)
-        for procurement in orderpoint.procurement_ids:
-            if procurement.state not in ('draft', 'cancel') and \
-                    procurement.add_to_net_flow_equation:
-                qty += procurement.product_uom._compute_quantity(
-                    procurement.product_qty, procurement.product_id.uom_id)
-        if qty >= 0.0:
-            return qty
-        else:
-            return 0.0
-
-    @api.model
+    @api.multi
     def _past_demand_estimate_domain(self, date_from, date_to, locations):
+        self.ensure_one()
         return [('location_id', 'in', locations.ids),
                 ('product_id', '=', self.product_id.id),
                 ('date_range_id.date_start', '<=', date_to),
@@ -400,8 +426,9 @@ class StockWarehouseOrderpoint(models.Model):
                 ('product_id', '=', self.product_id.id),
                 ('date', '>=', date_from)]
 
-    @api.model
-    def _compute_adu_past_demand(self):
+    @api.multi
+    def _calc_adu_past_demand(self):
+        self.ensure_one()
         horizon = 1
         if not self.adu_calculation_method:
             date_from = fields.Date.today()
@@ -429,23 +456,25 @@ class StockWarehouseOrderpoint(models.Model):
                 qty += group['product_qty']
             return qty / horizon
 
-    @api.model
+    @api.multi
     def _future_demand_estimate_domain(self, date_from, date_to, locations):
+        self.ensure_one()
         return [('location_id', 'in', locations.ids),
                 ('product_id', '=', self.product_id.id),
                 ('date_range_id.date_start', '<=', date_to),
                 ('date_range_id.date_end', '>=', date_from)]
 
-    @api.model
+    @api.multi
     def _future_moves_domain(self, date_to, locations):
+        self.ensure_one()
         return [('state', 'not in', ['done', 'cancel']),
                 ('location_id', 'in', locations.ids),
                 ('location_dest_id', 'not in', locations.ids),
                 ('product_id', '=', self.product_id.id),
-                ('date', '<=', date_to)]
+                ('date_expected', '<=', date_to)]
 
     @api.multi
-    def _compute_adu_future_demand(self):
+    def _calc_adu_future_demand(self):
         self.ensure_one()
         horizon = 1
         if not self.adu_calculation_method:
@@ -476,13 +505,13 @@ class StockWarehouseOrderpoint(models.Model):
 
     @api.multi
     def _calc_adu(self):
-        for orderpoint in self:
+        for orderpoint in self.with_context(__no_adu_calc=True):
             if orderpoint.adu_calculation_method.method == 'fixed':
                 orderpoint.adu = orderpoint.adu_fixed
             elif orderpoint.adu_calculation_method.method == 'past':
-                orderpoint.adu = orderpoint._compute_adu_past_demand()
+                orderpoint.adu = orderpoint._calc_adu_past_demand()
             elif orderpoint.adu_calculation_method.method == 'future':
-                orderpoint.adu = orderpoint._compute_adu_future_demand()
+                orderpoint.adu = orderpoint._calc_adu_future_demand()
         return True
 
     @api.multi
@@ -498,55 +527,75 @@ class StockWarehouseOrderpoint(models.Model):
         locations = self.env['stock.location'].search(
             [('id', 'child_of', [self.location_id.id])])
         return [('product_id', '=', self.product_id.id),
-                ('state', 'in', ['draft', 'waiting', 'confirmed',
-                                 'assigned']),
+                ('state', 'in', ['waiting', 'confirmed', 'assigned']),
                 ('location_id', 'in', locations.ids),
                 ('location_dest_id', 'not in', locations.ids),
-                ('date', '<=', date_to)]
+                ('date_expected', '<=', date_to)]
+
+    @api.multi
+    def _search_stock_moves_incoming_domain(self):
+        self.ensure_one()
+        horizon = self.dlt
+        if not horizon:
+            date_to = fields.Date.to_string(fields.date.today())
+
+        else:
+            date_to = fields.Date.to_string(fields.date.today() + timedelta(
+                days=horizon))
+        locations = self.env['stock.location'].search(
+            [('id', 'child_of', [self.location_id.id])])
+        return [('product_id', '=', self.product_id.id),
+                ('state', 'in', ['waiting', 'confirmed', 'assigned']),
+                ('location_id', 'not in', locations.ids),
+                ('location_dest_id', 'in', locations.ids),
+                ('date_expected', '<=', date_to)]
 
     @api.multi
     def _calc_qualified_demand(self):
         for rec in self:
-            rec.refresh()
             rec.qualified_demand = 0.0
             domain = rec._search_stock_moves_qualified_demand_domain()
             moves = self.env['stock.move'].search(domain)
             demand_by_days = {}
             move_dates = [fields.Datetime.from_string(dt).date() for dt in
-                          moves.mapped('date')]
+                          moves.mapped('date_expected')]
             for move_date in move_dates:
                 demand_by_days[move_date] = 0.0
             for move in moves:
-                date = fields.Datetime.from_string(move.date).date()
+                date = fields.Datetime.from_string(move.date_expected).date()
                 demand_by_days[date] += \
                     move.product_qty - move.reserved_availability
-            for date in demand_by_days.keys():
+            for date in demand_by_days:
                 if demand_by_days[date] >= rec.order_spike_threshold \
                         or date <= fields.date.today():
                     rec.qualified_demand += demand_by_days[date]
         return True
 
     @api.multi
+    def _calc_incoming_dlt_qty(self):
+        for rec in self:
+            rec.incoming_dlt_qty = 0.0
+            domain = rec._search_stock_moves_incoming_domain()
+            moves = self.env['stock.move'].search(domain)
+            rec.incoming_dlt_qty = sum(moves.mapped('product_qty'))
+        return True
+
+    @api.multi
     def _calc_net_flow_position(self):
         for rec in self:
-            rec.refresh()
             rec.net_flow_position = \
                 rec.product_location_qty_available_not_res + \
-                rec.incoming_location_qty - rec.qualified_demand
+                rec.incoming_dlt_qty - rec.qualified_demand
             usage = 0.0
             if rec.top_of_green:
                 usage = round((rec.net_flow_position /
                               rec.top_of_green*100), 2)
             rec.net_flow_position_percent = usage
-            procurements_to_update = rec.procurement_ids.filtered(
-                lambda p: p.state not in ('draft', 'cancel'))
-            procurements_to_update.write({'add_to_net_flow_equation': False})
         return True
 
     @api.multi
     def _calc_planning_priority(self):
         for rec in self:
-            rec.refresh()
             if rec.net_flow_position >= rec.top_of_yellow:
                 rec.planning_priority_level = '3_green'
             elif rec.net_flow_position >= rec.top_of_red:
@@ -557,7 +606,6 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     def _calc_execution_priority(self):
         for rec in self:
-            rec.refresh()
             if rec.product_location_qty_available_not_res >= rec.top_of_red:
                 rec.execution_priority_level = '3_green'
             elif rec.product_location_qty_available_not_res >= \
@@ -603,6 +651,7 @@ class StockWarehouseOrderpoint(models.Model):
         enhance extensibility."""
         self.ensure_one()
         self._calc_qualified_demand()
+        self._calc_incoming_dlt_qty()
         self._calc_net_flow_position()
         self._calc_planning_priority()
         self._calc_execution_priority()
@@ -619,6 +668,7 @@ class StockWarehouseOrderpoint(models.Model):
         orderpoints = self.search([])
         i = 0
         j = len(orderpoints)
+        orderpoints.refresh()
         for op in orderpoints:
             i += 1
             _logger.debug("ddmrp cron: %s. (%s/%s)" % (op.name, i, j))

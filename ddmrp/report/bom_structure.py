@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
 # © 2017 Eficent Business and IT Consulting Services S.L.
 #        (http://www.eficent.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from openerp import models
+from odoo import models
 
 
 class BomStructureReport(models.AbstractModel):
-    _inherit = 'report.mrp.report_mrpbomstructure'
+    _inherit = 'report.mrp.mrp_bom_structure_report'
 
     def get_children(self, record, level=0):
         result = []

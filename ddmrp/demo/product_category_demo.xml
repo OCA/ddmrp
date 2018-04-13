@@ -6,5 +6,9 @@
             <field name="name">DDMRP</field>
         </record>
 
+        <record id="product_category_example" model="product.category">
+            <field name="name">Simulating DDMRP Supply Order Generation</field>
+        </record>
+
     </data>
 </odoo>

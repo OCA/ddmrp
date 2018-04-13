@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016-18 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
@@ -7,7 +6,7 @@
 {
     "name": "DDMRP",
     "summary": "Demand Driven Material Requirements Planning",
-    "version": "10.0.1.0.0",
+    "version": "11.0.1.0.0",
     "author": "Eficent, "
               "Aleph Objects, Inc., "
               "Odoo Community Association (OCA)",
@@ -26,7 +25,6 @@
         "web_widget_bokeh_chart",
         "mrp_mto_with_stock",
         "base_cron_exclusion",
-        "web_tree_many2one_clickable",
     ],
     "data": [
         "data/product_adu_calculation_method_data.xml",
@@ -40,7 +38,6 @@
         "views/stock_buffer_profile_lead_time_view.xml",
         "views/product_adu_calculation_method_view.xml",
         "views/stock_warehouse_orderpoint_view.xml",
-        "views/procurement_order_view.xml",
         "views/mrp_production_view.xml",
         "views/purchase_order_line_view.xml",
         "views/mrp_bom_view.xml",
@@ -54,6 +51,8 @@
         "demo/product_supplierinfo_demo.xml",
         "demo/mrp_bom_demo.xml",
         "demo/stock_warehouse_orderpoint_demo.xml",
+        "demo/initial_on_hand_demo.xml",
+        "demo/supply_demand_demo.yml",
     ],
     "license": "AGPL-3",
     'installable': True,

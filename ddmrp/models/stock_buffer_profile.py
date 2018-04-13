@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016-18 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
@@ -8,7 +7,7 @@ from odoo import api, fields, models
 
 _REPLENISH_METHODS = [
     ('replenish', 'Replenished'),
-    ('replenish_override', 'Replenished override'),
+    ('replenish_override', 'Replenished Override'),
     ('min_max', 'Min-max')
 ]
 _ITEM_TYPES = [
