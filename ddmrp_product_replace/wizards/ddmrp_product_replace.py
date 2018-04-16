@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
@@ -44,6 +43,19 @@ class DdmrpProductReplace(models.TransientModel):
         default=True,
     )
 
+    def _prepare_copy_putaway_dict(self, from_product, to_product):
+        putaways = (
+            from_product.product_putaway_ids or
+            from_product.product_tmpl_id.product_putaway_ids
+        )
+        return [
+            (0, 0, {
+                'putaway_id': p.putaway_id.id,
+                'fixed_location_id': p.fixed_location_id.id,
+                'product_tmpl_id': to_product.product_tmpl_id.id
+            }) for p in putaways
+        ]
+
     @api.multi
     def button_validate(self):
         self.ensure_one()
@@ -54,15 +66,15 @@ class DdmrpProductReplace(models.TransientModel):
             )
             if not self.copy_route:
                 default['route_ids'] = None
+            self.new_product_id = self.old_product_id.copy(
+                default=default)
             if (self.copy_putaway and (
                     self.old_product_id.product_putaway_ids or
                     self.old_product_id.product_tmpl_id.product_putaway_ids)):
-                default['product_putaway_ids'] = [
-                    (6, 0, self.old_product_id.product_putaway_ids.ids or
-                     self.old_product_id.product_tmpl_id.
-                     product_putaway_ids.ids)]
-            self.new_product_id = self.old_product_id.copy(
-                default=default)
+                self.new_product_id.write({
+                    'product_putaway_ids': self._prepare_copy_putaway_dict(
+                        self.old_product_id, self.new_product_id)
+                })
         elif self.use_existing == 'existing':
             if self.copy_route:
                 self.new_product_id.write({
@@ -72,10 +84,8 @@ class DdmrpProductReplace(models.TransientModel):
                     self.old_product_id.product_putaway_ids or
                     self.old_product_id.product_tmpl_id.product_putaway_ids)):
                 self.new_product_id.write({
-                    'product_putaway_ids': [
-                        (6, 0, self.old_product_id.product_putaway_ids.ids or
-                         self.old_product_id.product_tmpl_id.
-                         product_putaway_ids.ids)],
+                    'product_putaway_ids': self._prepare_copy_putaway_dict(
+                        self.old_product_id, self.new_product_id),
                 })
         if self.orderpoint_ids:
             vals = {
