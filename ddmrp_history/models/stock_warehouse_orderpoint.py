@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
@@ -56,12 +55,12 @@ class StockWarehouseOrderpoint(models.Model):
 
     def _compute_history_chart(self):
         def stacked(df, categories):
-            areas = dict()
+            areas = {}
             last = np.zeros(len(df[categories[0]]))
             for cat in categories:
-                next = last + df[cat]
-                areas[cat] = np.hstack((last[::-1], next))
-                last = next
+                _next = last + df[cat]
+                areas[cat] = np.hstack((last[::-1], _next))
+                last = _next
             return areas
 
         for rec in self:
@@ -128,33 +127,32 @@ class StockWarehouseOrderpoint(models.Model):
         start_stack = 0
 
         def stacked(df, categories):
-            areas = dict()
+            areas = {}
             last = np.zeros(len(df[categories[0]]))
             last += start_stack
             for cat in categories:
-                next = last + df[cat]
-                areas[cat] = np.hstack((last[::-1], next))
-                last = next
+                _next = last + df[cat]
+                areas[cat] = np.hstack((last[::-1], _next))
+                last = _next
             return areas
 
+        history_model = self.env['ddmrp.history']
+
         for rec in self:
-            history_oh = self.env['ddmrp.history'].search([
-                ('orderpoint_id', '=', rec.id)], order='on_hand_position desc',
-                limit=1)
-            history_tog = self.env['ddmrp.history'].search([
-                ('orderpoint_id', '=', rec.id)], order='top_of_green desc',
-                limit=1)
+            domain = [('orderpoint_id', '=', rec.id)]
+            history_oh = history_model.search(
+                domain, order='on_hand_position desc', limit=1)
+            history_tog = history_model.search(
+                domain, order='top_of_green desc', limit=1)
             finish_stack = max(history_oh.on_hand_position,
                                history_tog.top_of_green)
 
-            history = self.env['ddmrp.history'].search([
-                ('orderpoint_id', '=', rec.id)], order='on_hand_position asc',
-                limit=1)
+            history = history_model.search(
+                domain, order='on_hand_position asc', limit=1)
             start_stack = history.on_hand_position
             if start_stack >= 0.0:
                 start_stack = 0.0
-            history = self.env['ddmrp.history'].search([
-                ('orderpoint_id', '=', rec.id)], order='date')
+            history = history_model.search(domain, order='date')
             if len(history) < 2:
                 rec.history_chart = _("Not enough data available.")
                 continue
