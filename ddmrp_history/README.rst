@@ -12,7 +12,7 @@ Installation
 
 You need to install the python pandas library::
 
-    pip install pandas==0.20.0
+    pip install pandas==0.22.0
 
 Usage
 =====
@@ -42,6 +42,7 @@ Contributors
 
 * Lois Rilo <lois.rilo@eficent.com>
 * Jordi Ballester <jordi.ballester@eficent.com>
+* Akim Juillerat <akim.juillerat@camptocamp.com>
 
 Maintainer
 ----------
