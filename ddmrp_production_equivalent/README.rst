@@ -49,6 +49,7 @@ Contributors
 ------------
 
 * Antonio Yamuta <ayamuta@opensourceintegrators.com>
+* Maxime Chambreuil <mchambreuil@opensourceintegrators.com>
 
 Funders
 -------

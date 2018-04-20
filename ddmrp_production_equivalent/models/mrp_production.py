@@ -1,7 +1,7 @@
 # Copyright (C) 2018 - TODAY, Open Source Integrators
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models
+from odoo import models, _
 
 
 class MrpProduction(models.Model):
@@ -15,8 +15,9 @@ class MrpProduction(models.Model):
         p_obj = self.env['product.product']
         products = p_obj.search(self._get_product_search_criteria(bom_line),
                                 order='priority asc, id asc')
-        # exclude the non-equivalent parts listed in the BOM line
-        products -= bom_line.nonequivalent_product_ids
+        # exclude the non-equivalent parts listed in the BOM line and the
+        # current product
+        products -= bom_line.nonequivalent_product_ids + bom_line.product_id
         product = False
         for product in products:
             if product.orderpoint_ids and \
@@ -36,8 +37,12 @@ class MrpProduction(models.Model):
         product_equivalent = self._get_product_equivalent(bom_line,
                                                           line_data['qty'])
         if product_equivalent:
+            body = _('%s has been replaced by %s.' %
+                     (sm.product_id.name_get()[0][1],
+                      product_equivalent.name_get()[0][1]))
             sm.write({
                 'price_unit': product_equivalent.standard_price,
                 'product_id': product_equivalent.id,
             })
+            self.message_post(body=body)
         return sm
