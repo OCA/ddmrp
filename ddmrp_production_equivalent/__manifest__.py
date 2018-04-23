@@ -4,7 +4,7 @@
 {
     "name": "MRP BoM Equivalences when Production Order is Created",
     "summary": "Use equivalences of a part when appropriate",
-    "version": "11.0.1.0.1",
+    "version": "11.0.1.0.2",
     "license": "AGPL-3",
     "author": "Open Source Integrators, Odoo Community Association (OCA)",
     "category": "MRP",

@@ -18,13 +18,14 @@ class MrpProduction(models.Model):
         # exclude the non-equivalent parts listed in the BOM line and the
         # current product
         products -= bom_line.nonequivalent_product_ids + bom_line.product_id
-        product = False
+        product_eq = False
         for product in products:
             if product.orderpoint_ids and \
                product.orderpoint_ids[0].planning_priority_level == '3_green':
                     if product.qty_available > requested_qty:
+                        product_eq = product
                         break
-        return product
+        return product_eq
 
     def _generate_raw_move(self, bom_line, line_data):
         sm = super(MrpProduction, self)._generate_raw_move(bom_line, line_data)
