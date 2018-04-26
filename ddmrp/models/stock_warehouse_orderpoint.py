@@ -342,19 +342,6 @@ class StockWarehouseOrderpoint(models.Model):
 
     _order = 'planning_priority_level asc, net_flow_position asc'
 
-    @api.model
-    def create(self, vals):
-        record = super(StockWarehouseOrderpoint, self).create(vals)
-        record._calc_adu()
-        return record
-
-    @api.multi
-    def write(self, vals):
-        super(StockWarehouseOrderpoint, self).write(vals)
-        if not self.env.context.get('__no_adu_calc'):
-            self._calc_adu()
-        return True
-
     @api.multi
     @api.onchange("red_zone_qty")
     def onchange_red_zone_qty(self):
@@ -505,7 +492,7 @@ class StockWarehouseOrderpoint(models.Model):
 
     @api.multi
     def _calc_adu(self):
-        for orderpoint in self.with_context(__no_adu_calc=True):
+        for orderpoint in self:
             if orderpoint.adu_calculation_method.method == 'fixed':
                 orderpoint.adu = orderpoint.adu_fixed
             elif orderpoint.adu_calculation_method.method == 'past':
