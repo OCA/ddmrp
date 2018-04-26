@@ -38,7 +38,7 @@ class StockWarehouseOrderpoint(models.Model):
             for val in values:
                 daf *= val
             prev = self.adu
-            self.with_context(__no_adu_calc=True).adu *= daf
+            self.adu *= daf
             _logger.debug(
                 "DAF=%s applied to %s. ADU: %s -> %s" %
                 (daf, self.name, prev, self.adu))
