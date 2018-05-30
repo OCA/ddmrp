@@ -39,7 +39,7 @@
                        &quot;bg_color&quot;: &quot;red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'&quot;,
                        &quot;fg_color&quot;: &quot;white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'&quot;}"/>
                 <field name="product_id" readonly="True"/>
-                <field name="orderpoint_id" string="Buffer"/>
+                <field name="orderpoint_ids" string="Buffers" widget="many2many_tags" readonly="1"/>
                 <field name="date_planned"  widget="date" readonly="True"/>
                 <field name="state"/>
                 <field name="ddmrp_comment"/>
@@ -90,7 +90,7 @@
         <field name="name">PO lines On-Hand Status</field>
         <field name="res_model">purchase.order.line</field>
         <field name="view_id" ref="purchase_order_line_execution_tree"/>
-        <field name="domain">[('orderpoint_id','!=',False), ('execution_priority_level','!=',False)]</field>
+        <field name="domain">[('orderpoint_ids','!=',False), ('execution_priority_level','!=',False)]</field>
         <field name="view_mode">tree</field>
     </record>
 

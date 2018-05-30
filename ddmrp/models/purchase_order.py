@@ -14,25 +14,6 @@ class PurchaseOrder(models.Model):
 class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
-    def create(self, vals):
-        record = super(PurchaseOrderLine, self).create(vals)
-        record._calc_execution_priority()
-        return record
-
-    @api.multi
-    def _calc_execution_priority(self):
-        prods = self.filtered(
-            lambda r: r.orderpoint_id and r.state not in ['done', 'cancel'])
-        for rec in prods:
-            rec.execution_priority_level = \
-                rec.orderpoint_id.execution_priority_level
-            rec.on_hand_percent = rec.orderpoint_id.on_hand_percent
-        (self - prods).write({
-            'execution_priority_level': None,
-            'on_hand_percent': None,
-        })
-
-    orderpoint_id = fields.Many2one(index=True, readonly=True)
     execution_priority_level = fields.Selection(
         string="Buffer On-Hand Status Level",
         selection=_PRIORITY_LEVEL, readonly=True,
@@ -41,3 +22,22 @@ class PurchaseOrderLine(models.Model):
         string="On Hand/TOR (%)", readonly=True,
     )
     ddmrp_comment = fields.Text(related="order_id.ddmrp_comment")
+
+    def create(self, vals):
+        record = super(PurchaseOrderLine, self).create(vals)
+        record._calc_execution_priority()
+        return record
+
+    @api.multi
+    def _calc_execution_priority(self):
+        # TODO: handle serveral orderpoints? worst scenario, average?
+        to_compute = self.filtered(
+            lambda r: r.orderpoint_ids and r.state not in ['done', 'cancel'])
+        for rec in to_compute:
+            rec.execution_priority_level = \
+                rec.orderpoint_ids[0].execution_priority_level
+            rec.on_hand_percent = rec.orderpoint_ids[0].on_hand_percent
+        (self - to_compute).write({
+            'execution_priority_level': None,
+            'on_hand_percent': None,
+        })
