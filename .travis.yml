@@ -6,7 +6,7 @@ cache:
     - $HOME/.cache/pip
 
 python:
-  - "2.7"
+  - "3.5"
 
 addons:
   apt:
@@ -19,17 +19,14 @@ addons:
 
 env:
   global:
-  - VERSION="9.0" TESTS="0" LINT_CHECK="0" TRANSIFEX="0"
+  - VERSION="11.0" TESTS="0" LINT_CHECK="0" TRANSIFEX="0"
   - TRANSIFEX_USER='transbot@odoo-community.org'
   - secure: HgKcIRHgUR14+T9TRJvGAd2jn9cSChN87zrYPSZ2p63i/6+MU+WaK3lFf6T0NIjHQUvMMpZ1Cu+OFymvjbIEtvPeglaBVUA9ZED5vrW6ED2p24c09ADdQa3LeBoqLxholaYtbbaQrLNWEnZF0pY4Qk9ZQsHkj2LTpV+M+tOYwpM=
   matrix:
   - LINT_CHECK="1"
   - TRANSIFEX="1"
-  - TESTS="0" ODOO_REPO="odoo/odoo"
-  - TESTS="0" ODOO_REPO="OCA/OCB"
-
-virtualenv:
-  system_site_packages: true
+  - TESTS="1" ODOO_REPO="odoo/odoo"
+  - TESTS="1" ODOO_REPO="OCA/OCB"
 
 install:
   - git clone https://github.com/OCA/maintainer-quality-tools.git $HOME/maintainer-quality-tools

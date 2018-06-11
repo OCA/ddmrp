@@ -1,4 +1,4 @@
 stock-logistics-warehouse
 web
-manufacture
+manufacture https://github.com/StephanRozendaal/manufacture 11.0-merge-bom-location
 server-tools
