@@ -55,14 +55,11 @@ class MrpBom(models.Model):
         for bom in self:
             bom.is_buffered = True if bom.orderpoint_id else False
 
-    @api.depends(
-        'location_id', 'product_id.product_tmpl_id.mrp_mts_mto_location_ids')
+    @api.depends('location_id')
     def _compute_mto_rule(self):
+        # TODO: fix
         for rec in self:
-            template = rec.product_id.product_tmpl_id or rec.product_tmpl_id
-            rec.has_mto_rule = True if (
-                rec.location_id in
-                template.mrp_mts_mto_location_ids) else False
+            rec.has_mto_rule = False
 
     @api.multi
     def _get_longest_path(self):
@@ -166,6 +163,4 @@ class MrpBomLine(models.Model):
     @api.depends('location_id')
     def _compute_mto_rule(self):
         for rec in self:
-            rec.has_mto_rule = True if (
-                rec.location_id in
-                rec.product_id.mrp_mts_mto_location_ids) else False
+            rec.has_mto_rule = False
