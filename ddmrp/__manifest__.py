@@ -24,7 +24,7 @@
         "stock_orderpoint_manual_procurement",
         "stock_demand_estimate",
         "web_widget_bokeh_chart",
-        "mrp_mto_with_stock",
+        "mrp_multi_level",
         "base_cron_exclusion",
     ],
     "data": [
