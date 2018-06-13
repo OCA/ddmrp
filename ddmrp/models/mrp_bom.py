@@ -28,8 +28,10 @@ class MrpBom(models.Model):
     )
 
     def _get_search_buffer_domain(self):
-        product = self.product_id or \
-            self.product_tmpl_id.product_variant_ids[0]
+        product = self.product_id
+        if not product:
+            if self.product_tmpl_id.product_variant_ids:
+                product = self.product_tmpl_id.product_variant_ids[0]
         domain = [('product_id', '=', product.id),
                   ('buffer_profile_id', '!=', False)]
         if self.location_id:
