@@ -893,3 +893,40 @@ class TestDdmrp(common.SavepointCase):
         self.assertEqual(self.bomA.has_mto_rule, True)
 
 
+class TestBomDLT(common.TransactionCase):
+    def setUp(self):
+        super(TestBomDLT, self).setUp()
+        self.orderpointModel = self.env['stock.warehouse.orderpoint']
+        self.buffer_profile_pur = self.env.ref(
+            'ddmrp.stock_buffer_profile_replenish_purchased_medium_low')
+        self.warehouse = self.env.ref('stock.warehouse0')
+
+    def test_bom_dlt_20(self):
+        bom_fpa = self.env.ref('ddmrp.mrp_bom_fpa')
+        self.assertEqual(bom_fpa.dlt, 20)
+        # Add buffer on 301
+
+    def test_bom_dlt_buffer_301(self):
+        # Add a buffer on product 301
+        product_301 = self.env.ref('ddmrp.product_product_301')
+        orderpointA = self.orderpointModel.create({
+            'buffer_profile_id': self.buffer_profile_pur.id,
+            'product_id': product_301.id,
+            'warehouse_id': self.warehouse.id,
+            'product_min_qty': 0.0,
+            'product_max_qty': 0.0,
+        })
+        bom_fpa = self.env.ref('ddmrp.mrp_bom_fpa')
+        self.assertEqual(bom_fpa.dlt, 7.0)
+
+    def test_bom_dlt_remove_buffer_302p(self):
+        orderpoint302p = self.env.ref('ddmrp.stock_warehouse_orderpoint_302p')
+        orderpoint302p.unlink()
+        bom_fpa = self.env.ref('ddmrp.mrp_bom_fpa')
+        self.assertEqual(bom_fpa.dlt, 20.0)
+
+    def test_bom_dlt_remove_buffer_402p(self):
+        orderpoint402p = self.env.ref('ddmrp.stock_warehouse_orderpoint_402p')
+        orderpoint402p.unlink()
+        bom_fpa = self.env.ref('ddmrp.mrp_bom_fpa')
+        self.assertEqual(bom_fpa.dlt, 37.0)
