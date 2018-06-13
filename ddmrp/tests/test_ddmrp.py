@@ -837,3 +837,42 @@ class TestDdmrp(common.SavepointCase):
         # We expect that the procurement recommendation is now 0
         expected_value = 0.0
         self.assertEqual(orderpointA.procure_recommended_qty, expected_value)
+
+    def test_bom_orderpoint(self):
+        # Check if is_buffered and orderpoint_id are not set
+        self.assertEqual(self.bomA.is_buffered, False)
+        self.assertEqual(len(self.bomA.orderpoint_id), 0)
+        product = self.productA
+        orderpointA = self.orderpointModel.create({
+            'buffer_profile_id': self.buffer_profile_pur.id,
+            'product_id': product.id,
+            'warehouse_id': self.warehouse.id,
+            'product_min_qty': 0.0,
+            'product_max_qty': 0.0,
+        })
+        # Create a new bom to trigger the compute functions
+        bomB = self.bomModel.create({
+            'product_id': product.id,
+            'product_tmpl_id': product.product_tmpl_id.id,
+        })
+        # Check if is_buffered and orderpoint_id are set
+        self.assertEqual(bomB.is_buffered, True)
+        self.assertEqual(bomB.orderpoint_id, orderpointA)
+        # Create another orderpoint with a location, then change the bom
+        # location
+        orderpointB = self.orderpointModel.create({
+            'buffer_profile_id': self.buffer_profile_pur.id,
+            'product_id': product.id,
+            'warehouse_id': self.warehouse.id,
+            'location_id': self.supplier_location.id,
+            'product_min_qty': 0.0,
+            'product_max_qty': 0.0,
+        })
+        bomB.location_id = self.supplier_location.id
+        self.assertEqual(bomB.is_buffered, True)
+        self.assertEqual(bomB.orderpoint_id, orderpointB)
+        bomC = self.env['mrp.bom'].create({
+            'product_tmpl_id': product.product_tmpl_id.id
+        })
+        self.assertEqual(bomC.is_buffered, True)
+        self.assertEqual(bomC.orderpoint_id, orderpointA)
