@@ -15,7 +15,7 @@ class MrpBom(models.Model):
     )
     orderpoint_id = fields.Many2one(
         comodel_name='stock.warehouse.orderpoint', string='Orderpoint',
-        compute="_compute_is_buffered",
+        compute="_compute_orderpoint",
     )
     dlt = fields.Float(
         string="Decoupled Lead Time (days)",
@@ -36,13 +36,23 @@ class MrpBom(models.Model):
             domain.append(('location_id', '=', self.location_id.id))
         return domain
 
-    def _compute_is_buffered(self):
-        for bom in self:
-            domain = bom._get_search_buffer_domain()
+    #TODO: try orderpoint from related product_id
+    @api.depends('product_id', 'product_tmpl_id', 'location_id')
+    def _compute_orderpoint(self):
+        for record in self:
+            domain = record._get_search_buffer_domain()
+            # NOTE: It can be possible to find multiple orderpoints.
+            # For example if the BoM has no location set, and there
+            # are orderpoints with the same product_id and buffer_profile_id
+            # You do not know which one the search function finds.
             orderpoint = self.env['stock.warehouse.orderpoint'].search(
                 domain, limit=1)
-            bom.orderpoint_id = orderpoint
-            bom.is_buffered = True if orderpoint else False
+            record.orderpoint_id = orderpoint
+
+    @api.depends('orderpoint_id')
+    def _compute_is_buffered(self):
+        for bom in self:
+            bom.is_buffered = True if bom.orderpoint_id else False
 
     def _compute_mto_rule(self):
         for rec in self:
