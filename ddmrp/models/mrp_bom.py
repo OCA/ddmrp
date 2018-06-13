@@ -56,6 +56,7 @@ class MrpBom(models.Model):
         for bom in self:
             bom.is_buffered = True if bom.orderpoint_id else False
 
+    @api.depends('location_id', 'product_id.product_tmpl_id.mrp_mts_mto_location_ids')
     def _compute_mto_rule(self):
         for rec in self:
             template = rec.product_id.product_tmpl_id or rec.product_tmpl_id
@@ -153,6 +154,7 @@ class MrpBomLine(models.Model):
             line.orderpoint_id = orderpoint
             line.is_buffered = True if orderpoint else False
 
+    @api.depends('product_id')
     def _compute_dlt(self):
         for rec in self:
             if rec.product_id.bom_ids:
@@ -161,6 +163,7 @@ class MrpBomLine(models.Model):
                 rec.dlt = rec.product_id.seller_ids and \
                     rec.product_id.seller_ids[0].delay or 0.0
 
+    @api.depends('location_id')
     def _compute_mto_rule(self):
         for rec in self:
             rec.has_mto_rule = True if (
