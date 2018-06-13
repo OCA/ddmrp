@@ -876,3 +876,20 @@ class TestDdmrp(common.SavepointCase):
         })
         self.assertEqual(bomC.is_buffered, True)
         self.assertEqual(bomC.orderpoint_id, orderpointA)
+
+    def test_bom_mto_rule(self):
+        self.assertEqual(self.bomA.has_mto_rule, False)
+        orderpointA = self.orderpointModel.create({
+            'buffer_profile_id': self.buffer_profile_pur.id,
+            'product_id': self.productA.id,
+            'warehouse_id': self.warehouse.id,
+            'product_min_qty': 0.0,
+            'product_max_qty': 0.0,
+        })
+        self.bomA.location_id = self.supplier_location
+        self.bomA.product_id.product_tmpl_id.mrp_mts_mto_location_ids += (
+            self.supplier_location
+        )
+        self.assertEqual(self.bomA.has_mto_rule, True)
+
+
