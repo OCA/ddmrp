@@ -2,3 +2,4 @@
 
 from . import stock_scheduler_compute
 from . import multi_level_mrp
+from . import make_procurement_orderpoint
