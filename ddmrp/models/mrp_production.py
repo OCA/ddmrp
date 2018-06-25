@@ -3,12 +3,32 @@
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+from datetime import timedelta
+
 from odoo import api, fields, models
 from .stock_warehouse_orderpoint import _PRIORITY_LEVEL
+from odoo.fields import Datetime as Dt
 
 
 class MrpProduction(models.Model):
     _inherit = 'mrp.production'
+
+    # TODO: remove after PR https://github.com/odoo/odoo/pull/25424 has
+    # been merged
+    @api.onchange('date_planned_start', 'product_id')
+    def onchange_date_planned(self):
+        self.date_planned_finished = Dt.from_string(
+            self.date_planned_start) + timedelta(
+            days=self.product_id.produce_delay)
+
+    # TODO: remove after PR https://github.com/odoo/odoo/pull/25424 has
+    # been merged
+    def _generate_finished_moves(self):
+        move = super(MrpProduction, self)._generate_finished_moves()
+        move.write({
+            'date': self.date_planned_finished,
+            'date_expected': self.date_planned_finished,
+        })
 
     @api.model
     def create(self, vals):
