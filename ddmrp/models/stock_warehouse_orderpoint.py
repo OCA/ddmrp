@@ -333,6 +333,8 @@ class StockWarehouseOrderpoint(models.Model):
     mrp_production_ids = fields.One2many(
         string='Manufacturing Orders', comodel_name='mrp.production',
         inverse_name='orderpoint_id')
+    purchase_line_ids = fields.Many2many(comodel_name='purchase.order.line',
+                                         string='PO Lines', copy=False)
     ddmrp_chart = fields.Text(string='DDMRP Chart',
                               compute=_compute_ddmrp_chart)
 
