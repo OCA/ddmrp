@@ -113,21 +113,21 @@ Decoupled Lead Time computation
 
 The DLT is automatically computed by the system.
 
-A) For manufactured products' buffers just remember to provide and
-   set properly the following information:
+For manufactured products' buffers just remember to provide and
+set properly the following information:
 
-* The *Manufacturing Lead Time* for the manufactured product. It can be found
-  at the product form view under the tab *Sales*.
-* The *Delivery Lead Time* for the preferred vendor of a product. This is
-  important for the products which are purchased and are components in any
-  Bill of Materials.
+  * The *Manufacturing Lead Time* for the manufactured product. It can be found
+    at the product form view under the tab *Sales*.
+  * The *Delivery Lead Time* for the preferred vendor of a product. This is
+    important for the products which are purchased and are components in any
+    Bill of Materials.
 
-B) For purchased/distributed products' buffers the logic is simpler.
+For purchased/distributed products' buffers the logic is simpler.
 
-* In the first place the system will look if there are Vendors for the product,
-  if so it will use the *Delivery Lead Time* of the preferred one.
-* In case of absence of vendors, the *Lead Time* at the bottom of the Buffer
-  form view will be used.
+  * In the first place the system will look if there are Vendors for the product,
+    if so it will use the *Delivery Lead Time* of the preferred one.
+  * In case of absence of vendors, the *Lead Time* at the bottom of the Buffer
+    form view will be used.
 
 Usage
 =====
