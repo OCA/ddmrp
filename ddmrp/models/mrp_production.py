@@ -13,6 +13,19 @@ from odoo.fields import Datetime as Dt
 class MrpProduction(models.Model):
     _inherit = 'mrp.production'
 
+    orderpoint_id = fields.Many2one(
+        comodel_name='stock.warehouse.orderpoint',
+        index=True,
+        string="Reordering rule"
+    )
+    execution_priority_level = fields.Selection(
+        string="Buffer On-Hand Alert Level",
+        selection=_PRIORITY_LEVEL, readonly=True,
+    )
+    on_hand_percent = fields.Float(
+        string="On Hand/TOR (%)",
+    )
+
     # TODO: remove after PR https://github.com/odoo/odoo/pull/25424 has
     # been merged
     @api.onchange('date_planned_start', 'product_id')
@@ -74,16 +87,3 @@ class MrpProduction(models.Model):
                 % (operator, value)
             )
         return [('id', 'in', found_ids)]
-
-    orderpoint_id = fields.Many2one(
-        comodel_name='stock.warehouse.orderpoint',
-        index=True,
-        string="Reordering rule"
-    )
-    execution_priority_level = fields.Selection(
-        string="Buffer On-Hand Alert Level",
-        selection=_PRIORITY_LEVEL, readonly=True,
-    )
-    on_hand_percent = fields.Float(
-        string="On Hand/TOR (%)",
-    )
