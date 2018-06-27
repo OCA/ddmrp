@@ -42,6 +42,7 @@
         "views/mrp_production_view.xml",
         "views/purchase_order_line_view.xml",
         "views/mrp_bom_view.xml",
+        "views/stock_move_views.xml",
         "views/report_mrpbomstructure.xml",
         "data/ir_cron.xml",
     ],
