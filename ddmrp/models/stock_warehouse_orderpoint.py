@@ -617,15 +617,15 @@ class StockWarehouseOrderpoint(models.Model):
             try:
                 i += 1
                 _logger.debug("ddmrp cron_adu: %s. (%s/%s)" % (op.name, i, j))
-                op._calc_adu()
                 if automatic:
-                    self.env.cr.commit()
-            except Exception:
-                if automatic:
-                    self.env.cr.rollback()
-                    _logger.exception(
-                        'Fail to compute ADU for orderpoint %s', op.name)
+                    with self.env.cr.savepoint():
+                        op._calc_adu()
                 else:
+                    op._calc_adu()
+            except Exception:
+                _logger.exception(
+                    'Fail to compute ADU for orderpoint %s', op.name)
+                if not automatic:
                     raise
         _logger.info("End cron_ddmrp_adu.")
         return True
@@ -658,16 +658,16 @@ class StockWarehouseOrderpoint(models.Model):
             i += 1
             _logger.debug("ddmrp cron: %s. (%s/%s)" % (op.name, i, j))
             try:
-                op.cron_actions()
                 if automatic:
-                    self.env.cr.commit()
-            except Exception:
-                if automatic:
-                    self.env.cr.rollback()
-                    _logger.exception(
-                        'Fail to create recurring invoice for orderpoint %s',
-                        op.name)
+                    with self.env.cr.savepoint():
+                        op.cron_actions()
                 else:
+                    op.cron_actions()
+            except Exception:
+                _logger.exception(
+                    'Fail to create recurring invoice for orderpoint %s',
+                    op.name)
+                if not automatic:
                     raise
         _logger.info("End cron_ddmrp.")
 
