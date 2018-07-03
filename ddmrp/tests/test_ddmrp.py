@@ -879,7 +879,7 @@ class TestDdmrp(common.SavepointCase):
 
     def test_bom_mto_rule(self):
         self.assertEqual(self.bomA.has_mto_rule, False)
-        orderpointA = self.orderpointModel.create({
+        self.orderpointModel.create({
             'buffer_profile_id': self.buffer_profile_pur.id,
             'product_id': self.productA.id,
             'warehouse_id': self.warehouse.id,
@@ -909,7 +909,7 @@ class TestBomDLT(common.TransactionCase):
     def test_bom_dlt_buffer_301(self):
         # Add a buffer on product 301
         product_301 = self.env.ref('ddmrp.product_product_301')
-        orderpointA = self.orderpointModel.create({
+        self.orderpointModel.create({
             'buffer_profile_id': self.buffer_profile_pur.id,
             'product_id': product_301.id,
             'warehouse_id': self.warehouse.id,
