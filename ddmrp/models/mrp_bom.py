@@ -38,7 +38,6 @@ class MrpBom(models.Model):
             domain.append(('location_id', '=', self.location_id.id))
         return domain
 
-    #TODO: try orderpoint from related product_id
     @api.depends('product_id', 'product_tmpl_id', 'location_id')
     def _compute_orderpoint(self):
         for record in self:
@@ -56,7 +55,8 @@ class MrpBom(models.Model):
         for bom in self:
             bom.is_buffered = True if bom.orderpoint_id else False
 
-    @api.depends('location_id', 'product_id.product_tmpl_id.mrp_mts_mto_location_ids')
+    @api.depends(
+        'location_id', 'product_id.product_tmpl_id.mrp_mts_mto_location_ids')
     def _compute_mto_rule(self):
         for rec in self:
             template = rec.product_id.product_tmpl_id or rec.product_tmpl_id
