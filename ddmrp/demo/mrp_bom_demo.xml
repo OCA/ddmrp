@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+         <!-- FPA -->
+         <record id="mrp_bom_fpa" model="mrp.bom">
+            <field name="product_tmpl_id"
+                   ref="product_product_fpa_product_template"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="mrp_bom_fpa_line_201" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_201"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="bom_id" ref="mrp_bom_fpa"/>
+        </record>
+
+        <record id="mrp_bom_fpa_line_203" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_203"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">10</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="bom_id" ref="mrp_bom_fpa"/>
+        </record>
+
+        <!-- 201 -->
+        <record id="mrp_bom_201" model="mrp.bom">
+            <field name="product_tmpl_id"
+                   ref="product_product_201_product_template"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="mrp_bom_201_line_301" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_301"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="bom_id" ref="mrp_bom_201"/>
+        </record>
+
+        <record id="mrp_bom_201_line_302p" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_302p"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">10</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="bom_id" ref="mrp_bom_201"/>
+        </record>
+
+        <!-- 301 -->
+        <record id="mrp_bom_301" model="mrp.bom">
+            <field name="product_tmpl_id"
+                   ref="product_product_301_product_template"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="mrp_bom_301_line_401p" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_401p"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="bom_id" ref="mrp_bom_301"/>
+        </record>
+
+        <!-- 203 -->
+        <record id="mrp_bom_203" model="mrp.bom">
+            <field name="product_tmpl_id"
+                   ref="product_product_203_product_template"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="mrp_bom_203_line_303" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_303"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="bom_id" ref="mrp_bom_203"/>
+        </record>
+
+        <!-- 303 -->
+        <record id="mrp_bom_303" model="mrp.bom">
+            <field name="product_tmpl_id"
+                   ref="product_product_303_product_template"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="mrp_bom_303_line_402p" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_402p"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="bom_id" ref="mrp_bom_303"/>
+        </record>
+
+        <record id="mrp_bom_303_line_403p" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_403p"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">10</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="bom_id" ref="mrp_bom_303"/>
+        </record>
+
+         <!-- FPB -->
+         <record id="mrp_bom_fpb" model="mrp.bom">
+            <field name="product_tmpl_id"
+                   ref="product_product_fpb_product_template"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+             <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="mrp_bom_fpb_line_101" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_101"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="sequence">5</field>
+            <field name="bom_id" ref="mrp_bom_fpb"/>
+        </record>
+
+         <!-- 101 -->
+         <record id="mrp_bom_101" model="mrp.bom">
+            <field name="product_tmpl_id"
+                   ref="product_product_101_product_template"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+             <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="mrp_bom_101_line_201" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_201"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="sequence">5</field>
+            <field name="bom_id" ref="mrp_bom_101"/>
+        </record>
+
+        <record id="mrp_bom_101_line_207" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_207"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="sequence">10</field>
+            <field name="bom_id" ref="mrp_bom_101"/>
+        </record>
+
+
+         <!-- 207 -->
+         <record id="mrp_bom_207" model="mrp.bom">
+            <field name="product_tmpl_id"
+                   ref="product_product_207_product_template"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="mrp_bom_207_line_310" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_310"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="sequence">5</field>
+            <field name="bom_id" ref="mrp_bom_101"/>
+        </record>
+
+         <!-- 310 -->
+         <record id="mrp_bom_310" model="mrp.bom">
+            <field name="product_tmpl_id"
+                   ref="product_product_310_product_template"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="mrp_bom_310_line_410p" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_410p"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="bom_id" ref="mrp_bom_310"/>
+        </record>
+
+        <record id="mrp_bom_310_line_411p" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_411p"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">10</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="bom_id" ref="mrp_bom_310"/>
+        </record>
+
+
+         <!-- FPC -->
+         <record id="mrp_bom_fpc" model="mrp.bom">
+            <field name="product_tmpl_id"
+                   ref="product_product_fpc_product_template"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="mrp_bom_fpc_line_102" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_102"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="bom_id" ref="mrp_bom_fpc"/>
+        </record>
+
+         <!-- 102 -->
+         <record id="mrp_bom_102" model="mrp.bom">
+            <field name="product_tmpl_id"
+                   ref="product_product_102_product_template"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <record id="mrp_bom_102_line_201" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_201"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="bom_id" ref="mrp_bom_102"/>
+        </record>
+
+        <record id="mrp_bom_102_line_202" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_202"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="bom_id" ref="mrp_bom_102"/>
+        </record>
+
+         <!-- 202 -->
+         <record id="mrp_bom_202" model="mrp.bom">
+            <field name="product_tmpl_id"
+                   ref="product_product_202_product_template"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <record id="mrp_bom_202_line_306" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_306"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="bom_id" ref="mrp_bom_202"/>
+        </record>
+
+        <record id="mrp_bom_202_line_305p" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_305p"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="bom_id" ref="mrp_bom_202"/>
+        </record>
+
+        <!-- 306 -->
+         <record id="mrp_bom_306" model="mrp.bom">
+            <field name="product_tmpl_id"
+                   ref="product_product_306_product_template"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <record id="mrp_bom_306_line_404p" model="mrp.bom.line">
+            <field name="product_id" ref="product_product_404p"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="bom_id" ref="mrp_bom_306"/>
+        </record>
+
+    </data>
+</odoo>

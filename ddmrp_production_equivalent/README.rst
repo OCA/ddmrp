@@ -18,9 +18,9 @@ Usage
   and equivalences can be used, use the first part (based on priority) that have a netflow position in the green zone.
 
 * As an example, when a manufacturing order is created:
-  if Part A from the BOM is available (quantity on hand > requested quantity):
-     use Part A
-  Otherwise
+  if Part A from the BOM is available (quantity on hand > requested quantity): use Part A
+  Otherwise:
+
       If equivalences can be used:
           Get all the other parts in the same product category
           Exclude the non-equivalent parts listed in the BOM line
