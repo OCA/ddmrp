@@ -642,6 +642,10 @@ class StockWarehouseOrderpoint(models.Model):
         self._calc_execution_priority()
         self.mrp_production_ids._calc_execution_priority()
         self.mapped("purchase_line_ids")._calc_execution_priority()
+        # FIXME: temporary patch to force the recalculation of zones.
+        self._compute_red_zone()
+        self._compute_yellow_zone()
+        self._compute_green_zone()
         return True
 
     @api.model
