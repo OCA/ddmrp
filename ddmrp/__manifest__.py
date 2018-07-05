@@ -44,6 +44,7 @@
         "views/mrp_bom_view.xml",
         "views/stock_move_views.xml",
         "views/report_mrpbomstructure.xml",
+        "wizards/ddmrp_run_view.xml",
         "data/ir_cron.xml",
     ],
     "demo": [
