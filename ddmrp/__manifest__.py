@@ -52,8 +52,6 @@
         "demo/product_supplierinfo_demo.xml",
         "demo/mrp_bom_demo.xml",
         "demo/stock_warehouse_orderpoint_demo.xml",
-        "demo/initial_on_hand_demo.xml",
-        "demo/supply_demand_demo.yml",
     ],
     "license": "AGPL-3",
     'installable': True,

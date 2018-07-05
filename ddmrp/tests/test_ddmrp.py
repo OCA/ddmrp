@@ -897,36 +897,30 @@ class TestBomDLT(common.TransactionCase):
     def setUp(self):
         super(TestBomDLT, self).setUp()
         self.orderpointModel = self.env['stock.warehouse.orderpoint']
-        self.buffer_profile_pur = self.env.ref(
-            'ddmrp.stock_buffer_profile_replenish_purchased_medium_low')
+        self.buffer_profile_mmm = self.env.ref(
+            'ddmrp.stock_buffer_profile_replenish_manufactured_medium_medium')
         self.warehouse = self.env.ref('stock.warehouse0')
+        self.stock_location = self.env.ref('stock.stock_location_stock')
 
-    def test_bom_dlt_20(self):
-        bom_fpa = self.env.ref('ddmrp.mrp_bom_fpa')
-        self.assertEqual(bom_fpa.dlt, 20)
-        # Add buffer on 301
+    def test_01_bom_dlt_computation(self):
+        """Tests that DLT computation is correct adding/removing buffers."""
+        bom_fp01 = self.env.ref('ddmrp.mrp_bom_fp01')
+        self.assertEqual(bom_fp01.dlt, 22)
+        # Remove RM-01 buffer:
+        orderpoint_rm01 = self.env.ref('ddmrp.stock_warehouse_orderpoint_rm01')
+        orderpoint_rm01.unlink()
+        self.assertEqual(bom_fp01.dlt, 33.0)
 
-    def test_bom_dlt_buffer_301(self):
-        # Add a buffer on product 301
-        product_301 = self.env.ref('ddmrp.product_product_301')
+    def test_02_bom_dlt_computation(self):
+        # Add buffer on AS-01
+        product_as01 = self.env.ref('ddmrp.product_product_as01')
         self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': product_301.id,
+            'buffer_profile_id': self.buffer_profile_mmm.id,
+            'product_id': product_as01.id,
             'warehouse_id': self.warehouse.id,
+            'location_id': self.stock_location.id,
             'product_min_qty': 0.0,
             'product_max_qty': 0.0,
         })
-        bom_fpa = self.env.ref('ddmrp.mrp_bom_fpa')
-        self.assertEqual(bom_fpa.dlt, 7.0)
-
-    def test_bom_dlt_remove_buffer_302p(self):
-        orderpoint302p = self.env.ref('ddmrp.stock_warehouse_orderpoint_302p')
-        orderpoint302p.unlink()
-        bom_fpa = self.env.ref('ddmrp.mrp_bom_fpa')
-        self.assertEqual(bom_fpa.dlt, 20.0)
-
-    def test_bom_dlt_remove_buffer_402p(self):
-        orderpoint402p = self.env.ref('ddmrp.stock_warehouse_orderpoint_402p')
-        orderpoint402p.unlink()
-        bom_fpa = self.env.ref('ddmrp.mrp_bom_fpa')
-        self.assertEqual(bom_fpa.dlt, 37.0)
+        bom_fp01 = self.env.ref('ddmrp.mrp_bom_fp01')
+        self.assertEqual(bom_fp01.dlt, 2.0)
