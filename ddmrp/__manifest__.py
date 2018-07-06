@@ -26,6 +26,7 @@
         "web_widget_bokeh_chart",
         "mrp_multi_level",
         "base_cron_exclusion",
+        "stock_warehouse_calendar",
     ],
     "data": [
         "data/product_adu_calculation_method_data.xml",
@@ -38,6 +39,7 @@
         "views/stock_buffer_profile_variability_view.xml",
         "views/stock_buffer_profile_lead_time_view.xml",
         "views/product_adu_calculation_method_view.xml",
+        "views/stock_warehouse_views.xml",
         "views/stock_warehouse_orderpoint_view.xml",
         "views/mrp_production_view.xml",
         "views/purchase_order_line_view.xml",
