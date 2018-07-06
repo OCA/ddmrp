@@ -56,7 +56,9 @@ class TestDdmrp(common.SavepointCase):
         cls.group_change_procure_qty = cls.env.ref(
             'stock_orderpoint_manual_procurement.'
             'group_change_orderpoint_procure_qty')
+        cls.calendar = cls.env.ref('resource.resource_calendar_std')
 
+        cls.warehouse.calendar_id = cls.calendar
         # Create users
         cls.user = cls._create_user('user_1',
                                     [cls.group_stock_manager,
@@ -217,9 +219,14 @@ class TestDdmrp(common.SavepointCase):
         self.assertEqual(orderpointA.adu, 0)
 
         pickingOuts = self.pickingModel
-        date_move = datetime.today() - timedelta(days=30)
+
+        days = 30
+        date_move = self.calendar.plan_days(
+            -1 * days - 1, datetime.today())
         pickingOuts += self.create_pickingoutA(date_move, 60)
-        date_move = datetime.today() - timedelta(days=60)
+        days = 60
+        date_move = self.calendar.plan_days(
+            -1 * days - 1, datetime.today())
         pickingOuts += self.create_pickingoutA(date_move, 60)
         for picking in pickingOuts:
             picking.action_confirm()
@@ -252,9 +259,13 @@ class TestDdmrp(common.SavepointCase):
         self.assertEqual(orderpointA.adu, 0)
 
         pickingInternals = self.pickingModel
-        date_move = datetime.today() - timedelta(days=30)
+        days = 30
+        date_move = self.calendar.plan_days(
+            -1 * days - 1, datetime.today())
         pickingInternals += self.create_pickinginternalA(date_move, 60)
-        date_move = datetime.today() - timedelta(days=60)
+        days = 60
+        date_move = self.calendar.plan_days(
+            -1 * days - 1, datetime.today())
         pickingInternals += self.create_pickinginternalA(date_move, 60)
         for picking in pickingInternals:
             picking.action_confirm()
@@ -276,9 +287,13 @@ class TestDdmrp(common.SavepointCase):
         })
 
         pickingOuts = self.pickingModel
-        date_move = datetime.today() + timedelta(days=30)
+        days = 30
+        date_move = self.calendar.plan_days(
+            +1 * days + 1, datetime.today())
         pickingOuts += self.create_pickingoutA(date_move, 60)
-        date_move = datetime.today() + timedelta(days=60)
+        days = 60
+        date_move = self.calendar.plan_days(
+            +1 * days + 1, datetime.today())
         pickingOuts += self.create_pickingoutA(date_move, 60)
 
         pickingOuts.action_confirm()
@@ -299,7 +314,9 @@ class TestDdmrp(common.SavepointCase):
         self.assertEqual(orderpointA.adu, to_assert_value)
 
         # Create a move more than 120 days in the future
-        date_move = datetime.today() + timedelta(days=150)
+        days = 150
+        date_move = self.calendar.plan_days(
+            +1 * days + 1, datetime.today())
         pickingOuts += self.create_pickingoutA(date_move, 1)
 
         # The extra move should not affect to the average ADU
@@ -309,8 +326,11 @@ class TestDdmrp(common.SavepointCase):
 
         method = self.env.ref('ddmrp.adu_calculation_method_future_120')
         # Create a period of 120 days.
-        date_from = datetime.now().date()
-        date_to = (datetime.now() + timedelta(days=119)).date()
+        date_from = self.calendar.plan_days(1, datetime.today()).date()
+        days = 119
+        dt = self.calendar.plan_days(
+            +1 * days + 1, datetime.today())
+        date_to = dt.date()
         estimate_period_next_120 = self.createEstimatePeriod(
             'test_next_120', date_from, date_to)
 
