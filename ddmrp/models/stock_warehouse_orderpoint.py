@@ -6,7 +6,7 @@
 import logging
 
 from odoo import api, fields, models, _
-from datetime import timedelta
+from datetime import datetime, timedelta
 from odoo.addons import decimal_precision as dp
 from odoo.tools import float_compare, float_round
 import operator as py_operator
@@ -117,8 +117,18 @@ class StockWarehouseOrderpoint(models.Model):
     @api.depends("dlt")
     def _compute_procure_recommended_date(self):
         for rec in self:
-            rec.procure_recommended_date = \
-                fields.date.today() + timedelta(days=int(rec.dlt))
+            dlt = int(rec.dlt)
+            # For purchased items we always consider calendar days,
+            # not work days.
+            if rec.warehouse_id.calendar_id and rec.buffer_profile_id and \
+                    rec.buffer_profile_id.item_type != 'purchased':
+                dt_to = rec.warehouse_id.calendar_id.plan_days(
+                    dlt + 1, datetime.now())
+                procure_recommended_date = fields.Date.to_string(dt_to)
+            else:
+                procure_recommended_date = \
+                    fields.date.today() + timedelta(days=dlt)
+            rec.procure_recommended_date = procure_recommended_date
 
     @api.multi
     @api.depends("net_flow_position", "dlt", "adu",
@@ -414,11 +424,12 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     def _calc_adu_past_demand(self):
         self.ensure_one()
-        horizon = 1
-        if not self.adu_calculation_method:
-            date_from = fields.Date.today()
+        horizon = self.adu_calculation_method.horizon or 0
+        if self.warehouse_id.calendar_id:
+            dt_from = self.warehouse_id.calendar_id.plan_days(
+                -1 * horizon - 1, datetime.now())
+            date_from = fields.Date.to_string(dt_from)
         else:
-            horizon = self.adu_calculation_method.horizon
             date_from = fields.Date.to_string(
                 fields.date.today() - timedelta(days=horizon))
         date_to = fields.Date.today()
@@ -461,11 +472,12 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     def _calc_adu_future_demand(self):
         self.ensure_one()
-        horizon = 1
-        if not self.adu_calculation_method:
-            date_to = fields.Date.today()
+        horizon = self.adu_calculation_method.horizon or 1
+        if self.warehouse_id.calendar_id:
+            dt_to = self.warehouse_id.calendar_id.plan_days(
+                horizon-1 + 1, datetime.now())
+            date_to = fields.Date.to_string(dt_to)
         else:
-            horizon = self.adu_calculation_method.horizon
             date_to = fields.Date.to_string(
                 fields.date.today() + timedelta(days=horizon-1))
         date_from = fields.Date.today()
@@ -503,12 +515,13 @@ class StockWarehouseOrderpoint(models.Model):
     def _search_stock_moves_qualified_demand_domain(self):
         self.ensure_one()
         horizon = self.order_spike_horizon
-        if not horizon:
-            date_to = fields.Date.to_string(fields.date.today())
-
+        if self.warehouse_id.calendar_id:
+            dt_to = self.warehouse_id.calendar_id.plan_days(
+                horizon + 1, datetime.now())
+            date_to = fields.Date.to_string(dt_to)
         else:
-            date_to = fields.Date.to_string(fields.date.today() + timedelta(
-                days=horizon))
+            date_to = fields.Date.to_string(fields.date.today() +
+                                            timedelta(days=horizon))
         locations = self.env['stock.location'].search(
             [('id', 'child_of', [self.location_id.id])])
         return [('product_id', '=', self.product_id.id),
@@ -520,13 +533,18 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     def _search_stock_moves_incoming_domain(self):
         self.ensure_one()
-        horizon = self.dlt
-        if not horizon:
-            date_to = fields.Date.to_string(fields.date.today())
-
+        # We introduce a safety factor of 2 for incoming moves
+        factor = self.warehouse_id.nfp_incoming_safety_factor or 1
+        horizon = int(self.dlt) * factor
+        # For purchased products we use calendar days, not work days
+        if self.warehouse_id.calendar_id and \
+                self.buffer_profile_id.item_type != 'purchased':
+            dt_to = self.warehouse_id.calendar_id.plan_days(
+                horizon + 1, datetime.now())
+            date_to = fields.Date.to_string(dt_to)
         else:
-            date_to = fields.Date.to_string(fields.date.today() + timedelta(
-                days=horizon))
+            date_to = fields.Date.to_string(fields.date.today() +
+                                            timedelta(days=horizon))
         locations = self.env['stock.location'].search(
             [('id', 'child_of', [self.location_id.id])])
         return [('product_id', '=', self.product_id.id),
