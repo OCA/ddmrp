@@ -55,6 +55,7 @@
                             string="Green"
                             domain="[('planning_priority_level', '=', '3_green')]"/>
                 </group>
+                <separator/>
                 <group name="execution_priority"
                        string="On Hand Alert Zones">
                     <filter name="execution_priority_level_red"
@@ -67,6 +68,7 @@
                             string="Green"
                             domain="[('execution_priority_level', '=', '3_green')]"/>
                 </group>
+                <separator/>
                 <group name="procure_recommendation"
                        string="Procurement">
                     <filter name="procure_recommended"
