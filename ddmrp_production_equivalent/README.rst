@@ -14,20 +14,22 @@ This module uses an equivalent part if the part on the BOM is not available..
 
 Usage
 =====
+
 * Using DDMRP mechanism, If the main part on the BOM is not available (netflow position is in the red or yellow zone) 
   and equivalences can be used, use the first part (based on priority) that have a netflow position in the green zone.
 
 * As an example, when a manufacturing order is created:
-  if Part A from the BOM is available (quantity on hand > requested quantity):
-     use Part A
-  Otherwise
-      If equivalences can be used:
-          Get all the other parts in the same product category
-          Exclude the non-equivalent parts listed in the BOM line
-          Sort the remaining parts by their priority
-          Use the first one
-      Otherwise:
-          Use Part A
+
+If Part A from the BOM is available (quantity on hand > requested quantity):
+  use Part A
+Otherwise
+  If equivalences can be used:
+    Get all the other parts in the same product category
+    Exclude the non-equivalent parts listed in the BOM line
+    Sort the remaining parts by their priority
+    Use the first one
+  Otherwise:
+    Use Part A
 
 Bug Tracker
 ===========
