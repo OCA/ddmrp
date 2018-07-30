@@ -12,7 +12,7 @@
               "Aleph Objects, Inc., "
               "Odoo Community Association (OCA)",
     "maintainers": ['jbeficent', 'lreficent'],
-    "website": "http://www.eficent.com",
+    "website": "https://github.com/OCA/ddmrp",
     "category": "Warehouse Management",
     "depends": [
         "purchase",
