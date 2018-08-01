@@ -13,30 +13,30 @@ class DdmrpHistory(models.Model):
 
     orderpoint_id = fields.Many2one(
         comodel_name="stock.warehouse.orderpoint", string="Buffer",
-        readonly=True, ondelete="cascade",
+        ondelete="cascade",
     )
     date = fields.Datetime(
-        string="Date", readonly=True,
+        string="Date",
     )
     top_of_red = fields.Float(
-        string="TOR", readonly=True,
+        string="TOR",
         help="Top of Red", group_operator="avg",
     )
     top_of_yellow = fields.Float(
-        string="TOY", readonly=True,
+        string="TOY",
         help="Top of Yellow", group_operator="avg",
     )
     top_of_green = fields.Float(
-        string="TOG", readonly=True,
+        string="TOG",
         help="Top of Green", group_operator="avg",
     )
     net_flow_position = fields.Float(
         string="NFP", digits=UNIT,
-        readonly=True, help="Net flow position",
+        help="Net flow position",
         group_operator="avg",
     )
     on_hand_position = fields.Float(
         string="OHP", digits=UNIT,
-        readonly=True, help="On-Hand Position",
+        help="On-Hand Position",
         group_operator="avg",
     )
