@@ -6,63 +6,65 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2018-08-02 03:31+0000\n"
+"Last-Translator: Jordi Ballester Alomar <jordi.ballester@eficent.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.1.1\n"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_form
 #: model:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_tree
 msgid "ADU Calculation Method"
-msgstr ""
+msgstr "Método de cálculo de CMD"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_adu_calculation_method
 msgid "ADU calculation method"
-msgstr ""
+msgstr "Método de cálculo de CMD"
 
 #. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.product_adu_calculation_method_form_action
 #: model:ir.ui.menu,name:ddmrp.menu_product_adu_calculation_method
 msgid "ADU calculation methods"
-msgstr ""
+msgstr "Métodos de cálculo de CMD"
 
 #. module: ddmrp
 #: model:product.product,name:ddmrp.product_product_as01
 #: model:product.template,name:ddmrp.product_product_as01_product_template
 msgid "AS-01"
-msgstr ""
+msgstr "AS-01"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_adu
 msgid "Average Daily Usage (ADU)"
-msgstr ""
+msgstr "Consumo Medio Diario (CMD)"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_mrp_bom
 msgid "Bill of Material"
-msgstr ""
+msgstr "Lista de Materiales"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_production_execution_priority_level
 msgid "Buffer On-Hand Alert Level"
-msgstr ""
+msgstr "Nivel de Alerta de Inventario Actual del Buffer"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line_execution_priority_level
 msgid "Buffer On-Hand Status Level"
-msgstr ""
+msgstr "Estado del Nivel de Inventario Actual del Buffer"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_buffer_profile_id
 #: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_form
 #: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_tree
 msgid "Buffer Profile"
-msgstr ""
+msgstr "Perfil de Buffer"
 
 #. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.stock_buffer_profile_lead_time_form_action
@@ -70,7 +72,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_lead_time_form
 #: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_lead_time_tree
 msgid "Buffer Profile Lead Time Factor"
-msgstr ""
+msgstr "Factor de Plazo de Entrega del Perfil de Buffer"
 
 #. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.stock_buffer_profile_variability_form_action
@@ -78,69 +80,70 @@ msgstr ""
 #: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_variability_form
 #: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_variability_tree
 msgid "Buffer Profile Variability Factor"
-msgstr ""
+msgstr "Factor de Variabilidad del Perfil de Buffer"
 
 #. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.stock_buffer_profile_form_action
 #: model:ir.ui.menu,name:ddmrp.menu_stock_buffer_profile_mgt
 msgid "Buffer Profiles"
-msgstr ""
+msgstr "Perfiles de Buffer"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_ddmrp_stock_buffer_planning_tree
 msgid "Buffer monitor"
-msgstr ""
+msgstr "Monitor de Buffer"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
 msgid "Buffer size factors"
-msgstr ""
+msgstr "Factores de dimensionamiento del buffer"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
 msgid "Buffer summary"
-msgstr ""
+msgstr "Resumen del Buffer"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
 msgid "Buffer zones"
-msgstr ""
+msgstr "Zonas del Buffer"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_is_buffered
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line_is_buffered
 msgid "Buffered?"
-msgstr ""
+msgstr "Tiene Buffer?"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.purchase_order_line_execution_tree
 msgid "Buffers"
-msgstr ""
+msgstr "Buffers"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_method
 msgid "Calculation method"
-msgstr ""
+msgstr "Método de cálculo"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: ddmrp
 #: model:ir.actions.act_window,help:ddmrp.stock_buffer_profile_form_action
 msgid "Click to start a new buffer profile"
-msgstr ""
+msgstr "Pulsar para crear un nuevo perfil de buffer"
 
 #. module: ddmrp
 #: model:ir.actions.act_window,help:ddmrp.stock_buffer_profile_lead_time_form_action
 msgid "Click to start a new buffer profile lead time factor"
 msgstr ""
+"Pulsar para crear un nuevo factor de plazo de entrega del perfil de buffer"
 
 #. module: ddmrp
 #: model:ir.actions.act_window,help:ddmrp.stock_buffer_profile_variability_form_action
 msgid "Click to start a new buffer profile variability factor"
-msgstr ""
+msgstr "Pulsar para crear un nuevo factor de variabilidad del perfil de buffer"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_company_id
@@ -148,12 +151,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_company_id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_company_id
 msgid "Company"
-msgstr ""
+msgstr "Compañía"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_ddmrp_stock_buffer_planning_tree
 msgid "Create Procurement"
-msgstr ""
+msgstr "Crear Aprovisionamiento"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run_create_uid
@@ -162,7 +165,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_create_uid
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run_create_date
@@ -171,37 +174,37 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_create_date
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado en"
 
 #. module: ddmrp
 #: model:ir.ui.menu,name:ddmrp.menu_ddmrp_config
 #: model:product.category,name:ddmrp.product_category_ddmrp
 msgid "DDMRP"
-msgstr ""
+msgstr "DDMRP"
 
 #. module: ddmrp
 #: model:ir.actions.server,name:ddmrp.ir_cron_ddmrp_adu_calculation_scheduler_action_ir_actions_server
 #: model:ir.cron,cron_name:ddmrp.ir_cron_ddmrp_adu_calculation_scheduler_action
 #: model:ir.cron,name:ddmrp.ir_cron_ddmrp_adu_calculation_scheduler_action
 msgid "DDMRP Buffer ADU calculation"
-msgstr ""
+msgstr "Cálculo del CMD del Buffer DDMRP"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_ddmrp_chart
 msgid "DDMRP Chart"
-msgstr ""
+msgstr "Gráfico DDMRP"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.report_mrpbomstructure_ddmrp
 msgid "DLT"
-msgstr ""
+msgstr "PED"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_dlt
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line_dlt
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_dlt
 msgid "Decoupled Lead Time (days)"
-msgstr ""
+msgstr "Plazo de Entrega Desacoplado (días)"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run_display_name
@@ -210,48 +213,50 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre de Visualización"
 
 #. module: ddmrp
 #: selection:stock.buffer.profile,item_type:0
 msgid "Distributed"
-msgstr ""
+msgstr "Distribuído"
 
 #. module: ddmrp
 #: model:product.product,name:ddmrp.product_product_fp01
 #: model:product.template,name:ddmrp.product_product_fp01_product_template
 msgid "FP-01"
-msgstr ""
+msgstr "FP-01"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_warehouse_nfp_incoming_safety_factor
 msgid "Factor used to compute the number of days to look into the future for incoming shipments for the purposes of the Net Flow position calculation."
 msgstr ""
+"Factor usado para calcular el número de días a futuro para movimientos de "
+"entrada de inventario, para el cómputo de la Posición de Flujo Neto"
 
 #. module: ddmrp
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:17
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_adu_fixed
 #, python-format
 msgid "Fixed ADU"
-msgstr ""
+msgstr "CMD Fijo"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_purchase_order_ddmrp_comment
 #: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line_ddmrp_comment
 msgid "Follow-up Notes"
-msgstr ""
+msgstr "Notas de Seguimiento"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_mrp_bom_has_mto_rule
 #: model:ir.model.fields,help:ddmrp.field_mrp_bom_line_has_mto_rule
 msgid "Follows an MTO Pull Rule"
-msgstr ""
+msgstr "Sigue una regla de abastecimiento MTO"
 
 #. module: ddmrp
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:19
 #, python-format
 msgid "Future-looking"
-msgstr ""
+msgstr "A futuro"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.purchase_order_line_search
@@ -262,57 +267,57 @@ msgstr ""
 #: selection:stock.warehouse.orderpoint,execution_priority_level:0
 #: selection:stock.warehouse.orderpoint,planning_priority_level:0
 msgid "Green"
-msgstr ""
+msgstr "Verde"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_green_override
 msgid "Green Zone (Override)"
-msgstr ""
+msgstr "Zona Verde (Sobreescrita)"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_green_zone_lt_factor
 msgid "Green Zone Lead Time Factor"
-msgstr ""
+msgstr "Factor de Tiempo de Aprovisionamiento de la Zona Verde"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_green_zone_moq
 msgid "Green Zone Minimum Order Quantity"
-msgstr ""
+msgstr "Cantidad Mínima de Pedido de la Zona Verde"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_green_zone_oc
 msgid "Green Zone Order Cycle"
-msgstr ""
+msgstr "Ciclo de Pedido de la Zona Verde"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_green_zone_qty
 msgid "Green Zone Qty"
-msgstr ""
+msgstr "Cantidad en la Zona Verde"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
 msgid "Green zone"
-msgstr ""
+msgstr "Zona verde"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_warehouse_orderpoint_green_zone_lt_factor
 msgid "Green zone Lead Time Factor"
-msgstr ""
+msgstr "Factor de Plazo de Entrega de la zona verde"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_warehouse_orderpoint_green_zone_moq
 msgid "Green zone minimum order quantity"
-msgstr ""
+msgstr "Cantidad mínima de pedido de la zona verde"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_warehouse_orderpoint_green_zone_oc
 msgid "Green zone order cycle"
-msgstr ""
+msgstr "Ciclo de pedido de la zona verde"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_horizon
 msgid "Horizon"
-msgstr ""
+msgstr "Horizonte"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run_id
@@ -326,22 +331,22 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_incoming_dlt_qty
 msgid "Incoming (Within DLT)"
-msgstr ""
+msgstr "Entrante (dentro de PED)"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_ddmrp_stock_buffer_planning_tree
 msgid "Incoming within DLT"
-msgstr ""
+msgstr "Entrante dentro de PED"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_item_type
 msgid "Item Type"
-msgstr ""
+msgstr "Tipo de Elemento"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.report_mrpbomstructure_ddmrp
 msgid "LT"
-msgstr ""
+msgstr "PE"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run___last_update
@@ -350,7 +355,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time___last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última Modificación en"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run_write_uid
@@ -359,7 +364,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_write_uid
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última Modificación por"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run_write_date
@@ -368,18 +373,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_write_date
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última Modificación en"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_factor
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5655
 msgid "Lead Time Factor"
-msgstr ""
+msgstr "Factor de Plazo de Entrega"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method_horizon
 msgid "Length-of-period horizon in days"
-msgstr ""
+msgstr "Longitud de periodo en días"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_has_mto_rule
@@ -390,37 +395,37 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_make_procurement_orderpoint
 msgid "Make Procurements from Orderpoints"
-msgstr ""
+msgstr "Crear Abastecimientos desde Buffers"
 
 #. module: ddmrp
 #: selection:stock.buffer.profile,item_type:0
 msgid "Manufactured"
-msgstr ""
+msgstr "Producido"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_mrp_production
 msgid "Manufacturing Order"
-msgstr ""
+msgstr "Órden de Producción"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_mrp_production_ids
 msgid "Manufacturing Orders"
-msgstr ""
+msgstr "Órdenes de Producción"
 
 #. module: ddmrp
 #: selection:stock.buffer.profile,replenish_method:0
 msgid "Min-max"
-msgstr ""
+msgstr "Min-max"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_order_cycle
 msgid "Minimum Order Cycle (days)"
-msgstr ""
+msgstr "Ciclo de Cantidad Mínima (días)"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_minimum_order_quantity
 msgid "Minimum Order Quantity"
-msgstr ""
+msgstr "Cantidad Mínima de Pedido"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_name
@@ -428,173 +433,173 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_name
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
 msgid "Net Flow Position"
-msgstr ""
+msgstr "Posición de Flujo Neto"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_nfp_incoming_safety_factor
 msgid "Net Flow Position Incoming Safety Factor"
-msgstr ""
+msgstr "Factor de Seguridad Entrante para Posición de Flujo Neto"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_net_flow_position
 msgid "Net flow position"
-msgstr ""
+msgstr "Posición de flujo neto"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_net_flow_position_percent
 msgid "Net flow position (% of TOG)"
-msgstr ""
+msgstr "Posición de flujo neto (% de TdV)"
 
 #. module: ddmrp
 #: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:390
 #, python-format
 msgid "Non-completed Moves"
-msgstr ""
+msgstr "Movimientos no completados"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.purchase_order_line_search
 #: model:ir.ui.view,arch_db:ddmrp.view_mrp_production_filter
 #: model:ir.ui.view,arch_db:ddmrp.warehouse_orderpoint_search
 msgid "On Hand Alert Zones"
-msgstr ""
+msgstr "Zonas de Alerta de En Mano"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_production_on_hand_percent
 #: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line_on_hand_percent
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_on_hand_percent
 msgid "On Hand/TOR (%)"
-msgstr ""
+msgstr "En Mano / TdV (%)"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_ddmrp_stock_buffer_planning_tree
 msgid "On-Hand"
-msgstr ""
+msgstr "En Mano"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_execution_priority_level
 msgid "On-Hand Alert Level"
-msgstr ""
+msgstr "Nivel de Alerta En Mano"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_purchase_order_filter
 msgid "On-Hand Alert: Red"
-msgstr ""
+msgstr "Alerta de En Mano: Rojo"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_purchase_order_filter
 msgid "On-Hand Alert: Yellow"
-msgstr ""
+msgstr "Alerta de En Mano: Amarillo"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_ddmrp_stock_buffer_planning_tree
 msgid "Open Non-completed Moves"
-msgstr ""
+msgstr "Abrir movimientos no completados"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_order_spike_horizon
 msgid "Order Spike Horizon"
-msgstr ""
+msgstr "Horizonte de Picos de Demanda"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_order_spike_threshold
 msgid "Order Spike Threshold"
-msgstr ""
+msgstr "Umbral de Picos de Demanda"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line_orderpoint_id
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_orderpoint_id
 msgid "Orderpoint"
-msgstr ""
+msgstr "Regla de Reabastecimiento"
 
 #. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.po_line_execution_action
 #: model:ir.ui.menu,name:ddmrp.menu_pol_execution
 msgid "PO lines On-Hand Status"
-msgstr ""
+msgstr "Estado de En Mano para Líneas de Pedido"
 
 #. module: ddmrp
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:18
 #, python-format
 msgid "Past-looking"
-msgstr ""
+msgstr "Hacia pasado"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_planning_priority_level
 msgid "Planning Priority Level"
-msgstr ""
+msgstr "Nivel de Prioridad de Planificación"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.warehouse_orderpoint_search
 msgid "Planning Priority Zones"
-msgstr ""
+msgstr "Zonas de Prioridad de Planificación"
 
 #. module: ddmrp
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:41
 #, python-format
 msgid "Please indicate a length-of-period horizon."
-msgstr ""
+msgstr "Por favor, indicar la longitud del periodo del horizonte."
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.warehouse_orderpoint_search
 msgid "Procurement"
-msgstr ""
+msgstr "Abastecimiento"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_procurement_group
 msgid "Procurement Requisition"
-msgstr ""
+msgstr "Solicitud de Abastecimiento"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_procurement_rule
 msgid "Procurement Rule"
-msgstr ""
+msgstr "Regla de Abastecimiento"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.warehouse_orderpoint_search
 msgid "Procurement recommended"
-msgstr ""
+msgstr "Abastecimiento recomendado"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_product_adu_calculation_method
 msgid "Product Average Daily Usage calculation method"
-msgstr ""
+msgstr "Método de cálculo del Consumo Medio Diario de Producto"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_purchase_order
 msgid "Purchase Order"
-msgstr ""
+msgstr "Pedido de Compra"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_purchase_order_line
 msgid "Purchase Order Line"
-msgstr ""
+msgstr "Línea de Pedido de Compra"
 
 #. module: ddmrp
 #: selection:stock.buffer.profile,item_type:0
 msgid "Purchased"
-msgstr ""
+msgstr "Comprado"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_qualified_demand
 msgid "Qualified demand"
-msgstr ""
+msgstr "Demanda cualificada"
 
 #. module: ddmrp
 #: model:product.product,name:ddmrp.product_product_rm01
 #: model:product.template,name:ddmrp.product_product_rm01_product_template
 msgid "RM-01"
-msgstr ""
+msgstr "RM-01"
 
 #. module: ddmrp
 #: model:product.product,name:ddmrp.product_product_rm02
 #: model:product.template,name:ddmrp.product_product_rm02_product_template
 msgid "RM-02"
-msgstr ""
+msgstr "RM-02"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.purchase_order_line_search
@@ -605,119 +610,119 @@ msgstr ""
 #: selection:stock.warehouse.orderpoint,execution_priority_level:0
 #: selection:stock.warehouse.orderpoint,planning_priority_level:0
 msgid "Red"
-msgstr ""
+msgstr "Roja"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_red_base_qty
 msgid "Red Base Qty"
-msgstr ""
+msgstr "Cantidad Roja Base"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_red_safety_qty
 msgid "Red Safety Qty"
-msgstr ""
+msgstr "Ctd. Roja Seguridad"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_red_override
 msgid "Red Zone (Override)"
-msgstr ""
+msgstr "Zona Roja (Sobreescrita)"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_red_zone_qty
 msgid "Red Zone Qty"
-msgstr ""
+msgstr "Ctd. Zona Roja"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
 msgid "Red zone"
-msgstr ""
+msgstr "Zona roja"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_ddmrp_stock_buffer_planning_tree
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
 msgid "Refresh Buffer"
-msgstr ""
+msgstr "Actualizar Buffer"
 
 #. module: ddmrp
 #: model:ir.actions.server,name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action_ir_actions_server
 #: model:ir.cron,cron_name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action
 #: model:ir.cron,name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action
 msgid "Reordering Rule DDMRP calculation"
-msgstr ""
+msgstr "Cálculo DDMRP para regla de reabastecimiento"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_production_orderpoint_id
 msgid "Reordering rule"
-msgstr ""
+msgstr "Regla de reabastecimiento"
 
 #. module: ddmrp
 #: selection:stock.buffer.profile,replenish_method:0
 msgid "Replenished"
-msgstr ""
+msgstr "Con Buffer"
 
 #. module: ddmrp
 #: selection:stock.buffer.profile,replenish_method:0
 msgid "Replenished Override"
-msgstr ""
+msgstr "Con Buffer Forzado"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_replenish_method
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_replenish_method
 msgid "Replenishment method"
-msgstr ""
+msgstr "Método de Buffer"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "Run ADU calculation"
-msgstr ""
+msgstr "Ejecutar cálculo CMD"
 
 #. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.action_ddmrp_run
 #: model:ir.ui.menu,name:ddmrp.ddmrp_run_menu
 #: model:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "Run DDMRP"
-msgstr ""
+msgstr "Ejecutar DDMRP"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "Run DDMRP Buffer calculation"
-msgstr ""
+msgstr "Ejecutar cálculo de Buffer DDMRP"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_scheduler_compute
 msgid "Run Scheduler Manually"
-msgstr ""
+msgstr "Ejecutar Planificador Manualmente"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_search
 msgid "Search ADU Calculatiion methods"
-msgstr ""
+msgstr "Buscar métodos de cálculo de CMD"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_lead_time_search
 msgid "Search Buffer Profile Lead Time"
-msgstr ""
+msgstr "Buscar Tiempo de Aprovisionamiento de Perfil de Buffer"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_variability_search
 msgid "Search Buffer Profile Variability"
-msgstr ""
+msgstr "Buscar Variabilidad de Perfil de Buffer"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_search
 msgid "Search Buffer Profiles"
-msgstr ""
+msgstr "Buscar Perfiles de Buffer"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_warehouse_orderpoint
 msgid "Stock Buffer"
-msgstr ""
+msgstr "Buffer de Inventario"
 
 #. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.action_ddmrp_stock_buffer_planning
 #: model:ir.ui.menu,name:ddmrp.menu_action_ddmrp_stock_buffer_planning
 msgid "Stock Buffer Planning"
-msgstr ""
+msgstr "Planificación de Buffer de Inventario"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
@@ -725,12 +730,19 @@ msgid "The green zone determines the average order frequency and the order size.
 "                            is determined as the maximum of the following three factors: Minimum Order Cycle,\n"
 "                            Lead Time Factor and Minimum Order Quantity."
 msgstr ""
+"La zona verde determina la frecuencia media de pedido y el tamaño de pedido."
+"\n"
+"…………………Se determina como el máximo de los siguientes tres factores: Ciclo "
+"Mínimo de Pedido,\n"
+"…………………Factor de Plazo de Aprovisionamiento y Cantidad Mínima de Pedido."
 
 #. module: ddmrp
 #: code:addons/ddmrp/wizards/stock_scheduler_compute.py:15
 #, python-format
 msgid "The option to compute minimum stock rules automatically has been disabled."
 msgstr ""
+"La opción de calcular automáticamente las reglas de inventario mínimo han "
+"sido deshabilitadas."
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
@@ -740,64 +752,71 @@ msgid "The red zone is the embedded safety in\n"
 "                            the red zone will be. It is composed of\n"
 "                            two sub-zones: Red base and red safety."
 msgstr ""
+"La zona roja es la seguridad integrada en\n"
+"…………………el buffer. Cuanta más variabilidad\n"
+"…………………asociada al producto habrá una\n"
+"…………………mayor zona roja. Se compone de\n"
+"…………………dos sub zonas: Roja base y Roja seguridad."
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
 msgid "The yellow zone represents the\n"
 "                            stock required to cover a full lead time."
 msgstr ""
+"La zona amarilla representa el\n"
+"…………………inventario requerido para cubir un plazo de entrega."
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_top_of_green
 msgid "Top of Green"
-msgstr ""
+msgstr "Tope de Verde"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_top_of_red
 msgid "Top of Red"
-msgstr ""
+msgstr "Tope de Rojo"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_top_of_yellow
 msgid "Top of Yellow"
-msgstr ""
+msgstr "Tope de Amarillo"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_ddmrp_stock_buffer_planning_tree
 msgid "Total Incoming"
-msgstr ""
+msgstr "Total Entrante"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_mrp_bom_is_buffered
 #: model:ir.model.fields,help:ddmrp.field_mrp_bom_line_is_buffered
 msgid "True when the product has an DDMRP buffer associated."
-msgstr ""
+msgstr "Verdadero cuando el producto tiene un buffer DDMRP asociado."
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_ddmrp_stock_buffer_planning_tree
 msgid "UoM"
-msgstr ""
+msgstr "UdM"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_use_estimates
 msgid "Use Estimates"
-msgstr ""
+msgstr "Usa Estimados"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_factor
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5656
 msgid "Variability Factor"
-msgstr ""
+msgstr "Factor de Variabilidad"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.purchase_order_line_execution_tree
 msgid "Vendor"
-msgstr ""
+msgstr "Proveedor"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_warehouse
 msgid "Warehouse"
-msgstr ""
+msgstr "Almacén"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.purchase_order_line_search
@@ -808,33 +827,33 @@ msgstr ""
 #: selection:stock.warehouse.orderpoint,execution_priority_level:0
 #: selection:stock.warehouse.orderpoint,planning_priority_level:0
 msgid "Yellow"
-msgstr ""
+msgstr "Amarilla"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_yellow_override
 msgid "Yellow Zone (Override)"
-msgstr ""
+msgstr "Zona Amarilla (Sobreescrita)"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_yellow_zone_qty
 msgid "Yellow Zone Qty"
-msgstr ""
+msgstr "Ctd. Zona Amarilla"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
 msgid "Yellow zone"
-msgstr ""
+msgstr "Zona amarilla"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_form
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
 msgid "days"
-msgstr ""
+msgstr "días"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_ddmrp_run
 msgid "ddmrp.run"
-msgstr ""
+msgstr "ejecutar.ddmrp"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_mrp_bom_line
@@ -849,7 +868,7 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
-msgstr ""
+msgstr "o"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_report_mrp_mrp_bom_structure_report
