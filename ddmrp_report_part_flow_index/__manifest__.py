@@ -3,10 +3,12 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 {
-    "name": "DDMRP Report Parts Flow Index",
+    "name": "DDMRP Report Part Flow Index",
     "summary": "Provides the DDMRP Parts Flow Index Report",
     "version": "11.0.1.0.0",
+    "development_status": "Beta",
     "author": "Eficent, Odoo Community Association (OCA)",
+    "maintainers": ['jbeficent', 'lreficent'],
     "website": "https://github.com/OCA/ddmrp",
     "category": "Warehouse Management",
     "depends": [
