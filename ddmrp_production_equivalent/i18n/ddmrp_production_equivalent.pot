@@ -1,0 +1,26 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* ddmrp_production_equivalent
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ddmrp_production_equivalent
+#: code:addons/ddmrp_production_equivalent/models/mrp_production.py:43
+#, python-format
+msgid "%s has been replaced by %s."
+msgstr ""
+
+#. module: ddmrp_production_equivalent
+#: model:ir.model,name:ddmrp_production_equivalent.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
