@@ -7,6 +7,8 @@ class TestAduAdjustment(TestDDMRPAdjustmentCommon):
 
     def setUp(self):
         super().setUp()
+        self.env['stock.warehouse.orderpoint'].cron_ddmrp_adu()
+        self.orderpoint._compute_dlt()
         self.adu_before = self.orderpoint.adu
         self.dlt_before = self.orderpoint.dlt
 
@@ -40,6 +42,6 @@ class TestAduAdjustment(TestDDMRPAdjustmentCommon):
             line.value = values.get(line.date_range_id)
         wiz.button_validate()
 
-        self.env['stock.warehouse.orderpoint'].cron_ddmrp_adu()
+        self.orderpoint._compute_dlt()
 
         self.assertEqual(self.orderpoint.dlt, self.dlt_before * 2)
