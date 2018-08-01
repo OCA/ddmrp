@@ -54,4 +54,4 @@ class TestDDMRPAdjustmentCommon(TransactionCase):
                 )
                 setattr(self, 'month_%i_%i' % (y, m), date_range)
         self.orderpoint = self.env.ref(
-            'ddmrp.stock_warehouse_orderpoint_fpa')
+            'ddmrp.stock_warehouse_orderpoint_fp01')
