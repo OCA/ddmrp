@@ -39,6 +39,13 @@ _PRIORITY_LEVEL = [
     ('3_green', 'Green')
 ]
 
+DDMRP_COLOR = {
+    '0_dark_red': '#8B0000',
+    '1_red': '#ff0000',
+    '2_yellow': '#ffff00',
+    '3_green': '#33cc33',
+}
+
 
 class StockWarehouseOrderpoint(models.Model):
     _inherit = 'stock.warehouse.orderpoint'
