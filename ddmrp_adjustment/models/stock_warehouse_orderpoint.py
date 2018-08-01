@@ -23,15 +23,24 @@ class StockWarehouseOrderpoint(models.Model):
     )
 
     @api.multi
+    def _daf_to_apply_domain(self, current=True):
+        self.ensure_one()
+        today = fields.Date.today()
+        domain = [
+            ('buffer_id', '=', self.id),
+            ('daf', '>', 0.0),
+            ('date_range_id.date_end', '>=', today)]
+        if current:
+            domain.append(('date_range_id.date_start', '<=', today))
+        return domain
+
+    @api.multi
     def _calc_adu(self):
         """Apply DAFs if existing for the buffer."""
         res = super()._calc_adu()
         self.ensure_one()
-        today = fields.Date.today()
-        dafs_to_apply = self.env['ddmrp.adjustment'].search([
-            ('buffer_id', '=', self.id), ('daf', '>', 0.0),
-            ('date_range_id.date_start', '<=', today),
-            ('date_range_id.date_end', '>=', today)])
+        dafs_to_apply = self.env['ddmrp.adjustment'].search(
+            self._daf_to_apply_domain())
         if dafs_to_apply:
             daf = 1
             values = dafs_to_apply.mapped('daf')
@@ -43,9 +52,8 @@ class StockWarehouseOrderpoint(models.Model):
                 "DAF=%s applied to %s. ADU: %s -> %s" %
                 (daf, self.name, prev, self.adu))
         # Compute generated demand to be applied to components:
-        dafs_to_explode = self.env['ddmrp.adjustment'].search([
-            ('buffer_id', '=', self.id), ('daf', '>', 0.0),
-            ('date_range_id.date_end', '>=', today)])
+        dafs_to_explode = self.env['ddmrp.adjustment'].search(
+            self._daf_to_apply_domain(False))
         for daf in dafs_to_explode:
             prev = self.adu
             increased_demand = prev * daf.daf - prev
@@ -121,15 +129,22 @@ class StockWarehouseOrderpoint(models.Model):
                     "DAFs-originated demand applied. %s: ADU += %s"
                     % (op.name, to_add))
 
+    @api.multi
+    def _ltaf_to_apply_domain(self):
+        self.ensure_one()
+        today = fields.Date.today()
+        return [
+            ('buffer_id', '=', self.id),
+            ('ltaf', '>', 0.0),
+            ('date_range_id.date_start', '<=', today),
+            ('date_range_id.date_end', '>=', today)]
+
     def _compute_dlt(self):
         """Apply Lead Time Adj Factor if existing"""
         res = super()._compute_dlt()
-        today = fields.Date.today()
         for rec in self:
-            ltaf_to_apply = self.env['ddmrp.adjustment'].search([
-                ('buffer_id', '=', rec.id), ('ltaf', '>', 0.0),
-                ('date_range_id.date_start', '<=', today),
-                ('date_range_id.date_end', '>=', today)])
+            ltaf_to_apply = self.env['ddmrp.adjustment'].search(
+                rec._ltaf_to_apply_domain())
             if ltaf_to_apply:
                 ltaf = 1
                 values = ltaf_to_apply.mapped('ltaf')
