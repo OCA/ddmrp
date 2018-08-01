@@ -8,6 +8,7 @@ from math import pi
 from odoo import api, fields, models, _
 from datetime import datetime
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.addons.ddmrp.models.stock_warehouse_orderpoint import DDMRP_COLOR
 
 _logger = logging.getLogger(__name__)
 try:
@@ -20,10 +21,25 @@ except (ImportError, IOError) as err:
     _logger.debug(err)
 
 
+PLANING_COLORS = [
+    DDMRP_COLOR['1_red'],
+    DDMRP_COLOR['2_yellow'],
+    DDMRP_COLOR['3_green'],
+]
+EXECUTION_COLORS = [
+    DDMRP_COLOR['0_dark_red'],
+    DDMRP_COLOR['1_red'],
+    DDMRP_COLOR['2_yellow'],
+    DDMRP_COLOR['3_green'],
+    DDMRP_COLOR['2_yellow'],
+    DDMRP_COLOR['1_red'],
+    DDMRP_COLOR['0_dark_red'],
+]
+
+
 class StockWarehouseOrderpoint(models.Model):
     _inherit = "stock.warehouse.orderpoint"
 
-    # TODO: computed through a button? able to select period.
     planning_history_chart = fields.Text(
         string='Historical Chart',
         compute='_compute_history_chart',
@@ -50,7 +66,8 @@ class StockWarehouseOrderpoint(models.Model):
     def cron_actions(self):
         res = super(StockWarehouseOrderpoint, self).cron_actions()
         data = self._prepare_history_data()
-        self.env['ddmrp.history'].sudo().create(data)
+        if not self.env.context.get('no_ddmrp_history'):
+            self.env['ddmrp.history'].sudo().create(data)
         return res
 
     def _compute_history_chart(self):
@@ -90,10 +107,6 @@ class StockWarehouseOrderpoint(models.Model):
 
             areas = stacked(df, categories)
 
-            # FIXME: create a get_colors method for share color from the two
-            # charst in ddmpr.
-            colors = ['#ff0000', '#ffff00', '#33cc33']
-
             x2 = np.hstack((data['date'][::-1], data['date']))
 
             tops = [data[categories[0]][i] + data[categories[1]][i] +
@@ -105,7 +118,7 @@ class StockWarehouseOrderpoint(models.Model):
 
             p.grid.minor_grid_line_color = '#eeeeee'
             p.patches([x2] * len(areas), [areas[cat] for cat in categories],
-                      color=colors, alpha=0.8, line_color=None)
+                      color=PLANING_COLORS, alpha=0.8, line_color=None)
             p.xaxis.formatter = DatetimeTickFormatter(
                 hours=["%d %B %Y"], days=["%d %B %Y"], months=["%d %B %Y"],
                 years=["%d %B %Y"])
@@ -191,11 +204,6 @@ class StockWarehouseOrderpoint(models.Model):
 
             areas = stacked(df, categories)
 
-            # FIXME: create a get_colors method for share color from the two
-            # charst in ddmpr.
-            colors = ['#bb2f2f', '#ff0000', '#ffff00', '#33cc33', '#ffff00',
-                      '#ff0000', '#bb2f2f']
-
             x2 = np.hstack((data['date'][::-1], data['date']))
 
             tops = [
@@ -213,7 +221,7 @@ class StockWarehouseOrderpoint(models.Model):
 
             p.grid.minor_grid_line_color = '#eeeeee'
             p.patches([x2] * len(areas), [areas[cat] for cat in categories],
-                      color=colors, alpha=0.8, line_color=None)
+                      color=EXECUTION_COLORS, alpha=0.8, line_color=None)
             p.xaxis.formatter = DatetimeTickFormatter(
                 hours=["%d %B %Y"], days=["%d %B %Y"], months=["%d %B %Y"],
                 years=["%d %B %Y"])
