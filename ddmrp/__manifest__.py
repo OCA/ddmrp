@@ -9,7 +9,6 @@
     "version": "11.0.1.0.0",
     "development_status": "Beta",
     "author": "Eficent, "
-              "Aleph Objects, Inc., "
               "Odoo Community Association (OCA)",
     "maintainers": ['jbeficent', 'lreficent'],
     "website": "https://github.com/OCA/ddmrp",
