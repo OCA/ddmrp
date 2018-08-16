@@ -720,9 +720,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
-msgid "The green zone determines the average order frequency and the order size. It\n"
-"                            is determined as the maximum of the following three factors: Minimum Order Cycle,\n"
-"                            Lead Time Factor and Minimum Order Quantity."
+msgid "The green zone determines the average order frequency and the order size. It is determined as the maximum of the following three factors: Minimum Order Cycle, Lead Time Factor and Minimum Order Quantity."
 msgstr ""
 
 #. module: ddmrp
@@ -733,17 +731,12 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
-msgid "The red zone is the embedded safety in\n"
-"                            the buffer. The larger the variability\n"
-"                            associated with the product, the larger\n"
-"                            the red zone will be. It is composed of\n"
-"                            two sub-zones: Red base and red safety."
+msgid "The red zone is the embedded safety in the buffer. The larger the variability associated with the product, the larger the red zone will be. It is composed of two sub-zones: Red base and red safety."
 msgstr ""
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
-msgid "The yellow zone represents the\n"
-"                            stock required to cover a full lead time."
+msgid "The yellow zone represents the stock required to cover a full lead time."
 msgstr ""
 
 #. module: ddmrp
