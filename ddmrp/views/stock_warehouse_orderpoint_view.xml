@@ -143,11 +143,7 @@
                 </group>
                 <group name="green_zone" string="Green zone">
                     <div class="no_print">
-                        <p class="oe_grey">
-                            The green zone determines the average order frequency and the order size. It
-                            is determined as the maximum of the following three factors: Minimum Order Cycle,
-                            Lead Time Factor and Minimum Order Quantity.
-                        </p>
+                        <p class="oe_grey">The green zone determines the average order frequency and the order size. It is determined as the maximum of the following three factors: Minimum Order Cycle, Lead Time Factor and Minimum Order Quantity.</p>
                     </div>
                     <div/>
                     <field name="green_zone_oc"/>
@@ -157,23 +153,14 @@
                 </group>
                 <group name="yellow_zone" string="Yellow zone">
                     <div class="no_print">
-                        <p class="oe_grey">
-                            The yellow zone represents the
-                            stock required to cover a full lead time.
-                        </p>
+                        <p class="oe_grey">The yellow zone represents the stock required to cover a full lead time.</p>
                     </div>
                     <div/>
                     <field name="yellow_zone_qty"/>
                 </group>
                 <group name="red_zone" string="Red zone">
                     <div class="no_print">
-                        <p class="oe_grey">
-                            The red zone is the embedded safety in
-                            the buffer. The larger the variability
-                            associated with the product, the larger
-                            the red zone will be. It is composed of
-                            two sub-zones: Red base and red safety.
-                        </p>
+                        <p class="oe_grey">The red zone is the embedded safety in the buffer. The larger the variability associated with the product, the larger the red zone will be. It is composed of two sub-zones: Red base and red safety.</p>
                     </div>
                     <div/>
                     <field name="red_base_qty"/>
