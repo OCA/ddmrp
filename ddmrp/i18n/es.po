@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-08-02 03:31+0000\n"
-"Last-Translator: Jordi Ballester Alomar <jordi.ballester@eficent.com>\n"
+"PO-Revision-Date: 2018-08-23 12:06+0000\n"
+"Last-Translator: hveficent <hector.villarreal@eficent.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -728,17 +728,14 @@ msgstr "Planificación de Buffer de Inventario"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
-#, fuzzy
 msgid ""
 "The green zone determines the average order frequency and the order size. It "
 "is determined as the maximum of the following three factors: Minimum Order "
 "Cycle, Lead Time Factor and Minimum Order Quantity."
 msgstr ""
-"La zona verde determina la frecuencia media de pedido y el tamaño de "
-"pedido.\n"
-"…………………Se determina como el máximo de los siguientes tres factores: Ciclo "
-"Mínimo de Pedido,\n"
-"…………………Factor de Plazo de Aprovisionamiento y Cantidad Mínima de Pedido."
+"La zona verde determina la frecuencia media de pedido y el tamaño de pedido. "
+"Se determina como el máximo de los siguientes tres factores: Ciclo Mínimo de "
+"Pedido, Factor de Plazo de Aprovisionamiento y Cantidad Mínima de Pedido."
 
 #. module: ddmrp
 #: code:addons/ddmrp/wizards/stock_scheduler_compute.py:15
@@ -751,26 +748,22 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
-#, fuzzy
 msgid ""
 "The red zone is the embedded safety in the buffer. The larger the "
 "variability associated with the product, the larger the red zone will be. It "
 "is composed of two sub-zones: Red base and red safety."
 msgstr ""
-"La zona roja es la seguridad integrada en\n"
-"…………………el buffer. Cuanta más variabilidad\n"
-"…………………asociada al producto habrá una\n"
-"…………………mayor zona roja. Se compone de\n"
-"…………………dos sub zonas: Roja base y Roja seguridad."
+"La zona roja es la seguridad integrada en el buffer. Cuanta más variabilidad "
+"asociada al producto habrá una mayor zona roja. Se compone de dos sub zonas: "
+"Roja base y Roja seguridad."
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
-#, fuzzy
 msgid ""
 "The yellow zone represents the stock required to cover a full lead time."
 msgstr ""
-"La zona amarilla representa el\n"
-"…………………inventario requerido para cubir un plazo de entrega."
+"La zona amarilla representa el inventario requerido para cubir un plazo de "
+"entrega."
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_top_of_green
