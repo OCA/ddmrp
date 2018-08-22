@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* ddmrp
+# 	* ddmrp
 #
 msgid ""
 msgstr ""
@@ -228,7 +228,9 @@ msgstr "FP-01"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_warehouse_nfp_incoming_safety_factor
-msgid "Factor used to compute the number of days to look into the future for incoming shipments for the purposes of the Net Flow position calculation."
+msgid ""
+"Factor used to compute the number of days to look into the future for "
+"incoming shipments for the purposes of the Net Flow position calculation."
 msgstr ""
 "Factor usado para calcular el número de días a futuro para movimientos de "
 "entrada de inventario, para el cómputo de la Posición de Flujo Neto"
@@ -726,12 +728,14 @@ msgstr "Planificación de Buffer de Inventario"
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
-msgid "The green zone determines the average order frequency and the order size. It\n"
-"                            is determined as the maximum of the following three factors: Minimum Order Cycle,\n"
-"                            Lead Time Factor and Minimum Order Quantity."
+#, fuzzy
+msgid ""
+"The green zone determines the average order frequency and the order size. It "
+"is determined as the maximum of the following three factors: Minimum Order "
+"Cycle, Lead Time Factor and Minimum Order Quantity."
 msgstr ""
-"La zona verde determina la frecuencia media de pedido y el tamaño de pedido."
-"\n"
+"La zona verde determina la frecuencia media de pedido y el tamaño de "
+"pedido.\n"
 "…………………Se determina como el máximo de los siguientes tres factores: Ciclo "
 "Mínimo de Pedido,\n"
 "…………………Factor de Plazo de Aprovisionamiento y Cantidad Mínima de Pedido."
@@ -739,18 +743,19 @@ msgstr ""
 #. module: ddmrp
 #: code:addons/ddmrp/wizards/stock_scheduler_compute.py:15
 #, python-format
-msgid "The option to compute minimum stock rules automatically has been disabled."
+msgid ""
+"The option to compute minimum stock rules automatically has been disabled."
 msgstr ""
 "La opción de calcular automáticamente las reglas de inventario mínimo han "
 "sido deshabilitadas."
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
-msgid "The red zone is the embedded safety in\n"
-"                            the buffer. The larger the variability\n"
-"                            associated with the product, the larger\n"
-"                            the red zone will be. It is composed of\n"
-"                            two sub-zones: Red base and red safety."
+#, fuzzy
+msgid ""
+"The red zone is the embedded safety in the buffer. The larger the "
+"variability associated with the product, the larger the red zone will be. It "
+"is composed of two sub-zones: Red base and red safety."
 msgstr ""
 "La zona roja es la seguridad integrada en\n"
 "…………………el buffer. Cuanta más variabilidad\n"
@@ -760,8 +765,9 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
-msgid "The yellow zone represents the\n"
-"                            stock required to cover a full lead time."
+#, fuzzy
+msgid ""
+"The yellow zone represents the stock required to cover a full lead time."
 msgstr ""
 "La zona amarilla representa el\n"
 "…………………inventario requerido para cubir un plazo de entrega."
