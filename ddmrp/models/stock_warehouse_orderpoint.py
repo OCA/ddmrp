@@ -74,7 +74,7 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     @api.depends("dlt", "adu", "buffer_profile_id.lead_time_id.factor",
                  "order_cycle", "minimum_order_quantity",
-                 "product_uom.rounding", "green_override")
+                 "product_uom.rounding", "green_override", "top_of_yellow")
     def _compute_green_zone(self):
         for rec in self:
             if rec.replenish_method in ['replenish', 'min_max']:
@@ -98,8 +98,7 @@ class StockWarehouseOrderpoint(models.Model):
                                          rec.green_zone_moq)
             else:
                 rec.green_zone_qty = rec.green_override
-            rec.top_of_green = \
-                rec.green_zone_qty + rec.yellow_zone_qty + rec.red_zone_qty
+            rec.top_of_green = rec.green_zone_qty + rec.top_of_yellow
 
     @api.multi
     @api.depends("dlt", "adu", "buffer_profile_id.lead_time_id.factor",
@@ -138,9 +137,7 @@ class StockWarehouseOrderpoint(models.Model):
             rec.procure_recommended_date = procure_recommended_date
 
     @api.multi
-    @api.depends("net_flow_position", "dlt", "adu",
-                 "buffer_profile_id.lead_time_id.factor",
-                 "red_zone_qty", "order_cycle", "minimum_order_quantity",
+    @api.depends("net_flow_position", "top_of_green",
                  "qty_multiple", "product_uom", "procure_uom_id",
                  "product_uom.rounding")
     def _compute_procure_recommended_qty(self):
@@ -669,8 +666,6 @@ class StockWarehouseOrderpoint(models.Model):
         self.mapped("purchase_line_ids")._calc_execution_priority()
         # FIXME: temporary patch to force the recalculation of zones.
         self._compute_red_zone()
-        self._compute_yellow_zone()
-        self._compute_green_zone()
         return True
 
     @api.model
