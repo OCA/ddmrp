@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import api, fields, models, _
-from odoo.exceptions import Warning as UserError
+from odoo.exceptions import ValidationError
 
 
 class ProductAduCalculationMethod(models.Model):
@@ -16,27 +16,87 @@ class ProductAduCalculationMethod(models.Model):
         return [
             ('fixed', _('Fixed ADU')),
             ('past', _('Past-looking')),
-            ('future', _('Future-looking'))]
+            ('future', _('Future-looking')),
+            ('blended', _('Blended')),
+        ]
+
+    @api.model
+    def _get_source_selection(self):
+        return [
+            ('actual', 'Use actual Stock Moves'),
+            ('estimates', 'Use Demand Estimates'),
+        ]
 
     name = fields.Char(string="Name", required=True)
-
-    method = fields.Selection("_get_calculation_method",
-                              string="Calculation method")
-
-    use_estimates = fields.Boolean(sting="Use estimates/forecasted values")
-    horizon = fields.Float(string="Horizon",
-                           help="Length-of-period horizon in days")
-
+    method = fields.Selection(
+        selection="_get_calculation_method",
+        string="Calculation method",
+    )
+    source_past = fields.Selection(
+        selection="_get_source_selection",
+        string="Past Source",
+        help="Information source used for past calculation.",
+    )
+    horizon_past = fields.Float(
+        string="Past Horizon",
+        help="Length-of-period horizon in days looking past.",
+    )
+    factor_past = fields.Float(
+        string="Past Factor",
+        help="When using a blended method, this is the relative weight "
+             "assigned to the past part of the combination.",
+        default=0.5,
+    )
+    source_future = fields.Selection(
+        selection="_get_source_selection",
+        string="Future Source",
+        help="Information source used for future calculation.",
+    )
+    horizon_future = fields.Float(
+        string="Future Horizon",
+        help="Length-of-period horizon in days looking forward.",
+    )
+    factor_future = fields.Float(
+        string="Future Factor",
+        help="When using a blended method, this is the relative weight "
+             "assigned to the future part of the combination.",
+        default=0.5,
+    )
     company_id = fields.Many2one(
         'res.company', string='Company', required=True,
         default=lambda self:
         self.env['res.company']._company_default_get(
-            'product.adu.calculation.method'))
+            'product.adu.calculation.method'),
+    )
 
     @api.multi
-    @api.constrains('method', 'horizon')
+    @api.constrains('method', 'horizon_past', 'horizon_future')
     def _check_horizon(self):
         for rec in self:
-            if rec.method in ['past', 'future'] and not rec.horizon:
-                raise UserError(_('Please indicate a length-of-period '
-                                  'horizon.'))
+            if rec.method in ['past', 'blended'] and not rec.horizon_past:
+                raise ValidationError(
+                    _('Please indicate a Past Horizon.'))
+            if rec.method in ['blended', 'future'] and not rec.horizon_future:
+                raise ValidationError(
+                    _('Please indicate a Future Horizon.'))
+
+    @api.multi
+    @api.constrains('method', 'source_past', 'source_future')
+    def _check_source(self):
+        for rec in self:
+            if rec.method in ['past', 'blended'] and not rec.source_past:
+                raise ValidationError(
+                    _('Please indicate a Past Source.'))
+            if rec.method in ['blended', 'future'] and not rec.source_future:
+                raise ValidationError(
+                    _('Please indicate a Future Source.'))
+
+    @api.multi
+    @api.constrains('method', 'factor_past', 'factor_future')
+    def _check_factor(self):
+        for rec in self.filtered(lambda r: r.method == 'blended'):
+            if rec.factor_past + rec.factor_future != 1.0 or \
+                    rec.factor_future < 0.0 or rec.factor_past < 0.0:
+                raise ValidationError(
+                    _('In blended method, past and future factors must be '
+                      'positive and sum exactly 1,0.'))
