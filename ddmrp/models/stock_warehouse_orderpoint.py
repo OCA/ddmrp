@@ -428,7 +428,7 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     def _calc_adu_past_demand(self):
         self.ensure_one()
-        horizon = self.adu_calculation_method.horizon or 0
+        horizon = self.adu_calculation_method.horizon_past or 0
         if self.warehouse_id.calendar_id:
             dt_from = self.warehouse_id.calendar_id.plan_days(
                 -1 * horizon - 1, datetime.now())
@@ -439,7 +439,7 @@ class StockWarehouseOrderpoint(models.Model):
         date_to = fields.Date.today()
         locations = self.env['stock.location'].search(
             [('id', 'child_of', [self.location_id.id])])
-        if self.adu_calculation_method.use_estimates:
+        if self.adu_calculation_method.source_past == 'estimates':
             qty = 0.0
             domain = self._past_demand_estimate_domain(date_from, date_to,
                                                        locations)
@@ -448,13 +448,15 @@ class StockWarehouseOrderpoint(models.Model):
                     fields.Date.from_string(date_from),
                     fields.Date.from_string(date_to))
             return qty / horizon
-        else:
+        elif self.adu_calculation_method.source_past == 'actual':
             qty = 0.0
             domain = self._past_moves_domain(date_from, locations)
             for group in self.env['stock.move'].read_group(
                     domain, ['product_id', 'product_qty'], ['product_id']):
                 qty += group['product_qty']
             return qty / horizon
+        else:
+            return 0.0
 
     @api.multi
     def _future_demand_estimate_domain(self, date_from, date_to, locations):
@@ -476,7 +478,7 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     def _calc_adu_future_demand(self):
         self.ensure_one()
-        horizon = self.adu_calculation_method.horizon or 1
+        horizon = self.adu_calculation_method.horizon_future or 1
         if self.warehouse_id.calendar_id:
             dt_to = self.warehouse_id.calendar_id.plan_days(
                 horizon-1 + 1, datetime.now())
@@ -487,7 +489,7 @@ class StockWarehouseOrderpoint(models.Model):
         date_from = fields.Date.today()
         locations = self.env['stock.location'].search(
             [('id', 'child_of', [self.location_id.id])])
-        if self.adu_calculation_method.use_estimates:
+        if self.adu_calculation_method.source_future == 'estimates':
             qty = 0.0
             domain = self._future_demand_estimate_domain(date_from, date_to,
                                                          locations)
@@ -496,13 +498,24 @@ class StockWarehouseOrderpoint(models.Model):
                     fields.Date.from_string(date_from),
                     fields.Date.from_string(date_to))
             return qty / horizon
-        else:
+        elif self.adu_calculation_method.source_future == 'actual':
             qty = 0.0
             domain = self._future_moves_domain(date_to, locations)
             for group in self.env['stock.move'].read_group(
                     domain, ['product_id', 'product_qty'], ['product_id']):
                 qty += group['product_qty']
             return qty / horizon
+        else:
+            return 0.0
+
+    @api.multi
+    def _calc_adu_blended(self):
+        self.ensure_one()
+        past_comp = self._calc_adu_past_demand()
+        fp = self.adu_calculation_method.factor_past
+        future_comp = self._calc_adu_future_demand()
+        ff = self.adu_calculation_method.factor_future
+        return past_comp * fp + future_comp * ff
 
     @api.multi
     def _calc_adu(self):
@@ -513,6 +526,8 @@ class StockWarehouseOrderpoint(models.Model):
                 orderpoint.adu = orderpoint._calc_adu_past_demand()
             elif orderpoint.adu_calculation_method.method == 'future':
                 orderpoint.adu = orderpoint._calc_adu_future_demand()
+            elif orderpoint.adu_calculation_method.method == 'blended':
+                orderpoint.adu = orderpoint._calc_adu_blended()
         return True
 
     @api.multi
