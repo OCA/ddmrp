@@ -3,15 +3,18 @@
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+from datetime import datetime, timedelta
+
 import odoo.tests.common as common
 from odoo import fields
-from datetime import datetime, timedelta
+from odoo.exceptions import ValidationError
 
 
 class TestDdmrp(common.SavepointCase):
 
-    def createEstimatePeriod(self, name, date_from, date_to):
-        date_range_type = self.env['date.range.type'].create({
+    @classmethod
+    def createEstimatePeriod(cls, name, date_from, date_to):
+        date_range_type = cls.env['date.range.type'].create({
             'name': 'Test Ranges',
         })
         data = {
@@ -20,7 +23,7 @@ class TestDdmrp(common.SavepointCase):
             'date_end': fields.Date.to_string(date_to),
             'type_id': date_range_type.id,
         }
-        res = self.estimatePeriodModel.create(data)
+        res = cls.estimatePeriodModel.create(data)
         return res
 
     @classmethod
@@ -100,6 +103,15 @@ class TestDdmrp(common.SavepointCase):
              'company_id': cls.main_company.id,
              'product_id': cls.productA.id,
              'quantity': 200.0})
+
+        # Create a period of 120 days for estimates.
+        date_from = cls.calendar.plan_days(1, datetime.today()).date()
+        days = 119
+        dt = cls.calendar.plan_days(
+            +1 * days + 1, datetime.today())
+        date_to = dt.date()
+        cls.estimate_period_next_120 = cls.createEstimatePeriod(
+            'test_next_120', date_from, date_to)
 
     @classmethod
     def _create_user(cls, login, groups):
@@ -201,7 +213,6 @@ class TestDdmrp(common.SavepointCase):
         self.assertEqual(orderpointA.adu, to_assert_value)
 
     def test_adu_calculation_past_120_days(self):
-
         method = self.env.ref('ddmrp.adu_calculation_method_past_120')
         orderpointA = self.orderpointModel.create({
             'buffer_profile_id': self.buffer_profile_pur.id,
@@ -281,8 +292,8 @@ class TestDdmrp(common.SavepointCase):
         method = self.aducalcmethodModel.create({
             'name': 'Future actual demand (120 days)',
             'method': 'future',
-            'use_estimates': False,
-            'horizon': 120,
+            'source_future': 'actual',
+            'horizon_future': 120,
             'company_id': self.main_company.id
         })
 
@@ -323,19 +334,9 @@ class TestDdmrp(common.SavepointCase):
         self.assertEqual(orderpointA.adu, to_assert_value)
 
     def test_adu_calculation_future_120_days_estimated(self):
-
         method = self.env.ref('ddmrp.adu_calculation_method_future_120')
-        # Create a period of 120 days.
-        date_from = self.calendar.plan_days(1, datetime.today()).date()
-        days = 119
-        dt = self.calendar.plan_days(
-            +1 * days + 1, datetime.today())
-        date_to = dt.date()
-        estimate_period_next_120 = self.createEstimatePeriod(
-            'test_next_120', date_from, date_to)
-
         self.estimateModel.create({
-            'date_range_id': estimate_period_next_120.id,
+            'date_range_id': self.estimate_period_next_120.id,
             'product_id': self.productA.id,
             'product_uom_qty': 120,
             'product_uom': self.productA.uom_id.id,
@@ -356,6 +357,111 @@ class TestDdmrp(common.SavepointCase):
 
         to_assert_value = 120 / 120
         self.assertEqual(orderpointA.adu, to_assert_value)
+
+    def test_adu_calculation_blended(self):
+        """Test blended ADU calculation method."""
+        method = self.aducalcmethodModel.create({
+            'name': 'Blended (120 d. actual past, 120 d. estimates future)',
+            'method': 'blended',
+            'source_past': 'actual',
+            'horizon_past': 120,
+            'factor_past': 0.5,
+            'source_future': 'estimates',
+            'horizon_future': 120,
+            'factor_future': 0.5,
+            'company_id': self.main_company.id
+        })
+
+        # Past. Generate past moves: 360 units / 120 days = 3 unit/day
+        pickingOuts = self.pickingModel
+
+        days = 30
+        date_move = self.calendar.plan_days(
+            -1 * days - 1, datetime.today())
+        pickingOuts += self.create_pickingoutA(date_move, 180)
+        days = 60
+        date_move = self.calendar.plan_days(
+            -1 * days - 1, datetime.today())
+        pickingOuts += self.create_pickingoutA(date_move, 180)
+        for picking in pickingOuts:
+            picking.action_confirm()
+            picking.force_assign()
+            picking.move_lines.quantity_done = 180
+            picking.action_done()
+
+        # Future. create estimate: 120 units / 120 days = 1 unit/day
+        self.estimateModel.create({
+            'date_range_id': self.estimate_period_next_120.id,
+            'product_id': self.productA.id,
+            'product_uom_qty': 120,
+            'product_uom': self.productA.uom_id.id,
+            'location_id': self.stock_location.id
+        })
+
+        orderpointA = self.orderpointModel.create({
+            'buffer_profile_id': self.buffer_profile_pur.id,
+            'product_id': self.productA.id,
+            'location_id': self.stock_location.id,
+            'warehouse_id': self.warehouse.id,
+            'product_min_qty': 0.0,
+            'product_max_qty': 0.0,
+            'qty_multiple': 0.0,
+            'adu_calculation_method': method.id
+        })
+        self.orderpointModel.cron_ddmrp_adu()
+        to_assert_value = 3 * 0.5 + 1 * 0.5
+        self.assertEqual(orderpointA.adu, to_assert_value)
+
+    def test_adu_calculation_method_checks(self):
+        with self.assertRaises(ValidationError):
+            # missing horizon_past
+            self.aducalcmethodModel.create({
+                'name': 'error horizon_past',
+                'method': 'past',
+                'source_past': 'actual',
+                'factor_past': 0.5,
+                'company_id': self.main_company.id,
+            })
+        with self.assertRaises(ValidationError):
+            # missing horizon_future
+            self.aducalcmethodModel.create({
+                'name': 'error horizon_future',
+                'method': 'future',
+                'source_future': 'estimates',
+                'factor_future': 0.5,
+                'company_id': self.main_company.id
+            })
+        with self.assertRaises(ValidationError):
+            # missing source_past
+            self.aducalcmethodModel.create({
+                'name': 'error source_past',
+                'method': 'past',
+                'horizon_past': 120,
+                'factor_past': 0.5,
+                'company_id': self.main_company.id
+            })
+        with self.assertRaises(ValidationError):
+            # missing source_future
+            self.aducalcmethodModel.create({
+                'name': 'error source_future',
+                'method': 'future',
+                'horizon_future': 120,
+                'factor_future': 0.5,
+                'company_id': self.main_company.id
+            })
+        with self.assertRaises(ValidationError):
+            # wrong factors for blended
+            self.aducalcmethodModel.create({
+                'name': 'error factors',
+                'method': 'blended',
+                'source_past': 'actual',
+                'horizon_past': 30,
+                'factor_past': 0.2,
+                'source_future': 'estimates',
+                'horizon_future': 30,
+                'factor_future': 0.6,
+                'company_id': self.main_company.id
+            })
 
     def test_qualified_demand_1(self):
         """Moves within order spike horizon, outside the threshold but past

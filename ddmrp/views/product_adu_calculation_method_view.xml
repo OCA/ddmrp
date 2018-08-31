@@ -19,18 +19,28 @@
             <form string="ADU Calculation Method">
                 <group name="name">
                     <field name="name"/>
-                </group>
-                <group name="method">
                     <field name="method"/>
-                    <field name="use_estimates"/>
-                    <label for="horizon"/>
-                    <div name="horizon">
-                        <field name="horizon" class="oe_inline"/> days
-                    </div>
-                </group>
-                <group name="company">
                     <field name="company_id" groups="base.group_multi_company" widget="selection"/>
                 </group>
+                <group name="configuration">
+                    <group name="past">
+                        <field name="source_past"/>
+                        <label for="horizon_past"/>
+                        <div name="horizon_past">
+                            <field name="horizon_past" class="oe_inline"/> days
+                        </div>
+                        <field name="factor_past" attrs="{'invisible': [('method', '!=', 'blended')]}"/>
+                    </group>
+                    <group name="future">
+                        <field name="source_future"/>
+                        <label for="horizon_future"/>
+                        <div name="horizon_future">
+                            <field name="horizon_future" class="oe_inline"/> days
+                        </div>
+                        <field name="factor_future" attrs="{'invisible': [('method', '!=', 'blended')]}"/>
+                    </group>
+                </group>
+
             </form>
       </field>
     </record>
