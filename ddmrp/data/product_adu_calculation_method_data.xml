@@ -11,14 +11,15 @@
             model="product.adu.calculation.method">
         <field name="name">Past (120 days)</field>
         <field name="method">past</field>
-        <field name="horizon">120</field>
+        <field name="source_past">actual</field>
+        <field name="horizon_past">120</field>
     </record>
     <record id="adu_calculation_method_future_120"
             model="product.adu.calculation.method">
         <field name="name">Future (120 days)</field>
         <field name="method">future</field>
-        <field name="use_estimates">True</field>
-        <field name="horizon">120</field>
+        <field name="source_future">estimates</field>
+        <field name="horizon_future">120</field>
     </record>
 
 </odoo>
