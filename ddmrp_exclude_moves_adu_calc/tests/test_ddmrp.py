@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016-18 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
@@ -74,7 +73,7 @@ class TestDdmrp(common.TransactionCase):
             {'location_id': self.binA.id,
              'company_id': self.main_company.id,
              'product_id': self.productA.id,
-             'qty': 200.0})
+             'quantity': 200.0})
 
     def _create_user(self, login, groups):
         """ Create a user."""
@@ -125,7 +124,7 @@ class TestDdmrp(common.TransactionCase):
                 })]
         })
 
-    def test_adu_calculation_past_120_days_exclude_from_adu(self):
+    def test_01_exclude_move_from_adu(self):
 
         method = self.env.ref('ddmrp.adu_calculation_method_past_120')
         orderpointA = self.orderpointModel.create({
@@ -140,7 +139,7 @@ class TestDdmrp(common.TransactionCase):
             'adu_calculation_method': method.id,
             'adu_fixed': 4
         })
-        self.orderpointModel.cron_ddmrp()
+        self.orderpointModel.cron_ddmrp_adu()
 
         self.assertEqual(orderpointA.adu, 0)
 
@@ -156,8 +155,10 @@ class TestDdmrp(common.TransactionCase):
         for picking in pickingOuts:
             picking.action_confirm()
             picking.action_assign()
+            for line in picking.move_line_ids:
+                line.qty_done = 60
             picking.action_done()
 
-        self.orderpointModel.cron_ddmrp()
+        self.orderpointModel.cron_ddmrp_adu()
         to_assert_value = (60 + 60) / 120
         self.assertEqual(orderpointA.adu, to_assert_value)
