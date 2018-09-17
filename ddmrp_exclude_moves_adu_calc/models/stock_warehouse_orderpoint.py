@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017-18 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
@@ -11,7 +10,7 @@ class StockWarehouseOrderpoint(models.Model):
 
     @api.model
     def _exclude_past_moves_domain(self):
-        return [('exclude_from_adu', '=', True), ('state', '=', 'done')]
+        return [('exclude_from_adu', '=', True)]
 
     @api.model
     def _past_moves_domain(self, date_from, locations):
