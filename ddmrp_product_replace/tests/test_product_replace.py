@@ -8,8 +8,8 @@ class TestDDMRPProductReplace(TransactionCase):
 
     def setUp(self):
         super().setUp()
-        self.orderpoint = self.env.ref('ddmrp.stock_warehouse_orderpoint_901p')
-        self.old_product = self.env.ref('ddmrp.product_product_901p')
+        self.orderpoint = self.env.ref('ddmrp.stock_warehouse_orderpoint_rm01')
+        self.old_product = self.env.ref('ddmrp.product_product_rm01')
         self.putaway = self.env['product.putaway'].create({
             'name': 'Test per product',
             # 'method': 'per_product'
@@ -33,7 +33,7 @@ class TestDDMRPProductReplace(TransactionCase):
         wiz = self.env['ddmrp.product.replace'].create({
             'old_product_id': self.orderpoint.product_id.id,
             'use_existing': 'new',
-            'new_product_name': '901p Replacement',
+            'new_product_name': 'RM-01 Replacement',
             'new_product_default_code': 'ABCDE012345',
             'copy_route': True,
             'copy_putaway': True,
@@ -42,7 +42,7 @@ class TestDDMRPProductReplace(TransactionCase):
         new_product_id = wiz.button_validate().get('res_id')
         new_product = self.env['product.product'].browse(new_product_id)
 
-        self.assertEqual(new_product.name, '901p Replacement')
+        self.assertEqual(new_product.name, 'RM-01 Replacement')
         self.assertEqual(new_product.default_code, 'ABCDE012345')
         self.assertEqual(new_product.route_ids, self.old_product.route_ids)
 
