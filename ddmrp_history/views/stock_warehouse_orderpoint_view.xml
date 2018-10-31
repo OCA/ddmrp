@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Eficent Business and IT Consulting Services S.L.
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+
+    <record id="view_warehouse_orderpoint_form" model="ir.ui.view">
+        <field name="name">stock.warehouse.orderpoint.form - ddmrp_history</field>
+        <field name="model">stock.warehouse.orderpoint</field>
+        <field name="inherit_id"
+               ref="ddmrp.view_warehouse_orderpoint_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="planning_history"
+                      string="Planning Chart">
+                    <div style="margin: 3em">
+                        <field name="planning_history_chart"
+                               widget="bokeh_chart" nolabel="1"/>
+                    </div>
+                </page>
+                <page name="execution_history" string="Execution Chart">
+                    <div style="margin: 3em">
+                        <field name="execution_history_chart"
+                               widget="bokeh_chart" nolabel="1"/>
+                    </div>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>
