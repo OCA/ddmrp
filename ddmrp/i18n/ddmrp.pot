@@ -371,7 +371,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5655
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5665
 msgid "Lead Time Factor"
 msgstr ""
 
@@ -450,7 +450,7 @@ msgid "Net flow position (% of TOG)"
 msgstr ""
 
 #. module: ddmrp
-#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:390
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:397
 #, python-format
 msgid "Non-completed Moves"
 msgstr ""
@@ -777,7 +777,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5656
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5666
 msgid "Variability Factor"
 msgstr ""
 
