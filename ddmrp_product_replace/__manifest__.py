@@ -5,7 +5,7 @@
 {
     "name": "DDMRP Product Replace",
     "summary": "Provides a assisting tool for product replacement.",
-    "version": "11.0.1.0.0",
+    "version": "11.0.1.0.1",
     "development_status": "Beta",
     "author": "Eficent, Odoo Community Association (OCA)",
     "maintainers": ['jbeficent', 'lreficent'],
@@ -17,6 +17,7 @@
     ],
     "data": [
         "wizards/ddmrp_product_replace_view.xml",
+        "views/stock_warehouse_orderpoint_view.xml",
     ],
     "license": "AGPL-3",
     'installable': True,
