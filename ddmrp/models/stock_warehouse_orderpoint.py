@@ -418,12 +418,13 @@ class StockWarehouseOrderpoint(models.Model):
                 ('date_range_id.date_end', '>=', date_from)]
 
     @api.multi
-    def _past_moves_domain(self, date_from, locations):
+    def _past_moves_domain(self, date_from, date_to, locations):
         self.ensure_one()
         return [('state', '=', 'done'), ('location_id', 'in', locations.ids),
                 ('location_dest_id', 'not in', locations.ids),
                 ('product_id', '=', self.product_id.id),
-                ('date', '>=', date_from)]
+                ('date', '>=', date_from),
+                ('date', '<=', date_to)]
 
     @api.multi
     def _calc_adu_past_demand(self):
@@ -450,7 +451,7 @@ class StockWarehouseOrderpoint(models.Model):
             return qty / horizon
         elif self.adu_calculation_method.source_past == 'actual':
             qty = 0.0
-            domain = self._past_moves_domain(date_from, locations)
+            domain = self._past_moves_domain(date_from, date_to, locations)
             for group in self.env['stock.move'].read_group(
                     domain, ['product_id', 'product_qty'], ['product_id']):
                 qty += group['product_qty']
@@ -467,12 +468,13 @@ class StockWarehouseOrderpoint(models.Model):
                 ('date_range_id.date_end', '>=', date_from)]
 
     @api.multi
-    def _future_moves_domain(self, date_to, locations):
+    def _future_moves_domain(self, date_from, date_to, locations):
         self.ensure_one()
         return [('state', 'not in', ['done', 'cancel']),
                 ('location_id', 'in', locations.ids),
                 ('location_dest_id', 'not in', locations.ids),
                 ('product_id', '=', self.product_id.id),
+                ('date_expected', '>=', date_from),
                 ('date_expected', '<=', date_to)]
 
     @api.multi
@@ -500,7 +502,7 @@ class StockWarehouseOrderpoint(models.Model):
             return qty / horizon
         elif self.adu_calculation_method.source_future == 'actual':
             qty = 0.0
-            domain = self._future_moves_domain(date_to, locations)
+            domain = self._future_moves_domain(date_from, date_to, locations)
             for group in self.env['stock.move'].read_group(
                     domain, ['product_id', 'product_qty'], ['product_id']):
                 qty += group['product_qty']
