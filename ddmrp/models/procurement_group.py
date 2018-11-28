@@ -11,10 +11,8 @@ class ProcurementGroup(models.Model):
     _inherit = 'procurement.group'
 
     @api.model
-    def _procure_orderpoint_confirm(self, use_new_cursor=False,
-                                    company_id=False):
+    def _run_scheduler_tasks(self, use_new_cursor=False, company_id=False):
         """ Override the standard method to disable the possibility to
-        automatically create procurements based on order points.
-        With DDMRP it is in the hands of the planner to manually
-        create procurements, based on the procure recommendations."""
-        return {}
+        automatically procure from orderpoints and to automatically
+        reserve stock moves."""
+        return True
