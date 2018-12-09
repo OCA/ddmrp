@@ -25,10 +25,11 @@ class StockWarehouseOrderpoint(models.Model):
                     _("Buffered product must be considered as demand."))
 
     @api.multi
-    def _past_moves_domain(self, date_from, locations):
+    def _past_moves_domain(self, date_from, date_to, locations):
         if not self.demand_product_ids:
-            return super()._past_moves_domain(date_from, locations)
+            return super()._past_moves_domain(date_from, date_to, locations)
         return [('state', '=', 'done'), ('location_id', 'in', locations.ids),
                 ('location_dest_id', 'not in', locations.ids),
                 ('product_id', 'in', self.demand_product_ids.ids),
-                ('date', '>=', date_from)]
+                ('date', '>=', date_from),
+                ('date', '<=', date_to)]
