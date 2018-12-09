@@ -74,7 +74,7 @@ class StockWarehouseOrderpoint(models.Model):
     @api.multi
     @api.depends("dlt", "adu", "buffer_profile_id.lead_time_id.factor",
                  "order_cycle", "minimum_order_quantity",
-                 "product_uom.rounding", "green_override")
+                 "product_uom.rounding", "green_override", "top_of_yellow")
     def _compute_green_zone(self):
         for rec in self:
             if rec.replenish_method in ['replenish', 'min_max']:
@@ -98,8 +98,7 @@ class StockWarehouseOrderpoint(models.Model):
                                          rec.green_zone_moq)
             else:
                 rec.green_zone_qty = rec.green_override
-            rec.top_of_green = \
-                rec.green_zone_qty + rec.yellow_zone_qty + rec.red_zone_qty
+            rec.top_of_green = rec.green_zone_qty + rec.top_of_yellow
 
     @api.multi
     @api.depends("dlt", "adu", "buffer_profile_id.lead_time_id.factor",
@@ -138,9 +137,7 @@ class StockWarehouseOrderpoint(models.Model):
             rec.procure_recommended_date = procure_recommended_date
 
     @api.multi
-    @api.depends("net_flow_position", "dlt", "adu",
-                 "buffer_profile_id.lead_time_id.factor",
-                 "red_zone_qty", "order_cycle", "minimum_order_quantity",
+    @api.depends("net_flow_position", "top_of_green",
                  "qty_multiple", "product_uom", "procure_uom_id",
                  "product_uom.rounding")
     def _compute_procure_recommended_qty(self):
@@ -421,17 +418,18 @@ class StockWarehouseOrderpoint(models.Model):
                 ('date_range_id.date_end', '>=', date_from)]
 
     @api.multi
-    def _past_moves_domain(self, date_from, locations):
+    def _past_moves_domain(self, date_from, date_to, locations):
         self.ensure_one()
         return [('state', '=', 'done'), ('location_id', 'in', locations.ids),
                 ('location_dest_id', 'not in', locations.ids),
                 ('product_id', '=', self.product_id.id),
-                ('date', '>=', date_from)]
+                ('date', '>=', date_from),
+                ('date', '<=', date_to)]
 
     @api.multi
     def _calc_adu_past_demand(self):
         self.ensure_one()
-        horizon = self.adu_calculation_method.horizon or 0
+        horizon = self.adu_calculation_method.horizon_past or 0
         if self.warehouse_id.calendar_id:
             dt_from = self.warehouse_id.calendar_id.plan_days(
                 -1 * horizon - 1, datetime.now())
@@ -442,7 +440,7 @@ class StockWarehouseOrderpoint(models.Model):
         date_to = fields.Date.today()
         locations = self.env['stock.location'].search(
             [('id', 'child_of', [self.location_id.id])])
-        if self.adu_calculation_method.use_estimates:
+        if self.adu_calculation_method.source_past == 'estimates':
             qty = 0.0
             domain = self._past_demand_estimate_domain(date_from, date_to,
                                                        locations)
@@ -451,13 +449,15 @@ class StockWarehouseOrderpoint(models.Model):
                     fields.Date.from_string(date_from),
                     fields.Date.from_string(date_to))
             return qty / horizon
-        else:
+        elif self.adu_calculation_method.source_past == 'actual':
             qty = 0.0
-            domain = self._past_moves_domain(date_from, locations)
+            domain = self._past_moves_domain(date_from, date_to, locations)
             for group in self.env['stock.move'].read_group(
                     domain, ['product_id', 'product_qty'], ['product_id']):
                 qty += group['product_qty']
             return qty / horizon
+        else:
+            return 0.0
 
     @api.multi
     def _future_demand_estimate_domain(self, date_from, date_to, locations):
@@ -468,18 +468,19 @@ class StockWarehouseOrderpoint(models.Model):
                 ('date_range_id.date_end', '>=', date_from)]
 
     @api.multi
-    def _future_moves_domain(self, date_to, locations):
+    def _future_moves_domain(self, date_from, date_to, locations):
         self.ensure_one()
         return [('state', 'not in', ['done', 'cancel']),
                 ('location_id', 'in', locations.ids),
                 ('location_dest_id', 'not in', locations.ids),
                 ('product_id', '=', self.product_id.id),
+                ('date_expected', '>=', date_from),
                 ('date_expected', '<=', date_to)]
 
     @api.multi
     def _calc_adu_future_demand(self):
         self.ensure_one()
-        horizon = self.adu_calculation_method.horizon or 1
+        horizon = self.adu_calculation_method.horizon_future or 1
         if self.warehouse_id.calendar_id:
             dt_to = self.warehouse_id.calendar_id.plan_days(
                 horizon-1 + 1, datetime.now())
@@ -490,7 +491,7 @@ class StockWarehouseOrderpoint(models.Model):
         date_from = fields.Date.today()
         locations = self.env['stock.location'].search(
             [('id', 'child_of', [self.location_id.id])])
-        if self.adu_calculation_method.use_estimates:
+        if self.adu_calculation_method.source_future == 'estimates':
             qty = 0.0
             domain = self._future_demand_estimate_domain(date_from, date_to,
                                                          locations)
@@ -499,13 +500,24 @@ class StockWarehouseOrderpoint(models.Model):
                     fields.Date.from_string(date_from),
                     fields.Date.from_string(date_to))
             return qty / horizon
-        else:
+        elif self.adu_calculation_method.source_future == 'actual':
             qty = 0.0
-            domain = self._future_moves_domain(date_to, locations)
+            domain = self._future_moves_domain(date_from, date_to, locations)
             for group in self.env['stock.move'].read_group(
                     domain, ['product_id', 'product_qty'], ['product_id']):
                 qty += group['product_qty']
             return qty / horizon
+        else:
+            return 0.0
+
+    @api.multi
+    def _calc_adu_blended(self):
+        self.ensure_one()
+        past_comp = self._calc_adu_past_demand()
+        fp = self.adu_calculation_method.factor_past
+        future_comp = self._calc_adu_future_demand()
+        ff = self.adu_calculation_method.factor_future
+        return past_comp * fp + future_comp * ff
 
     @api.multi
     def _calc_adu(self):
@@ -516,6 +528,8 @@ class StockWarehouseOrderpoint(models.Model):
                 orderpoint.adu = orderpoint._calc_adu_past_demand()
             elif orderpoint.adu_calculation_method.method == 'future':
                 orderpoint.adu = orderpoint._calc_adu_future_demand()
+            elif orderpoint.adu_calculation_method.method == 'blended':
+                orderpoint.adu = orderpoint._calc_adu_blended()
         return True
 
     @api.multi
@@ -669,8 +683,6 @@ class StockWarehouseOrderpoint(models.Model):
         self.mapped("purchase_line_ids")._calc_execution_priority()
         # FIXME: temporary patch to force the recalculation of zones.
         self._compute_red_zone()
-        self._compute_yellow_zone()
-        self._compute_green_zone()
         return True
 
     @api.model
