@@ -194,19 +194,25 @@ ADU Calculation Methods
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 The Average Daily Usage (ADU) defines the frequency of demand of a product in a
-certain location.
+certain location. It can be computed in different ways, which you can configure
+with ADU calculation methods as follows:
 
-#. Go to *Inventory / Configuration / ADU calculation methods*.
-#. To create new, indicate a name, calculation method (fixed, past-looking,
-   future-looking), and the length of period consideration (in days).
+#. Go to *Inventory / Configuration / DDMRP / ADU calculation methods*.
+#. Indicate a name, a calculation method (fixed, past-looking,
+   future-looking or blended).
+#. Fill the corresponding period (past, future or both for blended method) to
+   specify the length of period consideration (in days).
+#. Indicate the source of information: stock moves or demand estimates.
+#. If you use the blended method fill also the *Past Factor* and
+   *Future Factor*.
 
 If you do not have prior history of stock moves in your system, it is advised
-to use fixed method. If you have past-history of stock moves, best use
-past-looking method.
+to use fixed method or start to work on future estimates. If you have
+past-history of stock moves, best use past-looking method or blended method.
 
 The ADU is computed every day by default in a background job independently
 from the other buffer fields. This computation can be done with less frequency
-but It is not recommended to run it less than weekly or more than daily.
+but it is not recommended to run it less than weekly or more than daily.
 Circumstantially, If you need to force the calculation of the ADU go to
 *Inventory / Configuration / DDMRP / Run DDMRP* and click on
 *Run ADU calculation*.
@@ -220,6 +226,12 @@ be found on GitHub.
 
 Changelog
 =========
+
+11.0.1.1.0 (2018-08-31)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] Implemented Blended ADU calculation method.
+  (`#23 <https://github.com/OCA/ddmrp/pull/23>`_)
 
 11.0.1.0.0 (2018-07-16)
 ~~~~~~~~~~~~~~~~~~~~~~~
