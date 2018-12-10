@@ -13,6 +13,7 @@ class StockMove(models.Model):
         string='Exclude this move from ADU calculation', copy=False,
         help="If this flag is set this stock move will be excluded from ADU "
              "calculation",
+        index=True,
     )
 
     @api.multi
