@@ -47,10 +47,13 @@ class MrpProduction(models.Model):
             rec.execution_priority_level = \
                 rec.orderpoint_id.execution_priority_level
             rec.on_hand_percent = rec.orderpoint_id.on_hand_percent
-        (self - prods).write({
-            'execution_priority_level': None,
-            'on_hand_percent': None,
-        })
+        to_update = (self - prods).filtered(
+            lambda r: r.execution_priority_level or r.on_hand_percent)
+        if to_update:
+            to_update.write({
+                'execution_priority_level': None,
+                'on_hand_percent': None,
+            })
 
     def _search_execution_priority(self, operator, value):
         """Search on the execution priority by evaluating on all
