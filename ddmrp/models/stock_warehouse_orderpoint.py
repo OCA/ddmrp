@@ -141,7 +141,7 @@ class StockWarehouseOrderpoint(models.Model):
                  "qty_multiple", "product_uom", "procure_uom_id",
                  "product_uom.rounding")
     def _compute_procure_recommended_qty(self):
-        subtract_qty = self._quantity_in_progress()
+        subtract_qty = self.sudo()._quantity_in_progress()
         for rec in self:
             procure_recommended_qty = 0.0
             if rec.net_flow_position < rec.top_of_yellow:
