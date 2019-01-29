@@ -186,9 +186,9 @@
             <tree string="Buffer monitor"
                   decoration-danger="procure_recommended_qty &gt; 0">
                 <field name="product_id"/>
-                <field name="product_uom" string="UoM"/>
                 <field name="warehouse_id"/>
                 <field name="location_id"/>
+                <field name="product_uom" string="UoM"/>
                 <field name="planning_priority_level"
                        options="{
                        &quot;bg_color&quot;: &quot;red:planning_priority_level=='1_red';yellow:planning_priority_level=='2_yellow';green:planning_priority_level == '3_green'&quot;,
@@ -218,7 +218,7 @@
                 <field name="qualified_demand"/>
                 <field name="net_flow_position"/>
                 <field name="procure_recommended_qty"/>
-                <field name="procure_uom_id"/>
+                <field name="procure_uom_id" groups="product.group_uom"/>
                 <field name="procure_recommended_date"/>
                 <button string="Create Procurement"
                         name="%(stock_orderpoint_manual_procurement.act_make_procurement_from_orderpoint)d"
