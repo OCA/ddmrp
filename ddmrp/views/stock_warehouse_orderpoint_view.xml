@@ -112,7 +112,8 @@
                     <field name="minimum_order_quantity"/>
                     <field name="adu"/>
                     <field name="adu_calculation_method"/>
-                    <field name="adu_fixed"/>
+                    <field name="adu_calculation_method_type" invisible="1"/>
+                    <field name="adu_fixed" attrs="{'invisible': [('adu_calculation_method_type', '!=', 'fixed')]}"/>
                     <label for="order_spike_horizon"/>
                     <div name="order_spike_horizon">
                         <field name="order_spike_horizon" class="oe_inline"/> days

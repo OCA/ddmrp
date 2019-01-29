@@ -282,6 +282,8 @@ class StockWarehouseOrderpoint(models.Model):
     adu_calculation_method = fields.Many2one(
         comodel_name="product.adu.calculation.method",
         string="ADU calculation method")
+    adu_calculation_method_type = fields.Selection(
+        related="adu_calculation_method.method")
     adu_fixed = fields.Float(string="Fixed ADU",
                              default=1.0, digits=UNIT)
     order_cycle = fields.Float(string="Minimum Order Cycle (days)")
