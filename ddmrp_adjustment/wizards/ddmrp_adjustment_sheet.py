@@ -131,9 +131,7 @@ class DdmrpAdjustmentSheetLine(models.TransientModel):
         data = {
             'date_range_id': self.date_range_id.id,
             'buffer_id': buf.id,
+            'value': self.value,
+            'adjustment_type': self.factor,
         }
-        if self.factor == DAF_string:
-            data['daf'] = self.value
-        if self.factor == LTAF_string:
-            data['ltaf'] = self.value
         return data

@@ -44,11 +44,9 @@ class TestAdjustmentWizard(TestDDMRPAdjustmentCommon):
             demand_adjustment_ids)
         for adj in adjustments:
             self.assertEqual(adj.buffer_id, self.orderpoint)
-            if adj.daf:
-                self.assertEqual(adj.daf,
+            if adj.adjustment_type == 'DAF':
+                self.assertEqual(adj.value,
                                  values.get('DAF').get(adj.date_range_id))
-                self.assertEqual(adj.ltaf, 0)
-            if adj.ltaf:
-                self.assertEqual(adj.daf, 0)
-                self.assertEqual(adj.ltaf,
+            if adj.adjustment_type == 'LTAF':
+                self.assertEqual(adj.value,
                                  values.get('LTAF').get(adj.date_range_id))
