@@ -9,6 +9,8 @@ from datetime import datetime
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from odoo import api, fields, models, _
 
+from ..models.ddmrp_adjustment import DAF_string, LTAF_string
+
 _logger = logging.getLogger(__name__)
 
 
@@ -28,7 +30,7 @@ class StockWarehouseOrderpoint(models.Model):
         today = fields.Date.today()
         domain = [
             ('buffer_id', '=', self.id),
-            ('daf', '>', 0.0),
+            ('adjustment_type', '=', DAF_string),
             ('date_range_id.date_end', '>=', today)]
         if current:
             domain.append(('date_range_id.date_start', '<=', today))
@@ -43,7 +45,7 @@ class StockWarehouseOrderpoint(models.Model):
             self._daf_to_apply_domain())
         if dafs_to_apply:
             daf = 1
-            values = dafs_to_apply.mapped('daf')
+            values = dafs_to_apply.mapped('value')
             for val in values:
                 daf *= val
             prev = self.adu
@@ -56,7 +58,7 @@ class StockWarehouseOrderpoint(models.Model):
             self._daf_to_apply_domain(False))
         for daf in dafs_to_explode:
             prev = self.adu
-            increased_demand = prev * daf.daf - prev
+            increased_demand = prev * daf.value - prev
             self.explode_demand_to_components(
                 daf, increased_demand, self.product_uom)
         return res
@@ -135,7 +137,7 @@ class StockWarehouseOrderpoint(models.Model):
         today = fields.Date.today()
         return [
             ('buffer_id', '=', self.id),
-            ('ltaf', '>', 0.0),
+            ('adjustment_type', '=', LTAF_string),
             ('date_range_id.date_start', '<=', today),
             ('date_range_id.date_end', '>=', today)]
 
@@ -147,7 +149,7 @@ class StockWarehouseOrderpoint(models.Model):
                 rec._ltaf_to_apply_domain())
             if ltaf_to_apply:
                 ltaf = 1
-                values = ltaf_to_apply.mapped('ltaf')
+                values = ltaf_to_apply.mapped('value')
                 for val in values:
                     ltaf *= val
                 prev = rec.dlt
