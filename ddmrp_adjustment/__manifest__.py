@@ -5,7 +5,7 @@
 {
     "name": "DDMRP Adjustment",
     "summary": "Allow to apply factor adjustments to buffers.",
-    "version": "11.0.1.0.0",
+    "version": "11.0.1.1.0",
     "development_status": "Beta",
     "author": "Eficent, Odoo Community Association (OCA)",
     "maintainers": ['jbeficent', 'lreficent'],
@@ -13,7 +13,6 @@
     "category": "Warehouse Management",
     "depends": [
         "ddmrp",
-        "stock_demand_estimate",
     ],
     "data": [
         "security/ir.model.access.csv",
