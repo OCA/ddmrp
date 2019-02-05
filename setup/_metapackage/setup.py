@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo11-addon-ddmrp',
+        'odoo11-addon-ddmrp_adjustment',
         'odoo11-addon-ddmrp_exclude_moves_adu_calc',
         'odoo11-addon-ddmrp_history',
         'odoo11-addon-ddmrp_production_equivalent',
