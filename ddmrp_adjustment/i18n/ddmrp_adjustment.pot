@@ -1,0 +1,324 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* ddmrp_adjustment
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_adjustment_type
+msgid "Adjustment Type"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line_ids
+msgid "Adjustments"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand_buffer_id
+msgid "Apply to"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_buffer_id
+#: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_search
+msgid "Buffer"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model,name:ddmrp_adjustment.model_ddmrp_adjustment_sheet
+msgid "Buffer Adjustment Sheet"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model,name:ddmrp_adjustment.model_ddmrp_adjustment_sheet_line
+msgid "Buffer Adjustment Sheet Line"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.actions.act_window,name:ddmrp_adjustment.ddmrp_adjustment_action
+#: model:ir.ui.menu,name:ddmrp_adjustment.menu_ddmrp_adjustment
+#: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_tree
+msgid "Buffer Adjustments"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
+msgid "Buffer Adjustments Wizard"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
+msgid "Buffers"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
+msgid "Cancel"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_company_id
+msgid "Company"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.actions.act_window,name:ddmrp_adjustment.action_ddmrp_adjustment_sheet_wizard
+#: model:ir.ui.menu,name:ddmrp_adjustment.menu_ddmrp_adjustment_sheet_wizard
+msgid "Create Buffer Adjustments"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_create_uid
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand_create_uid
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_create_uid
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_create_date
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand_create_date
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_create_date
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.ui.view,arch_db:ddmrp_adjustment.view_warehouse_orderpoint_form
+msgid "DAF Demand Allocation"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:109
+#, python-format
+msgid "DDMRP Buffer Adjustment"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_buffer_ids
+msgid "DDMRP Buffers"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_date_start
+msgid "Date From"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_date_range_id
+msgid "Date Range"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_date_range_type_id
+msgid "Date Range Type"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_date_end
+msgid "Date To"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,help:ddmrp_adjustment.field_ddmrp_adjustment_demand_product_uom_id
+msgid "Default Unit of Measure used for all stock operation."
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: selection:ddmrp.adjustment,adjustment_type:0
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_apply_daf
+msgid "Demand Adjustment Factor"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: code:addons/ddmrp_adjustment/models/stock_warehouse_orderpoint.py:167
+#, python-format
+msgid "Demand Allocated to Components"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,help:ddmrp_adjustment.field_stock_warehouse_orderpoint_extra_demand_ids
+msgid "Demand associated to Demand Adjustment Factors applied to parent buffers."
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand_display_name
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_display_name
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_display_name
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand_date_end
+msgid "End date"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand_extra_demand
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_warehouse_orderpoint_extra_demand_ids
+msgid "Extra Demand"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line_factor
+msgid "Factors"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
+msgid "Factors to Apply"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
+msgid "Fill the factors to apply in each period for all the\n"
+"                       selected Buffers."
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_search
+msgid "Group By"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand_id
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_id
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_id
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line_id
+msgid "ID"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment___last_update
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand___last_update
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet___last_update
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand_write_uid
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line_write_uid
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_write_uid
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand_write_date
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line_write_date
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_write_date
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: selection:ddmrp.adjustment,adjustment_type:0
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_apply_ltaf
+msgid "Lead Time Adjustment Factor"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_location_id
+msgid "Location"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand_buffer_origin_id
+msgid "Originated from"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line_date_range_id
+#: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
+msgid "Period"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
+msgid "Periods"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand_product_id
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand_product_origin_id
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_product_id
+msgid "Product"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line_sheet_id
+#: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
+msgid "Sheet"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand_date_start
+msgid "Start date"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model,name:ddmrp_adjustment.model_stock_warehouse_orderpoint
+msgid "Stock Buffer"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:62
+#, python-format
+msgid "The start date cannot be later than the end date."
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand_product_uom_id
+msgid "Unit of Measure"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
+msgid "Validate"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line_value
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_value
+msgid "Value"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:98
+#, python-format
+msgid "You must apply at least one factor"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:95
+#, python-format
+msgid "You must select at least one buffer."
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model,name:ddmrp_adjustment.model_ddmrp_adjustment
+msgid "ddmrp.adjustment"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model,name:ddmrp_adjustment.model_ddmrp_adjustment_demand
+msgid "ddmrp.adjustment.demand"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
+msgid "to"
+msgstr ""
+
