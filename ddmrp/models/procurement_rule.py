@@ -28,5 +28,5 @@ class ProcurementRule(models.Model):
         )
         orderpoint = values.get('orderpoint_id')
         if orderpoint:
-            orderpoint.cron_actions()
+            orderpoint.sudo().cron_actions()
         return True
