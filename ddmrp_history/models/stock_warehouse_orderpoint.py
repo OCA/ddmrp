@@ -1,4 +1,4 @@
-# Copyright 2017 Eficent Business and IT Consulting Services S.L.
+# Copyright 2017-19 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
@@ -115,14 +115,19 @@ class StockWarehouseOrderpoint(models.Model):
             p = figure(
                 x_range=(dates[0], dates[-1]), y_range=(0, top_y),
                 x_axis_type='datetime')
+            p.sizing_mode = 'stretch_both'
+            p.toolbar.logo = None
 
             p.grid.minor_grid_line_color = '#eeeeee'
             p.patches([x2] * len(areas), [areas[cat] for cat in categories],
                       color=PLANING_COLORS, alpha=0.8, line_color=None)
+            date_format = self.env['res.lang']._lang_get(
+                self.env.lang).date_format
             p.xaxis.formatter = DatetimeTickFormatter(
-                hours=["%d %B %Y"], days=["%d %B %Y"], months=["%d %B %Y"],
-                years=["%d %B %Y"])
+                hours=date_format, days=date_format, months=date_format,
+                years=date_format)
             p.xaxis.major_label_orientation = pi / 4
+            p.xaxis.axis_label_text_font = 'helvetica'
 
             unit = rec.product_uom.name
             hover = HoverTool(tooltips=[("qty", "$y %s" % unit)],
@@ -196,7 +201,6 @@ class StockWarehouseOrderpoint(models.Model):
                   r.top_of_yellow)) - (r.top_of_green - r.top_of_yellow) for r
                  in history]
 
-            data['net_flow_position'] = [r.net_flow_position for r in history]
             data['on_hand_position'] = [r.on_hand_position for r in history]
 
             df = pd.DataFrame(data)
@@ -218,13 +222,17 @@ class StockWarehouseOrderpoint(models.Model):
             p = figure(
                 x_range=(dates[0], dates[-1]), y_range=(start_stack, top_y),
                 x_axis_type='datetime')
+            p.sizing_mode = 'stretch_both'
+            p.toolbar.logo = None
 
             p.grid.minor_grid_line_color = '#eeeeee'
             p.patches([x2] * len(areas), [areas[cat] for cat in categories],
                       color=EXECUTION_COLORS, alpha=0.8, line_color=None)
+            date_format = self.env['res.lang']._lang_get(
+                self.env.lang).date_format
             p.xaxis.formatter = DatetimeTickFormatter(
-                hours=["%d %B %Y"], days=["%d %B %Y"], months=["%d %B %Y"],
-                years=["%d %B %Y"])
+                hours=date_format, days=date_format, months=date_format,
+                years=date_format)
             p.xaxis.major_label_orientation = pi / 4
 
             unit = rec.product_uom.name
@@ -232,7 +240,6 @@ class StockWarehouseOrderpoint(models.Model):
                               point_policy='follow_mouse')
             p.add_tools(hover)
 
-            p.line(dates, data['net_flow_position'], line_width=3)
             p.line(dates, data['on_hand_position'], line_width=3,
                    line_dash='dotted')
 
