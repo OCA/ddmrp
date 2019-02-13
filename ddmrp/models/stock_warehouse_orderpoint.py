@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import logging
+from math import pi
 
 from odoo import api, fields, models, _
 from datetime import datetime, timedelta
@@ -16,6 +17,7 @@ try:
     from bokeh.plotting import figure
     from bokeh.embed import components
     from bokeh.models import Legend, ColumnDataSource, LabelSet
+    from bokeh.models import HoverTool, DatetimeTickFormatter
 except (ImportError, IOError) as err:
     _logger.debug(err)
 
@@ -187,6 +189,7 @@ class StockWarehouseOrderpoint(models.Model):
             p = figure(plot_width=300, plot_height=400,
                        y_axis_label='Quantity')
             p.xaxis.visible = False
+            p.toolbar.logo = None
             red = p.vbar(x=1, bottom=0, top=rec.top_of_red, width=1,
                          color='red', legend=False)
             yellow = p.vbar(x=1, bottom=rec.top_of_red, top=rec.top_of_yellow,
@@ -229,6 +232,93 @@ class StockWarehouseOrderpoint(models.Model):
 
             script, div = components(p)
             rec.ddmrp_chart = '%s%s' % (div, script)
+
+    def _compute_ddmrp_demand_supply_chart(self):
+        for rec in self:
+            if not rec.buffer_profile_id:
+                # Not a buffer, skip.
+                rec.ddmrp_demand_chart = ''
+                rec.ddmrp_supply_chart = ''
+                continue
+
+            # Prepare data:
+            demand_data = rec._get_demand_by_days()
+            supply_data = rec._get_incoming_by_days()
+            width = timedelta(days=0.4)
+            date_format = self.env['res.lang']._lang_get(
+                self.env.lang).date_format
+
+            # Plot demand data:
+            if demand_data:
+                x_demand = list(demand_data.keys())
+                y_demand = list(demand_data.values())
+
+                p = figure(plot_width=500, plot_height=400,
+                           y_axis_label='Quantity', x_axis_type='datetime')
+                p.toolbar.logo = None
+                p.sizing_mode = 'stretch_both'
+                # TODO: # p.xaxis.label_text_font = 'helvetica'
+                p.xaxis.formatter = DatetimeTickFormatter(
+                    hours=date_format, days=date_format, months=date_format,
+                    years=date_format)
+                p.xaxis.major_label_orientation = pi / 4
+
+                p.vbar(x=x_demand, width=width, bottom=0, top=y_demand,
+                       color="firebrick")
+                p.line(
+                    [datetime.today() - timedelta(days=1),
+                     datetime.today() + timedelta(
+                         days=rec.order_spike_horizon)],
+                    [rec.order_spike_threshold, rec.order_spike_threshold],
+                    line_width=2, line_dash='dashed')
+
+                unit = rec.product_uom.name
+                hover = HoverTool(
+                    tooltips=[("qty", "$y %s" % unit)],
+                    point_policy='follow_mouse')
+                p.add_tools(hover)
+
+                script, div = components(p)
+                rec.ddmrp_demand_chart = '%s%s' % (div, script)
+            else:
+                rec.ddmrp_demand_chart = _('No demand detected.')
+
+            # Plot supply data:
+            if supply_data:
+                x_supply = list(supply_data.keys())
+                y_supply = list(supply_data.values())
+
+                p = figure(plot_width=500, plot_height=400,
+                           y_axis_label='Quantity', x_axis_type='datetime')
+                p.toolbar.logo = None
+                p.sizing_mode = 'stretch_both'
+                p.xaxis.formatter = DatetimeTickFormatter(
+                    hours=date_format, days=date_format, months=date_format,
+                    years=date_format)
+                p.xaxis.major_label_orientation = pi / 4
+                p.x_range.flipped = True
+
+                # White line to have similar proportion to demand chart.
+                p.line(
+                    [datetime.today() - timedelta(days=1),
+                     datetime.today() + timedelta(
+                         days=rec.order_spike_horizon)],
+                    [rec.order_spike_threshold, rec.order_spike_threshold],
+                    line_width=2, line_dash='dashed', color='white')
+
+                p.vbar(x=x_supply, width=width, bottom=0, top=y_supply,
+                       color="grey")
+
+                unit = rec.product_uom.name
+                hover = HoverTool(
+                    tooltips=[("qty", "$y %s" % unit)],
+                    point_policy='follow_mouse')
+                p.add_tools(hover)
+
+                script, div = components(p)
+                rec.ddmrp_supply_chart = '%s%s' % (div, script)
+            else:
+                rec.ddmrp_supply_chart = _('No supply detected.')
 
     @api.multi
     @api.depends("red_zone_qty")
@@ -357,6 +447,14 @@ class StockWarehouseOrderpoint(models.Model):
                                          string='PO Lines', copy=False)
     ddmrp_chart = fields.Text(string='DDMRP Chart',
                               compute=_compute_ddmrp_chart)
+    ddmrp_demand_chart = fields.Text(
+        string='DDMRP Demand Chart',
+        compute='_compute_ddmrp_demand_supply_chart',
+    )
+    ddmrp_supply_chart = fields.Text(
+        string='DDMRP Supply Chart',
+        compute='_compute_ddmrp_demand_supply_chart',
+    )
 
     _order = 'planning_priority_level asc, net_flow_position asc'
 
@@ -569,20 +667,43 @@ class StockWarehouseOrderpoint(models.Model):
                 ('date_expected', '<=', date_to)]
 
     @api.multi
+    def _get_incoming_by_days(self):
+        self.ensure_one()
+        incoming_dom = self._search_stock_moves_incoming_domain()
+        moves = self.env['stock.move'].search(incoming_dom)
+        incoming_by_days = {}
+        move_dates = [fields.Datetime.from_string(dt).date() for dt in
+                      moves.mapped('date_expected')]
+        for move_date in move_dates:
+            incoming_by_days[move_date] = 0.0
+        for move in moves:
+            date = fields.Datetime.from_string(
+                move.date_expected).date()
+            incoming_by_days[date] += \
+                move.product_qty
+        return incoming_by_days
+
+    @api.multi
+    def _get_demand_by_days(self):
+        self.ensure_one()
+        domain = self._search_stock_moves_qualified_demand_domain()
+        moves = self.env['stock.move'].search(domain)
+        demand_by_days = {}
+        move_dates = [fields.Datetime.from_string(dt).date() for dt in
+                      moves.mapped('date_expected')]
+        for move_date in move_dates:
+            demand_by_days[move_date] = 0.0
+        for move in moves:
+            date = fields.Datetime.from_string(move.date_expected).date()
+            demand_by_days[date] += \
+                move.product_qty - move.reserved_availability
+        return demand_by_days
+
+    @api.multi
     def _calc_qualified_demand(self):
         for rec in self:
             rec.qualified_demand = 0.0
-            domain = rec._search_stock_moves_qualified_demand_domain()
-            moves = self.env['stock.move'].search(domain)
-            demand_by_days = {}
-            move_dates = [fields.Datetime.from_string(dt).date() for dt in
-                          moves.mapped('date_expected')]
-            for move_date in move_dates:
-                demand_by_days[move_date] = 0.0
-            for move in moves:
-                date = fields.Datetime.from_string(move.date_expected).date()
-                demand_by_days[date] += \
-                    move.product_qty - move.reserved_availability
+            demand_by_days = rec._get_demand_by_days()
             for date in demand_by_days:
                 if demand_by_days[date] >= rec.order_spike_threshold \
                         or date <= fields.date.today():
