@@ -227,6 +227,13 @@ be found on GitHub.
 Changelog
 =========
 
+11.0.1.3.0 (2019-02-21)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [ADD] New chart that depict information about the supply and demand (
+  displaying also de order spike threshold and horizon) for a buffer.
+  (`#40 <https://github.com/OCA/ddmrp/pull/40>`_)
+
 11.0.1.2.0 (2019-01-29)
 ~~~~~~~~~~~~~~~~~~~~~~~
 

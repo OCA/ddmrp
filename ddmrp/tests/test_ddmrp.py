@@ -54,6 +54,7 @@ class TestDdmrp(common.SavepointCase):
         cls.uom_unit = cls.env.ref('product.product_uom_unit')
         cls.buffer_profile_pur = cls.env.ref(
             'ddmrp.stock_buffer_profile_replenish_purchased_medium_medium')
+        cls.adu_fixed = cls.env.ref('ddmrp.adu_calculation_method_fixed')
         cls.group_stock_manager = cls.env.ref('stock.group_stock_manager')
         cls.group_mrp_user = cls.env.ref('mrp.group_mrp_user')
         cls.group_change_procure_qty = cls.env.ref(
@@ -194,8 +195,6 @@ class TestDdmrp(common.SavepointCase):
         return wizard
 
     def test_adu_calculation_fixed(self):
-        method = self.env.ref('ddmrp.adu_calculation_method_fixed')
-
         orderpointA = self.orderpointModel.create({
             'buffer_profile_id': self.buffer_profile_pur.id,
             'product_id': self.productA.id,
@@ -204,7 +203,7 @@ class TestDdmrp(common.SavepointCase):
             'product_min_qty': 0.0,
             'product_max_qty': 0.0,
             'qty_multiple': 0.0,
-            'adu_calculation_method': method.id,
+            'adu_calculation_method': self.adu_fixed.id,
             'adu_fixed': 4
         })
         self.orderpointModel.cron_ddmrp_adu()
@@ -1002,6 +1001,27 @@ class TestDdmrp(common.SavepointCase):
         })
         self.assertEqual(bomC.is_buffered, True)
         self.assertEqual(bomC.orderpoint_id, orderpointA)
+
+    def test_bokeh_charts(self):
+        # Check that chart computation do not raise an error:
+        date_move = datetime.today()
+        self.create_pickingoutA(date_move, 150)
+        self.create_pickinginA(date_move, 150)
+        orderpointA = self.orderpointModel.create({
+            'buffer_profile_id': self.buffer_profile_pur.id,
+            'product_id': self.productA.id,
+            'location_id': self.stock_location.id,
+            'warehouse_id': self.warehouse.id,
+            'product_min_qty': 0.0,
+            'product_max_qty': 0.0,
+            'qty_multiple': 0.0,
+            'adu_calculation_method': self.adu_fixed.id,
+            'adu_fixed': 4
+        })
+        orderpointA.cron_actions()
+        self.assertTrue(orderpointA.ddmrp_chart)
+        self.assertTrue(orderpointA.ddmrp_demand_chart)
+        self.assertTrue(orderpointA.ddmrp_supply_chart)
 
 
 class TestBomDLT(common.TransactionCase):
