@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* ddmrp_exclude_moves_adu_calc
+# 	* ddmrp_exclude_moves_adu_calc
 #
 msgid ""
 msgstr ""
@@ -31,12 +31,15 @@ msgstr ""
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model.fields,help:ddmrp_exclude_moves_adu_calc.field_stock_location_exclude_from_adu
-msgid "If this flag is set stock moves into this location will be excluded from ADU calculation in the origin location buffer."
+msgid ""
+"If this flag is set stock moves into this location will be excluded from ADU "
+"calculation in the origin location buffer."
 msgstr ""
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model.fields,help:ddmrp_exclude_moves_adu_calc.field_stock_move_exclude_from_adu
-msgid "If this flag is set this stock move will be excluded from ADU calculation"
+msgid ""
+"If this flag is set this stock move will be excluded from ADU calculation"
 msgstr ""
 
 #. module: ddmrp_exclude_moves_adu_calc
@@ -45,7 +48,7 @@ msgid "Inventory Locations"
 msgstr ""
 
 #. module: ddmrp_exclude_moves_adu_calc
-#: code:addons/ddmrp_exclude_moves_adu_calc/models/stock_move.py:21
+#: code:addons/ddmrp_exclude_moves_adu_calc/models/stock_move.py:22
 #, python-format
 msgid "Only inventory managers are allowed perform this action."
 msgstr ""
