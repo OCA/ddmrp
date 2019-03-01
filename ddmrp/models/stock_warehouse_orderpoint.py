@@ -355,21 +355,9 @@ class StockWarehouseOrderpoint(models.Model):
     _order = 'planning_priority_level asc, net_flow_position asc'
 
     @api.multi
-    @api.onchange("red_zone_qty")
-    def onchange_red_zone_qty(self):
-        for rec in self:
-            rec.product_min_qty = rec.red_zone_qty
-
-    @api.multi
     @api.onchange("adu_fixed", "adu_calculation_method")
     def onchange_adu(self):
         self._calc_adu()
-
-    @api.multi
-    @api.onchange("top_of_green")
-    def onchange_green_zone_qty(self):
-        for rec in self:
-            rec.product_max_qty = rec.top_of_green
 
     @api.multi
     def _search_open_stock_moves_domain(self):
