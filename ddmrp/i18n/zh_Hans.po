@@ -411,7 +411,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5648
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5652
 msgid "Lead Time Factor"
 msgstr "前置时间因子"
 
@@ -497,7 +497,7 @@ msgid "Net flow position (% of TOG)"
 msgstr "净流位置 (% of TOG)"
 
 #. module: ddmrp
-#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:394
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:382
 #, python-format
 msgid "Non-completed Moves"
 msgstr "未完成的移动"
@@ -727,11 +727,6 @@ msgid "Reordering Rule DDMRP calculation"
 msgstr "订货规则DDMRP计算"
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_production_orderpoint_id
-msgid "Reordering rule"
-msgstr "订货规则"
-
-#. module: ddmrp
 #: selection:stock.buffer.profile,replenish_method:0
 msgid "Replenished"
 msgstr "补给"
@@ -862,7 +857,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5649
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5653
 msgid "Variability Factor"
 msgstr "变动因子"
 
@@ -961,6 +956,9 @@ msgstr ""
 #: model:ir.model,name:ddmrp.model_stock_buffer_profile_variability
 msgid "stock.buffer.profile.variability"
 msgstr ""
+
+#~ msgid "Reordering rule"
+#~ msgstr "订货规则"
 
 #~ msgid "Use Estimates"
 #~ msgstr "使用估算"
