@@ -415,7 +415,7 @@ msgstr "Última Modificación en"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5648
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5652
 msgid "Lead Time Factor"
 msgstr "Factor de Plazo de Entrega"
 
@@ -499,7 +499,7 @@ msgid "Net flow position (% of TOG)"
 msgstr "Posición de flujo neto (% de TdV)"
 
 #. module: ddmrp
-#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:394
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:382
 #, python-format
 msgid "Non-completed Moves"
 msgstr "Movimientos no completados"
@@ -727,11 +727,6 @@ msgid "Reordering Rule DDMRP calculation"
 msgstr "Cálculo DDMRP para regla de reabastecimiento"
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_production_orderpoint_id
-msgid "Reordering rule"
-msgstr "Regla de reabastecimiento"
-
-#. module: ddmrp
 #: selection:stock.buffer.profile,replenish_method:0
 msgid "Replenished"
 msgstr "Con Buffer"
@@ -872,7 +867,7 @@ msgstr "UdM"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5649
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5653
 msgid "Variability Factor"
 msgstr "Factor de Variabilidad"
 
@@ -975,6 +970,9 @@ msgstr "'stock.buffer.profile.lead.time'"
 #: model:ir.model,name:ddmrp.model_stock_buffer_profile_variability
 msgid "stock.buffer.profile.variability"
 msgstr "'stock.buffer.profile.variability'"
+
+#~ msgid "Reordering rule"
+#~ msgstr "Regla de reabastecimiento"
 
 #~ msgid "Use Estimates"
 #~ msgstr "Usa Estimados"
