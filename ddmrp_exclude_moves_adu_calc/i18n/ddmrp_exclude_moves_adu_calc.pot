@@ -44,7 +44,7 @@ msgid "Inventory Locations"
 msgstr ""
 
 #. module: ddmrp_exclude_moves_adu_calc
-#: code:addons/ddmrp_exclude_moves_adu_calc/models/stock_move.py:21
+#: code:addons/ddmrp_exclude_moves_adu_calc/models/stock_move.py:22
 #, python-format
 msgid "Only inventory managers are allowed perform this action."
 msgstr ""
