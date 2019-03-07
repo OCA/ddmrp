@@ -127,6 +127,7 @@ msgstr "Amortiguadores"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_method
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_adu_calculation_method_type
 msgid "Calculation method"
 msgstr "Método de cálculo"
 
@@ -499,7 +500,7 @@ msgid "Net flow position (% of TOG)"
 msgstr "Posición de flujo neto (% de TdV)"
 
 #. module: ddmrp
-#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:382
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:388
 #, python-format
 msgid "Non-completed Moves"
 msgstr "Movimientos no completados"
