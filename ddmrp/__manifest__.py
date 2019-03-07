@@ -6,7 +6,7 @@
 {
     "name": "DDMRP",
     "summary": "Demand Driven Material Requirements Planning",
-    "version": "11.0.1.1.0",
+    "version": "11.0.1.2.0",
     "development_status": "Beta",
     "author": "Eficent, "
               "Odoo Community Association (OCA)",
