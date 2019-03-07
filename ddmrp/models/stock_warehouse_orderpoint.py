@@ -1,4 +1,4 @@
-# Copyright 2016-18 Eficent Business and IT Consulting Services S.L.
+# Copyright 2016-19 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
@@ -153,29 +153,33 @@ class StockWarehouseOrderpoint(models.Model):
             else:
                 if subtract_qty[rec.id] > 0.0:
                     procure_recommended_qty -= subtract_qty[rec.id]
-            if procure_recommended_qty > 0.0:
-                reste = rec.qty_multiple > 0 and \
-                    procure_recommended_qty % rec.qty_multiple or 0.0
 
+            adjusted_qty = 0.0
+            if procure_recommended_qty > 0.0:
+                # If there is a procure UoM we apply it before anything.
+                # This means max, min and multiple quantities are relative to
+                # the procure UoM.
                 if rec.procure_uom_id:
                     rounding = rec.procure_uom_id.rounding
+                    adjusted_qty = rec.product_id.uom_id._compute_quantity(
+                        procure_recommended_qty, rec.procure_uom_id)
                 else:
                     rounding = rec.product_uom.rounding
+                    adjusted_qty = procure_recommended_qty
 
+                # Apply qty multiple and minimum quantity (maximum quantity
+                # applies on the procure wizard)
+                reste = rec.qty_multiple > 0 and \
+                    adjusted_qty % rec.qty_multiple or 0.0
                 if float_compare(
                         reste, 0.0,
                         precision_rounding=rounding) > 0:
-                    procure_recommended_qty += rec.qty_multiple - reste
+                    adjusted_qty += rec.qty_multiple - reste
+                if float_compare(adjusted_qty, rec.product_min_qty,
+                                 precision_rounding=rounding) < 0:
+                    adjusted_qty = rec.product_min_qty
 
-                if rec.procure_uom_id:
-                    product_qty = rec.product_id.uom_id._compute_quantity(
-                        procure_recommended_qty, rec.procure_uom_id)
-                else:
-                    product_qty = procure_recommended_qty
-            else:
-                product_qty = 0.0
-
-            rec.procure_recommended_qty = product_qty
+            rec.procure_recommended_qty = adjusted_qty
 
     def _compute_ddmrp_chart(self):
         """This method use the Bokeh library to create a buffer depiction."""
@@ -278,6 +282,8 @@ class StockWarehouseOrderpoint(models.Model):
     adu_calculation_method = fields.Many2one(
         comodel_name="product.adu.calculation.method",
         string="ADU calculation method")
+    adu_calculation_method_type = fields.Selection(
+        related="adu_calculation_method.method")
     adu_fixed = fields.Float(string="Fixed ADU",
                              default=1.0, digits=UNIT)
     order_cycle = fields.Float(string="Minimum Order Cycle (days)")
