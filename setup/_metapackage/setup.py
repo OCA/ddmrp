@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo11-addon-ddmrp_adjustment',
         'odoo11-addon-ddmrp_exclude_moves_adu_calc',
         'odoo11-addon-ddmrp_history',
+        'odoo11-addon-ddmrp_product_replace',
         'odoo11-addon-ddmrp_production_equivalent',
         'odoo11-addon-ddmrp_report_part_flow_index',
     ],
