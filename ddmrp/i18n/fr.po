@@ -409,7 +409,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5652
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5668
 msgid "Lead Time Factor"
 msgstr ""
 
@@ -851,7 +851,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5653
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5669
 msgid "Variability Factor"
 msgstr ""
 
