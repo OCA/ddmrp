@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* ddmrp_history
+# 	* ddmrp_history
 #
 msgid ""
 msgstr ""
@@ -92,7 +92,7 @@ msgstr ""
 
 #. module: ddmrp_history
 #: code:addons/ddmrp_history/models/stock_warehouse_orderpoint.py:87
-#: code:addons/ddmrp_history/models/stock_warehouse_orderpoint.py:170
+#: code:addons/ddmrp_history/models/stock_warehouse_orderpoint.py:175
 #, python-format
 msgid "Not enough data available."
 msgstr ""
