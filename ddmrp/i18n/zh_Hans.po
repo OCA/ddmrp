@@ -201,6 +201,20 @@ msgid "DDMRP Chart"
 msgstr "DDMRP 图表"
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_ddmrp_demand_chart
+#, fuzzy
+#| msgid "DDMRP Chart"
+msgid "DDMRP Demand Chart"
+msgstr "DDMRP 图表"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_ddmrp_supply_chart
+#, fuzzy
+#| msgid "DDMRP Chart"
+msgid "DDMRP Supply Chart"
+msgstr "DDMRP 图表"
+
+#. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.report_mrpbomstructure_ddmrp
 msgid "DLT"
 msgstr ""
@@ -211,6 +225,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_dlt
 msgid "Decoupled Lead Time (days)"
 msgstr "解耦的前置时间(天)"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Demand"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run_display_name
@@ -498,7 +517,19 @@ msgid "Net flow position (% of TOG)"
 msgstr "净流位置 (% of TOG)"
 
 #. module: ddmrp
-#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:388
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:284
+#, python-format
+msgid "No demand detected."
+msgstr ""
+
+#. module: ddmrp
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:321
+#, python-format
+msgid "No supply detected."
+msgstr ""
+
+#. module: ddmrp
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:486
 #, python-format
 msgid "Non-completed Moves"
 msgstr "未完成的移动"
@@ -795,6 +826,16 @@ msgstr "库存缓冲"
 #: model:ir.ui.menu,name:ddmrp.menu_action_ddmrp_stock_buffer_planning
 msgid "Stock Buffer Planning"
 msgstr "库存缓冲计划"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Supply"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Supply & Demand"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form

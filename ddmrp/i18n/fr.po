@@ -199,6 +199,16 @@ msgid "DDMRP Chart"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_ddmrp_demand_chart
+msgid "DDMRP Demand Chart"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_ddmrp_supply_chart
+msgid "DDMRP Supply Chart"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.report_mrpbomstructure_ddmrp
 msgid "DLT"
 msgstr ""
@@ -208,6 +218,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line_dlt
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_dlt
 msgid "Decoupled Lead Time (days)"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Demand"
 msgstr ""
 
 #. module: ddmrp
@@ -493,7 +508,19 @@ msgid "Net flow position (% of TOG)"
 msgstr ""
 
 #. module: ddmrp
-#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:388
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:284
+#, python-format
+msgid "No demand detected."
+msgstr ""
+
+#. module: ddmrp
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:321
+#, python-format
+msgid "No supply detected."
+msgstr ""
+
+#. module: ddmrp
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:486
 #, python-format
 msgid "Non-completed Moves"
 msgstr ""
@@ -787,6 +814,16 @@ msgstr ""
 #: model:ir.actions.act_window,name:ddmrp.action_ddmrp_stock_buffer_planning
 #: model:ir.ui.menu,name:ddmrp.menu_action_ddmrp_stock_buffer_planning
 msgid "Stock Buffer Planning"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Supply"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Supply & Demand"
 msgstr ""
 
 #. module: ddmrp
