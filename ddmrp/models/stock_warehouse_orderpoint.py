@@ -243,15 +243,18 @@ class StockWarehouseOrderpoint(models.Model):
 
             # Prepare data:
             demand_data = rec._get_demand_by_days()
+            mrp_data = rec._get_qualified_mrp_moves()
             supply_data = rec._get_incoming_by_days()
             width = timedelta(days=0.4)
             date_format = self.env['res.lang']._lang_get(
                 self.env.lang).date_format
 
             # Plot demand data:
-            if demand_data:
+            if demand_data or mrp_data:
                 x_demand = list(demand_data.keys())
                 y_demand = list(demand_data.values())
+                x_mrp = list(mrp_data.keys())
+                y_mrp = list(mrp_data.values())
 
                 p = figure(plot_width=500, plot_height=400,
                            y_axis_label='Quantity', x_axis_type='datetime')
@@ -263,8 +266,12 @@ class StockWarehouseOrderpoint(models.Model):
                     years=date_format)
                 p.xaxis.major_label_orientation = pi / 4
 
-                p.vbar(x=x_demand, width=width, bottom=0, top=y_demand,
-                       color="firebrick")
+                if demand_data:
+                    p.vbar(x=x_demand, width=width, bottom=0, top=y_demand,
+                           color="firebrick")
+                if mrp_data:
+                    p.vbar(x=x_mrp, width=width, bottom=0, top=y_mrp,
+                           color="lightsalmon")
                 p.line(
                     [datetime.today() - timedelta(days=1),
                      datetime.today() + timedelta(
@@ -700,14 +707,54 @@ class StockWarehouseOrderpoint(models.Model):
         return demand_by_days
 
     @api.multi
+    def _search_mrp_moves_qualified_demand_domain(self):
+        self.ensure_one()
+        horizon = self.order_spike_horizon
+        if self.warehouse_id.calendar_id:
+            dt_to = self.warehouse_id.calendar_id.plan_days(
+                horizon + 1, datetime.now())
+            date_to = fields.Date.to_string(dt_to)
+        else:
+            date_to = fields.Date.to_string(fields.date.today() +
+                                            timedelta(days=horizon))
+        locations = self.env['stock.location'].search(
+            [('id', 'child_of', [self.location_id.id])])
+        return [('product_id', '=', self.product_id.id),
+                ('mrp_area_id.location_id', 'in', locations.ids),
+                ('mrp_type', '=', 'd'),
+                ('mrp_date', '<=', date_to)]
+
+    @api.multi
+    def _get_qualified_mrp_moves(self):
+        self.ensure_one()
+        domain = self._search_mrp_moves_qualified_demand_domain()
+        moves = self.env['mrp.move'].search(domain)
+        mrp_moves_by_days = {}
+        move_dates = [fields.Date.from_string(dt) for dt in
+                      moves.mapped('mrp_date')]
+        for move_date in move_dates:
+            mrp_moves_by_days[move_date] = 0.0
+        for move in moves:
+            date = fields.Datetime.from_string(move.mrp_date).date()
+            mrp_moves_by_days[date] += abs(move.mrp_qty)
+        return mrp_moves_by_days
+
+    @api.multi
     def _calc_qualified_demand(self):
         for rec in self:
             rec.qualified_demand = 0.0
             demand_by_days = rec._get_demand_by_days()
-            for date in demand_by_days:
-                if demand_by_days[date] >= rec.order_spike_threshold \
+            mrp_moves_by_days = rec._get_qualified_mrp_moves()
+            dates = list(demand_by_days.keys()) + \
+                list(mrp_moves_by_days.keys())
+            for date in dates:
+                if demand_by_days.get(date, 0.0) >= rec.order_spike_threshold \
                         or date <= fields.date.today():
-                    rec.qualified_demand += demand_by_days[date]
+                    rec.qualified_demand += demand_by_days.get(date, 0.0)
+                if mrp_moves_by_days.get(date, 0.0) >= \
+                        rec.order_spike_threshold \
+                        or date <= fields.date.today():
+                    rec.qualified_demand += mrp_moves_by_days.get(date, 0.0)
         return True
 
     @api.multi
