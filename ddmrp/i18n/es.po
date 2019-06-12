@@ -435,7 +435,7 @@ msgstr "Última Modificación en"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5668
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5689
 msgid "Lead Time Factor"
 msgstr "Factor de Plazo de Entrega"
 
@@ -519,19 +519,19 @@ msgid "Net flow position (% of TOG)"
 msgstr "Posición de flujo neto (% de TdV)"
 
 #. module: ddmrp
-#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:284
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:291
 #, python-format
 msgid "No demand detected."
 msgstr ""
 
 #. module: ddmrp
-#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:321
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:328
 #, python-format
 msgid "No supply detected."
 msgstr ""
 
 #. module: ddmrp
-#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:486
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:493
 #, python-format
 msgid "Non-completed Moves"
 msgstr "Movimientos no completados"
@@ -909,7 +909,7 @@ msgstr "UdM"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5669
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5690
 msgid "Variability Factor"
 msgstr "Factor de Variabilidad"
 
