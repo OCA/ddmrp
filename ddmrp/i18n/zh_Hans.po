@@ -431,7 +431,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5668
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5689
 msgid "Lead Time Factor"
 msgstr "前置时间因子"
 
@@ -517,19 +517,19 @@ msgid "Net flow position (% of TOG)"
 msgstr "净流位置 (% of TOG)"
 
 #. module: ddmrp
-#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:284
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:291
 #, python-format
 msgid "No demand detected."
 msgstr ""
 
 #. module: ddmrp
-#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:321
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:328
 #, python-format
 msgid "No supply detected."
 msgstr ""
 
 #. module: ddmrp
-#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:486
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:493
 #, python-format
 msgid "Non-completed Moves"
 msgstr "未完成的移动"
@@ -899,7 +899,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5669
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5690
 msgid "Variability Factor"
 msgstr "变动因子"
 
