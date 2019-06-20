@@ -1,4 +1,4 @@
-# Copyright 2016-18 Eficent Business and IT Consulting Services S.L.
+# Copyright 2016-19 Eficent Business and IT Consulting Services S.L.
 #   (http://www.eficent.com)
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
@@ -124,6 +124,14 @@ class TestDdmrp(common.TransactionCase):
                 })]
         })
 
+    def _do_picking(self, picking, date):
+        picking.action_confirm()
+        picking.force_assign()
+        picking.move_lines.quantity_done = picking.move_lines.product_uom_qty
+        picking.action_done()
+        for move in picking.move_lines:
+            move.date = date
+
     def test_01_exclude_move_from_adu(self):
 
         method = self.env.ref('ddmrp.adu_calculation_method_past_120')
@@ -143,21 +151,19 @@ class TestDdmrp(common.TransactionCase):
 
         self.assertEqual(orderpointA.adu, 0)
 
-        pickingOuts = self.pickingModel
+        # Create, process and ignore a picking:
         date_move = datetime.today() - timedelta(days=30)
-        pickingOut = self.create_pickingoutA(date_move, 60)
-        for move in pickingOut.move_lines:
+        pick_excluded = self.create_pickingoutA(date_move, 60)
+        self._do_picking(pick_excluded, date_move)
+        for move in pick_excluded.move_lines:
             move.exclude_from_adu = True
-        pickingOuts += pickingOut
+
+        # Create 2 outgoing picking (toward different locations):
         date_move = datetime.today() - timedelta(days=60)
-        pickingOuts += self.create_pickingoutA(date_move, 60)
-        pickingOuts += self.create_pickingoutB(date_move, 60)
-        for picking in pickingOuts:
-            picking.action_confirm()
-            picking.action_assign()
-            for line in picking.move_line_ids:
-                line.qty_done = 60
-            picking.action_done()
+        pick_a = self.create_pickingoutA(date_move, 60)
+        self._do_picking(pick_a, date_move)
+        pick_b = self.create_pickingoutB(date_move, 60)
+        self._do_picking(pick_b, date_move)
 
         self.orderpointModel.cron_ddmrp_adu()
         to_assert_value = (60 + 60) / 120
