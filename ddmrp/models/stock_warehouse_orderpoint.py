@@ -529,14 +529,20 @@ class StockWarehouseOrderpoint(models.Model):
     def _calc_adu_past_demand(self):
         self.ensure_one()
         horizon = self.adu_calculation_method.horizon_past or 0
+        # today is excluded to be sure that is a past day and all moves
+        # for that day are done (or at least the expected date is in the past).
         if self.warehouse_id.calendar_id:
             dt_from = self.warehouse_id.calendar_id.plan_days(
                 -1 * horizon - 1, datetime.now())
             date_from = fields.Date.to_string(dt_from)
+            dt_to = self.warehouse_id.calendar_id.plan_days(
+                -1 - 1, datetime.now())
+            date_to = fields.Date.to_string(dt_to)
         else:
             date_from = fields.Date.to_string(
                 fields.date.today() - timedelta(days=horizon))
-        date_to = fields.Date.today()
+            date_to = fields.Date.to_string(
+                fields.date.today() - timedelta(days=1))
         locations = self.env['stock.location'].search(
             [('id', 'child_of', [self.location_id.id])])
         if self.adu_calculation_method.source_past == 'estimates':
