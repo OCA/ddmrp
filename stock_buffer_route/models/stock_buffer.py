@@ -1,5 +1,5 @@
-# Copyright 2019 Eficent Business and IT Consulting Services, S.L.
-# Copyright 2019 Camptocamp SA
+# Copyright 2019-20 ForgeFlow S.L. (https://www.forgeflow.com)
+# Copyright 2019-20 Camptocamp SA
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import api, fields, models
