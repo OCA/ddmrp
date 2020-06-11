@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2018 Eficent Business and IT Consulting Services S.L.
+<!-- Copyright 2018-20 ForgeFlow S.L. (http://www.forgeflow.com)
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
 <odoo>
 
@@ -23,6 +23,9 @@
         <field name="arch" type="xml">
             <field name="date_expected" position="attributes">
                 <attribute name="invisible">False</attribute>
+            </field>
+            <field name="move_dest_ids" position="after">
+                <field name="buffer_ids"/>
             </field>
         </field>
     </record>
