@@ -1,8 +1,8 @@
-# Copyright 2017-18 Eficent Business and IT Consulting Services S.L.
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2017-20 ForgeFlow S.L. (http://www.forgeflow.com)
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models
-from .stock_warehouse_orderpoint import _PRIORITY_LEVEL
+from odoo import fields, models
+from .stock_buffer import _PRIORITY_LEVEL
 
 
 class PurchaseOrder(models.Model):
@@ -14,6 +14,12 @@ class PurchaseOrder(models.Model):
 class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
+    buffer_ids = fields.Many2many(
+        comodel_name="stock.buffer",
+        string="Stock Buffers",
+        copy=False,
+        readonly=True,
+    )
     execution_priority_level = fields.Selection(
         string="Buffer On-Hand Status Level",
         selection=_PRIORITY_LEVEL, readonly=True,
@@ -28,15 +34,14 @@ class PurchaseOrderLine(models.Model):
         record._calc_execution_priority()
         return record
 
-    @api.multi
     def _calc_execution_priority(self):
-        # TODO: handle serveral orderpoints? worst scenario, average?
+        # TODO: handle serveral buffers? worst scenario, average?
         to_compute = self.filtered(
-            lambda r: r.orderpoint_ids and r.state not in ['done', 'cancel'])
+            lambda r: r.buffer_ids and r.state not in ['done', 'cancel'])
         for rec in to_compute:
             rec.execution_priority_level = \
-                rec.orderpoint_ids[0].execution_priority_level
-            rec.on_hand_percent = rec.orderpoint_ids[0].on_hand_percent
+                rec.buffer_ids[0].execution_priority_level
+            rec.on_hand_percent = rec.buffer_ids[0].on_hand_percent
         (self - to_compute).write({
             'execution_priority_level': None,
             'on_hand_percent': None,

@@ -1,3 +1,9 @@
+13.0.1.0.0 (2020-06-11)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [MIG/REF] Migration of module to v13 and refactor (added new dedicated model
+  for stock buffer).
+
 11.0.1.3.0 (2019-02-21)
 ~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -1,6 +1,5 @@
-# © 2017 Eficent Business and IT Consulting Services S.L.
-#        (http://www.eficent.com)
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+# Copyright 2017-20 ForgeFlow S.L. (http://www.forgeflow.com)
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, models
 
@@ -10,8 +9,7 @@ class BomStructureReport(models.AbstractModel):
 
     @api.model
     def _get_child_vals(self, record, level, qty, uom):
-        res = super(BomStructureReport, self)._get_child_vals(
-            record, level, qty, uom)
+        res = super()._get_child_vals(record, level, qty, uom)
         if record.product_id.bom_ids:
             lead_time = record.product_id.produce_delay
         else:

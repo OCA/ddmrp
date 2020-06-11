@@ -1,8 +1,8 @@
-# Copyright 2017 Eficent Business and IT Consulting Services S.L.
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2017-20 ForgeFlow S.L. (http://www.forgeflow.com)
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import logging
-from openerp import api, fields, models
+from odoo import api, fields, models
 _logger = logging.getLogger(__name__)
 
 
@@ -13,18 +13,14 @@ class MrpBom(models.Model):
         string="Buffered?", compute="_compute_is_buffered",
         help="True when the product has an DDMRP buffer associated.",
     )
-    orderpoint_id = fields.Many2one(
-        comodel_name='stock.warehouse.orderpoint', string='Orderpoint',
-        compute="_compute_orderpoint",
+    buffer_id = fields.Many2one(
+        comodel_name="stock.buffer",
+        string="Stock Buffer",
+        compute="_compute_buffer",
     )
     dlt = fields.Float(
         string="Decoupled Lead Time (days)",
         compute="_compute_dlt",
-    )
-    has_mto_rule = fields.Boolean(
-        string="MTO",
-        help="Follows an MTO Pull Rule",
-        compute="_compute_mto_rule",
     )
 
     def _get_search_buffer_domain(self):
@@ -32,36 +28,27 @@ class MrpBom(models.Model):
         if not product:
             if self.product_tmpl_id.product_variant_ids:
                 product = self.product_tmpl_id.product_variant_ids[0]
-        domain = [('product_id', '=', product.id),
-                  ('buffer_profile_id', '!=', False)]
+        domain = [("product_id", "=", product.id)]
         if self.location_id:
-            domain.append(('location_id', '=', self.location_id.id))
+            domain.append(("location_id", "=", self.location_id.id))
         return domain
 
-    @api.depends('product_id', 'product_tmpl_id', 'location_id')
-    def _compute_orderpoint(self):
+    @api.depends("product_id", "product_tmpl_id", "location_id")
+    def _compute_buffer(self):
         for record in self:
             domain = record._get_search_buffer_domain()
-            # NOTE: It can be possible to find multiple orderpoints.
+            # NOTE: It can be possible to find multiple buffers.
             # For example if the BoM has no location set, and there
-            # are orderpoints with the same product_id and buffer_profile_id
+            # are buffers with the same product_id and buffer_profile_id
             # You do not know which one the search function finds.
-            orderpoint = self.env['stock.warehouse.orderpoint'].search(
-                domain, limit=1)
-            record.orderpoint_id = orderpoint
+            buffer = self.env["stock.buffer"].search(domain, limit=1)
+            record.buffer_id = buffer
 
-    @api.depends('orderpoint_id')
+    @api.depends("buffer_id")
     def _compute_is_buffered(self):
         for bom in self:
-            bom.is_buffered = True if bom.orderpoint_id else False
+            bom.is_buffered = True if bom.buffer_id else False
 
-    @api.depends('location_id')
-    def _compute_mto_rule(self):
-        # TODO: fix
-        for rec in self:
-            rec.has_mto_rule = False
-
-    @api.multi
     def _get_longest_path(self):
         if not self.bom_line_ids:
             return 0.0
@@ -98,7 +85,6 @@ class MrpBom(models.Model):
                 i += 1
         return max(paths)
 
-    @api.multi
     def _get_manufactured_dlt(self):
         """Computes the Decoupled Lead Time exploding all the branches of the
         BOM until a buffered position and then selecting the greatest."""
@@ -117,41 +103,36 @@ class MrpBomLine(models.Model):
     _inherit = "mrp.bom.line"
 
     is_buffered = fields.Boolean(
-        string="Buffered?", compute="_compute_is_buffered",
+        string="Buffered?",
+        compute="_compute_is_buffered",
         help="True when the product has an DDMRP buffer associated.",
     )
-    orderpoint_id = fields.Many2one(
-        comodel_name='stock.warehouse.orderpoint', string='Orderpoint',
+    buffer_id = fields.Many2one(
+        comodel_name="stock.buffer",
+        string="Stock Buffer",
         compute="_compute_is_buffered",
     )
     dlt = fields.Float(
         string="Decoupled Lead Time (days)",
         compute="_compute_dlt",
     )
-    has_mto_rule = fields.Boolean(
-        string="MTO",
-        help="Follows an MTO Pull Rule",
-        compute="_compute_mto_rule",
-    )
 
     def _get_search_buffer_domain(self):
         product = self.product_id or \
             self.product_tmpl_id.product_variant_ids[0]
-        domain = [('product_id', '=', product.id),
-                  ('buffer_profile_id', '!=', False)]
+        domain = [("product_id", "=", product.id)]
         if self.location_id:
-            domain.append(('location_id', '=', self.location_id.id))
+            domain.append(("location_id", "=", self.location_id.id))
         return domain
 
     def _compute_is_buffered(self):
         for line in self:
             domain = line._get_search_buffer_domain()
-            orderpoint = self.env['stock.warehouse.orderpoint'].search(
-                domain, limit=1)
-            line.orderpoint_id = orderpoint
-            line.is_buffered = True if orderpoint else False
+            buffer = self.env["stock.buffer"].search(domain, limit=1)
+            line.buffer_id = buffer
+            line.is_buffered = True if buffer else False
 
-    @api.depends('product_id')
+    @api.depends("product_id")
     def _compute_dlt(self):
         for rec in self:
             if rec.product_id.bom_ids:
@@ -159,8 +140,3 @@ class MrpBomLine(models.Model):
             else:
                 rec.dlt = rec.product_id.seller_ids and \
                     rec.product_id.seller_ids[0].delay or 0.0
-
-    @api.depends('location_id')
-    def _compute_mto_rule(self):
-        for rec in self:
-            rec.has_mto_rule = False
