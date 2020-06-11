@@ -8,8 +8,7 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     buffer_ids = fields.Many2many(
-        comodel_name="stock.buffer",
-        string="Linked Stock Buffers",
+        comodel_name="stock.buffer", string="Linked Stock Buffers",
     )
 
     def _prepare_procurement_values(self):
