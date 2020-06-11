@@ -54,4 +54,3 @@ Some of the benefits reported by the DDMRP method include:
 
 It is highly recommended to read the book 'Demand Driven Material
 Requirements Planning (DDMRP)' by Carol Ptak and Chad Smith.
-

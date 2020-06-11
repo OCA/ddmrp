@@ -10,5 +10,6 @@ class StockWarehouse(models.Model):
     nfp_incoming_safety_factor = fields.Float(
         "Net Flow Position Incoming Safety Factor",
         help="Factor used to compute the number of days to look into the "
-             "future for incoming shipments for the purposes of the Net "
-             "Flow position calculation.")
+        "future for incoming shipments for the purposes of the Net "
+        "Flow position calculation.",
+    )
