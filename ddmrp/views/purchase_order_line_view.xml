@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2017-18 Eficent Business and IT Consulting Services S.L.
+<!-- Copyright 2017-18 ForgeFlow S.L. (http://www.forgeflow.com)
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
 <odoo>
-
-    <record id="purchase_order_form" model="ir.ui.view">
-        <field name="name">purchase.order.form - ddmrp</field>
-        <field name="model">purchase.order</field>
-        <field name="inherit_id" ref="purchase.purchase_order_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='order_line']//field[@name='date_planned']"
-                   position="after">
-                <field name="execution_priority_level" invisible="1"/>
-                <field name="on_hand_percent"
-                       options="{
-                       &quot;bg_color&quot;: &quot;red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'&quot;,
-                       &quot;fg_color&quot;: &quot;white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'&quot;}"/>
-            </xpath>
-            <field name="incoterm_id" position="after">
-                <field name="ddmrp_comment"/>
-            </field>
-        </field>
-    </record>
 
     <record id="purchase_order_line_execution_tree" model="ir.ui.view">
         <field name="name">purchase.order.line.tree - ddmrp</field>
@@ -30,16 +11,10 @@
                   create="false" editable="top" delete="false">
                 <field name="order_id" widget="many2one" readonly="True"/>
                 <field name="partner_id" string="Vendor"/>
-                <field name="execution_priority_level"
-                       options="{
-                           &quot;bg_color&quot;: &quot;red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'&quot;,
-                           &quot;fg_color&quot;: &quot;white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'&quot;}"/>
-                <field name="on_hand_percent"
-                       options="{
-                       &quot;bg_color&quot;: &quot;red:execution_priority_level=='1_red';yellow:execution_priority_level=='2_yellow';green:execution_priority_level == '3_green'&quot;,
-                       &quot;fg_color&quot;: &quot;white:execution_priority_level=='1_red';black:execution_priority_level=='2_yellow';white:execution_priority_level == '3_green'&quot;}"/>
+                <field name="execution_priority_level" invisible="1"/>
+                <field name="on_hand_percent" options='{"buffer_ids": "buffer_ids", "color_from": "execution_priority_level"}'/>
                 <field name="product_id" readonly="True"/>
-                <field name="orderpoint_ids" string="Buffers" widget="many2many_tags" readonly="1"/>
+                <field name="buffer_ids" string="Buffers" widget="many2many_tags" readonly="1"/>
                 <field name="date_planned"  widget="date" readonly="True"/>
                 <field name="state"/>
                 <field name="ddmrp_comment"/>
@@ -69,28 +44,11 @@
         </field>
     </record>
 
-    <record id="view_purchase_order_filter" model="ir.ui.view">
-        <field name="name">request.quotation.select - ddmrp</field>
-        <field name="model">purchase.order</field>
-        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
-        <field name="arch" type="xml">
-            <filter name="not_invoiced" position="before">
-                <filter name="execution_priority_level_red"
-                        string="On-Hand Alert: Red"
-                        domain="[('order_line.execution_priority_level', '=', '1_red')]"/>
-                <filter name="execution_priority_level_yellow"
-                        string="On-Hand Alert: Yellow"
-                        domain="[('order_line.execution_priority_level', '=', '2_yellow')]"/>
-                <separator/>
-            </filter>
-        </field>
-    </record>
-
     <record id="po_line_execution_action" model="ir.actions.act_window">
         <field name="name">PO lines On-Hand Status</field>
         <field name="res_model">purchase.order.line</field>
         <field name="view_id" ref="purchase_order_line_execution_tree"/>
-        <field name="domain">[('orderpoint_ids','!=',False), ('execution_priority_level','!=',False)]</field>
+        <field name="domain">[('buffer_ids','!=',False), ('execution_priority_level','!=',False)]</field>
         <field name="view_mode">tree</field>
     </record>
 

@@ -1,7 +1,6 @@
-# Copyright 2016-18 Eficent Business and IT Consulting Services S.L.
-#   (http://www.eficent.com)
+# Copyright 2016-20 ForgeFlow S.L. (http://www.forgeflow.com)
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import api, fields, models
 
@@ -19,9 +18,8 @@ _ITEM_TYPES = [
 
 class StockBufferProfile(models.Model):
     _name = 'stock.buffer.profile'
-    _string = 'Buffer Profile'
+    _description = "Stock Buffer Profile"
 
-    @api.multi
     @api.depends("item_type", "lead_time_id", "lead_time_id.name",
                  "lead_time_id.factor", "variability_id",
                  "variability_id.name", "variability_id.factor")
@@ -48,6 +46,5 @@ class StockBufferProfile(models.Model):
         comodel_name='stock.buffer.profile.variability',
         string='Variability Factor')
     company_id = fields.Many2one(
-        'res.company', 'Company', required=True,
-        default=lambda self: self.env['res.company']._company_default_get(
-            'stock.buffer.profile'))
+        'res.company', 'Company',
+    )
