@@ -8,11 +8,28 @@ from odoo import models
 class StockRule(models.Model):
     _inherit = "stock.rule"
 
-    def _prepare_mo_vals(self, product_id, product_qty, product_uom,
-                         location_id, name, origin, company_id, values, bom):
+    def _prepare_mo_vals(
+        self,
+        product_id,
+        product_qty,
+        product_uom,
+        location_id,
+        name,
+        origin,
+        company_id,
+        values,
+        bom,
+    ):
         result = super(StockRule, self)._prepare_mo_vals(
-            product_id, product_qty, product_uom, location_id,
-            name, origin, company_id, values, bom
+            product_id,
+            product_qty,
+            product_uom,
+            location_id,
+            name,
+            origin,
+            company_id,
+            values,
+            bom,
         )
         # TODO: stock_orderpoint_mrp_link: tests!
         if "buffer_id" in values:
@@ -26,29 +43,47 @@ class StockRule(models.Model):
         return result
 
     def _run_manufacture(self, procurements):
-        super(StockRule, self)._run_manufacture(procurements)
-        for procurement, rule in procurements:
+        super()._run_manufacture(procurements)
+        for procurement, _rule in procurements:
             buffer = procurement.values.get("buffer_id")
             if buffer:
                 buffer.sudo().cron_actions()
         return True
 
     # TODO: stock_orderpoint_move_link: tests!
-    def _get_stock_move_values(self, product_id, product_qty, product_uom,
-                               location_id, name, origin, values, group_id):
+    def _get_stock_move_values(
+        self,
+        product_id,
+        product_qty,
+        product_uom,
+        location_id,
+        name,
+        origin,
+        values,
+        group_id,
+    ):
         vals = super()._get_stock_move_values(
-            product_id, product_qty, product_uom,
-            location_id, name, origin, values, group_id)
+            product_id,
+            product_qty,
+            product_uom,
+            location_id,
+            name,
+            origin,
+            values,
+            group_id,
+        )
         if "buffer_id" in values:
             vals["buffer_ids"] = [(4, values["buffer_id"].id)]
         elif "buffer_ids" in values:
             vals["buffer_ids"] = [(4, o.id) for o in values["buffer_ids"]]
         return vals
 
-    def _prepare_purchase_order_line(self, product_id, product_qty, product_uom,
-                                     company_id, values, po):
+    def _prepare_purchase_order_line(
+        self, product_id, product_qty, product_uom, company_id, values, po
+    ):
         vals = super()._prepare_purchase_order_line(
-            product_id, product_qty, product_uom, company_id, values, po)
+            product_id, product_qty, product_uom, company_id, values, po
+        )
         # If the procurement was run directly by a reordering rule.
         if "buffer_id" in values:
             vals["buffer_ids"] = [(4, values["buffer_id"].id)]
@@ -57,13 +92,14 @@ class StockRule(models.Model):
             vals["buffer_ids"] = [(4, o.id) for o in values["buffer_ids"]]
         return vals
 
-    def _update_purchase_order_line(self, product_id, product_qty, product_uom,
-                                    company_id, values, line):
+    def _update_purchase_order_line(
+        self, product_id, product_qty, product_uom, company_id, values, line
+    ):
         vals = super()._update_purchase_order_line(
-            product_id, product_qty, product_uom, company_id, values, line)
+            product_id, product_qty, product_uom, company_id, values, line
+        )
         if "buffer_id" in values:
-            vals["buffer_ids"] = [
-                (4, values["buffer_id"].id)]
+            vals["buffer_ids"] = [(4, values["buffer_id"].id)]
         # If the procurement was run by a stock move.
         elif "buffer_ids" in values:
             vals["buffer_ids"] = [(4, o.id) for o in values["buffer_ids"]]

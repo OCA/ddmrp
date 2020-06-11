@@ -7,7 +7,7 @@ from odoo import api, models
 
 
 class ProcurementGroup(models.Model):
-    _inherit = 'procurement.group'
+    _inherit = "procurement.group"
 
     @api.model
     def _run_scheduler_tasks(self, use_new_cursor=False, company_id=False):
@@ -25,16 +25,26 @@ class ProcurementGroup(models.Model):
         for i, procurement in enumerate(procurements):
             if "buffer_id" in procurement.values:
                 buffer = procurement.values.get("buffer_id")
-                if buffer.procure_uom_id and \
-                        procurement.product_uom != buffer.procure_uom_id:
+                if (
+                    buffer.procure_uom_id
+                    and procurement.product_uom != buffer.procure_uom_id
+                ):
                     new_product_qty = procurement.product_uom._compute_quantity(
-                        procurement.product_qty, buffer.procure_uom_id)
+                        procurement.product_qty, buffer.procure_uom_id
+                    )
                     new_product_uom = buffer.procure_uom_id
-                    new_procs.append(Proc(
-                        procurement.product_id, new_product_qty, new_product_uom,
-                        procurement.location_id, procurement.name,
-                        procurement.origin, procurement.company_id, procurement.values
-                    ))
+                    new_procs.append(
+                        Proc(
+                            procurement.product_id,
+                            new_product_qty,
+                            new_product_uom,
+                            procurement.location_id,
+                            procurement.name,
+                            procurement.origin,
+                            procurement.company_id,
+                            procurement.values,
+                        )
+                    )
                     indexes_to_pop.append(i)
         if new_procs:
             indexes_to_pop.reverse()
