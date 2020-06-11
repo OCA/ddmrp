@@ -6,4 +6,6 @@ access_stock_buffer_profile_system,stock.buffer.profile system,model_stock_buffe
 access_stock_buffer_profile_lead_time,stock.buffer.profile.lead.time stock user,model_stock_buffer_profile_lead_time,stock.group_stock_user,1,0,0,0
 access_stock_buffer_profile_lead_time_manager,stock.buffer.profile.lead.time stock user,model_stock_buffer_profile_lead_time,stock.group_stock_manager,1,1,1,1
 access_stock_buffer_profile_variability,stock.buffer.profile.variability stock user,model_stock_buffer_profile_variability,stock.group_stock_user,1,0,0,0
-access_stock_buffer_profile_variability_manager,stock.buffer.profile.variability stock user,model_stock_buffer_profile_variability,stock.group_stock_manager,1,1,1,1
+access_stock_buffer_profile_variability_manager,stock.buffer.profile.variability stock manager,model_stock_buffer_profile_variability,stock.group_stock_manager,1,1,1,1
+access_stock_buffer,stock.buffer.user,model_stock_buffer,stock.group_stock_user,1,0,0,0
+access_stock_buffer_manager,stock.buffer.manager,model_stock_buffer,stock.group_stock_manager,1,1,1,1

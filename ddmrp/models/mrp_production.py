@@ -1,22 +1,23 @@
-# Copyright 2016-18 Eficent Business and IT Consulting Services S.L.
-#   (http://www.eficent.com)
+# Copyright 2016-20 ForgeFlow S.L. (http://www.forgeflow.com)
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
+
 from odoo import api, fields, models
-from .stock_warehouse_orderpoint import _PRIORITY_LEVEL
+from .stock_buffer import _PRIORITY_LEVEL
 
 
 class MrpProduction(models.Model):
     _inherit = 'mrp.production'
 
-    orderpoint_id = fields.Many2one(
-        comodel_name='stock.warehouse.orderpoint',
+    buffer_id = fields.Many2one(
+        comodel_name='stock.buffer',
         index=True,
-        string="Reordering rule"
+        string="Stock Buffer",
     )
     execution_priority_level = fields.Selection(
         string="Buffer On-Hand Alert Level",
-        selection=_PRIORITY_LEVEL, readonly=True,
+        selection=_PRIORITY_LEVEL,
+        readonly=True,
     )
     on_hand_percent = fields.Float(
         string="On Hand/TOR (%)",
@@ -37,16 +38,15 @@ class MrpProduction(models.Model):
         record._calc_execution_priority()
         return record
 
-    @api.multi
     def _calc_execution_priority(self):
         """Technical note: this method cannot be decorated with api.depends,
         otherwise it would generate a infinite recursion."""
         prods = self.filtered(
-            lambda r: r.orderpoint_id and r.state not in ['done', 'cancel'])
+            lambda r: r.buffer_id and r.state not in ['done', 'cancel'])
         for rec in prods:
             rec.execution_priority_level = \
-                rec.orderpoint_id.execution_priority_level
-            rec.on_hand_percent = rec.orderpoint_id.on_hand_percent
+                rec.buffer_id.execution_priority_level
+            rec.on_hand_percent = rec.buffer_id.on_hand_percent
         to_update = (self - prods).filtered(
             lambda r: r.execution_priority_level or r.on_hand_percent)
         if to_update:
