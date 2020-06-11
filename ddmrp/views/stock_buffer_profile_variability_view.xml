@@ -59,7 +59,6 @@
         <field name="name">Buffer Profile Variability Factor</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">stock.buffer.profile.variability</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="search_view_id" ref="view_stock_buffer_profile_variability_search"/>
         <field name="help" type="html">

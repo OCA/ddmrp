@@ -1,135 +1,17 @@
-# Copyright 2016-18 Eficent Business and IT Consulting Services S.L.
-#   (http://www.eficent.com)
+# Copyright 2016-20 ForgeFlow S.L. (http://www.forgeflow.com)
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from datetime import datetime, timedelta
 
-import odoo.tests.common as common
-from odoo import fields
+from odoo.addons.ddmrp.tests.common import TestDdmrpCommon
 from odoo.exceptions import ValidationError
 
 
-class TestDdmrp(common.SavepointCase):
-
-    @classmethod
-    def createEstimatePeriod(cls, name, date_from, date_to):
-        date_range_type = cls.env['date.range.type'].create({
-            'name': 'Test Ranges',
-        })
-        data = {
-            'name': name,
-            'date_start': fields.Date.to_string(date_from),
-            'date_end': fields.Date.to_string(date_to),
-            'type_id': date_range_type.id,
-        }
-        res = cls.estimatePeriodModel.create(data)
-        return res
-
-    @classmethod
-    def setUpClass(cls):
-        super(TestDdmrp, cls).setUpClass()
-
-        # Models
-        cls.productModel = cls.env['product.product']
-        cls.bomModel = cls.env['mrp.bom']
-        cls.orderpointModel = cls.env['stock.warehouse.orderpoint']
-        cls.pickingModel = cls.env['stock.picking']
-        cls.quantModel = cls.env['stock.quant']
-        cls.estimateModel = cls.env['stock.demand.estimate']
-        cls.estimatePeriodModel = cls.env['date.range']
-        cls.aducalcmethodModel = cls.env['product.adu.calculation.method']
-        cls.locationModel = cls.env['stock.location']
-        cls.make_procurement_orderpoint_model =\
-            cls.env['make.procurement.orderpoint']
-        cls.user_model = cls.env['res.users']
-
-        # Refs
-        cls.main_company = cls.env.ref('base.main_company')
-        cls.warehouse = cls.env.ref('stock.warehouse0')
-        cls.stock_location = cls.env.ref('stock.stock_location_stock')
-        cls.location_shelf1 = cls.env.ref('stock.stock_location_components')
-        cls.supplier_location = cls.env.ref('stock.stock_location_suppliers')
-        cls.customer_location = cls.env.ref('stock.stock_location_customers')
-        cls.uom_unit = cls.env.ref('product.product_uom_unit')
-        cls.buffer_profile_pur = cls.env.ref(
-            'ddmrp.stock_buffer_profile_replenish_purchased_medium_medium')
-        cls.adu_fixed = cls.env.ref('ddmrp.adu_calculation_method_fixed')
-        cls.group_stock_manager = cls.env.ref('stock.group_stock_manager')
-        cls.group_mrp_user = cls.env.ref('mrp.group_mrp_user')
-        cls.group_change_procure_qty = cls.env.ref(
-            'stock_orderpoint_manual_procurement.'
-            'group_change_orderpoint_procure_qty')
-        cls.calendar = cls.env.ref('resource.resource_calendar_std')
-
-        cls.warehouse.calendar_id = cls.calendar
-        # Create users
-        cls.user = cls._create_user('user_1',
-                                    [cls.group_stock_manager,
-                                     cls.group_mrp_user,
-                                     cls.group_change_procure_qty])
-
-        manufacture_route = cls.env.ref('mrp.route_warehouse0_manufacture')
-        cls.productA = cls.productModel.create(
-            {'name': 'product A',
-             'standard_price': 1,
-             'type': 'product',
-             'uom_id': cls.uom_unit.id,
-             'default_code': 'A',
-             'route_ids': [(6, 0, manufacture_route.ids)]
-             })
-        cls.bomA = cls.bomModel.create({
-            'product_tmpl_id': cls.productA.product_tmpl_id.id,
-            'product_id': cls.productA.id,
-        })
-
-        cls.binA = cls.locationModel.create({
-            'usage': 'internal',
-            'name': 'Bin A',
-            'location_id': cls.location_shelf1.id,
-            'company_id': cls.main_company.id
-        })
-
-        cls.binB = cls.locationModel.create({
-            'usage': 'internal',
-            'name': 'Bin B',
-            'location_id': cls.location_shelf1.id,
-            'company_id': cls.main_company.id
-        })
-
-        cls.locationModel._parent_store_compute()
-
-        cls.quant = cls.quantModel.create(
-            {'location_id': cls.binA.id,
-             'company_id': cls.main_company.id,
-             'product_id': cls.productA.id,
-             'quantity': 200.0})
-
-        # Create a period of 120 days for estimates.
-        date_from = cls.calendar.plan_days(1, datetime.today()).date()
-        days = 119
-        dt = cls.calendar.plan_days(
-            +1 * days + 1, datetime.today())
-        date_to = dt.date()
-        cls.estimate_period_next_120 = cls.createEstimatePeriod(
-            'test_next_120', date_from, date_to)
-
-    @classmethod
-    def _create_user(cls, login, groups):
-        """ Create a user."""
-        group_ids = [group.id for group in groups]
-        user = \
-            cls.user_model.with_context({'no_reset_password': True}).create({
-                'name': 'Test User',
-                'login': login,
-                'password': 'demo',
-                'email': 'test@yourcompany.com',
-                'groups_id': [(6, 0, group_ids)]
-            })
-        return user
+class TestDdmrp(TestDdmrpCommon):
 
     def create_pickingoutA(self, date_move, qty):
-        return self.pickingModel.sudo(self.user).create({
+        return self.pickingModel.with_user(self.user).create({
             'picking_type_id': self.ref('stock.picking_type_out'),
             'location_id': self.binA.id,
             'location_dest_id': self.customer_location.id,
@@ -147,7 +29,7 @@ class TestDdmrp(common.SavepointCase):
         })
 
     def create_pickinginA(self, date_move, qty):
-        return self.pickingModel.sudo(self.user).create({
+        return self.pickingModel.with_user(self.user).create({
             'picking_type_id': self.ref('stock.picking_type_in'),
             'location_id': self.supplier_location.id,
             'location_dest_id': self.binA.id,
@@ -165,7 +47,7 @@ class TestDdmrp(common.SavepointCase):
         })
 
     def create_pickinginternalA(self, date_move, qty):
-        return self.pickingModel.sudo(self.user).create({
+        return self.pickingModel.with_user(self.user).create({
             'picking_type_id': self.ref('stock.picking_type_internal'),
             'location_id': self.binA.id,
             'location_dest_id': self.binB.id,
@@ -185,58 +67,26 @@ class TestDdmrp(common.SavepointCase):
     def _do_picking(self, picking, date):
         """Do picking with only one move on the given date."""
         picking.action_confirm()
-        picking.force_assign()
         picking.move_lines.quantity_done = picking.move_lines.product_uom_qty
         picking.action_done()
         for move in picking.move_lines:
             move.date = date
 
-    def create_orderpoint_procurement(self, orderpoint):
-        """Make Procurement from Reordering Rule"""
-        context = {
-            'active_model': 'stock.warehouse.orderpoint',
-            'active_ids': orderpoint.ids,
-            'active_id': orderpoint.id
-        }
-        wizard = self.make_procurement_orderpoint_model.sudo(self.user).\
-            with_context(context).create({})
-        wizard.make_procurement()
-        return wizard
+    # TEST GROUP 1: ADU and Spikes
 
-    def test_adu_calculation_fixed(self):
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'adu_calculation_method': self.adu_fixed.id,
-            'adu_fixed': 4
-        })
-        self.orderpointModel.cron_ddmrp_adu()
-
+    def test_01_adu_calculation_fixed(self):
+        """Test fixed ADU assigned correctly with fixed method."""
+        self.bufferModel.cron_ddmrp_adu()
         to_assert_value = 4
-        self.assertEqual(orderpointA.adu, to_assert_value)
+        self.assertEqual(self.buffer_a.adu, to_assert_value)
 
-    def test_adu_calculation_past_120_days(self):
+    def test_02_adu_calculation_past_120_days(self):
+        """Test ADU calculation method that uses actual past stock moves."""
         method = self.env.ref('ddmrp.adu_calculation_method_past_120')
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'adu_calculation_method': method.id,
-            'adu_fixed': 4
-        })
-        self.orderpointModel.cron_ddmrp_adu()
-
-        self.assertEqual(orderpointA.adu, 0)
-
+        self.buffer_a.adu_calculation_method = method.id
+        self.bufferModel.cron_ddmrp_adu()
+        self.assertEqual(self.buffer_a.adu, 0)
+        # Create past moves and process them.
         days = 30
         date_move = self.calendar.plan_days(
             -1 * days - 1, datetime.today())
@@ -247,12 +97,12 @@ class TestDdmrp(common.SavepointCase):
             -1 * days - 1, datetime.today())
         pick_out_2 = self.create_pickingoutA(date_move, 60)
         self._do_picking(pick_out_2, date_move)
-
-        self.orderpointModel.cron_ddmrp_adu()
+        # Compute ADU again and check result.
+        self.bufferModel.cron_ddmrp_adu()
         to_assert_value = (60 + 60) / 120
-        self.assertEqual(orderpointA.adu, to_assert_value)
+        self.assertEqual(self.buffer_a.adu, to_assert_value)
 
-    def test_adu_calculation_window_past(self):
+    def test_03_adu_calculation_window_past(self):
         """Test that the window considered to calculate the ADU is correct."""
         self.warehouse.calendar_id = False
         method = self.aducalcmethodModel.create({
@@ -262,17 +112,7 @@ class TestDdmrp(common.SavepointCase):
             'horizon_past': 6,
             'company_id': self.main_company.id
         })
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'adu_calculation_method': method.id,
-            'adu_fixed': 4
-        })
+        self.buffer_a.adu_calculation_method = method.id
         # Today should be excluded
         date_move_1 = datetime.today()
         picking_1 = self.create_pickingoutA(date_move_1, 20)
@@ -287,13 +127,17 @@ class TestDdmrp(common.SavepointCase):
         date_move_4 = datetime.today() - timedelta(days=6)
         picking_4 = self.create_pickingoutA(date_move_4, 10)
         self._do_picking(picking_4, date_move_4)
+        # This move should be ignored
+        date_move_5 = datetime.today() - timedelta(days=7)
+        picking_5 = self.create_pickingoutA(date_move_5, 12)
+        self._do_picking(picking_5, date_move_5)
 
         # Check ADU:
-        orderpointA._calc_adu()
+        self.buffer_a._calc_adu()
         to_assert_value = (20 + 20 + 10) / 6
-        self.assertAlmostEqual(orderpointA.adu, to_assert_value, places=2)
+        self.assertAlmostEqual(self.buffer_a.adu, to_assert_value, places=2)
 
-    def test_adu_calculation_window_past_calendar(self):
+    def test_04_adu_calculation_window_past_calendar(self):
         """Test that the window considered to calculate the ADU is correct.
         (With working days set)."""
         self.warehouse.calendar_id = self.calendar
@@ -304,17 +148,7 @@ class TestDdmrp(common.SavepointCase):
             'horizon_past': 6,
             'company_id': self.main_company.id
         })
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'adu_calculation_method': method.id,
-            'adu_fixed': 4
-        })
+        self.buffer_a.adu_calculation_method = method.id
         # Today should be excluded
         date_move_1 = datetime.today()
         picking_1 = self.create_pickingoutA(date_move_1, 20)
@@ -335,31 +169,25 @@ class TestDdmrp(common.SavepointCase):
             -1 * days - 1, datetime.today())
         picking_4 = self.create_pickingoutA(date_move_4, 10)
         self._do_picking(picking_4, date_move_4)
+        # This move should be ignored
+        days = 7
+        date_move_5 = self.calendar.plan_days(
+            -1 * days - 1, datetime.today())
+        picking_5 = self.create_pickingoutA(date_move_5, 12)
+        self._do_picking(picking_5, date_move_5)
 
         # Check ADU:
-        orderpointA._calc_adu()
+        self.buffer_a._calc_adu()
         to_assert_value = (20 + 20 + 10) / 6
-        self.assertAlmostEqual(orderpointA.adu, to_assert_value, places=2)
+        self.assertAlmostEqual(self.buffer_a.adu, to_assert_value, places=2)
 
-    def test_adu_calculation_internal_past_120_days(self):
-        """
-        Test that internal moves will not affect ADU calculation.
+    def test_05_adu_calculation_internal_past_120_days(self):
+        """Test that internal moves will not affect ADU calculation.
         """
         method = self.env.ref('ddmrp.adu_calculation_method_past_120')
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'adu_calculation_method': method.id,
-            'adu_fixed': 4
-        })
-        self.orderpointModel.cron_ddmrp_adu()
-
-        self.assertEqual(orderpointA.adu, 0)
+        self.buffer_a.adu_calculation_method = method.id
+        self.bufferModel.cron_ddmrp_adu()
+        self.assertEqual(self.buffer_a.adu, 0)
 
         pickingInternals = self.pickingModel
         days = 30
@@ -375,12 +203,13 @@ class TestDdmrp(common.SavepointCase):
             picking.action_assign()
             picking.action_done()
 
-        self.orderpointModel.cron_ddmrp_adu()
+        self.bufferModel.cron_ddmrp_adu()
 
         to_assert_value = 0
-        self.assertEqual(orderpointA.adu, to_assert_value)
+        self.assertEqual(self.buffer_a.adu, to_assert_value)
 
-    def test_adu_calculation_future_120_days_actual(self):
+    def test_06_adu_calculation_future_120_days_actual(self):
+        """Test ADU calculation method that uses actual future stock moves."""
         method = self.aducalcmethodModel.create({
             'name': 'Future actual demand (120 days)',
             'method': 'future',
@@ -388,6 +217,7 @@ class TestDdmrp(common.SavepointCase):
             'horizon_future': 120,
             'company_id': self.main_company.id
         })
+        self.buffer_a.adu_calculation_method = method.id
 
         pickingOuts = self.pickingModel
         days = 30
@@ -398,23 +228,11 @@ class TestDdmrp(common.SavepointCase):
         date_move = self.calendar.plan_days(
             +1 * days + 1, datetime.today())
         pickingOuts += self.create_pickingoutA(date_move, 60)
-
         pickingOuts.action_confirm()
 
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'adu_calculation_method': method.id
-        })
-        self.orderpointModel.cron_ddmrp_adu()
-
+        self.bufferModel.cron_ddmrp_adu()
         to_assert_value = (60 + 60) / 120
-        self.assertEqual(orderpointA.adu, to_assert_value)
+        self.assertEqual(self.buffer_a.adu, to_assert_value)
 
         # Create a move more than 120 days in the future
         days = 150
@@ -423,34 +241,24 @@ class TestDdmrp(common.SavepointCase):
         pickingOuts += self.create_pickingoutA(date_move, 1)
 
         # The extra move should not affect to the average ADU
-        self.assertEqual(orderpointA.adu, to_assert_value)
+        self.assertEqual(self.buffer_a.adu, to_assert_value)
 
-    def test_adu_calculation_future_120_days_estimated(self):
+    def test_90_adu_calculation_future_120_days_estimated(self):  # TODO: move
         method = self.env.ref('ddmrp.adu_calculation_method_future_120')
         self.estimateModel.create({
-            'date_range_id': self.estimate_period_next_120.id,
+            'manual_date_from': self.estimate_date_from,
+            'manual_date_to': self.estimate_date_to,
             'product_id': self.productA.id,
             'product_uom_qty': 120,
             'product_uom': self.productA.uom_id.id,
             'location_id': self.stock_location.id
         })
-
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'adu_calculation_method': method.id
-        })
-        self.orderpointModel.cron_ddmrp_adu()
-
+        self.buffer_a.adu_calculation_method = method.id
+        self.bufferModel.cron_ddmrp_adu()
         to_assert_value = 120 / 120
-        self.assertEqual(orderpointA.adu, to_assert_value)
+        self.assertEqual(self.buffer_a.adu, to_assert_value)
 
-    def test_adu_calculation_blended(self):
+    def test_91_adu_calculation_blended(self):  # TODO: move
         """Test blended ADU calculation method."""
         method = self.aducalcmethodModel.create({
             'name': 'Blended (120 d. actual past, 120 d. estimates future)',
@@ -463,9 +271,9 @@ class TestDdmrp(common.SavepointCase):
             'factor_future': 0.5,
             'company_id': self.main_company.id
         })
+        self.buffer_a.adu_calculation_method = method.id
 
         # Past. Generate past moves: 360 units / 120 days = 3 unit/day
-
         days = 30
         date_move = self.calendar.plan_days(
             -1 * days - 1, datetime.today())
@@ -479,28 +287,18 @@ class TestDdmrp(common.SavepointCase):
 
         # Future. create estimate: 120 units / 120 days = 1 unit/day
         self.estimateModel.create({
-            'date_range_id': self.estimate_period_next_120.id,
+            'manual_date_from': self.estimate_date_from,
+            'manual_date_to': self.estimate_date_to,
             'product_id': self.productA.id,
             'product_uom_qty': 120,
             'product_uom': self.productA.uom_id.id,
             'location_id': self.stock_location.id
         })
-
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'adu_calculation_method': method.id
-        })
-        self.orderpointModel.cron_ddmrp_adu()
+        self.bufferModel.cron_ddmrp_adu()
         to_assert_value = 3 * 0.5 + 1 * 0.5
-        self.assertEqual(orderpointA.adu, to_assert_value)
+        self.assertEqual(self.buffer_a.adu, to_assert_value)
 
-    def test_adu_calculation_method_checks(self):
+    def test_07_adu_calculation_method_checks(self):
         with self.assertRaises(ValidationError):
             # missing horizon_past
             self.aducalcmethodModel.create({
@@ -551,134 +349,60 @@ class TestDdmrp(common.SavepointCase):
                 'company_id': self.main_company.id
             })
 
-    def test_qualified_demand_1(self):
+    def test_08_qualified_demand_1(self):
         """Moves within order spike horizon, outside the threshold but past
         or today's demand."""
-        method = self.env.ref('ddmrp.adu_calculation_method_fixed')
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'adu_calculation_method': method.id,
-            'adu_fixed': 4,
-            'adu': 4,
-            'order_spike_horizon': 40
-        })
-
         date_move = datetime.today()
-        expected_result = orderpointA.order_spike_threshold * 2
+        expected_result = self.buffer_a.order_spike_threshold * 2
         pickingOut1 = self.create_pickingoutA(
             date_move, expected_result)
         pickingOut1.action_confirm()
-        self.orderpointModel.cron_ddmrp()
-        self.assertEqual(orderpointA.qualified_demand, expected_result)
+        self.bufferModel.cron_ddmrp()
+        self.assertEqual(self.buffer_a.qualified_demand, expected_result)
 
-    def test_qualified_demand_2(self):
+    def test_09_qualified_demand_2(self):
         """Moves within order spike horizon, below threshold. Should have no
         effect on the qualified demand."""
-        method = self.env.ref('ddmrp.adu_calculation_method_fixed')
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'adu_calculation_method': method.id,
-            'adu_fixed': 4,
-            'adu': 4,
-            'order_spike_horizon': 40
-        })
-
         date_move = datetime.today() + timedelta(days=10)
         self.create_pickingoutA(
-            date_move, orderpointA.order_spike_threshold - 1)
-        self.orderpointModel.cron_ddmrp()
+            date_move, self.buffer_a.order_spike_threshold - 1)
+        self.bufferModel.cron_ddmrp()
+        expected_result = 0.0
+        self.assertEqual(self.buffer_a.qualified_demand, expected_result)
 
-        self.assertEqual(orderpointA.qualified_demand, 0)
-
-    def test_qualified_demand_3(self):
+    def test_10_qualified_demand_3(self):
         """Moves within order spike horizon, above threshold. Should have an
         effect on the qualified demand"""
-        method = self.env.ref('ddmrp.adu_calculation_method_fixed')
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'adu_calculation_method': method.id,
-            'adu_fixed': 4,
-            'adu': 4,
-            'order_spike_horizon': 40
-        })
-
         date_move = datetime.today() + timedelta(days=10)
-        self.create_pickingoutA(date_move,
-                                orderpointA.order_spike_threshold * 2)
-        self.orderpointModel.cron_ddmrp()
+        picikingoutA = self.create_pickingoutA(
+            date_move, self.buffer_a.order_spike_threshold * 2)
+        picikingoutA.action_confirm()
+        self.bufferModel.cron_ddmrp()
+        expected_result = self.buffer_a.order_spike_threshold * 2
+        self.assertEqual(self.buffer_a.qualified_demand, expected_result)
 
-        expected_result = orderpointA.order_spike_threshold * 2
-        self.assertEqual(orderpointA.qualified_demand, expected_result)
-
-    def test_qualified_demand_4(self):
+    def test_11_qualified_demand_4(self):
         """ Moves outside of order spike horizon, above threshold. Should
         have no effect on the qualified demand"""
-        method = self.env.ref('ddmrp.adu_calculation_method_fixed')
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'adu_calculation_method': method.id,
-            'adu_fixed': 4,
-            'adu': 4,
-            'order_spike_horizon': 40
-        })
-
         date_move = datetime.today() + timedelta(days=100)
-        self.create_pickingoutA(date_move,
-                                orderpointA.order_spike_threshold * 2)
-        self.orderpointModel.cron_ddmrp()
-
+        self.create_pickingoutA(
+            date_move, self.buffer_a.order_spike_threshold * 2)
+        self.bufferModel.cron_ddmrp()
         expected_result = 0.0
-        self.assertEqual(orderpointA.qualified_demand, expected_result)
+        self.assertEqual(self.buffer_a.qualified_demand, expected_result)
 
-    def test_qualified_demand_5(self):
+    def test_12_qualified_demand_5(self):
         """Internal moves within the zone designated by the buffer
         should not be considered demand."""
-        method = self.env.ref('ddmrp.adu_calculation_method_fixed')
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'adu_calculation_method': method.id,
-            'adu_fixed': 4,
-            'adu': 4,
-            'order_spike_horizon': 40
-        })
-
         date_move = datetime.today()
         expected_result = 0
         pickingInternal = self.create_pickinginternalA(
             date_move, expected_result)
         pickingInternal.action_confirm()
-        self.orderpointModel.cron_ddmrp()
-        self.assertEqual(orderpointA.qualified_demand, expected_result)
+        self.bufferModel.cron_ddmrp()
+        self.assertEqual(self.buffer_a.qualified_demand, expected_result)
+
+    # TEST GROUP 2: Buffer zones and procurement
 
     def _check_red_zone(self, orderpoint, red_base_qty=0.0, red_safety_qty=0.0,
                         red_zone_qty=0.0):
@@ -721,110 +445,58 @@ class TestDdmrp(common.SavepointCase):
         # top_of_green = green_zone_qty + yellow_zone_qty + red_zone_qty
         self.assertEqual(orderpoint.top_of_green, top_of_green)
 
-    def test_buffer_zones_red(self):
-        method = self.env.ref('ddmrp.adu_calculation_method_fixed')
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'lead_days': 10,
-            'adu_calculation_method': method.id,
-            'adu_fixed': 4
-        })
-        self.orderpointModel.cron_ddmrp_adu()
-
-        self._check_red_zone(orderpointA, red_base_qty=20, red_safety_qty=10,
+    def test_20_buffer_zones_red(self):
+        self._check_red_zone(self.buffer_a, red_base_qty=20, red_safety_qty=10,
                              red_zone_qty=30)
 
-        orderpointA.lead_days = 20
-
-        self._check_red_zone(orderpointA, red_base_qty=40, red_safety_qty=20,
+        self.buffer_a.lead_days = 20
+        self._check_red_zone(self.buffer_a, red_base_qty=40, red_safety_qty=20,
                              red_zone_qty=60)
 
-        orderpointA.buffer_profile_id.lead_time_id.factor = 1
-
-        self._check_red_zone(orderpointA, red_base_qty=80, red_safety_qty=40,
+        self.buffer_a.buffer_profile_id.lead_time_id.factor = 1
+        self._check_red_zone(self.buffer_a, red_base_qty=80, red_safety_qty=40,
                              red_zone_qty=120)
 
-        orderpointA.buffer_profile_id.variability_id.factor = 1
-
-        self._check_red_zone(orderpointA, red_base_qty=80, red_safety_qty=80,
+        self.buffer_a.buffer_profile_id.variability_id.factor = 1
+        self._check_red_zone(self.buffer_a, red_base_qty=80, red_safety_qty=80,
                              red_zone_qty=160)
 
-        orderpointA.adu_fixed = 2
-        self.orderpointModel.cron_ddmrp_adu()
-
-        self._check_red_zone(orderpointA, red_base_qty=40, red_safety_qty=40,
+        self.buffer_a.adu_fixed = 2
+        self.bufferModel.cron_ddmrp_adu()
+        self._check_red_zone(self.buffer_a, red_base_qty=40, red_safety_qty=40,
                              red_zone_qty=80)
 
-    def test_buffer_zones_yellow(self):
-        method = self.env.ref('ddmrp.adu_calculation_method_fixed')
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'lead_days': 10,
-            'adu_calculation_method': method.id,
-            'adu_fixed': 4
-        })
-        self.orderpointModel.cron_ddmrp_adu()
-
-        self._check_yellow_zone(orderpointA, yellow_zone_qty=40.0,
+    def test_21_buffer_zones_yellow(self):
+        self._check_yellow_zone(self.buffer_a, yellow_zone_qty=40.0,
                                 top_of_yellow=70.0)
 
-        orderpointA.lead_days = 20
-
-        self._check_yellow_zone(orderpointA, yellow_zone_qty=80.0,
+        self.buffer_a.lead_days = 20
+        self._check_yellow_zone(self.buffer_a, yellow_zone_qty=80.0,
                                 top_of_yellow=140.0)
 
-        orderpointA.adu_fixed = 2
-        self.orderpointModel.cron_ddmrp_adu()
-
-        self._check_yellow_zone(orderpointA, yellow_zone_qty=40.0,
+        self.buffer_a.adu_fixed = 2
+        self.bufferModel.cron_ddmrp_adu()
+        self._check_yellow_zone(self.buffer_a, yellow_zone_qty=40.0,
                                 top_of_yellow=70.0)
 
-        orderpointA.buffer_profile_id.lead_time_id.factor = 1
-        orderpointA.buffer_profile_id.variability_id.factor = 1
-
-        self._check_yellow_zone(orderpointA, yellow_zone_qty=40.0,
+        self.buffer_a.buffer_profile_id.lead_time_id.factor = 1
+        self.buffer_a.buffer_profile_id.variability_id.factor = 1
+        self._check_yellow_zone(self.buffer_a, yellow_zone_qty=40.0,
                                 top_of_yellow=120.0)
 
-    def test_procure_recommended(self):
-        method = self.env.ref('ddmrp.adu_calculation_method_fixed')
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'lead_days': 10,
-            'adu_calculation_method': method.id,
-            'adu_fixed': 4
-        })
-        orderpointA._calc_adu()
-
-        self.orderpointModel.cron_ddmrp()
+    def test_22_procure_recommended(self):
+        self.buffer_a._calc_adu()
+        self.bufferModel.cron_ddmrp()
         # Now we prepare the shipment of 150
         date_move = datetime.today()
         pickingOut = self.create_pickingoutA(date_move, 150)
         pickingOut.action_confirm()
-        pickingOut.force_assign()
         pickingOut.move_lines.quantity_done = 150
         pickingOut.action_done()
-        self.orderpointModel.cron_ddmrp()
+        self.bufferModel.cron_ddmrp()
 
         expected_value = 40.0
-        self.assertEqual(orderpointA.procure_recommended_qty, expected_value)
+        self.assertEqual(self.buffer_a.procure_recommended_qty, expected_value)
 
         # Now we change the net flow position.
         # Net Flow position = 200 - 150 + 10 = 60
@@ -833,10 +505,10 @@ class TestDdmrp(common.SavepointCase):
              'company_id': self.main_company.id,
              'product_id': self.productA.id,
              'quantity': 10.0})
-        self.orderpointModel.cron_ddmrp()
+        self.bufferModel.cron_ddmrp()
 
         expected_value = 30.0
-        self.assertEqual(orderpointA.procure_recommended_qty, expected_value)
+        self.assertEqual(self.buffer_a.procure_recommended_qty, expected_value)
 
         # Now we change the top of green.
         # red base = dlt * adu * lead time factor = 10 * 2 * 0.5 = 10
@@ -851,14 +523,14 @@ class TestDdmrp(common.SavepointCase):
         # green_zone_qty = max(green_zone_oc, green_zone_lt_factor,
         # green_zone_moq) = max(0, 10, 0) = 10
         # Top Of Green (TOG) = TOY + green_zone_qty = 35 + 10 = 45
-        orderpointA.adu_fixed = 2
-        self.orderpointModel.cron_ddmrp_adu()
-        self.orderpointModel.cron_ddmrp()
+        self.buffer_a.adu_fixed = 2
+        self.bufferModel.cron_ddmrp_adu()
+        self.bufferModel.cron_ddmrp()
 
         expected_value = 0
-        self.assertEqual(orderpointA.procure_recommended_qty, expected_value)
+        self.assertEqual(self.buffer_a.procure_recommended_qty, expected_value)
 
-        orderpointA.buffer_profile_id.lead_time_id.factor = 1
+        self.buffer_a.buffer_profile_id.lead_time_id.factor = 1
         # Now we change the top of green.
         # red base = dlt * adu * lead time factor = 10 * 2 * 1 = 20
         # red safety = red_base * variability factor = 20 * 0.5 = 10
@@ -873,9 +545,9 @@ class TestDdmrp(common.SavepointCase):
         # green_zone_moq) = max(0, 20, 0) = 20
         # Top Of Green (TOG) = TOY + green_zone_qty = 50 + 20 = 70
         expected_value = 0
-        self.assertEqual(orderpointA.procure_recommended_qty, expected_value)
+        self.assertEqual(self.buffer_a.procure_recommended_qty, expected_value)
 
-        orderpointA.minimum_order_quantity = 40
+        self.buffer_a.minimum_order_quantity = 40
         # Now we change the top of green.
         # red base = dlt * adu * lead time factor = 10 * 2 * 1 = 20
         # red safety = red_base * variability factor = 20 * 0.5 = 10
@@ -890,34 +562,21 @@ class TestDdmrp(common.SavepointCase):
         # green_zone_moq) = max(0, 20, 40) = 40
         # Top Of Green (TOG) = TOY + green_zone_qty = 50 + 40 = 90
         expected_value = 0
-        self.assertEqual(orderpointA.procure_recommended_qty, expected_value)
+        self.assertEqual(self.buffer_a.procure_recommended_qty, expected_value)
 
-    def test_buffer_zones_all(self):
-        method = self.env.ref('ddmrp.adu_calculation_method_fixed')
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
-            'lead_days': 10,
-            'adu_calculation_method': method.id,
-            'adu_fixed': 4
-        })
-        self.orderpointModel.cron_ddmrp_adu()
+    def test_23_buffer_zones_all(self):
+        self.bufferModel.cron_ddmrp_adu()
         # red base = dlt * adu * lead time factor = 10 * 4 * 0.5 = 20
         # red safety = red_base * variability factor = 20 * 0.5 = 10
         # red zone = red_base + red_safety = 20 + 10 = 30
         # Top Of Red (TOR) = red zone = 30
-        self._check_red_zone(orderpointA, red_base_qty=20.0,
+        self._check_red_zone(self.buffer_a, red_base_qty=20.0,
                              red_safety_qty=10.0,
                              red_zone_qty=30.0)
 
         # yellow zone = dlt * adu = 10 * 4 = 40
         # Top Of Yellow (TOY) = TOR + yellow zone = 30 + 40 = 70
-        self._check_yellow_zone(orderpointA, yellow_zone_qty=40.0,
+        self._check_yellow_zone(self.buffer_a, yellow_zone_qty=40.0,
                                 top_of_yellow=70.0)
 
         # green_zone_oc = order_cycle * adu = 0 * 4 = 0
@@ -926,221 +585,207 @@ class TestDdmrp(common.SavepointCase):
         # green_zone_qty = max(green_zone_oc, green_zone_lt_factor,
         # green_zone_moq) = max(0, 20, 0) = 20
         # Top Of Green (TOG) = TOY + green_zone_qty = 70 + 20 = 90
-        self._check_green_zone(orderpointA, green_zone_oc=0.0,
+        self._check_green_zone(self.buffer_a, green_zone_oc=0.0,
                                green_zone_lt_factor=20.0, green_zone_moq=0.0,
                                green_zone_qty=20.0, top_of_green=90.0)
 
-        self.orderpointModel.cron_ddmrp()
+        self.bufferModel.cron_ddmrp()
 
         # Net Flow Position = on hand + incoming - qualified demand = 200 + 0
         #  - 0 = 200
         expected_value = 200.0
-        self.assertEqual(orderpointA.net_flow_position, expected_value)
+        self.assertEqual(self.buffer_a.net_flow_position, expected_value)
 
         # Net Flow Position Percent = (Net Flow Position / TOG)*100 = (
         # 200/90)*100 = 55.56 %
         expected_value = 222.22
-        self.assertEqual(orderpointA.net_flow_position_percent, expected_value)
+        self.assertEqual(
+            self.buffer_a.net_flow_position_percent, expected_value)
 
         # Planning priority level
         expected_value = '3_green'
-        self.assertEqual(orderpointA.planning_priority_level, expected_value)
+        self.assertEqual(self.buffer_a.planning_priority_level, expected_value)
 
         # On hand/TOR = (200 / 30) * 100 = 666.67
         expected_value = 666.67
-        self.assertEqual(orderpointA.on_hand_percent, expected_value)
+        self.assertEqual(self.buffer_a.on_hand_percent, expected_value)
 
         # Execution priority level
         expected_value = '3_green'
-        self.assertEqual(orderpointA.execution_priority_level, expected_value)
+        self.assertEqual(
+            self.buffer_a.execution_priority_level, expected_value)
 
         # Procure recommended quantity = TOG - Net Flow Position if > 0 = 90
         # - 200 => 0.0
         expected_value = 0.0
-        self.assertEqual(orderpointA.procure_recommended_qty, expected_value)
+        self.assertEqual(self.buffer_a.procure_recommended_qty, expected_value)
 
         # Now we prepare the shipment of 150
         date_move = datetime.today()
         pickingOut = self.create_pickingoutA(date_move, 150)
         pickingOut.action_confirm()
 
-        self.orderpointModel.cron_ddmrp()
+        self.bufferModel.cron_ddmrp()
 
         # Net Flow Position = on hand + incoming - qualified demand = 200 + 0
         #  - 150 = 50
         expected_value = 50.0
-        self.assertEqual(orderpointA.net_flow_position, expected_value)
+        self.assertEqual(self.buffer_a.net_flow_position, expected_value)
 
         # Net Flow Position Percent = (Net Flow Position / TOG)*100 = (
         # 50/90)*100 = 55.56 %
         expected_value = 55.56
-        self.assertEqual(orderpointA.net_flow_position_percent, expected_value)
+        self.assertEqual(
+            self.buffer_a.net_flow_position_percent, expected_value)
 
         # Planning priority level
         expected_value = '2_yellow'
-        self.assertEqual(orderpointA.planning_priority_level, expected_value)
+        self.assertEqual(self.buffer_a.planning_priority_level, expected_value)
 
         # On hand/TOR = (200 / 30) * 100 = 666.67
         expected_value = 666.67
-        self.assertEqual(orderpointA.on_hand_percent, expected_value)
+        self.assertEqual(self.buffer_a.on_hand_percent, expected_value)
 
         # Execution priority level
         expected_value = '3_green'
-        self.assertEqual(orderpointA.execution_priority_level, expected_value)
+        self.assertEqual(
+            self.buffer_a.execution_priority_level, expected_value)
 
         # Now we confirm the shipment of the 150
         pickingOut.action_assign()
-        pickingOut.force_assign()
         pickingOut.move_lines.quantity_done = 150
         pickingOut.action_done()
-        self.orderpointModel.cron_ddmrp()
+        self.bufferModel.cron_ddmrp()
 
         # On hand/TOR = (50 / 30) * 100 = 166.67
         expected_value = 166.67
-        self.assertEqual(orderpointA.on_hand_percent, expected_value)
+        self.assertEqual(self.buffer_a.on_hand_percent, expected_value)
 
         # Execution priority level. Considering that the quantity available
         # unrestricted is 50, and top of red is 30, we are in the green on
         # hand zone.
         expected_value = '3_green'
-        self.assertEqual(orderpointA.execution_priority_level, expected_value)
+        self.assertEqual(
+            self.buffer_a.execution_priority_level, expected_value)
 
         # Procure recommended quantity = TOG - Net Flow Position if > 0 = 90
         # - 50 => 40.0
         expected_value = 40.0
-        self.assertEqual(orderpointA.procure_recommended_qty, expected_value)
+        self.assertEqual(self.buffer_a.procure_recommended_qty, expected_value)
 
         # Now we ship them
         pickingOut.action_done()
-        self.orderpointModel.cron_ddmrp()
+        self.bufferModel.cron_ddmrp()
 
         # Net Flow Position = on hand + incoming - qualified demand = 200 + 0
         #  - 150 = 50
         expected_value = 50.0
-        self.assertEqual(orderpointA.net_flow_position, expected_value)
+        self.assertEqual(self.buffer_a.net_flow_position, expected_value)
 
         # Net Flow Position Percent = (Net Flow Position / TOG)*100 = (
         # 50/90)*100 = 55.56 %
         expected_value = 55.56
-        self.assertEqual(orderpointA.net_flow_position_percent, expected_value)
+        self.assertEqual(
+            self.buffer_a.net_flow_position_percent, expected_value)
 
         # Planning priority level
         expected_value = '2_yellow'
-        self.assertEqual(orderpointA.planning_priority_level, expected_value)
+        self.assertEqual(self.buffer_a.planning_priority_level, expected_value)
 
         # On hand/TOR = (50 / 30) * 100 = 166.67
         expected_value = 166.67
-        self.assertEqual(orderpointA.on_hand_percent, expected_value)
+        self.assertEqual(self.buffer_a.on_hand_percent, expected_value)
 
         # Execution priority level
         expected_value = '3_green'
-        self.assertEqual(orderpointA.execution_priority_level, expected_value)
+        self.assertEqual(
+            self.buffer_a.execution_priority_level, expected_value)
 
         # Procure recommended quantity = TOG - Net Flow Position if > 0 = 90
         # - 50 => 40.0
         expected_value = 40.0
-        self.assertEqual(orderpointA.procure_recommended_qty, expected_value)
+        self.assertEqual(self.buffer_a.procure_recommended_qty, expected_value)
 
         # Now we create a procurement order, based on the procurement
         # recommendation
-        self.create_orderpoint_procurement(orderpointA)
+        self.create_orderpoint_procurement(self.buffer_a)
         # should have generated a manufacturing order
-        self.assertEqual(len(orderpointA.mrp_production_ids), 1)
-        self.assertEqual(orderpointA.mrp_production_ids.product_qty, 40.0)
+        self.assertEqual(len(self.buffer_a.mrp_production_ids), 1)
+        self.assertEqual(self.buffer_a.mrp_production_ids.product_qty, 40.0)
 
         # We expect that the procurement recommendation is now 0
         expected_value = 0.0
-        self.assertEqual(orderpointA.procure_recommended_qty, expected_value)
+        self.assertEqual(self.buffer_a.procure_recommended_qty, expected_value)
 
-    def test_bom_orderpoint(self):
-        # Check if is_buffered and orderpoint_id are not set
-        self.assertEqual(self.bomA.is_buffered, False)
-        self.assertEqual(len(self.bomA.orderpoint_id), 0)
+    def test_24_purchase_link(self):
+        pol = self.pol_model.search([
+            ("product_id", "=", self.product_purchased.id)])
+        self.assertFalse(pol)
+        self.assertGreater(self.buffer_purchase.procure_recommended_qty, 0)
+        self.create_orderpoint_procurement(self.buffer_purchase)
+        pol = self.pol_model.search([
+            ("product_id", "=", self.product_purchased.id)])
+        self.assertEqual(len(pol), 1)
+        self.assertIn(pol.buffer_ids, self.buffer_purchase)
+        self.assertEqual(self.buffer_purchase.procure_recommended_qty, 0)
+
+    # TEST SECTION 3: DLT, BoM's and misc
+
+    def test_30_bom_buffer_fields(self):
+        """Check if is_buffered and buffer_id are set."""
+        self.assertTrue(self.bom_a.is_buffered)
+        self.assertEqual(self.bom_a.buffer_id, self.buffer_a)
         product = self.productA
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': product.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-        })
-        # Create a new bom to trigger the compute functions
-        bomB = self.bomModel.create({
-            'product_id': product.id,
-            'product_tmpl_id': product.product_tmpl_id.id,
-        })
-        # Check if is_buffered and orderpoint_id are set
-        self.assertEqual(bomB.is_buffered, True)
-        self.assertEqual(bomB.orderpoint_id, orderpointA)
-        # Create another orderpoint with a location, then change the bom
-        # location
-        orderpointB = self.orderpointModel.create({
+
+        # Create another buffer with a location, then change the bom location
+        new_buffer = self.bufferModel.create({
             'buffer_profile_id': self.buffer_profile_pur.id,
             'product_id': product.id,
             'warehouse_id': self.warehouse.id,
             'location_id': self.supplier_location.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-        })
-        bomB.location_id = self.supplier_location.id
-        self.assertEqual(bomB.is_buffered, True)
-        self.assertEqual(bomB.orderpoint_id, orderpointB)
-        bomC = self.env['mrp.bom'].create({
-            'product_tmpl_id': product.product_tmpl_id.id
-        })
-        self.assertEqual(bomC.is_buffered, True)
-        self.assertEqual(bomC.orderpoint_id, orderpointA)
-
-    def test_bokeh_charts(self):
-        # Check that chart computation do not raise an error:
-        date_move = datetime.today()
-        self.create_pickingoutA(date_move, 150)
-        self.create_pickinginA(date_move, 150)
-        orderpointA = self.orderpointModel.create({
-            'buffer_profile_id': self.buffer_profile_pur.id,
-            'product_id': self.productA.id,
-            'location_id': self.stock_location.id,
-            'warehouse_id': self.warehouse.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
-            'qty_multiple': 0.0,
             'adu_calculation_method': self.adu_fixed.id,
-            'adu_fixed': 4
         })
-        orderpointA.cron_actions()
-        self.assertTrue(orderpointA.ddmrp_chart)
-        self.assertTrue(orderpointA.ddmrp_demand_chart)
-        self.assertTrue(orderpointA.ddmrp_supply_chart)
+        self.bom_a.location_id = self.supplier_location.id
+        self.assertTrue(self.bom_a.is_buffered)
+        self.assertEqual(self.bom_a.buffer_id, new_buffer)
+        new_bom = self.env['mrp.bom'].create({
+            'product_tmpl_id': product.product_tmpl_id.id,
+        })
+        self.assertEqual(new_bom.is_buffered, True)
+        self.assertEqual(new_bom.buffer_id, self.buffer_a)
 
-
-class TestBomDLT(common.TransactionCase):
-    def setUp(self):
-        super(TestBomDLT, self).setUp()
-        self.orderpointModel = self.env['stock.warehouse.orderpoint']
-        self.buffer_profile_mmm = self.env.ref(
-            'ddmrp.stock_buffer_profile_replenish_manufactured_medium_medium')
-        self.warehouse = self.env.ref('stock.warehouse0')
-        self.stock_location = self.env.ref('stock.stock_location_stock')
-
-    def test_01_bom_dlt_computation(self):
-        """Tests that DLT computation is correct adding/removing buffers."""
+    def test_31_bom_dlt_computation(self):
+        """Tests that DLT computation is correct removing buffers."""
         bom_fp01 = self.env.ref('ddmrp.mrp_bom_fp01')
         self.assertEqual(bom_fp01.dlt, 22)
         # Remove RM-01 buffer:
-        orderpoint_rm01 = self.env.ref('ddmrp.stock_warehouse_orderpoint_rm01')
-        orderpoint_rm01.unlink()
+        orderpoint_rm01 = self.env.ref('ddmrp.stock_buffer_rm01')
+        bom_line_rm01 = self.env.ref('ddmrp.mrp_bom_as01_line_rm01')
+        orderpoint_rm01.active = False
+        bom_line_rm01._compute_is_buffered()
+        self.assertFalse(bom_line_rm01.is_buffered)
+        bom_fp01._compute_dlt()
         self.assertEqual(bom_fp01.dlt, 33.0)
 
-    def test_02_bom_dlt_computation(self):
-        # Add buffer on AS-01
+    def test_32_bom_dlt_computation(self):
+        """Tests that DLT computation is correct adding buffers."""
         product_as01 = self.env.ref('ddmrp.product_product_as01')
-        self.orderpointModel.create({
+        self.bufferModel.create({
             'buffer_profile_id': self.buffer_profile_mmm.id,
             'product_id': product_as01.id,
             'warehouse_id': self.warehouse.id,
             'location_id': self.stock_location.id,
-            'product_min_qty': 0.0,
-            'product_max_qty': 0.0,
+            'adu_calculation_method': self.adu_fixed.id,
         })
         bom_fp01 = self.env.ref('ddmrp.mrp_bom_fp01')
         self.assertEqual(bom_fp01.dlt, 2.0)
+
+    def test_40_bokeh_charts(self):
+        """Check bokeh chart computation."""
+        date_move = datetime.today()
+        self.create_pickingoutA(date_move, 150)
+        self.create_pickinginA(date_move, 150)
+        self.buffer_a.cron_actions()
+        self.assertTrue(self.buffer_a.ddmrp_chart)
+        self.assertTrue(self.buffer_a.ddmrp_demand_chart)
+        self.assertTrue(self.buffer_a.ddmrp_supply_chart)
