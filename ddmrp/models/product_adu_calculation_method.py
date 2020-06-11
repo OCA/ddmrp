@@ -1,7 +1,6 @@
-# Copyright 2016-18 Eficent Business and IT Consulting Services S.L.
-#   (http://www.eficent.com)
+# Copyright 2016-20 ForgeFlow S.L. (http://www.forgeflow.com)
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
@@ -63,13 +62,9 @@ class ProductAduCalculationMethod(models.Model):
         default=0.5,
     )
     company_id = fields.Many2one(
-        'res.company', string='Company', required=True,
-        default=lambda self:
-        self.env['res.company']._company_default_get(
-            'product.adu.calculation.method'),
+        comodel_name='res.company', string='Company',
     )
 
-    @api.multi
     @api.constrains('method', 'horizon_past', 'horizon_future')
     def _check_horizon(self):
         for rec in self:
@@ -80,7 +75,6 @@ class ProductAduCalculationMethod(models.Model):
                 raise ValidationError(
                     _('Please indicate a Future Horizon.'))
 
-    @api.multi
     @api.constrains('method', 'source_past', 'source_future')
     def _check_source(self):
         for rec in self:
@@ -91,7 +85,6 @@ class ProductAduCalculationMethod(models.Model):
                 raise ValidationError(
                     _('Please indicate a Future Source.'))
 
-    @api.multi
     @api.constrains('method', 'factor_past', 'factor_future')
     def _check_factor(self):
         for rec in self.filtered(lambda r: r.method == 'blended'):
