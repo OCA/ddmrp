@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2018-20 ForgeFlow S.L. (http://www.forgeflow.com)
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <!--Fixes to show date_expected on stock move report-->
+    <!--If someday Odoo corrects this, we could remove this views-->
+    <record id="view_move_tree" model="ir.ui.view">
+        <field name="name">stock.move.tree</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree" />
+        <field name="arch" type="xml">
+            <field name="date" position="after">
+                <field name="date_expected" />
+            </field>
+        </field>
+    </record>
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="name">stock.move.form</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form" />
+        <field name="arch" type="xml">
+            <field name="date_expected" position="attributes">
+                <attribute name="invisible">False</attribute>
+            </field>
+            <field name="move_dest_ids" position="after">
+                <field name="buffer_ids" />
+            </field>
+        </field>
+    </record>
+</odoo>

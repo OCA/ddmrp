@@ -1,0 +1,1006 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ddmrp
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2018-10-21 12:20+0000\n"
+"Last-Translator: Jeffery CHEN Fan <jeffery9@gmail.com>\n"
+"Language-Team: none\n"
+"Language: zh_Hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.2.1\n"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_form
+#: model:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_tree
+msgid "ADU Calculation Method"
+msgstr "ADU 计算方法"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_adu_calculation_method
+msgid "ADU calculation method"
+msgstr "ADU 计算方法"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.product_adu_calculation_method_form_action
+#: model:ir.ui.menu,name:ddmrp.menu_product_adu_calculation_method
+msgid "ADU calculation methods"
+msgstr "ADU 计算方法"
+
+#. module: ddmrp
+#: model:product.product,name:ddmrp.product_product_as01
+#: model:product.template,name:ddmrp.product_product_as01_product_template
+msgid "AS-01"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_adu
+msgid "Average Daily Usage (ADU)"
+msgstr "日均用量 (ADU)"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_mrp_bom
+msgid "Bill of Material"
+msgstr "物料清单"
+
+#. module: ddmrp
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:20
+#, python-format
+msgid "Blended"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_production_execution_priority_level
+msgid "Buffer On-Hand Alert Level"
+msgstr "在手缓冲警报级别"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line_execution_priority_level
+msgid "Buffer On-Hand Status Level"
+msgstr "在手缓冲状态级别"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_buffer_profile_id
+#: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_form
+#: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_tree
+msgid "Buffer Profile"
+msgstr "缓冲设置"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.stock_buffer_profile_lead_time_form_action
+#: model:ir.ui.menu,name:ddmrp.menu_stock_buffer_profile_lead_time
+#: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_lead_time_form
+#: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_lead_time_tree
+msgid "Buffer Profile Lead Time Factor"
+msgstr "缓冲设置前置时间因子"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.stock_buffer_profile_variability_form_action
+#: model:ir.ui.menu,name:ddmrp.menu_stock_buffer_profile_variability
+#: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_variability_form
+#: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_variability_tree
+msgid "Buffer Profile Variability Factor"
+msgstr "缓冲设置变动因子"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.stock_buffer_profile_form_action
+#: model:ir.ui.menu,name:ddmrp.menu_stock_buffer_profile_mgt
+msgid "Buffer Profiles"
+msgstr "缓冲设置"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_ddmrp_stock_buffer_planning_tree
+msgid "Buffer monitor"
+msgstr "缓冲监视器"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Buffer size factors"
+msgstr "缓冲大小因子"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Buffer summary"
+msgstr "缓冲摘要"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Buffer zones"
+msgstr "缓冲区"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_is_buffered
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line_is_buffered
+msgid "Buffered?"
+msgstr "缓冲 ?"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.purchase_order_line_execution_tree
+msgid "Buffers"
+msgstr "缓冲"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_method
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_adu_calculation_method_type
+msgid "Calculation method"
+msgstr "计算方法"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
+msgid "Cancel"
+msgstr "取消"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,help:ddmrp.stock_buffer_profile_form_action
+msgid "Click to start a new buffer profile"
+msgstr "点击开始新缓冲设置"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,help:ddmrp.stock_buffer_profile_lead_time_form_action
+msgid "Click to start a new buffer profile lead time factor"
+msgstr "点击开始新缓冲设置前置时间因子"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,help:ddmrp.stock_buffer_profile_variability_form_action
+msgid "Click to start a new buffer profile variability factor"
+msgstr "点击开始缓冲设置变动因子"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_company_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_company_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_company_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_company_id
+msgid "Company"
+msgstr "公司"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_ddmrp_stock_buffer_planning_tree
+msgid "Create Procurement"
+msgstr "创建补货"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run_create_uid
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_create_uid
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_create_uid
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_create_uid
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run_create_date
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_create_date
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_create_date
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_create_date
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: ddmrp
+#: model:ir.ui.menu,name:ddmrp.menu_ddmrp_config
+#: model:product.category,name:ddmrp.product_category_ddmrp
+msgid "DDMRP"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.actions.server,name:ddmrp.ir_cron_ddmrp_adu_calculation_scheduler_action_ir_actions_server
+#: model:ir.cron,cron_name:ddmrp.ir_cron_ddmrp_adu_calculation_scheduler_action
+#: model:ir.cron,name:ddmrp.ir_cron_ddmrp_adu_calculation_scheduler_action
+msgid "DDMRP Buffer ADU calculation"
+msgstr "DDMRP 缓冲ADU 计算"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_ddmrp_chart
+msgid "DDMRP Chart"
+msgstr "DDMRP 图表"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_ddmrp_demand_chart
+#, fuzzy
+#| msgid "DDMRP Chart"
+msgid "DDMRP Demand Chart"
+msgstr "DDMRP 图表"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_ddmrp_supply_chart
+#, fuzzy
+#| msgid "DDMRP Chart"
+msgid "DDMRP Supply Chart"
+msgstr "DDMRP 图表"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.report_mrpbomstructure_ddmrp
+msgid "DLT"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_dlt
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line_dlt
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_dlt
+msgid "Decoupled Lead Time (days)"
+msgstr "解耦的前置时间(天)"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Demand"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run_display_name
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: ddmrp
+#: selection:stock.buffer.profile,item_type:0
+msgid "Distributed"
+msgstr "分布"
+
+#. module: ddmrp
+#: model:product.product,name:ddmrp.product_product_fp01
+#: model:product.template,name:ddmrp.product_product_fp01_product_template
+msgid "FP-01"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_warehouse_nfp_incoming_safety_factor
+msgid ""
+"Factor used to compute the number of days to look into the future for "
+"incoming shipments for the purposes of the Net Flow position calculation."
+msgstr ""
+
+#. module: ddmrp
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:17
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_adu_fixed
+#, python-format
+msgid "Fixed ADU"
+msgstr "固定ADU"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_ddmrp_comment
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line_ddmrp_comment
+msgid "Follow-up Notes"
+msgstr "关注备注"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_mrp_bom_has_mto_rule
+#: model:ir.model.fields,help:ddmrp.field_mrp_bom_line_has_mto_rule
+msgid "Follows an MTO Pull Rule"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_factor_future
+msgid "Future Factor"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_horizon_future
+#, fuzzy
+msgid "Future Horizon"
+msgstr "视界"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_source_future
+msgid "Future Source"
+msgstr ""
+
+#. module: ddmrp
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:19
+#, python-format
+msgid "Future-looking"
+msgstr "未来样子"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.purchase_order_line_search
+#: model:ir.ui.view,arch_db:ddmrp.view_mrp_production_filter
+#: model:ir.ui.view,arch_db:ddmrp.warehouse_orderpoint_search
+#: selection:mrp.production,execution_priority_level:0
+#: selection:purchase.order.line,execution_priority_level:0
+#: selection:stock.warehouse.orderpoint,execution_priority_level:0
+#: selection:stock.warehouse.orderpoint,planning_priority_level:0
+msgid "Green"
+msgstr "绿"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_green_override
+msgid "Green Zone (Override)"
+msgstr "绿区(覆盖)"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_green_zone_lt_factor
+msgid "Green Zone Lead Time Factor"
+msgstr "绿区前置时间因子"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_green_zone_moq
+msgid "Green Zone Minimum Order Quantity"
+msgstr "绿区最小订购数量"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_green_zone_oc
+msgid "Green Zone Order Cycle"
+msgstr "绿区订购周期"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_green_zone_qty
+msgid "Green Zone Qty"
+msgstr "绿区数量"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Green zone"
+msgstr "绿区"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_warehouse_orderpoint_green_zone_lt_factor
+msgid "Green zone Lead Time Factor"
+msgstr "绿区前置时间因子"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_warehouse_orderpoint_green_zone_moq
+msgid "Green zone minimum order quantity"
+msgstr "绿区最小订购数量"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_warehouse_orderpoint_green_zone_oc
+msgid "Green zone order cycle"
+msgstr "绿区订购周期"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run_id
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id
+msgid "ID"
+msgstr ""
+
+#. module: ddmrp
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:101
+#, python-format
+msgid ""
+"In blended method, past and future factors must be positive and sum exactly "
+"1,0."
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_incoming_dlt_qty
+msgid "Incoming (Within DLT)"
+msgstr "进入(在 DLT 内)"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_ddmrp_stock_buffer_planning_tree
+msgid "Incoming within DLT"
+msgstr "进入在 DLT 内"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method_source_future
+msgid "Information source used for future calculation."
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method_source_past
+msgid "Information source used for past calculation."
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_item_type
+msgid "Item Type"
+msgstr "项目类型"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.report_mrpbomstructure_ddmrp
+msgid "LT"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run___last_update
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method___last_update
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile___last_update
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time___last_update
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run_write_uid
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_write_uid
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_write_uid
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_write_uid
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run_write_date
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_write_date
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_write_date
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_write_date
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_factor
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5689
+msgid "Lead Time Factor"
+msgstr "前置时间因子"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method_horizon_future
+#, fuzzy
+msgid "Length-of-period horizon in days looking forward."
+msgstr "视界时期长度，按天"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method_horizon_past
+#, fuzzy
+msgid "Length-of-period horizon in days looking past."
+msgstr "视界时期长度，按天"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_has_mto_rule
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line_has_mto_rule
+msgid "MTO"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_make_procurement_orderpoint
+msgid "Make Procurements from Orderpoints"
+msgstr "从订购点创造补货"
+
+#. module: ddmrp
+#: selection:stock.buffer.profile,item_type:0
+msgid "Manufactured"
+msgstr "制造"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_mrp_production
+msgid "Manufacturing Order"
+msgstr "制造订单"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_mrp_production_ids
+msgid "Manufacturing Orders"
+msgstr "制造订单"
+
+#. module: ddmrp
+#: selection:stock.buffer.profile,replenish_method:0
+msgid "Min-max"
+msgstr "最小-最大"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_order_cycle
+msgid "Minimum Order Cycle (days)"
+msgstr "最小订购周期(天)"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_minimum_order_quantity
+msgid "Minimum Order Quantity"
+msgstr "最小订购数量"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_name
+msgid "Name"
+msgstr "名称"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Net Flow Position"
+msgstr "净流位置"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_nfp_incoming_safety_factor
+msgid "Net Flow Position Incoming Safety Factor"
+msgstr "净流位置进入安全因子"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_net_flow_position
+msgid "Net flow position"
+msgstr "净流位置"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_net_flow_position_percent
+msgid "Net flow position (% of TOG)"
+msgstr "净流位置 (% of TOG)"
+
+#. module: ddmrp
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:291
+#, python-format
+msgid "No demand detected."
+msgstr ""
+
+#. module: ddmrp
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:328
+#, python-format
+msgid "No supply detected."
+msgstr ""
+
+#. module: ddmrp
+#: code:addons/ddmrp/models/stock_warehouse_orderpoint.py:493
+#, python-format
+msgid "Non-completed Moves"
+msgstr "未完成的移动"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.purchase_order_line_search
+#: model:ir.ui.view,arch_db:ddmrp.view_mrp_production_filter
+#: model:ir.ui.view,arch_db:ddmrp.warehouse_orderpoint_search
+msgid "On Hand Alert Zones"
+msgstr "在手警报区"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_production_on_hand_percent
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line_on_hand_percent
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_on_hand_percent
+msgid "On Hand/TOR (%)"
+msgstr "在手/TOR (%)"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_ddmrp_stock_buffer_planning_tree
+msgid "On-Hand"
+msgstr "在手"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_execution_priority_level
+msgid "On-Hand Alert Level"
+msgstr "在手警报级别"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_purchase_order_filter
+msgid "On-Hand Alert: Red"
+msgstr "在手警报: 红"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_purchase_order_filter
+msgid "On-Hand Alert: Yellow"
+msgstr "在手警报: 黄"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_ddmrp_stock_buffer_planning_tree
+msgid "Open Non-completed Moves"
+msgstr "开放未完成的移动"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_order_spike_horizon
+msgid "Order Spike Horizon"
+msgstr "订单尖峰视界"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_order_spike_threshold
+msgid "Order Spike Threshold"
+msgstr "订单尖峰阈值"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line_orderpoint_id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_orderpoint_id
+msgid "Orderpoint"
+msgstr "订购点"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.po_line_execution_action
+#: model:ir.ui.menu,name:ddmrp.menu_pol_execution
+msgid "PO lines On-Hand Status"
+msgstr "PO行在手状态"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_factor_past
+#, fuzzy
+msgid "Past Factor"
+msgstr "变动因子"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_horizon_past
+#, fuzzy
+msgid "Past Horizon"
+msgstr "视界"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method_source_past
+msgid "Past Source"
+msgstr ""
+
+#. module: ddmrp
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:18
+#, python-format
+msgid "Past-looking"
+msgstr "过去的样子"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_planning_priority_level
+msgid "Planning Priority Level"
+msgstr "计划优先级级别"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.warehouse_orderpoint_search
+msgid "Planning Priority Zones"
+msgstr "计划优先级区"
+
+#. module: ddmrp
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:81
+#, python-format
+msgid "Please indicate a Future Horizon."
+msgstr ""
+
+#. module: ddmrp
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:92
+#, python-format
+msgid "Please indicate a Future Source."
+msgstr ""
+
+#. module: ddmrp
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:78
+#, python-format
+msgid "Please indicate a Past Horizon."
+msgstr ""
+
+#. module: ddmrp
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:89
+#, python-format
+msgid "Please indicate a Past Source."
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.warehouse_orderpoint_search
+msgid "Procurement"
+msgstr "补货"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_procurement_group
+msgid "Procurement Requisition"
+msgstr "补货请求"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_procurement_rule
+msgid "Procurement Rule"
+msgstr "补货规则"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.warehouse_orderpoint_search
+msgid "Procurement recommended"
+msgstr "补货建议"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_product_adu_calculation_method
+msgid "Product Average Daily Usage calculation method"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_purchase_order
+msgid "Purchase Order"
+msgstr "采购订单"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "采购订单行"
+
+#. module: ddmrp
+#: selection:stock.buffer.profile,item_type:0
+msgid "Purchased"
+msgstr "已采购"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_qualified_demand
+msgid "Qualified demand"
+msgstr "验证的需求"
+
+#. module: ddmrp
+#: model:product.product,name:ddmrp.product_product_rm01
+#: model:product.template,name:ddmrp.product_product_rm01_product_template
+msgid "RM-01"
+msgstr ""
+
+#. module: ddmrp
+#: model:product.product,name:ddmrp.product_product_rm02
+#: model:product.template,name:ddmrp.product_product_rm02_product_template
+msgid "RM-02"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.purchase_order_line_search
+#: model:ir.ui.view,arch_db:ddmrp.view_mrp_production_filter
+#: model:ir.ui.view,arch_db:ddmrp.warehouse_orderpoint_search
+#: selection:mrp.production,execution_priority_level:0
+#: selection:purchase.order.line,execution_priority_level:0
+#: selection:stock.warehouse.orderpoint,execution_priority_level:0
+#: selection:stock.warehouse.orderpoint,planning_priority_level:0
+msgid "Red"
+msgstr "红"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_red_base_qty
+msgid "Red Base Qty"
+msgstr "红基数"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_red_safety_qty
+msgid "Red Safety Qty"
+msgstr "红安全数量"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_red_override
+msgid "Red Zone (Override)"
+msgstr "红区(覆盖)"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_red_zone_qty
+msgid "Red Zone Qty"
+msgstr "红区数量"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Red zone"
+msgstr "红区"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_ddmrp_stock_buffer_planning_tree
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Refresh Buffer"
+msgstr "刷新缓冲"
+
+#. module: ddmrp
+#: model:ir.actions.server,name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action_ir_actions_server
+#: model:ir.cron,cron_name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action
+#: model:ir.cron,name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action
+msgid "Reordering Rule DDMRP calculation"
+msgstr "订货规则DDMRP计算"
+
+#. module: ddmrp
+#: selection:stock.buffer.profile,replenish_method:0
+msgid "Replenished"
+msgstr "补给"
+
+#. module: ddmrp
+#: selection:stock.buffer.profile,replenish_method:0
+msgid "Replenished Override"
+msgstr "补给覆盖"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_replenish_method
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_replenish_method
+msgid "Replenishment method"
+msgstr "补给方法"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
+msgid "Run ADU calculation"
+msgstr "运行ADU计算"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.action_ddmrp_run
+#: model:ir.ui.menu,name:ddmrp.ddmrp_run_menu
+#: model:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
+msgid "Run DDMRP"
+msgstr "运行DDMRP"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
+msgid "Run DDMRP Buffer calculation"
+msgstr "运行DDMRP缓冲计算"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_scheduler_compute
+msgid "Run Scheduler Manually"
+msgstr "手动运行排程"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_search
+msgid "Search ADU Calculatiion methods"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_lead_time_search
+msgid "Search Buffer Profile Lead Time"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_variability_search
+msgid "Search Buffer Profile Variability"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_search
+msgid "Search Buffer Profiles"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_warehouse_orderpoint
+msgid "Stock Buffer"
+msgstr "库存缓冲"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.action_ddmrp_stock_buffer_planning
+#: model:ir.ui.menu,name:ddmrp.menu_action_ddmrp_stock_buffer_planning
+msgid "Stock Buffer Planning"
+msgstr "库存缓冲计划"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Supply"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Supply & Demand"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid ""
+"The green zone determines the average order frequency and the order size. It "
+"is determined as the maximum of the following three factors: Minimum Order "
+"Cycle, Lead Time Factor and Minimum Order Quantity."
+msgstr ""
+
+#. module: ddmrp
+#: code:addons/ddmrp/wizards/stock_scheduler_compute.py:15
+#, python-format
+msgid ""
+"The option to compute minimum stock rules automatically has been disabled."
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid ""
+"The red zone is the embedded safety in the buffer. The larger the "
+"variability associated with the product, the larger the red zone will be. It "
+"is composed of two sub-zones: Red base and red safety."
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid ""
+"The yellow zone represents the stock required to cover a full lead time."
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_top_of_green
+msgid "Top of Green"
+msgstr "绿顶"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_top_of_red
+msgid "Top of Red"
+msgstr "红顶"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_top_of_yellow
+msgid "Top of Yellow"
+msgstr "黄顶"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_ddmrp_stock_buffer_planning_tree
+msgid "Total Incoming"
+msgstr "进入总和"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_mrp_bom_is_buffered
+#: model:ir.model.fields,help:ddmrp.field_mrp_bom_line_is_buffered
+msgid "True when the product has an DDMRP buffer associated."
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_ddmrp_stock_buffer_planning_tree
+msgid "UoM"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_factor
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5690
+msgid "Variability Factor"
+msgstr "变动因子"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.purchase_order_line_execution_tree
+msgid "Vendor"
+msgstr "厂商"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_warehouse
+msgid "Warehouse"
+msgstr "仓库"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method_factor_future
+msgid ""
+"When using a blended method, this is the relative weight assigned to the "
+"future part of the combination."
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method_factor_past
+msgid ""
+"When using a blended method, this is the relative weight assigned to the "
+"past part of the combination."
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.purchase_order_line_search
+#: model:ir.ui.view,arch_db:ddmrp.view_mrp_production_filter
+#: model:ir.ui.view,arch_db:ddmrp.warehouse_orderpoint_search
+#: selection:mrp.production,execution_priority_level:0
+#: selection:purchase.order.line,execution_priority_level:0
+#: selection:stock.warehouse.orderpoint,execution_priority_level:0
+#: selection:stock.warehouse.orderpoint,planning_priority_level:0
+msgid "Yellow"
+msgstr "黄"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_yellow_override
+msgid "Yellow Zone (Override)"
+msgstr "黄区（覆盖）"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_yellow_zone_qty
+msgid "Yellow Zone Qty"
+msgstr "黄区数量"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "Yellow zone"
+msgstr "黄区"
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_form
+#: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
+msgid "days"
+msgstr "天"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_ddmrp_run
+msgid "ddmrp.run"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_mrp_bom_line
+msgid "mrp.bom.line"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_mrp_multi_level
+msgid "mrp.multi.level"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
+msgid "or"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_report_mrp_mrp_bom_structure_report
+msgid "report.mrp.mrp_bom_structure_report"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_buffer_profile
+msgid "stock.buffer.profile"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_buffer_profile_lead_time
+msgid "stock.buffer.profile.lead.time"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_buffer_profile_variability
+msgid "stock.buffer.profile.variability"
+msgstr ""
+
+#~ msgid "Reordering rule"
+#~ msgstr "订货规则"
+
+#~ msgid "Use Estimates"
+#~ msgstr "使用估算"
