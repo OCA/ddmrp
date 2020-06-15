@@ -4,10 +4,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0+e\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-06 10:44+0000\n"
-"PO-Revision-Date: 2020-03-06 10:44+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -35,6 +33,12 @@ msgstr ""
 #: model:ir.actions.act_window,name:ddmrp.product_adu_calculation_method_form_action
 #: model:ir.ui.menu,name:ddmrp.menu_product_adu_calculation_method
 msgid "ADU calculation methods"
+msgstr ""
+
+#. module: ddmrp
+#: model:product.product,name:ddmrp.product_product_as01
+#: model:product.template,name:ddmrp.product_product_as01_product_template
+msgid "AS-01"
 msgstr ""
 
 #. module: ddmrp
@@ -316,6 +320,12 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
 msgid "Execute"
+msgstr ""
+
+#. module: ddmrp
+#: model:product.product,name:ddmrp.product_product_fp01
+#: model:product.template,name:ddmrp.product_product_fp01_product_template
+msgid "FP-01"
 msgstr ""
 
 #. module: ddmrp
@@ -973,6 +983,18 @@ msgid "Quantity to release"
 msgstr ""
 
 #. module: ddmrp
+#: model:product.product,name:ddmrp.product_product_rm01
+#: model:product.template,name:ddmrp.product_product_rm01_product_template
+msgid "RM-01"
+msgstr ""
+
+#. module: ddmrp
+#: model:product.product,name:ddmrp.product_product_rm02
+#: model:product.template,name:ddmrp.product_product_rm02_product_template
+msgid "RM-02"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__mrp_production__execution_priority_level__1_red
 #: model:ir.model.fields.selection,name:ddmrp.selection__purchase_order_line__execution_priority_level__1_red
 #: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer__execution_priority_level__1_red
@@ -1183,6 +1205,18 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__uom_id
 msgid "Unit of Measure"
+msgstr ""
+
+#. module: ddmrp
+#: model:product.product,uom_name:ddmrp.product_product_as01
+#: model:product.product,uom_name:ddmrp.product_product_fp01
+#: model:product.product,uom_name:ddmrp.product_product_rm01
+#: model:product.product,uom_name:ddmrp.product_product_rm02
+#: model:product.template,uom_name:ddmrp.product_product_as01_product_template
+#: model:product.template,uom_name:ddmrp.product_product_fp01_product_template
+#: model:product.template,uom_name:ddmrp.product_product_rm01_product_template
+#: model:product.template,uom_name:ddmrp.product_product_rm02_product_template
+msgid "Units"
 msgstr ""
 
 #. module: ddmrp
