@@ -1,14 +1,11 @@
-# Copyright 2017-19 Eficent Business and IT Consulting Services S.L.
-#   (http://www.eficent.com)
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+# Copyright 2017-20 ForgeFlow S.L. (https://www.forgeflow.com)
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 import logging
 from math import pi
 
-from odoo import api, fields, models, _
-from datetime import datetime
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
-from odoo.addons.ddmrp.models.stock_warehouse_orderpoint import DDMRP_COLOR
+from odoo import fields, models, _
+from odoo.addons.ddmrp.models.stock_buffer import DDMRP_COLOR
 
 _logger = logging.getLogger(__name__)
 try:
@@ -37,8 +34,8 @@ EXECUTION_COLORS = [
 ]
 
 
-class StockWarehouseOrderpoint(models.Model):
-    _inherit = "stock.warehouse.orderpoint"
+class StockBuffer(models.Model):
+    _inherit = "stock.buffer"
 
     planning_history_chart = fields.Text(
         string='Historical Chart',
@@ -52,19 +49,19 @@ class StockWarehouseOrderpoint(models.Model):
     def _prepare_history_data(self):
         self.ensure_one()
         data = {
-            'orderpoint_id': self.id,
-            'date': datetime.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+            'buffer_id': self.id,
+            'date': fields.Datetime.now(),
             'top_of_red': self.top_of_red,
             'top_of_yellow': self.top_of_yellow,
             'top_of_green': self.top_of_green,
             'net_flow_position': self.net_flow_position,
             'on_hand_position': self.product_location_qty,
+            'adu': self.adu,
         }
         return data
 
-    @api.multi
     def cron_actions(self):
-        res = super(StockWarehouseOrderpoint, self).cron_actions()
+        res = super().cron_actions()
         data = self._prepare_history_data()
         if not self.env.context.get('no_ddmrp_history'):
             self.env['ddmrp.history'].sudo().create(data)
@@ -82,17 +79,16 @@ class StockWarehouseOrderpoint(models.Model):
 
         for rec in self:
             history = self.env['ddmrp.history'].search([
-                ('orderpoint_id', '=', rec.id)], order='date')
+                ('buffer_id', '=', rec.id)], order='date')
             if len(history) < 2:
-                rec.history_chart = _("Not enough data available.")
+                rec.planning_history_chart = _("Not enough data available.")
                 continue
 
             N = len(history)
             categories = ['top_of_red', 'top_of_yellow', 'top_of_green']
             data = {}
 
-            dates = [datetime.strptime(
-                r.date, DEFAULT_SERVER_DATETIME_FORMAT) for r in history]
+            dates = [r.date for r in history]
             data['date'] = dates
             data[categories[0]] = [r.top_of_red for r in history]
             data[categories[1]] = [r.top_of_yellow -
@@ -122,7 +118,7 @@ class StockWarehouseOrderpoint(models.Model):
             p.patches([x2] * len(areas), [areas[cat] for cat in categories],
                       color=PLANING_COLORS, alpha=0.8, line_color=None)
             date_format = self.env['res.lang']._lang_get(
-                self.env.lang).date_format
+                self.env.lang or "en_US").date_format
             p.xaxis.formatter = DatetimeTickFormatter(
                 hours=date_format, days=date_format, months=date_format,
                 years=date_format)
@@ -157,7 +153,7 @@ class StockWarehouseOrderpoint(models.Model):
         history_model = self.env['ddmrp.history']
 
         for rec in self:
-            domain = [('orderpoint_id', '=', rec.id)]
+            domain = [('buffer_id', '=', rec.id)]
             history_oh = history_model.search(
                 domain, order='on_hand_position desc', limit=1)
             history_tog = history_model.search(
@@ -172,7 +168,7 @@ class StockWarehouseOrderpoint(models.Model):
                 start_stack = 0.0
             history = history_model.search(domain, order='date')
             if len(history) < 2:
-                rec.history_chart = _("Not enough data available.")
+                rec.execution_history_chart = _("Not enough data available.")
                 continue
 
             N = len(history)
@@ -182,12 +178,11 @@ class StockWarehouseOrderpoint(models.Model):
                           'top_of_yellow', 'top_of_red', 'dark_red']
             data = {}
 
-            dates = [datetime.strptime(
-                r.date, DEFAULT_SERVER_DATETIME_FORMAT) for r in history]
+            dates = [r.date for r in history]
             data['date'] = dates
             data[categories[0]] = [(0 - start_stack) for r in history]
-            data[categories[1]] = [(r.top_of_red/2) for r in history]
-            data[categories[2]] = [(r.top_of_red/2) for r in history]
+            data[categories[1]] = [(r.top_of_red / 2) for r in history]
+            data[categories[2]] = [(r.top_of_red / 2) for r in history]
             data[categories[3]] = [r.top_of_green - r.top_of_yellow for r in
                                    history]
             data[categories[4]] = [r.top_of_yellow - r.top_of_red - (
@@ -229,7 +224,7 @@ class StockWarehouseOrderpoint(models.Model):
             p.patches([x2] * len(areas), [areas[cat] for cat in categories],
                       color=EXECUTION_COLORS, alpha=0.8, line_color=None)
             date_format = self.env['res.lang']._lang_get(
-                self.env.lang).date_format
+                self.env.lang or "en_US").date_format
             p.xaxis.formatter = DatetimeTickFormatter(
                 hours=date_format, days=date_format, months=date_format,
                 years=date_format)
