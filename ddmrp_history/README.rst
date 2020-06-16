@@ -10,17 +10,17 @@ DDMRP History
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
-    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
-    :alt: License: AGPL-3
+.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
+    :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
+    :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fddmrp-lightgray.png?logo=github
-    :target: https://github.com/OCA/ddmrp/tree/11.0/ddmrp_history
+    :target: https://github.com/OCA/ddmrp/tree/13.0/ddmrp_history
     :alt: OCA/ddmrp
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/ddmrp-11-0/ddmrp-11-0-ddmrp_history
+    :target: https://translation.odoo-community.org/projects/ddmrp-13-0/ddmrp-13-0-ddmrp_history
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/255/11.0
+    :target: https://runbot.odoo-community.org/runbot/255/13.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
@@ -37,7 +37,7 @@ Installation
 
 You need to install the python pandas library::
 
-    pip install pandas==0.22.0
+    pip install pandas==0.25.3
 
 Usage
 =====
@@ -49,6 +49,11 @@ either by a planning or a execution perspective.
 
 Changelog
 =========
+
+13.0.1.0.0 (2020-06-16)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* Migration to v13.
 
 11.0.1.0.1 (2019-02-07)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -67,7 +72,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/ddmrp/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/ddmrp/issues/new?body=module:%20ddmrp_history%0Aversion:%2011.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/ddmrp/issues/new?body=module:%20ddmrp_history%0Aversion:%2013.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -77,13 +82,13 @@ Credits
 Authors
 ~~~~~~~
 
-* Eficent
+* ForgeFlow
 
 Contributors
 ~~~~~~~~~~~~
 
-* Lois Rilo <lois.rilo@eficent.com>
-* Jordi Ballester <jordi.ballester@eficent.com>
+* Lois Rilo <lois.rilo@forgeflow.com>
+* Jordi Ballester <jordi.ballester@forgeflow.com>
 * Akim Juillerat <akim.juillerat@camptocamp.com>
 
 Other credits
@@ -106,17 +111,17 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-.. |maintainer-jbeficent| image:: https://github.com/jbeficent.png?size=40px
-    :target: https://github.com/jbeficent
-    :alt: jbeficent
-.. |maintainer-lreficent| image:: https://github.com/lreficent.png?size=40px
-    :target: https://github.com/lreficent
-    :alt: lreficent
+.. |maintainer-JordiBForgeFlow| image:: https://github.com/JordiBForgeFlow.png?size=40px
+    :target: https://github.com/JordiBForgeFlow
+    :alt: JordiBForgeFlow
+.. |maintainer-LoisRForgeFlow| image:: https://github.com/LoisRForgeFlow.png?size=40px
+    :target: https://github.com/LoisRForgeFlow
+    :alt: LoisRForgeFlow
 
 Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-jbeficent| |maintainer-lreficent| 
+|maintainer-JordiBForgeFlow| |maintainer-LoisRForgeFlow| 
 
-This module is part of the `OCA/ddmrp <https://github.com/OCA/ddmrp/tree/11.0/ddmrp_history>`_ project on GitHub.
+This module is part of the `OCA/ddmrp <https://github.com/OCA/ddmrp/tree/13.0/ddmrp_history>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
