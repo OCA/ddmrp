@@ -1,18 +1,16 @@
-# Copyright 2017 Eficent Business and IT Consulting Services S.L.
-#   (http://www.eficent.com)
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+# Copyright 2017-20 ForgeFlow S.L. (https://www.forgeflow.com)
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import fields, models
-from odoo.addons import decimal_precision as dp
-
-UNIT = dp.get_precision("Product Unit of Measure")
 
 
 class DdmrpHistory(models.Model):
     _name = "ddmrp.history"
+    _description = "DDMRP History"
 
-    orderpoint_id = fields.Many2one(
-        comodel_name="stock.warehouse.orderpoint", string="Buffer",
+    buffer_id = fields.Many2one(
+        comodel_name="stock.buffer",
+        string="Buffer",
         ondelete="cascade",
     )
     date = fields.Datetime(
@@ -31,12 +29,18 @@ class DdmrpHistory(models.Model):
         help="Top of Green", group_operator="avg",
     )
     net_flow_position = fields.Float(
-        string="NFP", digits=UNIT,
+        string="NFP", digits="Product Unit of Measure",
         help="Net flow position",
         group_operator="avg",
     )
     on_hand_position = fields.Float(
-        string="OHP", digits=UNIT,
+        string="OHP", digits="Product Unit of Measure",
         help="On-Hand Position",
         group_operator="avg",
+    )
+    adu = fields.Float(
+        string="ADU",
+        digits="Product Unit of Measure",
+        group_operator="avg",
+        help="Average Daily Usage",
     )
