@@ -16,12 +16,8 @@
         "views/ddmrp_history_view.xml",
         "views/stock_buffer_view.xml",
     ],
-    "demo": [
-        "demo/ddmrp.history.csv",
-    ],
-    "external_dependencies": {
-        "python": ["pandas"],
-    },
+    "demo": ["demo/ddmrp.history.csv"],
+    "external_dependencies": {"python": ["pandas"]},
     "license": "LGPL-3",
     "installable": True,
 }
