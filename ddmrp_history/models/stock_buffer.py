@@ -59,8 +59,8 @@ class StockBuffer(models.Model):
         }
         return data
 
-    def cron_actions(self):
-        res = super().cron_actions()
+    def cron_actions(self, only_nfp=False):
+        res = super().cron_actions(only_nfp=only_nfp)
         data = self._prepare_history_data()
         if not self.env.context.get("no_ddmrp_history"):
             self.env["ddmrp.history"].sudo().create(data)
