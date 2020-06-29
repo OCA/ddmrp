@@ -12,3 +12,6 @@ from . import stock_warehouse
 from . import stock_buffer
 from . import product_template
 from . import stock_move
+from . import res_company
+from . import product_product
+from . import stock_location
