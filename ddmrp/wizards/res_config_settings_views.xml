@@ -33,6 +33,30 @@
                             </div>
                         </div>
                     </div>
+                    <h2>Company Settings</h2>
+                    <div class="row mt16 o_settings_container" id="ddmrp_settings">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="ddmrp_auto_update_nfp" />
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label
+                                    string="Auto update Net Flow Position"
+                                    for="ddmrp_auto_update_nfp"
+                                />
+                                <span
+                                    class="fa fa-lg fa-building-o"
+                                    title="Values set here are company-specific."
+                                    role="img"
+                                    aria-label="Values set here are company-specific."
+                                    groups="base.group_multi_company"
+                                />
+                                <div class="text-muted">
+                                    Transfer status changes can trigger the update of relevant buffer's NFP.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </xpath>
         </field>
