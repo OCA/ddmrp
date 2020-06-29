@@ -259,7 +259,7 @@ class TestDdmrp(TestDdmrpCommon):
         # The extra move should not affect to the average ADU
         self.assertEqual(self.buffer_a.adu, to_assert_value)
 
-    def test_90_adu_calculation_future_120_days_estimated(self):  # TODO: move
+    def test_07_adu_calculation_future_120_days_estimated(self):
         method = self.env.ref("ddmrp.adu_calculation_method_future_120")
         self.estimateModel.create(
             {
@@ -276,7 +276,7 @@ class TestDdmrp(TestDdmrpCommon):
         to_assert_value = 120 / 120
         self.assertEqual(self.buffer_a.adu, to_assert_value)
 
-    def test_91_adu_calculation_blended(self):  # TODO: move
+    def test_08_adu_calculation_blended(self):
         """Test blended ADU calculation method."""
         method = self.aducalcmethodModel.create(
             {
@@ -318,7 +318,7 @@ class TestDdmrp(TestDdmrpCommon):
         to_assert_value = 3 * 0.5 + 1 * 0.5
         self.assertEqual(self.buffer_a.adu, to_assert_value)
 
-    def test_07_adu_calculation_method_checks(self):
+    def test_09_adu_calculation_method_checks(self):
         with self.assertRaises(ValidationError):
             # missing horizon_past
             self.aducalcmethodModel.create(
@@ -379,7 +379,7 @@ class TestDdmrp(TestDdmrpCommon):
                 }
             )
 
-    def test_08_qualified_demand_1(self):
+    def test_10_qualified_demand_1(self):
         """Moves within order spike horizon, outside the threshold but past
         or today's demand."""
         date_move = datetime.today()
@@ -389,7 +389,7 @@ class TestDdmrp(TestDdmrpCommon):
         self.bufferModel.cron_ddmrp()
         self.assertEqual(self.buffer_a.qualified_demand, expected_result)
 
-    def test_09_qualified_demand_2(self):
+    def test_11_qualified_demand_2(self):
         """Moves within order spike horizon, below threshold. Should have no
         effect on the qualified demand."""
         date_move = datetime.today() + timedelta(days=10)
@@ -398,7 +398,7 @@ class TestDdmrp(TestDdmrpCommon):
         expected_result = 0.0
         self.assertEqual(self.buffer_a.qualified_demand, expected_result)
 
-    def test_10_qualified_demand_3(self):
+    def test_12_qualified_demand_3(self):
         """Moves within order spike horizon, above threshold. Should have an
         effect on the qualified demand"""
         date_move = datetime.today() + timedelta(days=10)
@@ -410,7 +410,7 @@ class TestDdmrp(TestDdmrpCommon):
         expected_result = self.buffer_a.order_spike_threshold * 2
         self.assertEqual(self.buffer_a.qualified_demand, expected_result)
 
-    def test_11_qualified_demand_4(self):
+    def test_13_qualified_demand_4(self):
         """ Moves outside of order spike horizon, above threshold. Should
         have no effect on the qualified demand"""
         date_move = datetime.today() + timedelta(days=100)
@@ -419,7 +419,7 @@ class TestDdmrp(TestDdmrpCommon):
         expected_result = 0.0
         self.assertEqual(self.buffer_a.qualified_demand, expected_result)
 
-    def test_12_qualified_demand_5(self):
+    def test_14_qualified_demand_5(self):
         """Internal moves within the zone designated by the buffer
         should not be considered demand."""
         date_move = datetime.today()
@@ -819,6 +819,41 @@ class TestDdmrp(TestDdmrpCommon):
         )
         bom_fp01 = self.env.ref("ddmrp.mrp_bom_fp01")
         self.assertEqual(bom_fp01.dlt, 2.0)
+
+    def test_33_auto_compute_nfp_off(self):
+        self.main_company.ddmrp_auto_update_nfp = False
+        initial_nfp = self.buffer_a.net_flow_position
+        self.assertEqual(initial_nfp, 200)
+        self.assertEqual(self.buffer_a.product_location_qty_available_not_res, 200)
+        date_move = datetime.today()
+        p_out_1 = self.create_pickingoutA(date_move, 120)
+        p_out_1.action_confirm()
+        # NFP hasn't been updated.
+        self.assertEqual(self.buffer_a.net_flow_position, initial_nfp)
+        p_in_1 = self.create_pickinginA(date_move, 35)
+        p_in_1.action_confirm()
+        # NFP hasn't been updated.
+        self.assertEqual(self.buffer_a.net_flow_position, initial_nfp)
+        # Update buffer, expected NFP = 200 - 120 + 35 = 115
+        self.buffer_a.cron_actions()
+        expected = 200 - 120 + 35
+        self.assertEqual(self.buffer_a.net_flow_position, expected)
+
+    def test_34_auto_compute_nfp_on(self):
+        self.main_company.ddmrp_auto_update_nfp = True
+        initial_nfp = self.buffer_a.net_flow_position
+        self.assertEqual(initial_nfp, 200)
+        self.assertEqual(self.buffer_a.product_location_qty_available_not_res, 200)
+        date_move = datetime.today()
+        p_out_1 = self.create_pickingoutA(date_move, 120)
+        p_out_1.action_confirm()
+        # NFP has been updated after picking confirmation.
+        self.assertEqual(self.buffer_a.net_flow_position, 80)
+        p_in_1 = self.create_pickinginA(date_move, 35)
+        p_in_1.action_confirm()
+        # NFP has been updated after picking confirmation.
+        expected = 200 - 120 + 35
+        self.assertEqual(self.buffer_a.net_flow_position, expected)
 
     def test_40_bokeh_charts(self):
         """Check bokeh chart computation."""

@@ -1214,19 +1214,22 @@ class StockBuffer(models.Model):
         _logger.info("End cron_ddmrp_adu.")
         return True
 
-    def cron_actions(self):
+    def cron_actions(self, only_nfp=False):
         """This method is meant to be inherited by other modules in order to
         enhance extensibility."""
         self.ensure_one()
-        self._calc_qualified_demand()
-        self._calc_incoming_dlt_qty()
+        if not only_nfp or only_nfp == "out":
+            self._calc_qualified_demand()
+        if not only_nfp or only_nfp == "in":
+            self._calc_incoming_dlt_qty()
         self._calc_net_flow_position()
         self._calc_planning_priority()
         self._calc_execution_priority()
         self.mrp_production_ids._calc_execution_priority()
         self.mapped("purchase_line_ids")._calc_execution_priority()
-        # FIXME: temporary patch to force the recalculation of zones.
-        self._compute_red_zone()
+        if not only_nfp:
+            # re-compoute red to force in cascade the recalculation of zones.
+            self._compute_red_zone()
         return True
 
     @api.model
