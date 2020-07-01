@@ -1,2 +1,0 @@
-- New setting *Update NFP on Stock Buffers on relevant events*.
-- New dedicated settings block.
