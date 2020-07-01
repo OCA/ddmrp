@@ -226,6 +226,15 @@ be found on GitHub.
 Changelog
 =========
 
+13.0.1.1.0 (2020-07-01)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- - New setting *Update NFP on Stock Buffers on relevant events*.
+  - New dedicated settings block. (`#50 <https://github.com/OCA/ddmrp/issues/50>`_)
+
+
 13.0.1.0.0 (2020-06-11)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
