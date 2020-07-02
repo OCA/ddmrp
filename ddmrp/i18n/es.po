@@ -18,6 +18,14 @@ msgstr ""
 "X-Generator: Poedit 2.3\n"
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" role=\"img\" aria-label=\"Values set here are company-specific."
+"\" groups=\"base.group_multi_company\"/>"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu
 msgid "ADU"
 msgstr "CPD"
@@ -65,6 +73,13 @@ msgid ""
 msgstr ""
 "Como mínimo un búfer de inventario de este producto tiene una categoría de "
 "unidad de medida de abastecimiento diferente."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+#, fuzzy
+#| msgid "Net Flow Position"
+msgid "Auto update Net Flow Position"
+msgstr "Posición de Flujo Neto"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__adu
@@ -193,6 +208,13 @@ msgstr ""
 "Pulse para comenzar un nuevo factor de variabilidad del perfil de búfer"
 
 #. module: ddmrp
+#: model:ir.model,name:ddmrp.model_res_company
+#, fuzzy
+#| msgid "Company"
+msgid "Companies"
+msgstr "Compañía"
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__company_id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__company_id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__company_id
@@ -200,6 +222,20 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__company_id
 msgid "Company"
 msgstr "Compañía"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+#, fuzzy
+#| msgid "Company"
+msgid "Company Settings"
+msgstr "Compañía"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_res_config_settings
+#, fuzzy
+#| msgid "Other Settings"
+msgid "Config Settings"
+msgstr "Otras Configuraciones"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
@@ -258,6 +294,11 @@ msgstr "Gráfico DDMRP"
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__ddmrp_demand_chart
 msgid "DDMRP Demand Chart"
 msgstr "Gráfico de Demanda DDMRP"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "DDMRP History"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_ddmrp_run
@@ -333,6 +374,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
 msgid "Execute"
 msgstr "Ejecutar"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Extensions"
+msgstr ""
 
 #. module: ddmrp
 #: model:product.product,name:ddmrp.product_product_fp01
@@ -501,6 +547,13 @@ msgstr "Fuente de información para cálculo a futuro."
 #: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method__source_past
 msgid "Information source used for past calculation."
 msgstr "Fuente de información para cálculo a pasado."
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_location
+#, fuzzy
+#| msgid "Incoming On Location"
+msgid "Inventory Locations"
+msgstr "Entrante en Ubicación"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__item_type
@@ -906,6 +959,7 @@ msgid "Procurement recommended"
 msgstr "Abastecimiento recomendado"
 
 #. module: ddmrp
+#: model:ir.model,name:ddmrp.model_product_product
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__product_id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_id
 msgid "Product"
@@ -1115,6 +1169,13 @@ msgid "Search Buffer Profiles"
 msgstr "Buscar Perfiles de Búfer"
 
 #. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.action_ddmrp_config
+#, fuzzy
+#| msgid "Other Settings"
+msgid "Settings"
+msgstr "Otras Configuraciones"
+
+#. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_buffer
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__buffer_id
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__buffer_id
@@ -1140,6 +1201,7 @@ msgstr "Factor de Variabilidad en Perfil de Búfer de Inventario"
 
 #. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.action_stock_buffer
+#: model:ir.model.fields,field_description:ddmrp.field_product_product__buffer_ids
 #: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line__buffer_ids
 #: model:ir.ui.menu,name:ddmrp.menu_stock_buffer
 #: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_form
@@ -1156,6 +1218,16 @@ msgstr "Movimiento de existencias"
 #: model:ir.model,name:ddmrp.model_stock_rule
 msgid "Stock Rule"
 msgstr "Regla de Inventario"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_history
+msgid "Store historical data from stock buffers"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Store historical data from stock buffers."
+msgstr ""
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
@@ -1226,6 +1298,14 @@ msgid "Total Incoming"
 msgstr "Total Entrante"
 
 #. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_res_company__ddmrp_auto_update_nfp
+#: model:ir.model.fields,help:ddmrp.field_res_config_settings__ddmrp_auto_update_nfp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid ""
+"Transfer status changes can trigger the update of relevant buffer's NFP."
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_mrp_bom__is_buffered
 #: model:ir.model.fields,help:ddmrp.field_mrp_bom_line__is_buffered
 msgid "True when the product has an DDMRP buffer associated."
@@ -1252,6 +1332,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "UoM"
 msgstr "UdM"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_company__ddmrp_auto_update_nfp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__ddmrp_auto_update_nfp
+msgid "Update NFP on Stock Buffers on relevant events."
+msgstr ""
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
