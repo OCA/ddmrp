@@ -1,12 +1,9 @@
-# Copyright 2017-18 Eficent Business and IT Consulting Services S.L.
-#   (http://www.eficent.com)
+# Copyright 2017-20 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import logging
 from datetime import timedelta as td
-from datetime import datetime
 
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from odoo import api, fields, models, _
 
 from ..models.ddmrp_adjustment import DAF_string, LTAF_string
@@ -14,8 +11,8 @@ from ..models.ddmrp_adjustment import DAF_string, LTAF_string
 _logger = logging.getLogger(__name__)
 
 
-class StockWarehouseOrderpoint(models.Model):
-    _inherit = "stock.warehouse.orderpoint"
+class StockBuffer(models.Model):
+    _inherit = "stock.buffer"
 
     extra_demand_ids = fields.One2many(
         comodel_name="ddmrp.adjustment.demand", string="Extra Demand",
@@ -24,7 +21,6 @@ class StockWarehouseOrderpoint(models.Model):
              "parent buffers.",
     )
 
-    @api.multi
     def _daf_to_apply_domain(self, current=True):
         self.ensure_one()
         today = fields.Date.today()
@@ -36,7 +32,6 @@ class StockWarehouseOrderpoint(models.Model):
             domain.append(('date_range_id.date_start', '<=', today))
         return domain
 
-    @api.multi
     def _calc_adu(self):
         """Apply DAFs if existing for the buffer."""
         res = super()._calc_adu()
@@ -82,15 +77,11 @@ class StockWarehouseOrderpoint(models.Model):
             clt += produce_delay
             for line in bom.bom_line_ids:
                 if line.is_buffered:
-                    buffer_id = line.orderpoint_id
+                    buffer_id = line.buffer_id
                     extra_demand = _get_extra_demand(
                         bom, line, buffer_id, factor)
-                    date_start = datetime.strptime(
-                        daf.date_range_id.date_start,
-                        DEFAULT_SERVER_DATE_FORMAT) - td(days=clt)
-                    date_end = datetime.strptime(
-                        daf.date_range_id.date_end,
-                        DEFAULT_SERVER_DATE_FORMAT) - td(days=clt)
+                    date_start = daf.date_range_id.date_start - td(days=clt)
+                    date_end = daf.date_range_id.date_end - td(days=clt)
                     demand_obj.sudo().create({
                         'buffer_id': buffer_id.id,
                         'buffer_origin_id': self.id,
@@ -131,7 +122,6 @@ class StockWarehouseOrderpoint(models.Model):
                     "DAFs-originated demand applied. %s: ADU += %s"
                     % (op.name, to_add))
 
-    @api.multi
     def _ltaf_to_apply_domain(self):
         self.ensure_one()
         today = fields.Date.today()
@@ -159,7 +149,6 @@ class StockWarehouseOrderpoint(models.Model):
                     (ltaf, rec.name, prev, rec.dlt))
         return res
 
-    @api.multi
     def action_view_demand_to_components(self):
         demand_ids = self.env["ddmrp.adjustment.demand"].search([
             ('buffer_origin_id', '=', self.id)]).ids

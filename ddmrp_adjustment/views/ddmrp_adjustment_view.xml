@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2017 Eficent Business and IT Consulting Services S.L.
-     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<!-- Copyright 2017-20 ForgeFlow S.L. (https://www.forgeflow.com)
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
 <odoo>
 
     <record id="view_ddmrp_adjustment_tree" model="ir.ui.view">
@@ -41,12 +41,11 @@
         <field name="name">Buffer Adjustments</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">ddmrp.adjustment</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
 
     <menuitem id="menu_ddmrp_adjustment"
-              parent="stock_demand_estimate.menu_stock_demand_planning"
+              parent="stock_demand_estimate.stock_demand_planning_menu"
               action="ddmrp_adjustment_action"
               sequence="50"/>
 

@@ -50,16 +50,16 @@
       </field>
     </record>
 
-    <act_window id="action_ddmrp_adjustment_sheet_wizard"
-                name="Create Buffer Adjustments"
-                res_model="ddmrp.adjustment.sheet"
-                src_model="ddmrp.adjustment.sheet"
-                view_mode="form"
-                target="new"
-                key2="client_action_multi"/>
+    <record id="action_ddmrp_adjustment_sheet_wizard" model="ir.actions.act_window">
+        <field name="name">Create Buffer Adjustments</field>
+        <field name="res_model">ddmrp.adjustment.sheet</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
 
     <menuitem id="menu_ddmrp_adjustment_sheet_wizard"
-              parent="stock_demand_estimate.menu_stock_demand_planning"
+              parent="stock_demand_estimate.stock_demand_planning_menu"
               action="action_ddmrp_adjustment_sheet_wizard"
               groups="stock.group_stock_manager"
               sequence="51"/>
