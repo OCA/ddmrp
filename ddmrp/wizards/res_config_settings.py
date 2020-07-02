@@ -10,6 +10,9 @@ class ResConfigSettings(models.TransientModel):
     module_ddmrp_history = fields.Boolean(
         string="Store historical data from stock buffers",
     )
+    module_ddmrp_adjustment = fields.Boolean(
+        string="apply adjustments to dynamically alter buffers",
+    )
     ddmrp_auto_update_nfp = fields.Boolean(
         related="company_id.ddmrp_auto_update_nfp", readonly=False
     )
