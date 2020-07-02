@@ -12,26 +12,27 @@ class DdmrpAdjustment(models.Model):
     _description = "DDMRP Adjustment"
 
     buffer_id = fields.Many2one(
-        comodel_name="stock.buffer", string="Buffer",
-        required=True,
+        comodel_name="stock.buffer", string="Buffer", required=True,
     )
     product_id = fields.Many2one(
-        comodel_name="product.product", related="buffer_id.product_id",
-        readonly=True,
+        comodel_name="product.product", related="buffer_id.product_id", readonly=True,
     )
     location_id = fields.Many2one(
-        comodel_name="stock.location", related="buffer_id.location_id",
-        readonly=True,
+        comodel_name="stock.location", related="buffer_id.location_id", readonly=True,
     )
     date_range_id = fields.Many2one(
         comodel_name="date.range", string="Date Range", required=True,
     )
     adjustment_type = fields.Selection(
-        selection=[(DAF_string, 'Demand Adjustment Factor'),
-                   (LTAF_string, 'Lead Time Adjustment Factor')],
+        selection=[
+            (DAF_string, "Demand Adjustment Factor"),
+            (LTAF_string, "Lead Time Adjustment Factor"),
+        ],
     )
     value = fields.Float()
     company_id = fields.Many2one(
-        comodel_name='res.company', string='Company', required=True,
+        comodel_name="res.company",
+        string="Company",
+        required=True,
         default=lambda self: self.env.company,
     )
