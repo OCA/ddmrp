@@ -1,5 +1,4 @@
-# Copyright 2017-18 Eficent Business and IT Consulting Services S.L.
-#                   (http://www.eficent.com)
+# Copyright 2017-20 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import api, fields, models, _
@@ -29,7 +28,6 @@ class DdmrpAdjustmentSheet(models.TransientModel):
         }
         return vals
 
-    @api.multi
     def _prepare_lines(self):
         self.ensure_one()
         periods = self.env['date.range'].search([
@@ -54,7 +52,6 @@ class DdmrpAdjustmentSheet(models.TransientModel):
                 items.append((0, 0, vals))
         return items
 
-    @api.multi
     @api.constrains('date_start', 'date_end')
     def _check_start_end_dates(self):
         for rec in self:
@@ -70,7 +67,7 @@ class DdmrpAdjustmentSheet(models.TransientModel):
         string='Date Range Type', comodel_name='date.range.type',
         required=True)
     buffer_ids = fields.Many2many(
-        comodel_name="stock.warehouse.orderpoint", string="DDMRP Buffers")
+        comodel_name="stock.buffer", string="DDMRP Buffers")
     line_ids = fields.Many2many(
         string="Adjustments",
         comodel_name='ddmrp.adjustment.sheet.line')
@@ -88,7 +85,6 @@ class DdmrpAdjustmentSheet(models.TransientModel):
             lines = self._prepare_lines()
             self.line_ids = lines
 
-    @api.multi
     def button_validate(self):
         self.ensure_one()
         if not self.buffer_ids:
