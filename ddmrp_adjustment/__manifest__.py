@@ -10,11 +10,7 @@
     "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],
     "website": "https://github.com/OCA/ddmrp",
     "category": "Warehouse Management",
-    "depends": [
-        "ddmrp",
-        "web_widget_x2many_2d_matrix",
-        "date_range",
-    ],
+    "depends": ["ddmrp", "web_widget_x2many_2d_matrix", "date_range"],
     "data": [
         "security/ir.model.access.csv",
         "security/ddmrp_security.xml",

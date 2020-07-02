@@ -8,28 +8,22 @@ class DdmrpAdjustmentDemand(models.Model):
     _name = "ddmrp.adjustment.demand"
     _description = "DDMRP Adjustment Demand"
 
-    buffer_id = fields.Many2one(
-        comodel_name="stock.buffer", string="Apply to",
-    )
+    buffer_id = fields.Many2one(comodel_name="stock.buffer", string="Apply to",)
     product_id = fields.Many2one(related="buffer_id.product_id")
     buffer_origin_id = fields.Many2one(
         comodel_name="stock.buffer", string="Originated from",
     )
     product_origin_id = fields.Many2one(
-        related="buffer_origin_id.product_id",
-        string="Origin Product",
+        related="buffer_origin_id.product_id", string="Origin Product",
     )
     extra_demand = fields.Float(string="Extra Demand")
     product_uom_id = fields.Many2one(
-        comodel_name="uom.uom", string="Unit of Measure",
+        comodel_name="uom.uom",
+        string="Unit of Measure",
         related="buffer_id.product_uom",
     )
-    date_start = fields.Date(
-        string='Start date',
-    )
-    date_end = fields.Date(
-        string='End date',
-    )
+    date_start = fields.Date(string="Start date",)
+    date_end = fields.Date(string="End date",)
     company_id = fields.Many2one(
         comodel_name="res.company", related="buffer_id.company_id",
     )

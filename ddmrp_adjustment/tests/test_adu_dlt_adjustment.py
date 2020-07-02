@@ -6,10 +6,9 @@ from .test_common import TestDDMRPAdjustmentCommon
 
 
 class TestAduAdjustment(TestDDMRPAdjustmentCommon):
-
     def setUp(self):
         super().setUp()
-        self.env['stock.buffer'].cron_ddmrp_adu()
+        self.env["stock.buffer"].cron_ddmrp_adu()
         self.buffer._compute_dlt()
         self.adu_before = self.buffer.adu
         self.dlt_before = self.buffer.dlt
@@ -20,14 +19,13 @@ class TestAduAdjustment(TestDDMRPAdjustmentCommon):
         wiz._onchange_sheet()
 
         values = {
-            getattr(self, 'month_%i_%i' % (
-                self.now.year, self.now.month)): 1.5,
+            getattr(self, "month_%i_%i" % (self.now.year, self.now.month)): 1.5,
         }
         for line in wiz.line_ids:
             line.value = values.get(line.date_range_id)
         wiz.button_validate()
 
-        self.env['stock.buffer'].cron_ddmrp_adu()
+        self.env["stock.buffer"].cron_ddmrp_adu()
 
         self.assertEqual(self.buffer.adu, self.adu_before * 1.5)
 
@@ -37,8 +35,7 @@ class TestAduAdjustment(TestDDMRPAdjustmentCommon):
         wiz._onchange_sheet()
 
         values = {
-            getattr(self, 'month_%i_%i' % (
-                self.now.year, self.now.month)): 2,
+            getattr(self, "month_%i_%i" % (self.now.year, self.now.month)): 2,
         }
         for line in wiz.line_ids:
             line.value = values.get(line.date_range_id)
