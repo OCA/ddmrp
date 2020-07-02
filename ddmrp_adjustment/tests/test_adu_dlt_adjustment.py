@@ -1,5 +1,7 @@
 # Copyright 2018 Camptocamp SA
+# Copyright 2020 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 from .test_common import TestDDMRPAdjustmentCommon
 
 
@@ -7,10 +9,10 @@ class TestAduAdjustment(TestDDMRPAdjustmentCommon):
 
     def setUp(self):
         super().setUp()
-        self.env['stock.warehouse.orderpoint'].cron_ddmrp_adu()
-        self.orderpoint._compute_dlt()
-        self.adu_before = self.orderpoint.adu
-        self.dlt_before = self.orderpoint.dlt
+        self.env['stock.buffer'].cron_ddmrp_adu()
+        self.buffer._compute_dlt()
+        self.adu_before = self.buffer.adu
+        self.dlt_before = self.buffer.dlt
 
     def test_adu_adjustment(self):
         wiz = self._create_adjustment_wizard(1)
@@ -25,9 +27,9 @@ class TestAduAdjustment(TestDDMRPAdjustmentCommon):
             line.value = values.get(line.date_range_id)
         wiz.button_validate()
 
-        self.env['stock.warehouse.orderpoint'].cron_ddmrp_adu()
+        self.env['stock.buffer'].cron_ddmrp_adu()
 
-        self.assertEqual(self.orderpoint.adu, self.adu_before * 1.5)
+        self.assertEqual(self.buffer.adu, self.adu_before * 1.5)
 
     def test_dlt_adjustment(self):
         wiz = self._create_adjustment_wizard(1)
@@ -42,6 +44,6 @@ class TestAduAdjustment(TestDDMRPAdjustmentCommon):
             line.value = values.get(line.date_range_id)
         wiz.button_validate()
 
-        self.orderpoint._compute_dlt()
+        self.buffer._compute_dlt()
 
-        self.assertEqual(self.orderpoint.dlt, self.dlt_before * 2)
+        self.assertEqual(self.buffer.dlt, self.dlt_before * 2)
