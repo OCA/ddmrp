@@ -1,5 +1,7 @@
 # Copyright 2018 Camptocamp SA
+# Copyright 2020 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 from dateutil.relativedelta import relativedelta
 
 from .test_common import TestDDMRPAdjustmentCommon
@@ -43,7 +45,7 @@ class TestAdjustmentWizard(TestDDMRPAdjustmentCommon):
         adjustments = self.env['ddmrp.adjustment'].browse(
             demand_adjustment_ids)
         for adj in adjustments:
-            self.assertEqual(adj.buffer_id, self.orderpoint)
+            self.assertEqual(adj.buffer_id, self.buffer)
             if adj.adjustment_type == 'DAF':
                 self.assertEqual(adj.value,
                                  values.get('DAF').get(adj.date_range_id))

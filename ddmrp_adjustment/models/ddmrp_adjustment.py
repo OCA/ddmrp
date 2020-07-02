@@ -1,5 +1,4 @@
-# Copyright 2017-19 Eficent Business and IT Consulting Services S.L.
-#   (http://www.eficent.com)
+# Copyright 2017-20 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import fields, models
@@ -10,9 +9,10 @@ LTAF_string = "LTAF"
 
 class DdmrpAdjustment(models.Model):
     _name = "ddmrp.adjustment"
+    _description = "DDMRP Adjustment"
 
     buffer_id = fields.Many2one(
-        comodel_name="stock.warehouse.orderpoint", string="Buffer",
+        comodel_name="stock.buffer", string="Buffer",
         required=True,
     )
     product_id = fields.Many2one(
@@ -33,6 +33,5 @@ class DdmrpAdjustment(models.Model):
     value = fields.Float()
     company_id = fields.Many2one(
         comodel_name='res.company', string='Company', required=True,
-        default=lambda self: self.env['res.company']._company_default_get(
-            'ddmrp.adjustment'),
+        default=lambda self: self.env.company,
     )
