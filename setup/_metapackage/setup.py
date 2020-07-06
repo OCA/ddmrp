@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo13-addon-ddmrp',
+        'odoo13-addon-ddmrp_adjustment',
         'odoo13-addon-ddmrp_history',
     ],
     classifiers=[
