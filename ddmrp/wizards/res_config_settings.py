@@ -13,6 +13,14 @@ class ResConfigSettings(models.TransientModel):
     module_ddmrp_adjustment = fields.Boolean(
         string="apply adjustments to dynamically alter buffers",
     )
+    module_ddmrp_coverage_days = fields.Boolean(
+        string="Shows the current on-hand for stock buffers expressed "
+        "as coverage days.",
+    )
+    module_ddmrp_packaging = fields.Boolean(string="Use packagings on stock buffers.",)
+    module_stock_buffer_capacity_limit = fields.Boolean(
+        string="Storage Capacity Limits",
+    )
     ddmrp_auto_update_nfp = fields.Boolean(
         related="company_id.ddmrp_auto_update_nfp", readonly=False
     )
