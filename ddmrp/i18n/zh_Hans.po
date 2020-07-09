@@ -1209,8 +1209,24 @@ msgid "Search Buffer Profiles"
 msgstr ""
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Set an storage capacity limit on stock buffers."
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.action_ddmrp_config
 msgid "Settings"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Show Coverage Days in Stock Buffers"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_coverage_days
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Shows the current on-hand for stock buffers expressed as coverage days."
 msgstr ""
 
 #. module: ddmrp
@@ -1256,6 +1272,13 @@ msgid "Stock Buffers"
 msgstr "库存缓冲"
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+#, fuzzy
+#| msgid "Stock Buffer Planning"
+msgid "Stock Buffers & Packagings"
+msgstr "库存缓冲计划"
+
+#. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_move
 #, fuzzy
 #| msgid "Stock Buffer"
@@ -1268,6 +1291,11 @@ msgstr "库存缓冲"
 #| msgid "Stock Buffer"
 msgid "Stock Rule"
 msgstr "库存缓冲"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_stock_buffer_capacity_limit
+msgid "Storage Capacity Limits"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_history
@@ -1378,6 +1406,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_res_company__ddmrp_auto_update_nfp
 #: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__ddmrp_auto_update_nfp
 msgid "Update NFP on Stock Buffers on relevant events."
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_packaging
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Use packagings on stock buffers."
 msgstr ""
 
 #. module: ddmrp
@@ -1504,9 +1538,6 @@ msgstr ""
 
 #~ msgid "Run Scheduler Manually"
 #~ msgstr "手动运行排程"
-
-#~ msgid "Stock Buffer Planning"
-#~ msgstr "库存缓冲计划"
 
 #~ msgid "Reordering rule"
 #~ msgstr "订货规则"
