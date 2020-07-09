@@ -1152,8 +1152,24 @@ msgid "Search Buffer Profiles"
 msgstr ""
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Set an storage capacity limit on stock buffers."
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.action_ddmrp_config
 msgid "Settings"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Show Coverage Days in Stock Buffers"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_coverage_days
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Shows the current on-hand for stock buffers expressed as coverage days."
 msgstr ""
 
 #. module: ddmrp
@@ -1191,6 +1207,11 @@ msgid "Stock Buffers"
 msgstr ""
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Stock Buffers & Packagings"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_move
 msgid "Stock Move"
 msgstr ""
@@ -1198,6 +1219,11 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_rule
 msgid "Stock Rule"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_stock_buffer_capacity_limit
+msgid "Storage Capacity Limits"
 msgstr ""
 
 #. module: ddmrp
@@ -1309,6 +1335,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_res_company__ddmrp_auto_update_nfp
 #: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__ddmrp_auto_update_nfp
 msgid "Update NFP on Stock Buffers on relevant events."
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_packaging
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Use packagings on stock buffers."
 msgstr ""
 
 #. module: ddmrp
