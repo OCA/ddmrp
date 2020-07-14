@@ -9,9 +9,7 @@ class StockBuffer(models.Model):
     _inherit = "stock.buffer"
 
     route_ids = fields.Many2many(
-        "stock.location.route",
-        string="Allowed routes",
-        compute="_compute_route_ids",
+        "stock.location.route", string="Allowed routes", compute="_compute_route_ids",
     )
     route_id = fields.Many2one(
         "stock.location.route",
@@ -20,9 +18,7 @@ class StockBuffer(models.Model):
         ondelete="restrict",
     )
 
-    @api.depends(
-        "product_id", "warehouse_id", "warehouse_id.route_ids", "location_id"
-    )
+    @api.depends("product_id", "warehouse_id", "warehouse_id.route_ids", "location_id")
     def _compute_route_ids(self):
         route_obj = self.env["stock.location.route"]
         for record in self:
@@ -31,9 +27,7 @@ class StockBuffer(models.Model):
             if record.product_id:
                 routes += record.product_id.mapped(
                     "route_ids"
-                ) | record.product_id.mapped("categ_id").mapped(
-                    "total_route_ids"
-                )
+                ) | record.product_id.mapped("categ_id").mapped("total_route_ids")
             if record.warehouse_id:
                 routes |= wh_routes
             parents = record.get_parents()
@@ -57,11 +51,7 @@ class StockBuffer(models.Model):
             result |= location
         return result
 
-    def _prepare_procurement_values(
-        self, product_qty, date=False, group=False
-    ):
-        res = super()._prepare_procurement_values(
-            product_qty, date=date, group=group
-        )
+    def _prepare_procurement_values(self, product_qty, date=False, group=False):
+        res = super()._prepare_procurement_values(product_qty, date=date, group=group)
         res["route_ids"] = self.route_id
         return res
