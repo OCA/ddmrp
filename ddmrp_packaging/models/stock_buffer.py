@@ -8,18 +8,29 @@ class StockBuffer(models.Model):
     _inherit = "stock.buffer"
 
     packaging_id = fields.Many2one(
-        string="Purchase Packaging",
+        string="Packaging",
         comodel_name="product.packaging",
         check_company=True,
         domain="[('product_id', '=', product_id), "
         "'|', ('company_id', '=', False), "
         "('company_id', '=', company_id)]",
     )
+    package_multiple = fields.Float()
 
     @api.onchange("packaging_id", "procure_uom_id", "qty_multiple")
     def _onchange_packaging_id(self):
         res = self._check_package()
+        if not res:
+            # Check is Ok, we can change package multiple to keep alignment:
+            if self.packaging_id.qty:
+                self.package_multiple = self.qty_multiple / self.packaging_id.qty
         return res
+
+    @api.onchange("package_multiple")
+    def _onchange_package_multiple(self):
+        for rec in self:
+            if rec.packaging_id.qty:
+                rec.qty_multiple = rec.package_multiple * rec.packaging_id.qty
 
     def _check_package(self):
         pack = self.packaging_id
