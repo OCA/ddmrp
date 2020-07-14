@@ -80,7 +80,6 @@ class TestStockBufferRoute(common.TransactionCase):
                 "procure_method": "make_to_stock",
                 "warehouse_id": self.warehouse.id,
                 "company_id": self.main_company.id,
-                "propagate": "False",
             }
         )
 
@@ -95,7 +94,6 @@ class TestStockBufferRoute(common.TransactionCase):
                 "procure_method": "make_to_stock",
                 "warehouse_id": self.warehouse.id,
                 "company_id": self.main_company.id,
-                "propagate": "False",
             }
         )
 
@@ -135,7 +133,7 @@ class TestStockBufferRoute(common.TransactionCase):
             "active_id": buffer.id,
         }
         wizard = (
-            self.make_procurement_wiz.sudo(self.stock_manager)
+            self.make_procurement_wiz.with_user(self.stock_manager)
             .with_context(context)
             .create({})
         )
@@ -146,8 +144,8 @@ class TestStockBufferRoute(common.TransactionCase):
         self.product.route_ids = [(6, 0, [self.route.id, self.route2.id])]
         vals = {
             "product_id": self.product.id,
-            "product_min_qty": 10.0,
-            "product_max_qty": 100.0,
+            "procure_min_qty": 10.0,
+            "procure_max_qty": 100.0,
             "company_id": self.main_company.id,
             "warehouse_id": self.warehouse.id,
             "location_id": self.warehouse.lot_stock_id.id,
@@ -155,7 +153,7 @@ class TestStockBufferRoute(common.TransactionCase):
             "adu_calculation_method": self.adu_fixed.id,
         }
 
-        buffer = self.buffer_model.sudo(self.stock_manager).create(vals)
+        buffer = self.buffer_model.with_user(self.stock_manager).create(vals)
         self.assertIn(self.route, buffer.route_ids)
         self.assertIn(self.route2, buffer.route_ids)
         buffer.route_id = self.route.id
@@ -174,8 +172,8 @@ class TestStockBufferRoute(common.TransactionCase):
         self.product.route_ids = [(6, 0, [self.route.id, self.route2.id])]
         vals = {
             "product_id": self.product.id,
-            "product_min_qty": 10.0,
-            "product_max_qty": 100.0,
+            "procure_min_qty": 10.0,
+            "procure_max_qty": 100.0,
             "company_id": self.main_company.id,
             "warehouse_id": self.warehouse.id,
             "location_id": self.warehouse.lot_stock_id.id,
@@ -183,7 +181,7 @@ class TestStockBufferRoute(common.TransactionCase):
             "adu_calculation_method": self.adu_fixed.id,
         }
 
-        buffer = self.buffer_model.sudo(self.stock_manager).create(vals)
+        buffer = self.buffer_model.with_user(self.stock_manager).create(vals)
         self.assertIn(self.route, buffer.route_ids)
         self.assertIn(self.route2, buffer.route_ids)
         buffer.route_id = self.route2.id
