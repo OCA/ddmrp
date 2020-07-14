@@ -8,9 +8,10 @@
         <field name="model">stock.buffer</field>
         <field name="inherit_id" ref="ddmrp.stock_buffer_view_form" />
         <field name="arch" type="xml">
-            <group name="other" position="inside">
+            <field name="qty_multiple" position="before">
                 <field name="packaging_id" />
-            </group>
+                <field name="package_multiple" />
+            </field>
         </field>
     </record>
 </odoo>
