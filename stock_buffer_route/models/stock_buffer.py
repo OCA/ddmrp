@@ -38,8 +38,14 @@ class StockBuffer(models.Model):
             lambda route: any(
                 p.location_id in parents
                 for p in route.rule_ids.filtered(
-                    lambda rule: rule.action in ("pull", "pull_push")
+                    lambda rule: rule.action in ("pull", "pull_push", "manufacture")
                 ).mapped("location_src_id")
+            )
+            or any(rule.action == "buy" for rule in route.rule_ids)
+            or any(
+                rule.action == "manufacture"
+                for rule in route.rule_ids
+                if not rule.location_src_id
             )
         )
 
