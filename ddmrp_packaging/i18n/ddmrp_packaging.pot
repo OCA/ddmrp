@@ -14,8 +14,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: ddmrp_packaging
+#: model:ir.model.fields,field_description:ddmrp_packaging.field_stock_buffer__package_multiple
+msgid "Package Multiple"
+msgstr ""
+
+#. module: ddmrp_packaging
 #: model:ir.model.fields,field_description:ddmrp_packaging.field_stock_buffer__packaging_id
-msgid "Purchase Packaging"
+msgid "Packaging"
 msgstr ""
 
 #. module: ddmrp_packaging
