@@ -14,6 +14,7 @@ setuptools.setup(
         'odoo13-addon-ddmrp_history',
         'odoo13-addon-ddmrp_packaging',
         'odoo13-addon-stock_buffer_capacity_limit',
+        'odoo13-addon-stock_buffer_route',
     ],
     classifiers=[
         'Programming Language :: Python',
