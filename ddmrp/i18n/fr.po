@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-07-22 10:13+0000\n"
+"PO-Revision-Date: 2020-07-22 14:19+0000\n"
 "Last-Translator: c2cdidier <didier.donze@camptocamp.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -131,7 +131,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_form
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_tree
 msgid "Buffer Profile"
-msgstr ""
+msgstr "Profil de buffer"
 
 #. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.stock_buffer_profile_lead_time_form_action
@@ -168,40 +168,41 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "Buffer zones"
-msgstr ""
+msgstr "Zones de buffer"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__is_buffered
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__is_buffered
 msgid "Buffered?"
-msgstr ""
+msgstr "Protégé ?"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_line_execution_tree
 msgid "Buffers"
-msgstr ""
+msgstr "Buffers"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__method
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method_type
 msgid "Calculation method"
-msgstr ""
+msgstr "Méthode de calcul"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #. module: ddmrp
 #: model:res.groups,name:ddmrp.group_change_buffer_procure_qty
 msgid "Change quantity in manual procurements from Stock Buffers"
 msgstr ""
+"Changer la quantité en approvisionnement manuel depuis les buffers de stock"
 
 #. module: ddmrp
 #: model_terms:ir.actions.act_window,help:ddmrp.stock_buffer_profile_form_action
 msgid "Click to start a new buffer profile"
-msgstr ""
+msgstr "Cliquer pour créer un nouveau profil de buffer"
 
 #. module: ddmrp
 #: model_terms:ir.actions.act_window,help:ddmrp.stock_buffer_profile_lead_time_form_action
@@ -216,7 +217,7 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Sociétés"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__company_id
@@ -225,22 +226,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__company_id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__company_id
 msgid "Company"
-msgstr ""
+msgstr "Société"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid "Company Settings"
-msgstr ""
+msgstr "Paramètres Société"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Paramètres de configuration"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "Create Procurement"
-msgstr ""
+msgstr "Créer approvisionnement"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__create_uid
@@ -252,7 +253,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__create_uid
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__create_date
@@ -264,46 +265,46 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__create_date
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #. module: ddmrp
 #: model:ir.ui.menu,name:ddmrp.menu_ddmrp_config
 msgid "DDMRP"
-msgstr ""
+msgstr "DDMRP"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid "DDMRP Adjustments"
-msgstr ""
+msgstr "Ajustements DDMRP"
 
 #. module: ddmrp
 #: model:ir.actions.server,name:ddmrp.ir_cron_ddmrp_adu_calculation_scheduler_action_ir_actions_server
 #: model:ir.cron,cron_name:ddmrp.ir_cron_ddmrp_adu_calculation_scheduler_action
 #: model:ir.cron,name:ddmrp.ir_cron_ddmrp_adu_calculation_scheduler_action
 msgid "DDMRP Buffer ADU calculation"
-msgstr ""
+msgstr "Buffers DDMRP calcul CMJ"
 
 #. module: ddmrp
 #: model:ir.actions.server,name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action_ir_actions_server
 #: model:ir.cron,cron_name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action
 #: model:ir.cron,name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action
 msgid "DDMRP Buffer calculation"
-msgstr ""
+msgstr "DDMRP calcul du buffer"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__ddmrp_chart
 msgid "DDMRP Chart"
-msgstr ""
+msgstr "Graphique DDMRP"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__ddmrp_demand_chart
 msgid "DDMRP Demand Chart"
-msgstr ""
+msgstr "DDMRP Graphique de la demande"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid "DDMRP History"
-msgstr ""
+msgstr "DDMRP historique"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_ddmrp_run
