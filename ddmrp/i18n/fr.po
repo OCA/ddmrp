@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-07-22 10:13+0000\n"
+"Last-Translator: c2cdidier <didier.donze@camptocamp.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
@@ -21,28 +23,31 @@ msgid ""
 "specific.\" role=\"img\" aria-label=\"Values set here are company-specific."
 "\" groups=\"base.group_multi_company\"/>"
 msgstr ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Les valeurs définies ici sont "
+"dépendantes de la société.\" role=\"img\" aria-label=\"Les valeurs définies "
+"ici sont dépendantes de la société.\" groups=\"base.group_multi_company\"/>"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu
 msgid "ADU"
-msgstr ""
+msgstr "CMJ"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_form
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_tree
 msgid "ADU Calculation Method"
-msgstr ""
+msgstr "Méthode de calcul de la CMJ"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method
 msgid "ADU calculation method"
-msgstr ""
+msgstr "Méthode de calcul de la CMJ"
 
 #. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.product_adu_calculation_method_form_action
 #: model:ir.ui.menu,name:ddmrp.menu_product_adu_calculation_method
 msgid "ADU calculation methods"
-msgstr ""
+msgstr "Méthode de calcul de la CMJ"
 
 #. module: ddmrp
 #: model:product.product,name:ddmrp.product_product_as01
@@ -53,7 +58,7 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__active
 msgid "Active"
-msgstr ""
+msgstr "Actif"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
@@ -61,12 +66,14 @@ msgid ""
 "Apply adjustments to dynamically alter stock buffers to respond to planned "
 "or anticipated events."
 msgstr ""
+"Appliquer des ajustements afin de modifier dynamiquement les buffers en "
+"réponse à des événements planifiés ou anticipés."
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "Archived"
-msgstr ""
+msgstr "Archivé"
 
 #. module: ddmrp
 #: code:addons/ddmrp/models/product_template.py:0
@@ -75,37 +82,39 @@ msgid ""
 "At least one stock buffer for this product has a different Procurement unit "
 "of measure category."
 msgstr ""
+"Au minimum un buffer de stock de ce produit possède une catégorie unité de "
+"mesure d'approvisionnement différente."
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid "Auto update Net Flow Position"
-msgstr ""
+msgstr "Mise à jour automatique du Stock disponible (NFP)"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__adu
 msgid "Average Daily Usage"
-msgstr ""
+msgstr "Consommation Moyenne Journalière"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_report_mrp_report_bom_structure
 msgid "BOM Structure Report"
-msgstr ""
+msgstr "Rapport structure de nomenclature"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_mrp_bom
 msgid "Bill of Material"
-msgstr ""
+msgstr "Nomenclature"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_mrp_bom_line
 msgid "Bill of Material Line"
-msgstr ""
+msgstr "Ligne de nomenclature"
 
 #. module: ddmrp
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
 #, python-format
 msgid "Blended"
-msgstr ""
+msgstr "Mixte"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_production__execution_priority_level
