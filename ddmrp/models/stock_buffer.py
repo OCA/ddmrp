@@ -1218,6 +1218,7 @@ class StockBuffer(models.Model):
         """This method is meant to be inherited by other modules in order to
         enhance extensibility."""
         self.ensure_one()
+        self.refresh()
         if not only_nfp or only_nfp == "out":
             self._calc_qualified_demand()
         if not only_nfp or only_nfp == "in":
