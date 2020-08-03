@@ -1630,6 +1630,11 @@ class StockBuffer(models.Model):
         _logger.info("End cron_ddmrp_adu.")
         return True
 
+    def refresh_buffer(self):
+        self.ensure_one()
+        self.cron_actions(only_nfp=False)
+        return True
+
     def cron_actions(self, only_nfp=False):
         """This method is meant to be inherited by other modules in order to
         enhance extensibility."""
