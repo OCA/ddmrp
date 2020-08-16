@@ -81,14 +81,12 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 #, fuzzy
-#| msgid "Net Flow Position"
 msgid "Auto update Net Flow Position"
 msgstr "净流位置"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__adu
 #, fuzzy
-#| msgid "Average Daily Usage (ADU)"
 msgid "Average Daily Usage"
 msgstr "日均用量 (ADU)"
 
@@ -105,7 +103,6 @@ msgstr "物料清单"
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_mrp_bom_line
 #, fuzzy
-#| msgid "Bill of Material"
 msgid "Bill of Material Line"
 msgstr "物料清单"
 
@@ -215,7 +212,6 @@ msgstr "点击开始缓冲设置变动因子"
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_res_company
 #, fuzzy
-#| msgid "Company"
 msgid "Companies"
 msgstr "公司"
 
@@ -231,7 +227,6 @@ msgstr "公司"
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 #, fuzzy
-#| msgid "Company"
 msgid "Company Settings"
 msgstr "公司"
 
@@ -291,7 +286,6 @@ msgstr "DDMRP 缓冲ADU 计算"
 #: model:ir.cron,cron_name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action
 #: model:ir.cron,name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action
 #, fuzzy
-#| msgid "Run DDMRP Buffer calculation"
 msgid "DDMRP Buffer calculation"
 msgstr "运行DDMRP缓冲计算"
 
@@ -303,7 +297,6 @@ msgstr "DDMRP 图表"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__ddmrp_demand_chart
 #, fuzzy
-#| msgid "DDMRP Chart"
 msgid "DDMRP Demand Chart"
 msgstr "DDMRP 图表"
 
@@ -320,7 +313,6 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__ddmrp_supply_chart
 #, fuzzy
-#| msgid "DDMRP Chart"
 msgid "DDMRP Supply Chart"
 msgstr "DDMRP 图表"
 
@@ -344,7 +336,6 @@ msgstr "解耦的前置时间(天)"
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.report_mrpbomstructure_ddmrp
 #, fuzzy
-#| msgid "Decoupled Lead Time (days)"
 msgid "Decoupled lead time of the BoM"
 msgstr "解耦的前置时间(天)"
 
@@ -500,7 +491,6 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__green_zone_moq
 #, fuzzy
-#| msgid "Green zone minimum order quantity"
 msgid "Green zone qty option considering minimum order quantity"
 msgstr "绿区最小订购数量"
 
@@ -542,7 +532,6 @@ msgstr "进入(在 DLT 内)"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__incoming_location_qty
 #, fuzzy
-#| msgid "Incoming within DLT"
 msgid "Incoming On Location"
 msgstr "进入在 DLT 内"
 
@@ -564,7 +553,6 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_location
 #, fuzzy
-#| msgid "Incoming within DLT"
 msgid "Inventory Locations"
 msgstr "进入在 DLT 内"
 
@@ -624,7 +612,6 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__lead_days
 #, fuzzy
-#| msgid "Distributed"
 msgid "Lead Time (Distributed)"
 msgstr "分布"
 
@@ -659,7 +646,6 @@ msgstr "视界时期长度，按天"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_move__buffer_ids
 #, fuzzy
-#| msgid "Stock Buffer"
 msgid "Linked Stock Buffers"
 msgstr "库存缓冲"
 
@@ -688,14 +674,12 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_make_procurement_buffer_item
 #, fuzzy
-#| msgid "Make Procurements from Orderpoints"
 msgid "Make Procurements from Stock Buffer Item"
 msgstr "从订购点创造补货"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_make_procurement_buffer
 #, fuzzy
-#| msgid "Make Procurements from Orderpoints"
 msgid "Make Procurements from Stock Buffers"
 msgstr "从订购点创造补货"
 
@@ -738,7 +722,6 @@ msgstr "最小订购数量"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__procure_min_qty
 #, fuzzy
-#| msgid "Minimum Order Quantity"
 msgid "Minimum Procure Batch"
 msgstr "最小订购数量"
 
@@ -954,7 +937,6 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__procure_recommended_qty
 #, fuzzy
-#| msgid "Procurement recommended"
 msgid "Procure Recommendation"
 msgstr "补货建议"
 
@@ -967,21 +949,18 @@ msgstr "补货"
 #: model:ir.model,name:ddmrp.model_procurement_group
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__group_id
 #, fuzzy
-#| msgid "Procurement Rule"
 msgid "Procurement Group"
 msgstr "补货规则"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
 #, fuzzy
-#| msgid "Procurement Requisition"
 msgid "Procurement Request"
 msgstr "补货请求"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__procure_uom_id
 #, fuzzy
-#| msgid "Procurement"
 msgid "Procurement UoM"
 msgstr "补货"
 
@@ -1015,7 +994,6 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_mrp_production
 #, fuzzy
-#| msgid "Manufacturing Order"
 msgid "Production Order"
 msgstr "制造订单"
 
@@ -1032,14 +1010,12 @@ msgstr "采购订单行"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__purchase_line_ids
 #, fuzzy
-#| msgid "Purchase Order Line"
 msgid "Purchase Order Lines"
 msgstr "采购订单行"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 #, fuzzy
-#| msgid "Purchase Order"
 msgid "Purchase Orders"
 msgstr "采购订单"
 
@@ -1167,7 +1143,6 @@ msgstr "补给方法"
 #. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.act_make_procurement_from_buffer
 #, fuzzy
-#| msgid "Create Procurement"
 msgid "Request Procurement"
 msgstr "创建补货"
 
@@ -1241,21 +1216,18 @@ msgstr "库存缓冲"
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_buffer_profile
 #, fuzzy
-#| msgid "Buffer Profile"
 msgid "Stock Buffer Profile"
 msgstr "缓冲设置"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_buffer_profile_lead_time
 #, fuzzy
-#| msgid "Buffer Profile Lead Time Factor"
 msgid "Stock Buffer Profile Lead Time Factor"
 msgstr "缓冲设置前置时间因子"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_buffer_profile_variability
 #, fuzzy
-#| msgid "Buffer Profile Variability Factor"
 msgid "Stock Buffer Profile Variability Factor"
 msgstr "缓冲设置变动因子"
 
@@ -1267,28 +1239,24 @@ msgstr "缓冲设置变动因子"
 #: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_form
 #: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_line_form2
 #, fuzzy
-#| msgid "Stock Buffer"
 msgid "Stock Buffers"
 msgstr "库存缓冲"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 #, fuzzy
-#| msgid "Stock Buffer Planning"
 msgid "Stock Buffers & Packagings"
 msgstr "库存缓冲计划"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_move
 #, fuzzy
-#| msgid "Stock Buffer"
 msgid "Stock Move"
 msgstr "库存缓冲"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_rule
 #, fuzzy
-#| msgid "Stock Buffer"
 msgid "Stock Rule"
 msgstr "库存缓冲"
 
