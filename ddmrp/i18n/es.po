@@ -84,7 +84,6 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 #, fuzzy
-#| msgid "Net Flow Position"
 msgid "Auto update Net Flow Position"
 msgstr "Posición de Flujo Neto"
 
@@ -217,7 +216,6 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_res_company
 #, fuzzy
-#| msgid "Company"
 msgid "Companies"
 msgstr "Compañía"
 
@@ -233,14 +231,12 @@ msgstr "Compañía"
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 #, fuzzy
-#| msgid "Company"
 msgid "Company Settings"
 msgstr "Compañía"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_res_config_settings
 #, fuzzy
-#| msgid "Other Settings"
 msgid "Config Settings"
 msgstr "Otras Configuraciones"
 
@@ -563,7 +559,6 @@ msgstr "Fuente de información para cálculo a pasado."
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_location
 #, fuzzy
-#| msgid "Incoming On Location"
 msgid "Inventory Locations"
 msgstr "Entrante en Ubicación"
 
@@ -1188,7 +1183,6 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.action_ddmrp_config
 #, fuzzy
-#| msgid "Other Settings"
 msgid "Settings"
 msgstr "Otras Configuraciones"
 
@@ -1240,7 +1234,6 @@ msgstr "Búferes de Inventario"
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 #, fuzzy
-#| msgid "Stock Buffers"
 msgid "Stock Buffers & Packagings"
 msgstr "Búferes de Inventario"
 
