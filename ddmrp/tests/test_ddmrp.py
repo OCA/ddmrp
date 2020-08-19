@@ -10,88 +10,6 @@ from odoo.addons.ddmrp.tests.common import TestDdmrpCommon
 
 
 class TestDdmrp(TestDdmrpCommon):
-    def create_pickingoutA(self, date_move, qty):
-        return self.pickingModel.with_user(self.user).create(
-            {
-                "picking_type_id": self.ref("stock.picking_type_out"),
-                "location_id": self.binA.id,
-                "location_dest_id": self.customer_location.id,
-                "move_lines": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": "Test move",
-                            "product_id": self.productA.id,
-                            "date_expected": date_move,
-                            "date": date_move,
-                            "product_uom": self.productA.uom_id.id,
-                            "product_uom_qty": qty,
-                            "location_id": self.binA.id,
-                            "location_dest_id": self.customer_location.id,
-                        },
-                    )
-                ],
-            }
-        )
-
-    def create_pickinginA(self, date_move, qty):
-        return self.pickingModel.with_user(self.user).create(
-            {
-                "picking_type_id": self.ref("stock.picking_type_in"),
-                "location_id": self.supplier_location.id,
-                "location_dest_id": self.binA.id,
-                "move_lines": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": "Test move",
-                            "product_id": self.productA.id,
-                            "date_expected": date_move,
-                            "date": date_move,
-                            "product_uom": self.productA.uom_id.id,
-                            "product_uom_qty": qty,
-                            "location_id": self.supplier_location.id,
-                            "location_dest_id": self.binA.id,
-                        },
-                    )
-                ],
-            }
-        )
-
-    def create_pickinginternalA(self, date_move, qty):
-        return self.pickingModel.with_user(self.user).create(
-            {
-                "picking_type_id": self.ref("stock.picking_type_internal"),
-                "location_id": self.binA.id,
-                "location_dest_id": self.binB.id,
-                "move_lines": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": "Test move",
-                            "product_id": self.productA.id,
-                            "date_expected": date_move,
-                            "date": date_move,
-                            "product_uom": self.productA.uom_id.id,
-                            "product_uom_qty": qty,
-                            "location_id": self.binA.id,
-                            "location_dest_id": self.binB.id,
-                        },
-                    )
-                ],
-            }
-        )
-
-    def _do_picking(self, picking, date):
-        """Do picking with only one move on the given date."""
-        picking.action_confirm()
-        picking.move_lines.quantity_done = picking.move_lines.product_uom_qty
-        picking.action_done()
-        for move in picking.move_lines:
-            move.date = date
 
     # TEST GROUP 1: ADU and Spikes
 
@@ -763,6 +681,41 @@ class TestDdmrp(TestDdmrpCommon):
         pol = self.pol_model.search([("product_id", "=", self.product_purchased.id)])
         self.assertEqual(len(pol), 1)
         self.assertIn(pol.buffer_ids, self.buffer_purchase)
+        self.assertEqual(self.buffer_purchase.procure_recommended_qty, 0)
+
+    def test_25_auto_procure(self):
+        pol = self.pol_model.search([("product_id", "=", self.product_purchased.id)])
+        self.assertFalse(pol)
+        self.assertGreater(self.buffer_purchase.procure_recommended_qty, 0)
+        self.buffer_purchase.auto_procure = True
+        self.buffer_purchase.auto_procure_option = "stockout"
+        self.buffer_purchase.cron_actions()
+        pol = self.pol_model.search([("product_id", "=", self.product_purchased.id)])
+        self.assertFalse(pol)  # Buffer is not in stockout.
+        # Change to standard, it should procure now.
+        self.buffer_purchase.auto_procure_option = "standard"
+        self.buffer_purchase.cron_actions()
+        pol = self.pol_model.search([("product_id", "=", self.product_purchased.id)])
+        self.assertEqual(len(pol), 1)
+        self.assertEqual(self.buffer_purchase.procure_recommended_qty, 0)
+
+    def test_26_auto_procure_stockout_and_auto_nfp(self):
+        self.main_company.ddmrp_auto_update_nfp = True
+        self.buffer_purchase.auto_procure = True
+        self.buffer_purchase.auto_procure_option = "stockout"
+        pol = self.pol_model.search([("product_id", "=", self.product_purchased.id)])
+        self.assertFalse(pol)
+        initial_nfp = self.buffer_purchase.net_flow_position
+        self.assertEqual(initial_nfp, 0)
+        # Provoke an stockout:
+        date_move = datetime.today()
+        p_out_1 = self.create_picking_out(self.product_purchased, date_move, 10)
+        p_out_1.action_confirm()
+        self._do_picking(p_out_1, date_move)
+        # A RFQ should have been created.
+        self.assertEqual(self.buffer_purchase.net_flow_position, -10)
+        pol = self.pol_model.search([("product_id", "=", self.product_purchased.id)])
+        self.assertEqual(len(pol), 1)
         self.assertEqual(self.buffer_purchase.procure_recommended_qty, 0)
 
     # TEST SECTION 3: DLT, BoM's and misc
