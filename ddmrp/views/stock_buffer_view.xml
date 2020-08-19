@@ -13,7 +13,6 @@
                     name="product_uom"
                     string="UoM"
                     groups="uom.group_uom"
-                    optional="show"
                 />
                 <field name="planning_priority_level" invisible="1" />
                 <field
@@ -36,7 +35,7 @@
                 <field
                     name="incoming_location_qty"
                     string="Total Incoming"
-                    optional="show"
+
                 />
                 <button
                     string="Open Non-completed Moves"
@@ -47,20 +46,20 @@
                 <field name="qualified_demand" />
                 <field name="net_flow_position" />
                 <field name="procure_recommended_qty" />
-                <field name="procure_uom_id" groups="uom.group_uom" optional="show" />
+                <field name="procure_uom_id" groups="uom.group_uom"/>
                 <button
                     string="Create Procurement"
                     name="%(ddmrp.act_make_procurement_from_buffer)d"
                     icon="fa-cogs"
                     type="action"
                 />
-                <field name="item_type" optional="show" />
-                <field name="main_supplier_id" optional="show" />
+                <field name="item_type"/>
+                <field name="main_supplier_id"/>
                 <field name="adu" />
                 <field name="dlt" />
-                <field name="top_of_red" optional="show" />
-                <field name="top_of_yellow" optional="show" />
-                <field name="top_of_green" optional="show" />
+                <field name="top_of_red"/>
+                <field name="top_of_yellow"/>
+                <field name="top_of_green"/>
             </tree>
         </field>
     </record>

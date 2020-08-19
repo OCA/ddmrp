@@ -125,7 +125,7 @@ class StockBuffer(models.Model):
         comodel_name="res.company",
         string="Company",
         required=True,
-        default=lambda self: self.env.company,
+        default=lambda self: self.env.user.company_id,
     )
     # TODO: rename to manual LT ??
     lead_days = fields.Integer(

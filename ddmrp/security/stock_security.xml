@@ -6,7 +6,7 @@
         <field name="global" eval="True" />
         <field
             name="domain_force"
-        >['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        >['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
     </record>
     <record model="ir.rule" id="stock_buffer_profile_variability_lead_time_comp_rule">
         <field name="name">Buffer Profile Lead Time multi-company</field>
@@ -14,7 +14,7 @@
         <field name="global" eval="True" />
         <field
             name="domain_force"
-        >['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        >['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
     </record>
     <record model="ir.rule" id="stock_buffer_profile_comp_rule">
         <field name="name">Buffer Profile multi-company</field>
@@ -22,7 +22,7 @@
         <field name="global" eval="True" />
         <field
             name="domain_force"
-        >['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        >['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
     </record>
     <record model="ir.rule" id="product_adu_calculation_method_comp_rule">
         <field name="name">Product ADU calculation method multi-company</field>
@@ -30,7 +30,7 @@
         <field name="global" eval="True" />
         <field
             name="domain_force"
-        >['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        >['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
     </record>
     <record model="ir.rule" id="stock_buffer_comp_rule">
         <field name="name">Stock Buffer multi-company</field>
@@ -38,6 +38,6 @@
         <field name="global" eval="True" />
         <field
             name="domain_force"
-        >['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        >['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
     </record>
 </odoo>
