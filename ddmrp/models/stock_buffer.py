@@ -9,6 +9,7 @@ from math import pi
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.addons import decimal_precision as dp
 from odoo.tools import float_compare, float_round
 
 _logger = logging.getLogger(__name__)
@@ -29,6 +30,8 @@ OPERATORS = {
     "==": py_operator.eq,
     "!=": py_operator.ne,
 }
+
+UNIT = dp.get_precision('Product Unit of Measure')
 
 
 _PRIORITY_LEVEL = [("1_red", "Red"), ("2_yellow", "Yellow"), ("3_green", "Green")]
@@ -97,17 +100,17 @@ class StockBuffer(models.Model):
     # not sure maybe they are useful for tweak batches like in multi level mrp
     procure_min_qty = fields.Float(
         string="Minimum Procure Batch",
-        digits="Product Unit of Measure",
+        digits=UNIT,
         help="Minimum qty for a single procurement",
     )
     procure_max_qty = fields.Float(
         string="Maximum Procure Batch",
-        digits="Product Unit of Measure",
+        digits=UNIT,
         help="Maximum qty for a single procurement",
     )
     qty_multiple = fields.Float(
         string="Qty Multiple",
-        digits="Product Unit of Measure",
+        digits=UNIT,
         default=1,
         required=True,
         help="The procurement quantity will be rounded up to this multiple. "
@@ -738,7 +741,7 @@ class StockBuffer(models.Model):
     adu = fields.Float(
         string="ADU",
         default=0.0,
-        digits="Product Unit of Measure",
+        digits=UNIT,
         readonly=True,
         help="Average Daily Usage",
     )
@@ -751,35 +754,35 @@ class StockBuffer(models.Model):
         related="adu_calculation_method.method",
     )
     adu_fixed = fields.Float(
-        string="Fixed ADU", default=1.0, digits="Product Unit of Measure",
+        string="Fixed ADU", default=1.0, digits=UNIT,
     )
     order_cycle = fields.Float(string="Minimum Order Cycle (days)")
     minimum_order_quantity = fields.Float(
-        string="Minimum Order Quantity", digits="Product Unit of Measure",
+        string="Minimum Order Quantity", digits=UNIT,
     )
     red_base_qty = fields.Float(
         string="Red Base Qty",
         compute="_compute_red_zone",
-        digits="Product Unit of Measure",
+        digits=UNIT,
         store=True,
     )
     red_safety_qty = fields.Float(
         string="Red Safety Qty",
         compute="_compute_red_zone",
-        digits="Product Unit of Measure",
+        digits=UNIT,
         store=True,
     )
     red_zone_qty = fields.Float(
         string="Red Zone Qty",
         compute="_compute_red_zone",
-        digits="Product Unit of Measure",
+        digits=UNIT,
         store=True,
     )
     top_of_red = fields.Float(string="Top of Red", related="red_zone_qty", store=True,)
     green_zone_qty = fields.Float(
         string="Green Zone Qty",
         compute="_compute_green_zone",
-        digits="Product Unit of Measure",
+        digits=UNIT,
         store=True,
     )
     green_zone_lt_factor = fields.Float(
@@ -791,7 +794,7 @@ class StockBuffer(models.Model):
     green_zone_moq = fields.Float(
         string="Green Zone Minimum Order Quantity",
         compute="_compute_green_zone",
-        digits="Product Unit of Measure",
+        digits=UNIT,
         store=True,
         help="Green zone qty option considering minimum order quantity",
     )
@@ -804,34 +807,34 @@ class StockBuffer(models.Model):
     yellow_zone_qty = fields.Float(
         string="Yellow Zone Qty",
         compute="_compute_yellow_zone",
-        digits="Product Unit of Measure",
+        digits=UNIT,
         store=True,
     )
     top_of_yellow = fields.Float(
         string="Top of Yellow",
         compute="_compute_yellow_zone",
-        digits="Product Unit of Measure",
+        digits=UNIT,
         store=True,
     )
     top_of_green = fields.Float(
         string="Top of Green",
         compute="_compute_green_zone",
-        digits="Product Unit of Measure",
+        digits=UNIT,
         store=True,
     )
     order_spike_horizon = fields.Float(string="Order Spike Horizon")
     order_spike_threshold = fields.Float(
         string="Order Spike Threshold",
         compute="_compute_order_spike_threshold",
-        digits="Product Unit of Measure",
+        digits=UNIT,
         store=True,
     )
     qualified_demand = fields.Float(
-        string="Qualified demand", digits="Product Unit of Measure", readonly=True,
+        string="Qualified demand", digits=UNIT, readonly=True,
     )
     incoming_dlt_qty = fields.Float(string="Incoming (Within DLT)", readonly=True,)
     net_flow_position = fields.Float(
-        string="Net flow position", digits="Product Unit of Measure", readonly=True,
+        string="Net flow position", digits=UNIT, readonly=True,
     )
     net_flow_position_percent = fields.Float(
         string="Net flow position (% of TOG)", readonly=True,
