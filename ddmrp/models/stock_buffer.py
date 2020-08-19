@@ -858,6 +858,19 @@ class StockBuffer(models.Model):
     ddmrp_supply_chart = fields.Text(
         string="DDMRP Supply Chart", compute="_compute_ddmrp_demand_supply_chart",
     )
+    auto_procure = fields.Boolean(
+        default=False,
+        help="Whenever the buffer is recomputed, if this option is set, it "
+        "will procure automatically if needed.",
+    )
+    auto_procure_option = fields.Selection(
+        selection=[
+            ("standard", "When recommended (NFP below TOY)"),
+            ("stockout", "When in stockout"),
+        ],
+        default="standard",
+        required=True,
+    )
 
     @api.onchange("adu_fixed", "adu_calculation_method")
     def onchange_adu(self):
@@ -1191,6 +1204,33 @@ class StockBuffer(models.Model):
             self._calc_adu()
         return res
 
+    def do_auto_procure(self):
+        if not self.auto_procure:
+            return False
+        rounding = self.product_uom.rounding
+        if float_compare(
+            self.procure_recommended_qty, 0.0, precision_rounding=rounding
+        ) > 0 and (
+            (
+                self.auto_procure_option == "stockout"
+                and float_compare(
+                    self.net_flow_position, 0.0, precision_rounding=rounding
+                )
+                < 0
+            )
+            or self.auto_procure_option == "standard"
+        ):
+            context = {
+                "active_model": "stock.buffer",
+                "active_ids": self.ids,
+                "active_id": self.id,
+            }
+            wizard = (
+                self.env["make.procurement.buffer"].with_context(context).create({})
+            )
+            wizard.make_procurement()
+        return True
+
     @api.model
     def cron_ddmrp_adu(self, automatic=False):
         """calculate ADU for each DDMRP buffer. Called by cronjob."""
@@ -1230,6 +1270,7 @@ class StockBuffer(models.Model):
         if not only_nfp:
             # re-compoute red to force in cascade the recalculation of zones.
             self._compute_red_zone()
+        self.do_auto_procure()
         return True
 
     @api.model

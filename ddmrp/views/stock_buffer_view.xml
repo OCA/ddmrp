@@ -185,6 +185,11 @@
                             <field name="procure_min_qty" />
                             <field name="procure_max_qty" />
                             <field name="lead_days" />
+                            <field name="auto_procure" />
+                            <field
+                                name="auto_procure_option"
+                                attrs="{'invisible': [('auto_procure', '=', False)]}"
+                            />
                         </group>
                         <group name="buffer_zones_summary" string="Buffer zones">
                             <field name="top_of_green" />
