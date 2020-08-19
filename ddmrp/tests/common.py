@@ -269,6 +269,31 @@ class TestDdmrpCommon(common.SavepointCase):
             }
         )
 
+    def create_picking_out(self, product, date_move, qty):
+        return self.pickingModel.with_user(self.user).create(
+            {
+                "picking_type_id": self.ref("stock.picking_type_out"),
+                "location_id": self.binA.id,
+                "location_dest_id": self.customer_location.id,
+                "move_lines": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Test move",
+                            "product_id": product.id,
+                            "date_expected": date_move,
+                            "date": date_move,
+                            "product_uom": product.uom_id.id,
+                            "product_uom_qty": qty,
+                            "location_id": self.binA.id,
+                            "location_dest_id": self.customer_location.id,
+                        },
+                    )
+                ],
+            }
+        )
+
     def _do_picking(self, picking, date):
         """Do picking with only one move on the given date."""
         picking.action_confirm()
