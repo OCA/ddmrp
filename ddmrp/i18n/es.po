@@ -431,7 +431,7 @@ msgstr "Última Modificación en"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5689
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5698
 msgid "Lead Time Factor"
 msgstr "Factor de Plazo de Entrega"
 
@@ -905,7 +905,7 @@ msgstr "UdM"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5690
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5699
 msgid "Variability Factor"
 msgstr "Factor de Variabilidad"
 

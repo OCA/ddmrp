@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* ddmrp
+# 	* ddmrp
 #
 msgid ""
 msgstr ""
@@ -247,7 +247,9 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_warehouse_nfp_incoming_safety_factor
-msgid "Factor used to compute the number of days to look into the future for incoming shipments for the purposes of the Net Flow position calculation."
+msgid ""
+"Factor used to compute the number of days to look into the future for "
+"incoming shipments for the purposes of the Net Flow position calculation."
 msgstr ""
 
 #. module: ddmrp
@@ -358,7 +360,9 @@ msgstr ""
 #. module: ddmrp
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:101
 #, python-format
-msgid "In blended method, past and future factors must be positive and sum exactly 1,0."
+msgid ""
+"In blended method, past and future factors must be positive and sum exactly "
+"1,0."
 msgstr ""
 
 #. module: ddmrp
@@ -420,7 +424,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5689
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5698
 msgid "Lead Time Factor"
 msgstr ""
 
@@ -824,23 +828,31 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
-msgid "The green zone determines the average order frequency and the order size. It is determined as the maximum of the following three factors: Minimum Order Cycle, Lead Time Factor and Minimum Order Quantity."
+msgid ""
+"The green zone determines the average order frequency and the order size. It "
+"is determined as the maximum of the following three factors: Minimum Order "
+"Cycle, Lead Time Factor and Minimum Order Quantity."
 msgstr ""
 
 #. module: ddmrp
 #: code:addons/ddmrp/wizards/stock_scheduler_compute.py:15
 #, python-format
-msgid "The option to compute minimum stock rules automatically has been disabled."
+msgid ""
+"The option to compute minimum stock rules automatically has been disabled."
 msgstr ""
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
-msgid "The red zone is the embedded safety in the buffer. The larger the variability associated with the product, the larger the red zone will be. It is composed of two sub-zones: Red base and red safety."
+msgid ""
+"The red zone is the embedded safety in the buffer. The larger the "
+"variability associated with the product, the larger the red zone will be. It "
+"is composed of two sub-zones: Red base and red safety."
 msgstr ""
 
 #. module: ddmrp
 #: model:ir.ui.view,arch_db:ddmrp.view_warehouse_orderpoint_form
-msgid "The yellow zone represents the stock required to cover a full lead time."
+msgid ""
+"The yellow zone represents the stock required to cover a full lead time."
 msgstr ""
 
 #. module: ddmrp
@@ -876,7 +888,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5690
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5699
 msgid "Variability Factor"
 msgstr ""
 
@@ -892,12 +904,16 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method_factor_future
-msgid "When using a blended method, this is the relative weight assigned to the future part of the combination."
+msgid ""
+"When using a blended method, this is the relative weight assigned to the "
+"future part of the combination."
 msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method_factor_past
-msgid "When using a blended method, this is the relative weight assigned to the past part of the combination."
+msgid ""
+"When using a blended method, this is the relative weight assigned to the "
+"past part of the combination."
 msgstr ""
 
 #. module: ddmrp
