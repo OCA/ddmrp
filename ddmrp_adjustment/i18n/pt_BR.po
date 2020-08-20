@@ -6,77 +6,79 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-08-20 14:59+0000\n"
+"Last-Translator: Luis Felipe Miléo <mileo@kmee.com.br>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_adjustment_type
 msgid "Adjustment Type"
-msgstr ""
+msgstr "Tipo de Ajuste"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line_ids
 msgid "Adjustments"
-msgstr ""
+msgstr "Ajustes"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand_buffer_id
 msgid "Apply to"
-msgstr ""
+msgstr "Aplicar em"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_buffer_id
 #: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_search
 msgid "Buffer"
-msgstr ""
+msgstr "Buffer"
 
 #. module: ddmrp_adjustment
 #: model:ir.model,name:ddmrp_adjustment.model_ddmrp_adjustment_sheet
 msgid "Buffer Adjustment Sheet"
-msgstr ""
+msgstr "Planilha de Ajuste de Buffer"
 
 #. module: ddmrp_adjustment
 #: model:ir.model,name:ddmrp_adjustment.model_ddmrp_adjustment_sheet_line
 msgid "Buffer Adjustment Sheet Line"
-msgstr ""
+msgstr "Linha de Ajuste de Buffer"
 
 #. module: ddmrp_adjustment
 #: model:ir.actions.act_window,name:ddmrp_adjustment.ddmrp_adjustment_action
 #: model:ir.ui.menu,name:ddmrp_adjustment.menu_ddmrp_adjustment
 #: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_tree
 msgid "Buffer Adjustments"
-msgstr ""
+msgstr "Ajustes de Buffer"
 
 #. module: ddmrp_adjustment
 #: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
 msgid "Buffer Adjustments Wizard"
-msgstr ""
+msgstr "Wizard de Ajuste de Buffer"
 
 #. module: ddmrp_adjustment
 #: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
 msgid "Buffers"
-msgstr ""
+msgstr "Buffers"
 
 #. module: ddmrp_adjustment
 #: model:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_company_id
 msgid "Company"
-msgstr ""
+msgstr "Empresa"
 
 #. module: ddmrp_adjustment
 #: model:ir.actions.act_window,name:ddmrp_adjustment.action_ddmrp_adjustment_sheet_wizard
 #: model:ir.ui.menu,name:ddmrp_adjustment.menu_ddmrp_adjustment_sheet_wizard
 msgid "Create Buffer Adjustments"
-msgstr ""
+msgstr "Cancelar Ajuste de Buffer"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_create_uid
@@ -84,7 +86,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_create_uid
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Criado por"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_create_date
@@ -92,43 +94,43 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_create_date
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Criado em"
 
 #. module: ddmrp_adjustment
 #: model:ir.ui.view,arch_db:ddmrp_adjustment.view_warehouse_orderpoint_form
 msgid "DAF Demand Allocation"
-msgstr ""
+msgstr "Fator de Ajuste de Demanda (DAF )"
 
 #. module: ddmrp_adjustment
 #: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:109
 #, python-format
 msgid "DDMRP Buffer Adjustment"
-msgstr ""
+msgstr "DDMRP Ajuste no Buffer"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_buffer_ids
 msgid "DDMRP Buffers"
-msgstr ""
+msgstr "DDMRP Buffers"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_date_start
 msgid "Date From"
-msgstr ""
+msgstr "Data inicial"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_date_range_id
 msgid "Date Range"
-msgstr ""
+msgstr "Intervalo de Datas"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_date_range_type_id
 msgid "Date Range Type"
-msgstr ""
+msgstr "Tipo de Intervalo de Datas"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_date_end
 msgid "Date To"
-msgstr ""
+msgstr "Data Inicial"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,help:ddmrp_adjustment.field_ddmrp_adjustment_demand_product_uom_id
