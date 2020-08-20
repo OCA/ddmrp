@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import fields, models
+from odoo.addons import decimal_precision as dp
 
 
 class DdmrpHistory(models.Model):
@@ -21,19 +22,19 @@ class DdmrpHistory(models.Model):
     )
     net_flow_position = fields.Float(
         string="NFP",
-        digits="Product Unit of Measure",
+        digits=dp.get_precision("Product Unit of Measure"),
         help="Net flow position",
         group_operator="avg",
     )
     on_hand_position = fields.Float(
         string="OHP",
-        digits="Product Unit of Measure",
+        digits=dp.get_precision("Product Unit of Measure"),
         help="On-Hand Position",
         group_operator="avg",
     )
     adu = fields.Float(
         string="ADU",
-        digits="Product Unit of Measure",
+        digits=dp.get_precision("Product Unit of Measure"),
         group_operator="avg",
         help="Average Daily Usage",
     )
