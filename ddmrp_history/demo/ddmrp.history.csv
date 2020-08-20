@@ -1,0 +1,12 @@
+id,buffer_id/id,date,net_flow_position,on_hand_position,top_of_green,top_of_red,top_of_yellow
+ddmrp_history_rm01_1,ddmrp.stock_buffer_rm01,2017-09-14 00:45:32,400,400,492.82,122.28,400.88
+ddmrp_history_rm01_2,ddmrp.stock_buffer_rm01,2017-09-14 03:53:30,400,400,492.82,122.28,400.88
+ddmrp_history_rm01_3,ddmrp.stock_buffer_rm01,2017-09-14 07:19:22,400,400,492.82,122.28,400.88
+ddmrp_history_rm01_4,ddmrp.stock_buffer_rm01,2017-09-14 10:39:18,400,400,492.82,122.28,400.88
+ddmrp_history_rm01_5,ddmrp.stock_buffer_rm01,2017-09-14 13:56:05,395,395,496.94,123.3,404.23
+ddmrp_history_rm01_6,ddmrp.stock_buffer_rm01,2017-09-14 17:15:05,395,395,496.94,123.3,404.23
+ddmrp_history_rm01_7,ddmrp.stock_buffer_rm01,2017-09-14 20:37:16,390,390,501.08,124.33,407.6
+ddmrp_history_rm01_8,ddmrp.stock_buffer_rm01,2017-09-15 00:05:02,389,389,412.74,102.41,335.74
+ddmrp_history_rm01_9,ddmrp.stock_buffer_rm01,2017-09-15 18:55:42,381,381,419.35,104.05,341.12
+ddmrp_history_rm01_10,ddmrp.stock_buffer_rm01,2017-09-18 16:33:40,371,371,266.62,66.15,216.88
+ddmrp_history_rm01_11,ddmrp.stock_buffer_rm01,2017-09-18 19:59:13,387,371,266.62,66.15,216.88
