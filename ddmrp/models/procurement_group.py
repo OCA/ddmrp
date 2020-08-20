@@ -16,40 +16,40 @@ class ProcurementGroup(models.Model):
         reserve stock moves."""
         return True
 
-    # UOM: (stock_orderpoint_uom):
-    @api.model
-    def run(self, procurements):
-        Proc = self.env["procurement.group"].Procurement
-        indexes_to_pop = []
-        new_procs = []
-        for i, procurement in enumerate(procurements):
-            if "buffer_id" in procurement.values:
-                buffer = procurement.values.get("buffer_id")
-                if (
-                    buffer.procure_uom_id
-                    and procurement.product_uom != buffer.procure_uom_id
-                ):
-                    new_product_qty = procurement.product_uom._compute_quantity(
-                        procurement.product_qty, buffer.procure_uom_id
-                    )
-                    new_product_uom = buffer.procure_uom_id
-                    new_procs.append(
-                        Proc(
-                            procurement.product_id,
-                            new_product_qty,
-                            new_product_uom,
-                            procurement.location_id,
-                            procurement.name,
-                            procurement.origin,
-                            procurement.company_id,
-                            procurement.values,
-                        )
-                    )
-                    indexes_to_pop.append(i)
-        if new_procs:
-            indexes_to_pop.reverse()
-            for index in indexes_to_pop:
-                procurements.pop(index)
-            procurements.extend(new_procs)
-
-        return super(ProcurementGroup, self).run(procurements)
+    # # UOM: (stock_orderpoint_uom):
+    # @api.model
+    # def run(self, procurements):
+    #     Proc = self.env["procurement.group"].Procurement
+    #     indexes_to_pop = []
+    #     new_procs = []
+    #     for i, procurement in enumerate(procurements):
+    #         if "buffer_id" in procurement.values:
+    #             buffer = procurement.values.get("buffer_id")
+    #             if (
+    #                 buffer.procure_uom_id
+    #                 and procurement.product_uom != buffer.procure_uom_id
+    #             ):
+    #                 new_product_qty = procurement.product_uom._compute_quantity(
+    #                     procurement.product_qty, buffer.procure_uom_id
+    #                 )
+    #                 new_product_uom = buffer.procure_uom_id
+    #                 new_procs.append(
+    #                     Proc(
+    #                         procurement.product_id,
+    #                         new_product_qty,
+    #                         new_product_uom,
+    #                         procurement.location_id,
+    #                         procurement.name,
+    #                         procurement.origin,
+    #                         procurement.company_id,
+    #                         procurement.values,
+    #                     )
+    #                 )
+    #                 indexes_to_pop.append(i)
+    #     if new_procs:
+    #         indexes_to_pop.reverse()
+    #         for index in indexes_to_pop:
+    #             procurements.pop(index)
+    #         procurements.extend(new_procs)
+    #
+    #     return super(ProcurementGroup, self).run(procurements)

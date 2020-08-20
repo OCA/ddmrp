@@ -94,29 +94,27 @@ class MakeProcurementBuffer(models.TransientModel):
                     "supplier_id": self.partner_id if self.partner_id else False,
                 }
             )
-            procurements.append(
-                pg_obj.Procurement(
-                    item.buffer_id.product_id,
-                    item.qty,
-                    item.uom_id,
-                    item.buffer_id.location_id,
-                    item.buffer_id.name,
-                    item.buffer_id.name,
-                    item.buffer_id.company_id,
-                    values,
-                )
-            )
+            procurements.append((
+                item.buffer_id.product_id,
+                item.qty,
+                item.uom_id,
+                item.buffer_id.location_id,
+                item.buffer_id.name,
+                item.buffer_id.name,
+                values,
+            ))
         # Run procurements
         try:
-            pg_obj.run(procurements)
+            for args in procurements:
+                pg_obj.run(*args)
         except UserError as error:
             errors.append(error.name)
         if errors:
             raise UserError("\n".join(errors))
-        # Update buffer computed fields:
+        # # Update buffer computed fields:
         buffers = self.mapped("item_ids.buffer_id")
-        buffers.invalidate_cache()
-        self.env.add_to_compute(buffers._fields["procure_recommended_qty"], buffers)
+        # buffers.invalidate_cache()
+        # self.env.add_to_compute(buffers._fields["procure_recommended_qty"], buffers)
         buffers.recompute()
         return {"type": "ir.actions.act_window_close"}
 

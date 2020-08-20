@@ -79,10 +79,10 @@ class StockRule(models.Model):
         return vals
 
     def _prepare_purchase_order_line(
-        self, product_id, product_qty, product_uom, company_id, values, po
+        self, product_id, product_qty, product_uom, values, po, partner
     ):
         vals = super()._prepare_purchase_order_line(
-            product_id, product_qty, product_uom, company_id, values, po
+            product_id, product_qty, product_uom, values, po, partner
         )
         # If the procurement was run directly by a reordering rule.
         if "buffer_id" in values:
