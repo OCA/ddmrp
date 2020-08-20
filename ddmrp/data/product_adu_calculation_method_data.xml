@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="adu_calculation_method_fixed" model="product.adu.calculation.method">
+        <field name="name">Fixed</field>
+        <field name="method">fixed</field>
+    </record>
+    <record id="adu_calculation_method_past_120" model="product.adu.calculation.method">
+        <field name="name">Past (120 days)</field>
+        <field name="method">past</field>
+        <field name="source_past">actual</field>
+        <field name="horizon_past">120</field>
+    </record>
+    <record
+        id="adu_calculation_method_future_120"
+        model="product.adu.calculation.method"
+    >
+        <field name="name">Future (120 days)</field>
+        <field name="method">future</field>
+        <field name="source_future">estimates</field>
+        <field name="horizon_future">120</field>
+    </record>
+</odoo>

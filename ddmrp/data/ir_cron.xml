@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record
+        id="ir_cron_ddmrp_calculation_scheduler_action"
+        model="ir.cron"
+        forcecreate="True"
+    >
+        <field name="name">DDMRP Buffer calculation</field>
+        <field name="state">code</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">8</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="priority">6</field>
+        <field eval="False" name="doall" />
+        <field name="model_id" ref="model_stock_buffer" />
+        <field name="code">model.cron_ddmrp(True)</field>
+    </record>
+    <record
+        id="ir_cron_ddmrp_adu_calculation_scheduler_action"
+        model="ir.cron"
+        forcecreate="True"
+    >
+        <field name="name">DDMRP Buffer ADU calculation</field>
+        <field name="state">code</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="priority">3</field>
+        <field
+            name="mutually_exclusive_cron_ids"
+            eval="[(6, 0, [ref('ir_cron_ddmrp_calculation_scheduler_action'),])]"
+        />
+        <field eval="False" name="doall" />
+        <field name="model_id" ref="model_stock_buffer" />
+        <field name="code">model.cron_ddmrp_adu(True)</field>
+    </record>
+</odoo>

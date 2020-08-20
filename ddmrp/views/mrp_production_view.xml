@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="mrp_production_tree_view" model="ir.ui.view">
+        <field name="name">mrp.production.tree</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_tree_view" />
+        <field name="arch" type="xml">
+            <field name="date_planned_start" position="before">
+                <field name="buffer_id" invisible="1" />
+                <field name="execution_priority_level" invisible="1" />
+                <field
+                    name="on_hand_percent"
+                    options='{"buffer_id": "buffer_id", "color_from": "execution_priority_level"}'
+                />
+            </field>
+        </field>
+    </record>
+    <record id="view_mrp_production_filter" model="ir.ui.view">
+        <field name="name">mrp.production.select</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.view_mrp_production_filter" />
+        <field name="arch" type="xml">
+            <field name="product_id" position="before">
+                <field name="execution_priority_level" />
+                <group name="execution_priority" string="On Hand Alert Zones">
+                    <filter
+                        name="execution_priority_level_red"
+                        string="Red"
+                        domain="[('execution_priority_level', '=', '1_red')]"
+                    />
+                    <filter
+                        name="execution_priority_level_yellow"
+                        string="Yellow"
+                        domain="[('execution_priority_level', '=', '2_yellow')]"
+                    />
+                    <filter
+                        name="execution_priority_level_green"
+                        string="Green"
+                        domain="[('execution_priority_level', '=', '3_green')]"
+                    />
+                </group>
+            </field>
+        </field>
+    </record>
+</odoo>

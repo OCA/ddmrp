@@ -1,0 +1,27 @@
+.circle {
+    padding: 0.3em 0.7em;
+    border-radius: 25em;
+    display: inline-cell;
+}
+.circle_dark_red {
+    background-color: #8b0000;
+    color: white;
+}
+.circle_red {
+    background-color: #ff0000;
+    color: white;
+}
+.circle_yellow {
+    background-color: #ffff00;
+    color: black;
+}
+.circle_green {
+    background-color: #33cc33;
+    color: white;
+}
+.popover {
+    display: inline-table;
+}
+body.with-scrollbar {
+    overflow-y: scroll;
+}

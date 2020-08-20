@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="product_supplierinfo_rm01" model="product.supplierinfo">
+        <field name="product_tmpl_id" ref="product_product_rm01_product_template" />
+        <field name="name" ref="res_partner_forgeflow" />
+        <field name="delay">25</field>
+        <field name="min_qty">50</field>
+        <field name="price">100</field>
+    </record>
+    <record id="product_supplierinfo_rm02" model="product.supplierinfo">
+        <field name="product_tmpl_id" ref="product_product_rm02_product_template" />
+        <field name="name" ref="res_partner_forgeflow" />
+        <field name="delay">14</field>
+        <field name="min_qty">10</field>
+        <field name="price">100</field>
+    </record>
+</odoo>
