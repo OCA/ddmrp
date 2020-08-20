@@ -505,8 +505,10 @@ class StockBuffer(models.Model):
             [0, 2], [self.net_flow_position, self.net_flow_position], line_width=2
         )
         on_hand = p.line(
-            [0, 2],
-            [self.product_location_qty, self.product_location_qty],
+            [0, 2], [
+                self.product_location_qty_available_not_res,
+                self.product_location_qty_available_not_res
+            ],
             line_width=2,
             line_dash="dotted",
         )
