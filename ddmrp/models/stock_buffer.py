@@ -10,6 +10,7 @@ from math import pi
 from odoo import _, api, exceptions, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import float_compare, float_round
+from odoo.tools.misc import split_every
 
 _logger = logging.getLogger(__name__)
 try:
@@ -1462,22 +1463,23 @@ class StockBuffer(models.Model):
     def cron_ddmrp_adu(self, automatic=False):
         """calculate ADU for each DDMRP buffer. Called by cronjob."""
         _logger.info("Start cron_ddmrp_adu.")
-        buffers = self.search([])
+        buffer_ids = self.search([]).ids
         i = 0
-        j = len(buffers)
-        for b in buffers:
-            try:
-                i += 1
-                _logger.debug("ddmrp cron_adu: {}. ({}/{})".format(b.name, i, j))
-                if automatic:
-                    with self.env.cr.savepoint():
+        j = len(buffer_ids)
+        for buffer_chunk_ids in split_every(50, buffer_ids):
+            for b in self.browse(buffer_chunk_ids):
+                try:
+                    i += 1
+                    _logger.debug("ddmrp cron_adu: {}. ({}/{})".format(b.name, i, j))
+                    if automatic:
+                        with self.env.cr.savepoint():
+                            b._calc_adu()
+                    else:
                         b._calc_adu()
-                else:
-                    b._calc_adu()
-            except Exception:
-                _logger.exception("Fail to compute ADU for buffer %s", b.name)
-                if not automatic:
-                    raise
+                except Exception:
+                    _logger.exception("Fail to compute ADU for buffer %s", b.name)
+                    if not automatic:
+                        raise
         _logger.info("End cron_ddmrp_adu.")
         return True
 
@@ -1506,23 +1508,26 @@ class StockBuffer(models.Model):
         """Calculate key DDMRP parameters for each buffer.
         Called by cronjob."""
         _logger.info("Start cron_ddmrp.")
-        buffers = self.search([])
+        buffer_ids = self.search([]).ids
+
         i = 0
-        j = len(buffers)
-        buffers.refresh()
-        for b in buffers:
-            i += 1
-            _logger.debug("ddmrp cron: {}. ({}/{})".format(b.name, i, j))
-            try:
-                if automatic:
-                    with self.env.cr.savepoint():
+        j = len(buffer_ids)
+        for buffer_chunk_ids in split_every(50, buffer_ids):
+            for b in self.browse(buffer_chunk_ids):
+                i += 1
+                _logger.debug("ddmrp cron: {}. ({}/{})".format(b.name, i, j))
+                try:
+                    if automatic:
+                        with self.env.cr.savepoint():
+                            b.refresh()
+                            b.cron_actions()
+                    else:
+                        b.refresh()
                         b.cron_actions()
-                else:
-                    b.cron_actions()
-            except Exception:
-                _logger.exception("Fail updating buffer %s", b.name)
-                if not automatic:
-                    raise
+                except Exception:
+                    _logger.exception("Fail updating buffer %s", b.name)
+                    if not automatic:
+                        raise
         _logger.info("End cron_ddmrp.")
         return True
 
