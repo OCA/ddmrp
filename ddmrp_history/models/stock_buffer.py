@@ -54,7 +54,7 @@ class StockBuffer(models.Model):
             "top_of_yellow": self.top_of_yellow,
             "top_of_green": self.top_of_green,
             "net_flow_position": self.net_flow_position,
-            "on_hand_position": self.product_location_qty,
+            "on_hand_position": self.product_location_qty_available_not_res,
             "adu": self.adu,
         }
         return data
