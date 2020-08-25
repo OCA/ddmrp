@@ -86,6 +86,16 @@ msgstr ""
 "mesure d'approvisionnement différente."
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__auto_procure
+msgid "Auto Procure"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__auto_procure_option
+msgid "Auto Procure Option"
+msgstr ""
+
+#. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid "Auto update Net Flow Position"
 msgstr "Mise à jour automatique du Stock disponible (NFP)"
@@ -1384,6 +1394,16 @@ msgid "Warehouse"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer__auto_procure_option__stockout
+msgid "When in stockout"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer__auto_procure_option__standard
+msgid "When recommended (NFP below TOY)"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method__factor_future
 msgid ""
 "When using a blended method, this is the relative weight assigned to the "
@@ -1395,6 +1415,13 @@ msgstr ""
 msgid ""
 "When using a blended method, this is the relative weight assigned to the "
 "past part of the combination."
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__auto_procure
+msgid ""
+"Whenever the buffer is recomputed, if this option is set, it will procure "
+"automatically if needed."
 msgstr ""
 
 #. module: ddmrp
