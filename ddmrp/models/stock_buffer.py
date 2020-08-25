@@ -3,6 +3,7 @@
 
 import logging
 import operator as py_operator
+import threading
 from collections import defaultdict
 from datetime import datetime, timedelta
 from math import pi
@@ -1195,6 +1196,7 @@ class StockBuffer(models.Model):
     @api.model
     def cron_ddmrp_adu(self, automatic=False):
         """calculate ADU for each DDMRP buffer. Called by cronjob."""
+        auto_commit = not getattr(threading.currentThread(), "testing", False)
         _logger.info("Start cron_ddmrp_adu.")
         buffer_ids = self.search([]).ids
         i = 0
@@ -1209,6 +1211,8 @@ class StockBuffer(models.Model):
                             b._calc_adu()
                     else:
                         b._calc_adu()
+                    if auto_commit:
+                        self._cr.commit()
                 except Exception:
                     _logger.exception("Fail to compute ADU for buffer %s", b.name)
                     if not automatic:
@@ -1238,6 +1242,7 @@ class StockBuffer(models.Model):
     def cron_ddmrp(self, automatic=False):
         """Calculate key DDMRP parameters for each buffer.
         Called by cronjob."""
+        auto_commit = not getattr(threading.currentThread(), "testing", False)
         _logger.info("Start cron_ddmrp.")
         buffer_ids = self.search([]).ids
 
@@ -1255,6 +1260,8 @@ class StockBuffer(models.Model):
                     else:
                         b.refresh()
                         b.cron_actions()
+                    if auto_commit:
+                        self._cr.commit()
                 except Exception:
                     _logger.exception("Fail updating buffer %s", b.name)
                     if not automatic:
