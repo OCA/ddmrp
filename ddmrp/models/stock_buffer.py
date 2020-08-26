@@ -506,7 +506,10 @@ class StockBuffer(models.Model):
         )
         on_hand = p.line(
             [0, 2],
-            [self.product_location_qty, self.product_location_qty],
+            [
+                self.product_location_qty_available_not_res,
+                self.product_location_qty_available_not_res,
+            ],
             line_width=2,
             line_dash="dotted",
         )
@@ -522,7 +525,7 @@ class StockBuffer(models.Model):
         labels_source_data = {
             "height": [
                 self.net_flow_position,
-                self.product_location_qty,
+                self.product_location_qty_available_not_res,
                 self.top_of_red,
                 self.top_of_yellow,
                 self.top_of_green,
@@ -530,7 +533,7 @@ class StockBuffer(models.Model):
             "weight": [0.25, 1.75, 1, 1, 1],
             "names": [
                 self.net_flow_position,
-                self.product_location_qty,
+                self.product_location_qty_available_not_res,
                 self.top_of_red,
                 self.top_of_yellow,
                 self.top_of_green,
