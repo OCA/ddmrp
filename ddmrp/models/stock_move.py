@@ -25,7 +25,9 @@ class StockMove(models.Model):
     def write(self, vals):
         res = super(StockMove, self).write(vals)
         if "state" in vals and self.env.company.ddmrp_auto_update_nfp:
-            self._update_ddmrp_nfp()
+            # Stock moves state changes can be triggered by users without
+            # access to write stock buffers, thus we do it with sudo.
+            self.sudo()._update_ddmrp_nfp()
         return res
 
     def _update_ddmrp_nfp(self):
