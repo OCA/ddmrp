@@ -702,20 +702,30 @@ class StockBuffer(models.Model):
             elif rec.buffer_profile_id.item_type == "distributed":
                 rec.dlt = rec.lead_days
             else:
-                rec.dlt = (
-                    rec.product_id.seller_ids
-                    and rec.product_id.seller_ids[0].delay
-                    or rec.lead_days
-                )
+                sellers = rec._get_product_sellers()
+                rec.dlt = sellers and fields.first(sellers).delay or rec.lead_days
+
+    def _get_product_sellers(self):
+        """:returns the default sellers for a single buffer."""
+        self.ensure_one()
+        all_sellers = self.product_id.seller_ids.filtered(
+            lambda r: not r.company_id or r.company_id == self.company_id
+        )
+        # specific for variant
+        sellers = all_sellers.filtered(lambda s: s.product_id == self.product_id)
+        if not sellers:
+            # generic no variant
+            sellers = all_sellers.filtered(lambda s: not s.product_id)
+        if not sellers:
+            # fallback to all sellers
+            sellers = all_sellers
+        return sellers
 
     @api.depends("buffer_profile_id", "product_id.seller_ids")
     def _compute_main_supplier(self):
         for rec in self:
             if rec.item_type == "purchased":
-                suppliers = rec.product_id.seller_ids.filtered(
-                    lambda r: (not r.product_id or r.product_id == rec.product_id)
-                    and (not r.company_id or r.company_id == rec.company_id)
-                )
+                suppliers = rec._get_product_sellers()
                 rec.main_supplier_id = suppliers[0].name if suppliers else False
             else:
                 rec.main_supplier_id = False
