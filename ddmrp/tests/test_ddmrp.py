@@ -808,6 +808,15 @@ class TestDdmrp(TestDdmrpCommon):
         expected = 200 - 120 + 35
         self.assertEqual(self.buffer_a.net_flow_position, expected)
 
+    def test_35_dlt_variants_computation(self):
+        # The seller_ids attribute is the same for all variants, but correct
+        # one needs to be applied when variant is specified.
+        self.assertEqual(self.buffer_c_blue.dlt, 5)
+        self.assertEqual(self.buffer_c_orange.dlt, 10)
+        self.p_c_supinfo_orange.unlink()
+        # Fall back to no-variant supplier info
+        self.assertEqual(self.buffer_c_orange.dlt, 8)
+
     def test_40_bokeh_charts(self):
         """Check bokeh chart computation."""
         date_move = datetime.today()
