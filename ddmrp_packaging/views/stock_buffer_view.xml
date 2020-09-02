@@ -9,7 +9,10 @@
         <field name="inherit_id" ref="ddmrp.stock_buffer_view_form" />
         <field name="arch" type="xml">
             <field name="qty_multiple" position="before">
-                <field name="packaging_id" />
+                <field
+                    name="packaging_id"
+                    context="{'form_view_ref':'product.product_packaging_form_view'}"
+                />
                 <field name="package_multiple" />
             </field>
         </field>
