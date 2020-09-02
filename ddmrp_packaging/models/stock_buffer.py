@@ -24,7 +24,6 @@ class StockBuffer(models.Model):
             # Check is Ok, we can change package multiple to keep alignment:
             if self.packaging_id.qty:
                 self.package_multiple = self.qty_multiple / self.packaging_id.qty
-                self._check_moq()
         return res
 
     @api.onchange("package_multiple")
@@ -32,11 +31,6 @@ class StockBuffer(models.Model):
         for rec in self:
             if rec.packaging_id.qty:
                 rec.qty_multiple = rec.package_multiple * rec.packaging_id.qty
-                rec._check_moq()
-
-    def _check_moq(self):
-        if self.minimum_order_quantity < self.qty_multiple:
-            self.minimum_order_quantity = self.qty_multiple
 
     def _check_package(self):
         pack = self.packaging_id
