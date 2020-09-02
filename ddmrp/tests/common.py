@@ -14,6 +14,7 @@ class TestDdmrpCommon(common.SavepointCase):
 
         # Models
         cls.productModel = cls.env["product.product"]
+        cls.templateModel = cls.env["product.template"]
         cls.bomModel = cls.env["mrp.bom"]
         cls.bomlineModel = cls.env["mrp.bom.line"]
         cls.bufferModel = cls.env["stock.buffer"]
@@ -131,7 +132,7 @@ class TestDdmrpCommon(common.SavepointCase):
                 "standard_price": 1,
                 "type": "product",
                 "uom_id": cls.uom_unit.id,
-                "default_code": "A",
+                "default_code": "B",
                 "route_ids": [(6, 0, buy_route.ids)],
             }
         )
@@ -141,6 +142,56 @@ class TestDdmrpCommon(common.SavepointCase):
                 "name": vendor.id,
                 "delay": 20.0,
             }
+        )
+
+        # Product C (purchased and with variants):
+        cls.template_c = cls.templateModel.create(
+            {
+                "name": "Product C",
+                "type": "product",
+                "uom_id": cls.uom_unit.id,
+                "default_code": "C",
+                "route_ids": [(6, 0, buy_route.ids)],
+            }
+        )
+        cls.color_attribute = cls.env["product.attribute"].create(
+            {"name": "Color", "sequence": 1}
+        )
+        cls.color_blue = cls.env["product.attribute.value"].create(
+            {"name": "Blue", "attribute_id": cls.color_attribute.id, "sequence": 1}
+        )
+        cls.color_orange = cls.env["product.attribute.value"].create(
+            {"name": "Orange", "attribute_id": cls.color_attribute.id, "sequence": 2}
+        )
+        cls.p_c_color_attribute_line = cls.env[
+            "product.template.attribute.line"
+        ].create(
+            {
+                "product_tmpl_id": cls.template_c.id,
+                "attribute_id": cls.color_attribute.id,
+                "value_ids": [(6, 0, [cls.color_blue.id, cls.color_orange.id])],
+            }
+        )
+        cls.product_c_blue = cls.template_c.product_variant_ids[0]
+        cls.product_c_orange = cls.template_c.product_variant_ids[1]
+        cls.p_c_supinfo_blue = cls.supinfo_model.create(
+            {
+                "product_tmpl_id": cls.template_c.id,
+                "product_id": cls.product_c_blue.id,
+                "name": vendor.id,
+                "delay": 5.0,
+            }
+        )
+        cls.p_c_supinfo_orange = cls.supinfo_model.create(
+            {
+                "product_tmpl_id": cls.template_c.id,
+                "product_id": cls.product_c_orange.id,
+                "name": vendor.id,
+                "delay": 10.0,
+            }
+        )
+        cls.p_c_supinfo_no_variant = cls.supinfo_model.create(
+            {"product_tmpl_id": cls.template_c.id, "name": vendor.id, "delay": 8.0}
         )
 
         # Create buffers:
@@ -161,6 +212,28 @@ class TestDdmrpCommon(common.SavepointCase):
             {
                 "buffer_profile_id": cls.buffer_profile_pur.id,
                 "product_id": cls.product_purchased.id,
+                "location_id": cls.stock_location.id,
+                "warehouse_id": cls.warehouse.id,
+                "qty_multiple": 1.0,
+                "adu_calculation_method": cls.adu_fixed.id,
+                "adu_fixed": 5.0,
+            }
+        )
+        cls.buffer_c_blue = cls.bufferModel.create(
+            {
+                "buffer_profile_id": cls.buffer_profile_pur.id,
+                "product_id": cls.product_c_blue.id,
+                "location_id": cls.stock_location.id,
+                "warehouse_id": cls.warehouse.id,
+                "qty_multiple": 1.0,
+                "adu_calculation_method": cls.adu_fixed.id,
+                "adu_fixed": 5.0,
+            }
+        )
+        cls.buffer_c_orange = cls.bufferModel.create(
+            {
+                "buffer_profile_id": cls.buffer_profile_pur.id,
+                "product_id": cls.product_c_orange.id,
                 "location_id": cls.stock_location.id,
                 "warehouse_id": cls.warehouse.id,
                 "qty_multiple": 1.0,
