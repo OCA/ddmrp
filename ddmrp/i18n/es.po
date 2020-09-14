@@ -60,6 +60,11 @@ msgstr "Activo"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Adds chatter and activities to stock buffers."
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid ""
 "Apply adjustments to dynamically alter stock buffers to respond to planned "
 "or anticipated events."
@@ -205,6 +210,11 @@ msgstr "Cancelar"
 msgid "Change quantity in manual procurements from Stock Buffers"
 msgstr ""
 "Cambiar cantidad en reabastecimientos manuales desde Búferes de Inventario"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_chatter
+msgid "Chatter in Stock Buffers"
+msgstr ""
 
 #. module: ddmrp
 #: model_terms:ir.actions.act_window,help:ddmrp.stock_buffer_profile_form_action
