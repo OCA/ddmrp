@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class StockBuffer(models.Model):
@@ -16,6 +17,24 @@ class StockBuffer(models.Model):
         "('company_id', '=', company_id)]",
     )
     package_multiple = fields.Float()
+
+    @api.constrains("product_id", "packaging_id")
+    def _check_product_packaging(self):
+        for rec in self:
+            if (
+                rec.packaging_id.product_id
+                and rec.packaging_id.product_id != rec.product_id
+            ):
+                raise ValidationError(
+                    _("Please, select a packaging of the buffered product.")
+                )
+
+    @api.onchange("product_id")
+    def onchange_product_id(self):
+        res = super().onchange_product_id()
+        if self.product_id:
+            self.packaging_id = False
+        return res
 
     @api.onchange("packaging_id", "procure_uom_id", "qty_multiple")
     def _onchange_packaging_id(self):
