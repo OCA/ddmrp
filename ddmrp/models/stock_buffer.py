@@ -893,7 +893,11 @@ class StockBuffer(models.Model):
         self.ensure_one()
         return [
             ("product_id", "=", self.product_id.id),
-            ("state", "in", ["draft", "waiting", "confirmed", "assigned"]),
+            (
+                "state",
+                "in",
+                ["draft", "waiting", "confirmed", "partially_available", "assigned"],
+            ),
             ("location_dest_id", "=", self.location_id.id),
         ]
 
@@ -1057,7 +1061,11 @@ class StockBuffer(models.Model):
         )
         return [
             ("product_id", "=", self.product_id.id),
-            ("state", "in", ["waiting", "confirmed", "assigned"]),
+            (
+                "state",
+                "in",
+                ["waiting", "confirmed", "partially_available", "assigned"],
+            ),
             ("location_id", "in", locations.ids),
             ("location_dest_id", "not in", locations.ids),
             ("date_expected", "<=", date_to),
@@ -1083,7 +1091,11 @@ class StockBuffer(models.Model):
         )
         return [
             ("product_id", "=", self.product_id.id),
-            ("state", "in", ["waiting", "confirmed", "assigned"]),
+            (
+                "state",
+                "in",
+                ["waiting", "confirmed", "partially_available", "assigned"],
+            ),
             ("location_id", "not in", locations.ids),
             ("location_dest_id", "in", locations.ids),
             ("date_expected", "<=", date_to),
