@@ -37,13 +37,13 @@ class StockMove(models.Model):
         # outgoing and `in_buffers` as incoming.
         out_buffers = in_buffers = self.env["stock.buffer"]
         for move in self:
-            out_buffers = move.mapped("product_id.buffer_ids").filtered(
+            out_buffers |= move.mapped("product_id.buffer_ids").filtered(
                 lambda buffer: (
                     move.location_id.is_sublocation_of(buffer.location_id)
                     and not move.location_dest_id.is_sublocation_of(buffer.location_id)
                 )
             )
-            in_buffers = move.mapped("product_id.buffer_ids").filtered(
+            in_buffers |= move.mapped("product_id.buffer_ids").filtered(
                 lambda buffer: (
                     not move.location_id.is_sublocation_of(buffer.location_id)
                     and move.location_dest_id.is_sublocation_of(buffer.location_id)
