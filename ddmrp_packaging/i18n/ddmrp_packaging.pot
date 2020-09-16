@@ -24,6 +24,12 @@ msgid "Packaging"
 msgstr ""
 
 #. module: ddmrp_packaging
+#: code:addons/ddmrp_packaging/models/stock_buffer.py:0
+#, python-format
+msgid "Please, select a packaging of the buffered product."
+msgstr ""
+
+#. module: ddmrp_packaging
 #: model:ir.model,name:ddmrp_packaging.model_stock_buffer
 msgid "Stock Buffer"
 msgstr ""
