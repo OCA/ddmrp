@@ -35,18 +35,15 @@ class StockBuffer(models.Model):
 
     def _get_location_routes_of_parents(self, routes, parents):
         return routes.filtered(
-            lambda route: any(
-                p.location_id in parents
-                for p in route.rule_ids.filtered(
-                    lambda rule: rule.action in ("pull", "pull_push", "manufacture")
-                ).mapped("location_src_id")
+            lambda route: (
+                # at least one rule of the route must have a destination location
+                # reaching the buffer
+                route.rule_ids.filtered(lambda rule: rule.action != "push").mapped(
+                    "location_id"
+                )
+                & parents
             )
             or any(rule.action == "buy" for rule in route.rule_ids)
-            or any(
-                rule.action == "manufacture"
-                for rule in route.rule_ids
-                if not rule.location_src_id
-            )
         )
 
     def get_parents(self):

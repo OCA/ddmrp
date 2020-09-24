@@ -3,7 +3,7 @@
 {
     "name": "Stock Buffer Route",
     "summary": "Allows to force a route to be used when procuring from Stock Buffers",
-    "version": "13.0.1.0.1",
+    "version": "13.0.1.0.2",
     "license": "LGPL-3",
     "website": "https://github.com/OCA/ddmrp",
     "author": "Eficent, Camptocamp, Odoo Community Association (OCA)",
