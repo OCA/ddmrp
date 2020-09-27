@@ -94,6 +94,14 @@
                             </field>
                         </page>
                         <page string="Simulation Results">
+                            <group>
+                                <group>
+                                    <field name="initial_inventory_id"/>
+                                </group>
+                                <group>
+
+                                </group>
+                            </group>
                         </page>
                         <page string="Remote Configuration" attrs="{'invisible': [('simulation_type', '!=', 'remote')]}">
                             <group name="details">

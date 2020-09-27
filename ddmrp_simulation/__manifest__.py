@@ -32,5 +32,6 @@
         "python": [
             "odoorpc",
             "pandas",
+            "time-machine",
         ]},
 }

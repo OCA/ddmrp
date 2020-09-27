@@ -1,9 +1,9 @@
 # Copyright 2020 KMEE
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import logging
-from datetime import datetime
 import locale
+import logging
+from datetime import datetime, timedelta
 
 from odoo import api, fields, models, _
 from odoo.addons.queue_job.job import job
@@ -15,6 +15,7 @@ _logger = logging.getLogger(__name__)
 try:
     import odoorpc
     import pandas as pd
+    import time_machine
 except (ImportError, IOError) as err:
     _logger.debug(err)
 
@@ -235,6 +236,10 @@ class DdmrpSimulation(models.Model):
         'stock.buffer',
         'simulation_id',
         string='Stock Buffers',
+    )
+    initial_inventory_id = fields.Many2one(
+        comodel_name='stock.inventory',
+        string='Initial Inventory',
     )
 
     def _connection(self):
@@ -602,8 +607,105 @@ class DdmrpSimulation(models.Model):
                                 'order_spike_horizon': 7,
                             })
 
+    def _simulation_create_initial_inventory(self):
+        if not self.initial_inventory_id:
+            line_ids = [(6, 0, {})]
+
+            inventory_vals = {
+                "name": "Initial Inventory / Simulation ID: {} NAME: {}".format(
+                    self.id, self.name),
+                "prefill_counted_quantity": 'zero',
+                "product_ids": [(6, 0, self.product_ids.ids)],
+                "location_ids": [
+                    (6, 0, [self.env.ref('stock.stock_location_stock').id])],
+                "line_ids": line_ids,
+            }
+
+            for product_id in self.product_ids:
+                simulation_line = self.simulation_line_ids.search([
+                    ('simulation_id', '=', self.id),
+                    ('product_id', '=', product_id.id),
+                    ('date', '=', fields.Date.today()),
+                ])
+                on_hand = simulation_line.on_hand
+                if on_hand < 0:
+                    on_hand = 0
+                line_ids.append((0, 0, {
+                    'product_id': product_id.id,
+                    'product_qty': on_hand,
+                    'product_uom_id': product_id.uom_id.id,
+                    'location_id': self.env.ref('stock.stock_location_stock').id,
+                }))
+
+            self.initial_inventory_id = self.env['stock.inventory'].create(
+                inventory_vals
+            )
+            self.initial_inventory_id.action_start()
+            self.initial_inventory_id.action_validate()
+
+    def _simulation_create_out_demand(self):
+        simulation_lines = self.simulation_line_ids.search([
+            ('simulation_id', '=', self.id),
+            ('product_id', 'in', self.product_ids.ids),
+            ('date', '=', fields.Date.today()),
+        ])
+        move_lines = [(6, 0, {})]
+        picking_vals = {
+            'picking_type_id':  self.env.ref('stock.picking_type_out').id,
+            'location_id': self.env.ref('stock.stock_location_stock').id,
+            'location_dest_id': self.env.ref('stock.stock_location_customers').id,
+            'scheduled_date': fields.Datetime.now(),
+            'move_lines': move_lines,
+        }
+
+        for line in simulation_lines:
+            move_lines.append((0, 0, {
+                'name': line.product_id.name,
+                'product_id': line.product_id.id,
+                'product_uom': line.product_id.uom_id.id,
+                'product_uom_qty': line.demand,
+                'quantity_done': line.demand,
+                'location_id': self.env.ref('stock.stock_location_stock').id,
+                'location_dest_id': self.env.ref('stock.stock_location_customers').id,
+                'date': fields.Datetime.now(),
+            }))
+
+        picking_id = self.env['stock.picking'].create(picking_vals)
+        picking_id.action_done()
+
+    def _simulation_confirm_po(self):
+        po_ids = self.stock_buffers_ids.mapped('purchase_line_ids').mapped('order_id')
+        po_ids.button_confirm()
+
+    def _simulation_confirm_receive(self):
+        end_of_today = fields.Date.today() + timedelta(days=1)
+        picking_ids = self.env['stock.picking'].search([
+            ('scheduled_date', '<', end_of_today),
+            ('state', '!=', 'done')
+        ])
+        if picking_ids:
+            picking_ids.action_confirm()
+            self.env['stock.immediate.transfer'].create(
+                {'pick_ids': [(6, 0, picking_ids.ids)]}).process()
+
+    def _simulation_clean(self):
+        self.env.cr.execute("""
+           delete from stock_move_line;
+           delete from stock_move;
+           delete from stock_picking;
+           delete from stock_inventory_line;
+           delete from stock_inventory;
+           delete from stock_valuation_layer;
+           delete from stock_quant;
+           delete from ddmrp_history;
+           delete from purchase_order;
+           delete from purchase_order_line;
+        """)
+        self._cr.commit()
+
     def run_simulation(self):
         for record in self:
+            record._simulation_clean()
             start_date = min(record.simulation_line_ids.mapped('date'))
             end_date = max(record.simulation_line_ids.mapped('date'))
             range = pd.date_range(start=start_date, end=end_date)
@@ -611,3 +713,15 @@ class DdmrpSimulation(models.Model):
                 # Criar inventário na data
                 # Criar vendas
 
+                traveller = time_machine.travel(simulation_day)
+                traveller.start()
+                if simulation_day == start_date:
+                    record._simulation_create_initial_inventory()
+                record._simulation_confirm_receive()
+                self.env['stock.buffer'].cron_ddmrp(True)
+                record._simulation_create_out_demand()
+                self.env['stock.buffer'].cron_ddmrp_adu(True)
+                self.env['stock.buffer'].cron_ddmrp(True)
+                record._simulation_confirm_po()
+                self._cr.commit()
+                traveller.stop()
