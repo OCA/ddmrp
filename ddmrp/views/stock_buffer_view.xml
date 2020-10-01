@@ -32,11 +32,21 @@
                     icon="fa-refresh"
                     type="object"
                 />
-                <field name="incoming_dlt_qty" string="Incoming within DLT" />
+                <field name="incoming_dlt_qty" string="Incoming Within DLT" />
                 <field
                     name="incoming_location_qty"
                     string="Total Incoming"
                     optional="show"
+                />
+                <field
+                    name="incoming_outside_dlt_qty"
+                    string="Incoming Outside DLT"
+                    optional="hide"
+                />
+                <field
+                    name="rfq_outside_dlt_qty"
+                    string="RFQ Qty Outside DLT"
+                    optional="hide"
                 />
                 <button
                     string="Open Non-completed Moves"
@@ -53,6 +63,13 @@
                     name="%(ddmrp.act_make_procurement_from_buffer)d"
                     icon="fa-cogs"
                     type="action"
+                />
+                <button
+                    string="Some incoming quantities are outside of the DLT Horizon and may require rescheduling. Press this button to display the involved supply orders"
+                    name="action_view_supply_outside_dlt_window"
+                    icon="fa-warning"
+                    type="object"
+                    attrs="{'invisible':[('incoming_outside_dlt_qty', '=', 0), ('rfq_outside_dlt_qty', '=', 0)]}"
                 />
                 <field name="item_type" optional="show" />
                 <field name="main_supplier_id" optional="show" />
@@ -341,6 +358,12 @@
                         domain="[('procure_recommended_qty', '>', 0.0)]"
                     />
                 </group>
+                <separator />
+                <filter
+                    name="has_long_term_supply"
+                    string="Has Long Term Supply"
+                    domain="['|', ('incoming_outside_dlt_qty', '>', 0), ('rfq_outside_dlt_qty', '>', 0)]"
+                />
                 <separator />
                 <filter
                     string="Archived"
