@@ -6,7 +6,7 @@
     "version": "13.0.1.0.2",
     "license": "LGPL-3",
     "website": "https://github.com/OCA/ddmrp",
-    "author": "Eficent, Camptocamp, Odoo Community Association (OCA)",
+    "author": "ForgeFlow, Camptocamp, Odoo Community Association (OCA)",
     "category": "Warehouse",
     "depends": ["ddmrp"],
     "data": ["views/stock_buffer_views.xml"],
