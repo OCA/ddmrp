@@ -843,6 +843,15 @@ class StockBuffer(models.Model):
         string="Qualified demand", digits="Product Unit of Measure", readonly=True,
     )
     incoming_dlt_qty = fields.Float(string="Incoming (Within DLT)", readonly=True,)
+    incoming_outside_dlt_qty = fields.Float(
+        string="Incoming (Outside DLT)", readonly=True,
+    )
+    rfq_outside_dlt_qty = fields.Float(
+        string="RFQ Qty (Outside DLT)",
+        readonly=True,
+        help="Request for Quotation total quantity that is planned outside of "
+        "the DLT horizon.",
+    )
     net_flow_position = fields.Float(
         string="Net flow position", digits="Product Unit of Measure", readonly=True,
     )
@@ -1071,9 +1080,8 @@ class StockBuffer(models.Model):
             ("date_expected", "<=", date_to),
         ]
 
-    def _search_stock_moves_incoming_domain(self):
-        self.ensure_one()
-        # We introduce a safety factor of 2 for incoming moves
+    def _get_incoming_supply_date_limit(self):
+        # The safety factor allows to control the date limit
         factor = self.warehouse_id.nfp_incoming_safety_factor or 1
         horizon = int(self.dlt) * factor
         # For purchased products we use calendar days, not work days
@@ -1086,9 +1094,15 @@ class StockBuffer(models.Model):
             date_to = fields.Date.to_string(
                 fields.date.today() + timedelta(days=horizon)
             )
+        return date_to
+
+    def _search_stock_moves_incoming_domain(self, outside_dlt=False):
+        self.ensure_one()
+        date_to = self._get_incoming_supply_date_limit()
         locations = self.env["stock.location"].search(
             [("id", "child_of", [self.location_id.id])]
         )
+        date_operator = outside_dlt and ">" or "<="
         return [
             ("product_id", "=", self.product_id.id),
             (
@@ -1098,7 +1112,7 @@ class StockBuffer(models.Model):
             ),
             ("location_id", "not in", locations.ids),
             ("location_dest_id", "in", locations.ids),
-            ("date_expected", "<=", date_to),
+            ("date_expected", date_operator, date_to),
         ]
 
     def _get_incoming_by_days(self):
@@ -1176,10 +1190,24 @@ class StockBuffer(models.Model):
 
     def _calc_incoming_dlt_qty(self):
         for rec in self:
-            rec.incoming_dlt_qty = 0.0
             domain = rec._search_stock_moves_incoming_domain()
             moves = self.env["stock.move"].search(domain)
             rec.incoming_dlt_qty = sum(moves.mapped("product_qty"))
+            out_domain = rec._search_stock_moves_incoming_domain(outside_dlt=True)
+            moves = self.env["stock.move"].search(out_domain)
+            rec.incoming_outside_dlt_qty = sum(moves.mapped("product_qty"))
+            if rec.item_type == "purchased":
+                cut_date = rec._get_incoming_supply_date_limit()
+                # FIXME: filter using order_id.state while
+                #  https://github.com/odoo/odoo/pull/58966 is not merged.
+                #  Can be changed in v14.
+                pols = rec.purchase_line_ids.filtered(
+                    lambda l: l.date_planned > fields.Datetime.to_datetime(cut_date)
+                    and l.order_id.state in ("draft", "sent")
+                )
+                rec.rfq_outside_dlt_qty = sum(pols.mapped("product_qty"))
+            else:
+                rec.rfq_outside_dlt_qty = 0.0
         return True
 
     def _calc_net_flow_position(self):
@@ -1255,6 +1283,39 @@ class StockBuffer(models.Model):
             )
             wizard.make_procurement()
         return True
+
+    def action_view_supply_outside_dlt_window(self):
+        cut_date = self._get_incoming_supply_date_limit()
+        if self.item_type == "purchased":
+            pols = self.purchase_line_ids.filtered(
+                lambda l: l.date_planned > fields.Datetime.to_datetime(cut_date)
+                and l.order_id.state in ("draft", "sent")
+            )
+            out_domain = self._search_stock_moves_incoming_domain(outside_dlt=True)
+            moves = self.env["stock.move"].search(out_domain)
+            pos = pols.mapped("order_id") + moves.mapped("purchase_line_id.order_id")
+            action = self.env.ref("purchase.purchase_rfq")
+            result = action.read()[0]
+            # Remove the context since the action display RFQ and not PO.
+            result["context"] = {}
+            result["domain"] = [("id", "in", pos.ids)]
+        elif self.item_type == "manufactured":
+            out_domain = self._search_stock_moves_incoming_domain(outside_dlt=True)
+            moves = self.env["stock.move"].search(out_domain)
+            mos = moves.mapped("production_id")
+            action = self.env.ref("mrp.mrp_production_action")
+            result = action.read()[0]
+            result["context"] = {}
+            result["domain"] = [("id", "in", mos.ids)]
+        else:
+            out_domain = self._search_stock_moves_incoming_domain(outside_dlt=True)
+            moves = self.env["stock.move"].search(out_domain)
+            picks = moves.mapped("picking_id")
+            action = self.env.ref("stock.action_picking_tree_all")
+            result = action.read()[0]
+            result["context"] = {}
+            result["domain"] = [("id", "in", picks.ids)]
+        return result
 
     @api.model
     def cron_ddmrp_adu(self, automatic=False):
