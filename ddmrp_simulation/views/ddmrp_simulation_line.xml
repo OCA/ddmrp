@@ -4,59 +4,42 @@
 
 <odoo>
 
-<!--    <record model="ir.ui.view" id="ddmrp_simulation_line_form_view">-->
-<!--        <field name="name">ddmrp.simulation.line.form (in ddmrp_simulation)</field>-->
-<!--        <field name="model">ddmrp.simulation.line</field>-->
-<!--        <field name="arch" type="xml">-->
-<!--            <form>-->
-<!--                <header>-->
-<!--                    &lt;!&ndash; TODO &ndash;&gt;-->
-<!--                </header>-->
-<!--                <sheet>-->
-<!--                    &lt;!&ndash; TODO &ndash;&gt;-->
-<!--                    <group>-->
-<!--                        <field name="name"/>-->
-<!--                    </group>-->
-<!--                </sheet>-->
-<!--                <div class="oe_chatter"></div>-->
-<!--            </form>-->
-<!--        </field>-->
-<!--    </record>-->
+    <record model="ir.ui.view" id="ddmrp_simulation_line_form_view">
+        <field name="name">ddmrp.simulation.line.form (in ddmrp_simulation)</field>
+        <field name="model">ddmrp.simulation.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <!-- TODO -->
+                </header>
+                <sheet>
+                    <group col="4" modifiers="{}">
+                        <field name="simulation_id"/>
+                        <field name="product_id"/>
+                        <field name="date"/>
+                        <field name="on_hand"/>
+                        <field name="demand"/>
+                        <separator modifiers="{}"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter"></div>
+            </form>
+        </field>
+    </record>
 
-<!--    <record model="ir.ui.view" id="ddmrp_simulation_line_search_view">-->
-<!--        <field name="name">ddmrp.simulation.line.search (in ddmrp_simulation)</field>-->
-<!--        <field name="model">ddmrp.simulation.line</field>-->
-<!--        <field name="arch" type="xml">-->
-<!--            <search>-->
-<!--                &lt;!&ndash; TODO &ndash;&gt;-->
-<!--            </search>-->
-<!--        </field>-->
-<!--    </record>-->
+    <record model="ir.ui.view" id="ddmrp_simulation_line_tree_view">
+        <field name="name">ddmrp.simulation.line.tree (in ddmrp_simulation)</field>
+        <field name="model">ddmrp.simulation.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="simulation_id"/>
+                <field name="product_id"/>
+                <field name="date"/>
+                <field name="on_hand"/>
+                <field name="demand"/>
+            </tree>
+        </field>
+    </record>
 
-<!--    <record model="ir.ui.view" id="ddmrp_simulation_line_tree_view">-->
-<!--        <field name="name">ddmrp.simulation.line.tree (in ddmrp_simulation)</field>-->
-<!--        <field name="model">ddmrp.simulation.line</field>-->
-<!--        <field name="arch" type="xml">-->
-<!--            <tree>-->
-<!--                &lt;!&ndash; TODO &ndash;&gt;-->
-<!--                <field name="name"/>-->
-<!--            </tree>-->
-<!--        </field>-->
-<!--    </record>-->
-
-<!--    <record model="ir.actions.act_window" id="ddmrp_simulation_line_act_window">-->
-<!--        <field name="name">Ddmrp_simulation Line</field> &lt;!&ndash; TODO &ndash;&gt;-->
-<!--        <field name="res_model">ddmrp.simulation.line</field>-->
-<!--        <field name="view_mode">tree,form</field>-->
-<!--        <field name="domain">[]</field>-->
-<!--        <field name="context">{}</field>-->
-<!--    </record>-->
-
-<!--    <record model="ir.ui.menu" id="ddmrp_simulation_line_menu">-->
-<!--        <field name="name">Ddmrp_simulation Line</field>-->
-<!--        <field name="parent_id" ref="xmlid of parent menu"/> &lt;!&ndash; TODO &ndash;&gt;-->
-<!--        <field name="action" ref="ddmrp_simulation_line_act_window"/>-->
-<!--        <field name="sequence" eval="16"/> &lt;!&ndash; TODO &ndash;&gt;-->
-<!--    </record>-->
 
 </odoo>

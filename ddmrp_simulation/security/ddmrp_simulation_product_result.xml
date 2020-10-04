@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 KMEE
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.model.access" id="ddmrp_simulation_product_result_stock_manager">
+        <field name="name">ddmrp.simulation.product.result stock_manager</field>
+        <field name="model_id" ref="model_ddmrp_simulation_product_result"/>
+        <field name="group_id" ref="stock.group_stock_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+</odoo>

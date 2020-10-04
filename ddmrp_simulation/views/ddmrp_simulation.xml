@@ -15,8 +15,12 @@
                     <button name="button_create_stock_buffers" string="Create Stock Buffers" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
                     <button name="action_open_product_lines" string="Open/Import Product Lines" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
                     <button name="action_open_on_hand_demand_lines" string="Open/Import On Hand / Inventory" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
+                    <button name="action_compute_results" string="Compute Results" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button string="Simulation Products" type="object" name="action_view_related_simulation_lines" class="oe_stat_button" icon="fa-exchange" context="{'no_reference': True}"/>
+                    </div>
                     <h1>
                         <field name="name"/>
                     </h1>
@@ -99,7 +103,7 @@
                                     <field name="initial_inventory_id"/>
                                 </group>
                                 <group>
-
+                                    <field name="result_ids" nolabel="1"/>
                                 </group>
                             </group>
                         </page>
@@ -170,43 +174,5 @@
         action="ddmrp_simulation_act_window"
         id="ddmrp_simulation_menu"
     />
-
-                             <!--                                <page string="Input Stock Moves">-->
-                            <!--                                    <button name="button_search_in_moves" type="object" string="Search"/>-->
-                            <!--                                    <button name="button_import_in_moves" type="object" string="Import"/>-->
-                            <!--                                    <button name="button_delete_in_moves" type="object" string="Delete"/>-->
-                            <!--                                    <group>-->
-                            <!--                                        <separator string="Domain"/>-->
-                            <!--                                        <field name="in_stock_domain" nolabel="true" widget="ace" options="{'mode': 'python'}"/>-->
-                            <!--                                        <group>-->
-                            <!--                                            <field name="input_stock_date_start"/>-->
-                            <!--                                            <field name="in_stock_found_count"/>-->
-                            <!--                                        </group>-->
-                            <!--                                        <group>-->
-                            <!--                                            <field name="input_stock_date_stop"/>-->
-                            <!--                                            <field name="in_stock_imported_count"/>-->
-                            <!--                                        </group>-->
-                            <!--                                    </group>-->
-                            <!--                                    <field name="in_stock_move_ids"/>-->
-                            <!--                                </page>-->
-                            <!--                                <page string="Output Stock Moves">-->
-                            <!--                                    <button name="button_search_out_moves" type="object" string="Search"/>-->
-                            <!--                                    <button name="button_import_out_moves" type="object" string="Import"/>-->
-                            <!--                                    <button name="button_delete_out_moves" type="object" string="Delete"/>-->
-                            <!--                                    <group>-->
-                            <!--                                        <separator string="Domain"/>-->
-                            <!--                                        <field name="out_stock_domain" nolabel="true" widget="ace" options="{'mode': 'python'}"/>-->
-                            <!--                                        <group>-->
-                            <!--                                            <field name="output_stock_date_start"/>-->
-                            <!--                                            <field name="out_stock_found_count"/>-->
-                            <!--                                        </group>-->
-                            <!--                                        <group>-->
-                            <!--                                            <field name="output_stock_date_stop"/>-->
-                            <!--                                            <field name="out_stock_imported_count"/>-->
-                            <!--                                        </group>-->
-                            <!--                                    </group>-->
-                            <!--                                    <field name="out_stock_move_ids"/>-->
-                            <!--                                </page>-->
-
 
 </odoo>

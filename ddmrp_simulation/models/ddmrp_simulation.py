@@ -3,6 +3,7 @@
 
 import locale
 import logging
+import statistics
 from datetime import datetime, timedelta
 
 from odoo import api, fields, models, _
@@ -50,7 +51,7 @@ class DdmrpSimulation(models.Model):
         for record in self:
             if (record.remote_address and
                 record.remote_port and
-                    record.simulation_type == SIMULATION_REMOTE):
+                record.simulation_type == SIMULATION_REMOTE):
                 try:
                     odoo = record._connection()
                     if odoo:
@@ -241,6 +242,11 @@ class DdmrpSimulation(models.Model):
         comodel_name='stock.inventory',
         string='Initial Inventory',
     )
+    result_ids = fields.One2many(
+        comodel_name='ddmrp.simulation.total.result',
+        inverse_name='simulation_id',
+        string='Results'
+    )
 
     def _connection(self):
         return odoorpc.ODOO(
@@ -320,7 +326,7 @@ class DdmrpSimulation(models.Model):
 
         for field in product_product.fields_get_keys():
             if (product_product._fields[field].type not in ('binary', 'image') and
-                    not product_product._fields[field].relational):
+                not product_product._fields[field].relational):
                 field_list.append(
                     product_product._fields[field].name
                 )
@@ -428,6 +434,7 @@ class DdmrpSimulation(models.Model):
     def button_delete_out_moves(self):
         for record in self:
             record.out_stock_move_ids.unlink()
+
     @job
     def import_move_batch(self, move_id, move_type):
         field_list = []
@@ -436,7 +443,7 @@ class DdmrpSimulation(models.Model):
 
         for field in stock_move.fields_get_keys():
             if (stock_move._fields[field].type not in ('binary', 'image') and
-                    not stock_move._fields[field].relational):
+                not stock_move._fields[field].relational):
                 field_list.append(
                     stock_move._fields[field].name
                 )
@@ -510,7 +517,7 @@ class DdmrpSimulation(models.Model):
 
     @job
     def recursive_read_product_demand(
-          self, product_id, simulation_product_external_id, offset=0):
+        self, product_id, simulation_product_external_id, offset=0):
         move_domain = [
             ("product_id", "=", simulation_product_external_id),
             (
@@ -530,7 +537,7 @@ class DdmrpSimulation(models.Model):
                 'groupby': ['date:day'],
                 'limit': 80,
                 'offset': offset,
-             }
+            }
         )
         for item in answer:
             lc = locale.setlocale(locale.LC_TIME)
@@ -553,7 +560,7 @@ class DdmrpSimulation(models.Model):
 
         if len(answer) == 80:
             self.with_delay().recursive_read_product_demand(
-                product_id, simulation_product_external_id, offset+80
+                product_id, simulation_product_external_id, offset + 80
             )
 
     @job
@@ -581,11 +588,11 @@ class DdmrpSimulation(models.Model):
                                 'name': 'Dummy Seller',
                             })
                         supplierinfo = simulation_product.seller_id.create({
-                                'product_id': simulation_product.product_id.id,
-                                'product_tmpl_id':
+                            'product_id': simulation_product.product_id.id,
+                            'product_tmpl_id':
                                 simulation_product.product_tmpl_id.id,
-                                'name': seller.id,
-                            })
+                            'name': seller.id,
+                        })
                         simulation_product.seller_id = supplierinfo
 
                     buffer_profile = self.env['stock.buffer.profile'].search([
@@ -596,7 +603,6 @@ class DdmrpSimulation(models.Model):
                     ], limit=1)
 
                     if buffer_profile:
-
                         simulation_product.stock_buffer_id = \
                             simulation_product.stock_buffer_id.create({
                                 'product_id': simulation_product.product_id.id,
@@ -651,7 +657,7 @@ class DdmrpSimulation(models.Model):
         ])
         move_lines = [(6, 0, {})]
         picking_vals = {
-            'picking_type_id':  self.env.ref('stock.picking_type_out').id,
+            'picking_type_id': self.env.ref('stock.picking_type_out').id,
             'location_id': self.env.ref('stock.stock_location_stock').id,
             'location_dest_id': self.env.ref('stock.stock_location_customers').id,
             'scheduled_date': fields.Datetime.now(),
@@ -725,3 +731,117 @@ class DdmrpSimulation(models.Model):
                 record._simulation_confirm_po()
                 self._cr.commit()
                 traveller.stop()
+
+    def action_view_related_simulation_lines(self):
+        self.ensure_one()
+        domain = [('simulation_id', '=', self.id)]
+        action = {
+            'name': _('Simulation Lines'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'ddmrp.simulation.product',
+            'view_type': 'list',
+            'view_mode': 'list,form',
+            'domain': domain,
+        }
+        return action
+
+    def action_compute_results(self):
+        for record in self:
+            for simulation_product_id in record.simulation_product_ids:
+                simulation_product_id.result_ids.unlink()
+                simulation_product_id.button_statistics()
+
+            result_ids = record.simulation_product_ids.result_ids
+            average_on_hand = result_ids.filtered(lambda x: x.code == 'average_on_hand')
+            average_on_hand_value = result_ids.filtered(lambda x: x.code == 'average_on_hand_value')
+            total_demand = result_ids.filtered(lambda x: x.code == 'total_demand')
+            turnover = result_ids.filtered(lambda x: x.code == 'turnover')
+            peak_demand = result_ids.filtered(lambda x: x.code == 'peak_demand')
+            supply_orders = result_ids.filtered(lambda x: x.code == 'supply_orders')
+            average_order_size = result_ids.filtered(lambda x: x.code == 'average_order_size')
+            minimum_on_hand = result_ids.filtered(lambda x: x.code == 'minimum_on_hand')
+            max_on_hand = result_ids.filtered(lambda x: x.code == 'max_on_hand')
+            service_level = result_ids.filtered(lambda x: x.code == 'service_level')
+            days_stock_out = result_ids.filtered(lambda x: x.code == 'days_stock_out')
+
+            results = [
+                (6, 0, {}),
+                (0, 0, {
+                    'code': 'average_on_hand',
+                    'name': 'Average On Hand - QTY',
+                    'current': statistics.mean(average_on_hand.mapped('current')),
+                    'simulation':
+                        statistics.mean(average_on_hand.mapped('simulation')),
+                }),
+                (0, 0, {
+                    'code': 'average_on_hand_value',
+                    'name': 'Average On Hand - Value ($)',
+                    'current': statistics.mean(average_on_hand_value.mapped('current')),
+                    'simulation':
+                        statistics.mean(average_on_hand_value.mapped('simulation')),
+                }),
+                (0, 0, {
+                    'code': 'total_demand',
+                    'name': 'Total Demand',
+                    'current': statistics.mean(total_demand.mapped('current')),
+                    'simulation': statistics.mean(total_demand.mapped('simulation')),
+                }),
+                (0, 0, {
+                    'code': 'turnover',
+                    'name': 'Average Turnover',
+                    'current': statistics.mean(turnover.mapped('current')),
+                    'simulation': statistics.mean(turnover.mapped('simulation')),
+                }),
+                (0, 0, {
+                    'code': 'peak_demand',
+                    'name': 'Peak Demand',
+                    'current': statistics.mean(peak_demand.mapped('current')),
+                    'simulation':
+                        statistics.mean(peak_demand.mapped('simulation')),
+                }),
+                (0, 0, {
+                    'code': 'supply_orders',
+                    'name': 'Supply Orders',
+                    'current': statistics.mean(supply_orders.mapped('current')),
+                    'simulation':
+                        statistics.mean(supply_orders.mapped('simulation')),
+                }),
+                (0, 0, {
+                    'code': 'average_order_size',
+                    'name': 'Average Order Size',
+                    'current': statistics.mean(average_order_size.mapped('current')),
+                    'simulation':
+                        statistics.mean(average_order_size.mapped('simulation')),
+                }),
+                (0, 0, {
+                    'code': 'minimum_on_hand',
+                    'name': 'Minimum On Hand',
+                    'current': statistics.mean(minimum_on_hand.mapped('current')),
+                    'simulation':
+                        statistics.mean(minimum_on_hand.mapped('simulation')),
+                }),
+                (0, 0, {
+                    'code': 'max_on_hand',
+                    'name': 'Max On Hand',
+                    'current': statistics.mean(max_on_hand.mapped('current')),
+                    'simulation': statistics.mean(max_on_hand.mapped('simulation')),
+                }),
+                (0, 0, {
+                    'code': '',
+                    'name': 'Service Level',
+                    'current': statistics.mean(service_level.mapped('current')),
+                    'simulation':
+                        statistics.mean(service_level.mapped('simulation')),
+                }),
+                (0, 0, {
+                    'code': 'days_stock_out',
+                    'name': 'Days Stock Out',
+                    'current': statistics.mean(days_stock_out.mapped('current')),
+                    'simulation':
+                        statistics.mean(days_stock_out.mapped('simulation')),
+                }),
+            ]
+
+            record.write({
+                'result_ids': results,
+            })

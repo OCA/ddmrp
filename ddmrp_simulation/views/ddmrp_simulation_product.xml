@@ -4,59 +4,67 @@
 
 <odoo>
 
-<!--    <record model="ir.ui.view" id="ddmrp_simulation_product_form_view">-->
-<!--        <field name="name">ddmrp.simulation.product.form (in ddmrp_simulation)</field>-->
-<!--        <field name="model">ddmrp.simulation.product</field>-->
-<!--        <field name="arch" type="xml">-->
-<!--            <form>-->
-<!--                <header>-->
-<!--                    &lt;!&ndash; TODO &ndash;&gt;-->
-<!--                </header>-->
-<!--                <sheet>-->
-<!--                    &lt;!&ndash; TODO &ndash;&gt;-->
-<!--                    <group>-->
-<!--                        <field name="name"/>-->
-<!--                    </group>-->
-<!--                </sheet>-->
-<!--                <div class="oe_chatter"></div>-->
-<!--            </form>-->
-<!--        </field>-->
-<!--    </record>-->
+    <record model="ir.ui.view" id="ddmrp_simulation_product_form_view">
+        <field name="name">ddmrp.simulation.product.form (in ddmrp_simulation)</field>
+        <field name="model">ddmrp.simulation.product</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="button_statistics" type="object" string="Calculate"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button string="Lines" type="object" name="action_view_related_lines" class="oe_stat_button" icon="fa-exchange" context="{'no_reference': True}"/>
+                    </div>
+                    <group col="4" modifiers="{}">
+                        <field name="simulation_id" can_create="true" can_write="true" modifiers="{'required':true}"/>
+                        <field name="product_tmpl_id" can_create="true" can_write="true" modifiers="{'readonly':true}"/>
+                        <field name="product_id" on_change="1" can_create="true" can_write="true" modifiers="{}"/>
+                        <field name="reference" modifiers="{}"/>
+                        <field name="name" modifiers="{}"/>
+                        <field name="standard_price" modifiers="{}"/>
+                        <field name="seller_id" on_change="1" can_create="true" can_write="true" modifiers="{}"/>
+                        <field name="lead_time" modifiers="{}"/>
+                        <field name="replenish_method" modifiers="{'required':true}"/>
+                        <field name="item_type" modifiers="{'required':true}"/>
+                        <field name="lead_time_id" can_create="true" can_write="true" modifiers="{}"/>
+                        <field name="variability_id" can_create="true" can_write="true" modifiers="{}"/>
+                        <field name="adu_calculation_method" can_create="true" can_write="true" modifiers="{'required':true}"/>
+                        <field name="stock_buffer_id" can_create="true" can_write="true" modifiers="{}"/>
+                        <separator modifiers="{}"/>
+                    </group>
+                    <field name="result_ids" nolabel="1"/>
+                    <group>
+                        <field name="demand_histogram" widget="plotly_chart" nolabel="1"/>
+                        <field name="on_hand_simulation_histogram" widget="plotly_chart" nolabel="1"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter"></div>
+            </form>
+        </field>
+    </record>
 
-<!--    <record model="ir.ui.view" id="ddmrp_simulation_product_search_view">-->
-<!--        <field name="name">ddmrp.simulation.product.search (in ddmrp_simulation)</field>-->
-<!--        <field name="model">ddmrp.simulation.product</field>-->
-<!--        <field name="arch" type="xml">-->
-<!--            <search>-->
-<!--                &lt;!&ndash; TODO &ndash;&gt;-->
-<!--            </search>-->
-<!--        </field>-->
-<!--    </record>-->
+    <record model="ir.ui.view" id="ddmrp_simulation_product_tree_view">
+        <field name="name">ddmrp.simulation.product.tree (in ddmrp_simulation)</field>
+        <field name="model">ddmrp.simulation.product</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="simulation_id"/>
+                <field name="product_tmpl_id" invisible="1"/>
+                <field name="product_id"/>
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="standard_price"/>
+                <field name="seller_id"/>
+                <field name="lead_time"/>
+                <field name="replenish_method"/>
+                <field name="item_type"/>
+                <field name="lead_time_id"/>
+                <field name="variability_id"/>
+                <field name="stock_buffer_id"/>
+            </tree>
+        </field>
+    </record>
 
-<!--    <record model="ir.ui.view" id="ddmrp_simulation_product_tree_view">-->
-<!--        <field name="name">ddmrp.simulation.product.tree (in ddmrp_simulation)</field>-->
-<!--        <field name="model">ddmrp.simulation.product</field>-->
-<!--        <field name="arch" type="xml">-->
-<!--            <tree>-->
-<!--                &lt;!&ndash; TODO &ndash;&gt;-->
-<!--                <field name="name"/>-->
-<!--            </tree>-->
-<!--        </field>-->
-<!--    </record>-->
-
-<!--    <record model="ir.actions.act_window" id="ddmrp_simulation_product_act_window">-->
-<!--        <field name="name">Ddmrp Simulation Product</field> &lt;!&ndash; TODO &ndash;&gt;-->
-<!--        <field name="res_model">ddmrp.simulation.product</field>-->
-<!--        <field name="view_mode">tree,form</field>-->
-<!--        <field name="domain">[]</field>-->
-<!--        <field name="context">{}</field>-->
-<!--    </record>-->
-
-<!--    <record model="ir.ui.menu" id="ddmrp_simulation_product_menu">-->
-<!--        <field name="name">Ddmrp Simulation Product</field>-->
-<!--        <field name="parent_id" ref="xmlid of parent menu"/> &lt;!&ndash; TODO &ndash;&gt;-->
-<!--        <field name="action" ref="ddmrp_simulation_product_act_window"/>-->
-<!--        <field name="sequence" eval="16"/> &lt;!&ndash; TODO &ndash;&gt;-->
-<!--    </record>-->
 
 </odoo>
