@@ -26,9 +26,9 @@ class PurchaseOrderLine(models.Model):
 
     def create(self, vals):
         record = super().create(vals)
-        record._calc_execution_priority()
         if record.product_id:
             record._find_buffer_link()
+        record._calc_execution_priority()
         return record
 
     def write(self, vals):
