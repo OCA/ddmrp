@@ -22,6 +22,8 @@
         'security/ddmrp_simulation_line.xml',
         'security/ddmrp_simulation.xml',
 
+        'data/ir_sequence.xml',
+
         'views/ddmrp_simulation_product_result.xml',
         'views/ddmrp_simulation_product.xml',
         'views/ddmrp_simulation_line.xml',

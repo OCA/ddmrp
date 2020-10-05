@@ -220,15 +220,20 @@ class DdmrpSimulationProduct(models.Model):
     lead_time_id = fields.Many2one(
         comodel_name="stock.buffer.profile.lead.time",
         string="Lead Time Factor",
+        default=lambda self:
+            self.env.ref('ddmrp.stock_buffer_profile_lead_time_medium')
     )
     variability_id = fields.Many2one(
         comodel_name='stock.buffer.profile.variability',
+        default=lambda self:
+            self.env.ref('ddmrp.stock_buffer_profile_variability_medium')
     )
     adu_calculation_method = fields.Many2one(
         comodel_name="product.adu.calculation.method",
         string="ADU calculation method",
         required=True,
-        default=lambda self: self.env.ref('ddmrp.adu_calculation_method_fixed')
+        default=lambda self:
+            self.env.ref('ddmrp.adu_calculation_method_fixed')
     )
     stock_buffer_id = fields.Many2one(
         comodel_name='stock.buffer',

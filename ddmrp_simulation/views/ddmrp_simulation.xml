@@ -11,15 +11,16 @@
             <form>
                 <header>
                     <field name="state" widget="statusbar"/>
-                    <button name="run_simulation" string="Run Simulation" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
-                    <button name="button_create_stock_buffers" string="Create Stock Buffers" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
-                    <button name="action_open_product_lines" string="Open/Import Product Lines" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
-                    <button name="action_open_on_hand_demand_lines" string="Open/Import On Hand / Inventory" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
-                    <button name="action_compute_results" string="Compute Results" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
+                    <button name="action_start_simulation" string="Start" type="object" class="oe_highlight" groups="stock.group_stock_user" states="draft"/>
+                    <button name="action_run_simulation" string="Run Step" type="object" class="oe_highlight" groups="stock.group_stock_user" states="imported" context="{'step': True}"/>
+                    <button name="action_run_simulation" string="Run All" type="object" class="btn-secondary" groups="stock.group_stock_user" states="imported"/>
+                    <button name="action_compute_results" string="Compute Results" type="object" class="oe_highlight" groups="stock.group_stock_user" states="ready"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button string="Simulation Products" type="object" name="action_view_related_simulation_lines" class="oe_stat_button" icon="fa-exchange" context="{'no_reference': True}"/>
+                        <button string="Products" type="object" name="action_view_related_products" class="oe_stat_button"  icon="fa-cubes"  context="{'no_reference': True}"/>
+                        <button string="Buffers" type="object" name="action_view_related_buffers" class="oe_stat_button"  icon="fa-refresh" context="{'no_reference': True}"/>
+                        <button string="Line Results" type="object" name="action_view_related_simulation_lines" class="oe_stat_button" icon="fa-exchange" context="{'no_reference': True}"/>
                     </div>
                     <h1>
                         <field name="name"/>
@@ -27,28 +28,18 @@
                     <group name="main">
                         <group name="main_left">
                             <field name="simulation_type"/>
+                            <field name="simulation_file_name" invisible="1"/>
+                            <field name="simulation_file" filename="simulation_file_name"/>
                         </group>
                         <group name="main_right">
-                            <field name="date_start"/>
-                            <field name="date_end"/>
-                            <field name="duration"/>
+                            <field name="simulation_date_start"/>
+                            <field name="simulation_date_end"/>
+                            <field name="simulation_step"/>
+                            <field name="simulation_date_current"/>
                         </group>
                     </group>
                     <notebook>
-                        <page string="Input Data">
-                            <group>
-                                <separator string="Product Domain"/>
-                                <field name="product_domain" nolabel="true" widget="ace" options="{'mode': 'python'}"/>
-                                <group>
-                                    <button name="button_search_product" type="object" string="Search"/>
-                                    <button name="button_delete_products" type="object" string="Delete"/>
-                                    <button name="button_import_product" type="object" string="Import"/>
-                                </group>
-                                <group>
-                                    <field name="product_found_count"/>
-                                    <field name="product_imported_count"/>
-                                </group>
-                            </group>
+                        <page string="Master Data">
                             <field name="simulation_product_ids">
                                 <tree editable="top">
                                     <field name="simulation_id" invisible="1"/>
@@ -67,10 +58,10 @@
                                 </tree>
                             </field>
                         </page>
-                        <page string="On Hand / Demand Lines">
-                            <button name="button_import_lines" type="object" string="Import Products and On Hand"/>
-                            <button name="button_import_demand" type="object" string="Import Demand"/>
-                            <button name="button_delete_similation_lines" type="object" string="Delete Lines"/>
+                        <page string="Bill of Materials">
+
+                        </page>
+                        <page string="On Hand / Demand History">
                             <field name="simulation_line_ids">
                                 <tree>
                                     <field name="simulation_id" invisible="1"/>
@@ -81,49 +72,19 @@
                                 </tree>
                             </field>
                         </page>
-                        <page string="Stock Buffers">
-                            <field name="stock_buffers_ids">
-                                <tree editable="bottom">
-                                    <field name="company_id" invisible="1"/>
-                                    <field name="warehouse_id" invisible="1"/>
-                                    <field name="location_id" invisible="1"/>
-                                    <field name="auto_procure_option" invisible="1"/>
-                                    <field name="name"/>
-                                    <field name="product_id"/>
-                                    <field name="product_uom"/>
-                                    <field name="buffer_profile_id"/>
-                                    <field name="adu_calculation_method"/>
-                                    <field name="adu_calculation_method"/>
-                                </tree>
-                            </field>
-                        </page>
-                        <page string="Simulation Results">
+                        <page string="Results">
                             <group>
                                 <group>
                                     <field name="initial_inventory_id"/>
                                 </group>
                                 <group>
-                                    <field name="result_ids" nolabel="1"/>
+                                    <field name="date_start"/>
+                                    <field name="date_end"/>
+                                    <field name="duration"/>
                                 </group>
                             </group>
-                        </page>
-                        <page string="Remote Configuration" attrs="{'invisible': [('simulation_type', '!=', 'remote')]}">
-                            <group name="details">
-                                <group name="details_remote" attrs="{'invisible': [('simulation_type', '!=', 'remote')]}">
-                                    <field name="connected" invisible="1"/>
-                                    <field name="remote_address"/>
-                                    <field name="remote_port"/>
-                                    <field name="remote_protocol"/>
-                                    <field name="remote_database_list" attrs="{'invisible': [('connected', '!=', True)]}"/>
-                                    <button name="test_connection" type="object" string="Test Connection to continue" attrs="{'invisible': [('connected', '=', True)]}"/>
-                                </group>
-                                <group name="details_remote" attrs="{'invisible': [('simulation_type', '!=', 'remote')]}">
-                                    <field name="remote_database" attrs="{'invisible': [('connected', '!=', True)]}"/>
-                                    <field name="remote_user" attrs="{'invisible': [('connected', '!=', True)]}"/>
-                                    <field name="remote_password" password="True" attrs="{'invisible': [('connected', '!=', True)]}"/>
-                                    <field name="credentials"/>
-                                    <button name="test_credentials" type="object" string="Test Credentials" attrs="{'invisible': [('connected', '!=', True)]}"/>
-                                </group>
+                            <group>
+                                <field name="result_ids" nolabel="1"/>
                             </group>
                         </page>
                     </notebook>

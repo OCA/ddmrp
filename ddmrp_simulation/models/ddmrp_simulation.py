@@ -1,15 +1,16 @@
 # Copyright 2020 KMEE
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import locale
+import io
+import base64
 import logging
 import statistics
-from datetime import datetime, timedelta
+import xlrd
+from datetime import timedelta
+from odoo.modules.module import get_resource_path
+from odoo.exceptions import UserError
 
-from odoo import api, fields, models, _
-from odoo.addons.queue_job.job import job
-from odoo.exceptions import AccessDenied, UserError
-from odoo.tools.safe_eval import safe_eval
+from odoo import api, fields, models, tools, _
 
 _logger = logging.getLogger(__name__)
 
@@ -20,20 +21,24 @@ try:
 except (ImportError, IOError) as err:
     _logger.debug(err)
 
-SIMULATION_REMOTE = 'remote'
 SIMULATION_LOCAL = 'local'
+SIMULATION_FILE = 'file'
 
 SIMULATION_TYPE = [
     (SIMULATION_LOCAL, 'Local'),
-    (SIMULATION_REMOTE, 'Remote'),
+    (SIMULATION_FILE, 'File'),
 ]
-
-ODOO = {}  # Avoid aways reconnect
 
 
 class DdmrpSimulation(models.Model):
     _name = 'ddmrp.simulation'
     _description = 'DDMRP Simulation'
+
+    def _default_simulation_file(self):
+        file_path = get_resource_path(
+            'ddmrp_simulation', 'static/xlsx', 'OdooSimulationTemplate.xlsx')
+        with tools.file_open(file_path, 'rb') as f:
+            return base64.b64encode(f.read())
 
     @api.depends('date_end', 'date_start')
     def _compute_duration(self):
@@ -46,38 +51,18 @@ class DdmrpSimulation(models.Model):
             else:
                 record.duration = 0.0
 
-    @api.depends('remote_address', 'remote_port', 'simulation_type')
-    def _compute_database(self):
-        for record in self:
-            if (record.remote_address and
-                record.remote_port and
-                record.simulation_type == SIMULATION_REMOTE):
-                try:
-                    odoo = record._connection()
-                    if odoo:
-                        record.remote_database_list = odoo.db.list()
-                except Exception as e:
-                    raise AccessDenied(
-                        _("Error when listing databases {}".format(e))
-                    )
-            else:
-                record.remote_database_list = ''
-
-    @api.depends('product_ids')
-    def _compute_imports(self):
-        for record in self:
-            record.product_imported_count = len(record.product_ids)
-            record.in_stock_imported_count = len(record.in_stock_move_ids)
-            record.out_stock_imported_count = len(record.out_stock_move_ids)
-
     name = fields.Char(
         name='Description',
         required=True,
+        copy=False,
+        default=lambda self: self.env['ir.sequence'].next_by_code('ddmrp.simulation')
     )
     state = fields.Selection(
         selection=[
             ('draft', 'Draft'),
+            ('imported', 'Data Imported'),
             ('processing', 'Processing'),
+            ('ready', 'Ready'),
             ('done', 'Done'),
         ],
         name='State',
@@ -89,44 +74,11 @@ class DdmrpSimulation(models.Model):
         selection=SIMULATION_TYPE,
         name='Simulation Type',
         required=True,
-    )
-    remote_address = fields.Char(
-        string='Odoo URL',
-        help='https://myodoo.oca.org'
-    )
-    remote_port = fields.Integer(
-        string='Odoo Port',
-    )
-    remote_protocol = fields.Selection(
-        string='Protocol',
-        selection=[
-            ('jsonrpc', 'jsonrpc',),
-            ('jsonrpc+ssl', 'jsonrpc+ssl')
-        ]
-    )
-    remote_database_list = fields.Text(
-        string='Available databases',
-        compute='_compute_database',
-    )
-    remote_database = fields.Char(
-        string='Database',
-    )
-    remote_user = fields.Char(
-        string='User',
-    )
-    remote_password = fields.Char(
-        string='Password',
-    )
-    connected = fields.Boolean(
-        readonly=True
-    )
-    credentials = fields.Boolean(
-        readonly=True
+        default=SIMULATION_FILE,
     )
     date_start = fields.Datetime(
         string='Start Date',
-        default=fields.Datetime.now,
-        required=True
+        readonly=True,
     )
     date_end = fields.Datetime(
         string='End Date',
@@ -136,24 +88,20 @@ class DdmrpSimulation(models.Model):
         string='Duration',
         compute='_compute_duration',
     )
-
-    #
-    #  Product Fields
-    #
-
-    product_domain = fields.Text(
-        string='Product Domain',
-        default="[]"
-    )
-    product_found_count = fields.Integer(
-        string='Product Found',
+    simulation_date_start = fields.Date(
+        string='Start Date',
         readonly=True,
     )
-    product_imported_count = fields.Integer(
-        string='Product Imported',
+    simulation_date_end = fields.Date(
+        string='End Date',
         readonly=True,
-        compute='_compute_imports'
     )
+    simulation_date_current = fields.Date(
+        string='Current Date',
+        readonly=True,
+    )
+    simulation_step = fields.Integer(default=1)
+
     product_ids = fields.Many2many(
         'product.product',
         'simulation_product_product_rel',
@@ -162,69 +110,6 @@ class DdmrpSimulation(models.Model):
         string='Products',
     )
 
-    #
-    #  In Stock Fields
-    #
-
-    input_stock_date_start = fields.Date(
-        string='Stock Move Start'
-    )
-    input_stock_date_stop = fields.Date(
-        string='Stock Move Stop'
-    )
-    in_stock_domain = fields.Text(
-        string='In Stock Domain',
-        default="[]"
-    )
-    in_stock_found_count = fields.Integer(
-        string='In Stock Found',
-        readonly=True,
-    )
-    in_stock_imported_count = fields.Integer(
-        string='In Stock Imported',
-        readonly=True,
-        compute='_compute_imports'
-    )
-    in_stock_move_ids = fields.Many2many(
-        'stock.move',
-        'simulation_stock_move_in_rel',
-        'simulation_id',
-        'move_id',
-        string='In Stock Moves',
-        readonly=True,
-    )
-
-    #
-    #  Out Stock Fields
-    #
-
-    output_stock_date_start = fields.Date(
-        string='Stock Move Start'
-    )
-    output_stock_date_stop = fields.Date(
-        string='Stock Move Stop'
-    )
-    out_stock_domain = fields.Text(
-        string='Out Stock Domain',
-        default="[]"
-    )
-    out_stock_found_count = fields.Integer(
-        string='Out Stock Found',
-        readonly=True,
-    )
-    out_stock_imported_count = fields.Integer(
-        string='Out Stock Imported',
-        readonly=True,
-        compute='_compute_imports'
-    )
-    out_stock_move_ids = fields.Many2many(
-        'stock.move',
-        'simulation_stock_move_out_rel',
-        'simulation_id',
-        'move_id',
-        string='Out Stock Moves',
-        readonly=True,
-    )
     simulation_product_ids = fields.One2many(
         comodel_name='ddmrp.simulation.product',
         inverse_name='simulation_id',
@@ -247,353 +132,19 @@ class DdmrpSimulation(models.Model):
         inverse_name='simulation_id',
         string='Results'
     )
+    simulation_file_name = fields.Char(
+        string='File Name',
+        default='OdooSimulationTemplate.xlsx'
+    )
+    simulation_file = fields.Binary(
+        string='Simulation File',
+        default=_default_simulation_file,
+    )
 
-    def _connection(self):
-        return odoorpc.ODOO(
-            host=self.remote_address,
-            protocol=self.remote_protocol,
-            port=self.remote_port,
-            timeout=500,
-        )
-
-    def test_connection(self, user_raise=True):
-        self.ensure_one()
-        try:
-            self._connection()
-            self.connected = True
-        except Exception as e:
-            if user_raise:
-                raise AccessDenied(
-                    _("Connection Error {}".format(e))
-                )
-            self.connected = False
-
-    def _credentials(self):
-        if not ODOO.get(self.id):
-            odoo = self._connection()
-            odoo.login(self.remote_database, self.remote_user, self.remote_password)
-            ODOO[self.id] = odoo
-        return ODOO[self.id]
-
-    def _get_env(self):
-        if self.simulation_type == SIMULATION_REMOTE:
-            return self._credentials().env
-        else:
-            return self.env
-
-    def _get_record_ids(self, record):
-        if self.simulation_type == SIMULATION_REMOTE:
-            return record
-        else:
-            return record.ids
-
-    def test_credentials(self, user_raise=True):
-        self.ensure_one()
-        try:
-            self._credentials()
-            self.credentials = True
-        except Exception as e:
-            if user_raise:
-                raise AccessDenied(
-                    _("Credentials Error {}".format(e))
-                )
-            self.credentials = False
-
-    #
-    #  Products
-    #
-
-    def button_search_product(self):
-        for record in self:
-            env = self._get_env()
-            record.product_found_count = env['product.product'].search_count(
-                safe_eval(record.product_domain)
-            )
-
-    def button_import_product(self):
-        for record in self:
-            env = self._get_env()
-            products = env['product.product'].search(
-                safe_eval(record.product_domain)
-            )
-        for product in self._get_record_ids(products):
-            self.with_delay().import_product_batch(product)
-
-    @job
-    def import_product_batch(self, product_id):
-        field_list = []
-        product_product = self.env['product.product']
-
-        for field in product_product.fields_get_keys():
-            if (product_product._fields[field].type not in ('binary', 'image') and
-                not product_product._fields[field].relational):
-                field_list.append(
-                    product_product._fields[field].name
-                )
-
-        result = self._credentials().execute_kw(
-            'product.product', 'read',
-            args=[product_id],
-            kwargs={
-                'fields': field_list,
-            }
-        )[0]
-
-        external_id = 'ddmrp_simulation.{}_{}'.format(
-            self.id,
-            result['id']
-        )
-        result['simulation_id'] = self.id
-        result['simulation_product_external_id'] = result['id']
-        result.pop('id')
-        product_product = product_product.create(
-            result
-        )
-        data_list = [{
-            'xml_id': external_id,
-            'record': product_product,
-            'noupdate': True,
-        }]
-        self.env['ir.model.data']._update_xmlids(data_list)
-
-        if product_product:
-            self.simulation_product_ids.create({
-                'simulation_id': self.id,
-                'product_id': product_product.id,
-            })
-            self.write({'product_ids': [(4, product_product.id)]})
-
-    def button_delete_products(self):
-        for record in self:
-            record.product_ids.unlink()
-
-    #
-    #  In Stock Moves
-    #
-
-    def get_stock_in_domain(self):
-        env = self._get_env()
-        products = env['product.template'].search(
-            safe_eval(self.product_domain)
-        )
-        domain = safe_eval(self.in_stock_domain)
-        domain += [
-            ('date', '>=', '2020-08-01'),
-            ('date', '<=', '2020-08-31'),
-            ('location_id.usage', '=', 'supplier'),
-            ('product_id.product_tmpl_id', 'in', self._get_record_ids(products))
-        ]
-        return domain
-
-    def button_search_in_moves(self):
-        for record in self:
-            env = self._get_env()
-            record.in_stock_found_count = env['stock.move'].search_count(
-                self.get_stock_in_domain()
-            )
-
-    def button_import_in_moves(self):
-        for record in self:
-            env = self._get_env()
-            moves = env['stock.move'].search(record.get_stock_in_domain(), limit=10)
-            for move in self._get_record_ids(moves):
-                self.with_delay().import_move_batch(move, move_type='in')
-
-    def button_delete_in_moves(self):
-        for record in self:
-            record.in_stock_move_ids.unlink()
-
-    def get_stock_out_domain(self):
-        env = self._get_env()
-        products = env['product.template'].search(
-            safe_eval(self.product_domain)
-        )
-        domain = safe_eval(self.in_stock_domain)
-        domain += [
-            ('date', '>=', '2020-01-01'),
-            ('date', '<=', '2020-08-31'),
-            ('location_dest_id.usage', '=', 'customers'),
-            ('product_id.product_tmpl_id', 'in', self._get_record_ids(products))
-        ]
-        return domain
-
-    def button_search_out_moves(self):
-        for record in self:
-            env = self._get_env()
-            record.out_stock_found_count = env['stock.move'].search_count(
-                self.get_stock_out_domain()
-            )
-
-    def button_import_out_moves(self):
-        for record in self:
-            env = self._get_env()
-            moves = env['stock.move'].search(record.get_stock_out_domain())
-            for move in self._get_record_ids(moves):
-                self.with_delay().import_move_batch(move, move_type='out')
-
-    def button_delete_out_moves(self):
-        for record in self:
-            record.out_stock_move_ids.unlink()
-
-    @job
-    def import_move_batch(self, move_id, move_type):
-        field_list = []
-        stock_move = self.env['stock.move']
-        env = self._get_env()
-
-        for field in stock_move.fields_get_keys():
-            if (stock_move._fields[field].type not in ('binary', 'image') and
-                not stock_move._fields[field].relational):
-                field_list.append(
-                    stock_move._fields[field].name
-                )
-
-        for move in env['stock.move'].browse(move_id):
-            result = move.read(field_list)[0]
-            external_id = 'ddmrp_simulation.{}_{}'.format(
-                self.id,
-                result['id']
-            )
-            result.pop('id')
-            stock_move = stock_move.create(
-                result
-            )
-            data_list = [{
-                'xml_id': external_id,
-                'record': stock_move,
-                'noupdate': True,
-            }]
-            self.env['ir.model.data']._update_xmlids(data_list)
-        if stock_move and move_type == 'in':
-            self.write({'in_stock_move_ids': [(4, stock_move.id)]})
-        elif stock_move and move_type == 'out':
-            self.write({'out_stock_move_ids': [(4, stock_move.id)]})
-
-    def button_import_lines(self):
-        for record in self:
-            range = pd.date_range(start="2020-01-01", end="2020-08-31")
-            for i in range:
-                date = fields.Datetime.to_string(i)
-                record.with_delay().import_product_qty_avaliable(date)
-
-    @job
-    def import_product_qty_avaliable(self, date):
-        simulation_product_external_id = self.product_ids.mapped(
-            'simulation_product_external_id')
-        ctx = self.env.context.copy()
-        ctx['to_date'] = date
-        result = self._credentials().execute_kw(
-            'product.product', 'read',
-            args=[simulation_product_external_id],
-            kwargs={
-                'fields': ['qty_available'],
-                'context': ctx
-            }
-        )
-        result_dict = {}
-        for item in result:
-            result_dict[item['id']] = item['qty_available']
-
-        simulation_lines = [
-            (4, 0, {})
-        ]
-
-        for product in self.product_ids:
-            simulation_lines.append((0, 0, {
-                'simulation_id': self.id,
-                'product_id': product.id,
-                'date': date[:10],
-                'on_hand': result_dict[product.simulation_product_external_id],
-            }))
-        self.write({'simulation_line_ids': simulation_lines})
-
-    def button_import_demand(self):
-        for record in self:
-            for product in record.product_ids:
-                record.with_delay().import_product_demand(
-                    product.id,
-                    product.simulation_product_external_id
-                )
-
-    @job
-    def recursive_read_product_demand(
-        self, product_id, simulation_product_external_id, offset=0):
-        move_domain = [
-            ("product_id", "=", simulation_product_external_id),
-            (
-                "state", "in",
-                ["done"],
-            ),
-            ("location_id", "=", 38),
-            ("location_dest_id", "=", 9),
-            ("date", ">=", '2020-01-01 00:00:00'),
-            ("date", "<", '2020-08-31 23:59:59'),
-        ]
-        answer = self._credentials().execute_kw(
-            'stock.move.line', 'read_group',
-            kwargs={
-                'domain': move_domain,
-                'fields': ['date', 'qty_done'],
-                'groupby': ['date:day'],
-                'limit': 80,
-                'offset': offset,
-            }
-        )
-        for item in answer:
-            lc = locale.setlocale(locale.LC_TIME)
-            try:  # TODO: Refactory - Locale - This can be dangerous!
-                locale.setlocale(locale.LC_TIME, "C")
-                date = datetime.strptime(item['date:day'].lower(), '%d %b %Y')
-            finally:
-                locale.setlocale(locale.LC_TIME, lc)
-
-            simulation_line_ids = self.simulation_line_ids.search([
-                ('product_id', '=', product_id),
-                ('simulation_id', '=', self.id),
-                ('date', '=', date.date()),
-            ])
-            if not simulation_line_ids:
-                raise UserError(_("Can't find simulation date"))
-            simulation_line_ids.write({
-                'demand': item['qty_done'] or 0
-            })
-
-        if len(answer) == 80:
-            self.with_delay().recursive_read_product_demand(
-                product_id, simulation_product_external_id, offset + 80
-            )
-
-    @job
-    def import_product_demand(self, product_id, simulation_product_external_id):
-        self.recursive_read_product_demand(
-            product_id, simulation_product_external_id
-        )
-
-    def button_delete_similation_lines(self):
-        for record in self:
-            record.simulation_line_ids.unlink()
-
-    def button_create_stock_buffers(self):
+    def _create_stock_buffers(self):
         for record in self:
             for simulation_product in record.simulation_product_ids:
                 if not simulation_product.stock_buffer_id:
-                    if not simulation_product.seller_id:
-
-                        partner = self.env['res.partner']
-                        seller = partner.search(
-                            [('name', '=', 'Dummy Seller')]
-                        )
-                        if not seller:
-                            seller = partner.create({
-                                'name': 'Dummy Seller',
-                            })
-                        supplierinfo = simulation_product.seller_id.create({
-                            'product_id': simulation_product.product_id.id,
-                            'product_tmpl_id':
-                                simulation_product.product_tmpl_id.id,
-                            'name': seller.id,
-                        })
-                        simulation_product.seller_id = supplierinfo
 
                     buffer_profile = self.env['stock.buffer.profile'].search([
                         ('replenish_method', '=', simulation_product.replenish_method),
@@ -611,6 +162,8 @@ class DdmrpSimulation(models.Model):
                                     simulation_product.adu_calculation_method.id,
                                 'simulation_id': self.id,
                                 'order_spike_horizon': 7,
+                                'auto_procure': True,
+                                'auto_procure_option': 'standard',
                             })
 
     def _simulation_create_initial_inventory(self):
@@ -709,11 +262,21 @@ class DdmrpSimulation(models.Model):
         """)
         self._cr.commit()
 
-    def run_simulation(self):
+    def action_run_simulation(self):
         for record in self:
-            record._simulation_clean()
-            start_date = min(record.simulation_line_ids.mapped('date'))
-            end_date = max(record.simulation_line_ids.mapped('date'))
+            if not record.env.context.get('step'):
+                record._simulation_clean()
+                start_date = record.simulation_date_start
+                end_date = record.simulation_date_end
+            else:
+                if record.simulation_date_current:
+                    start_date = record.simulation_date_current + timedelta(days=1)
+                else:
+                    start_date = record.simulation_date_start
+                end_date = start_date + timedelta(days=record.step)
+            if not record.date_start:
+                record.date_start = fields.Datetime.now()
+
             range = pd.date_range(start=start_date, end=end_date)
             for simulation_day in range:
                 # Criar inventário na data
@@ -731,6 +294,39 @@ class DdmrpSimulation(models.Model):
                 record._simulation_confirm_po()
                 self._cr.commit()
                 traveller.stop()
+
+            if simulation_day == record.simulation_date_end:
+                record.state = 'ready'
+                record.date_end = fields.Datetime.now()
+            else:
+                record.state = 'processing'
+                record.simulation_date_current = simulation_day
+
+    def action_view_related_products(self):
+        self.ensure_one()
+        domain = [('id', 'in', self.product_ids.ids)]
+        action = {
+            'name': _('Product of the Simulation'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'product.product',
+            'view_type': 'list',
+            'view_mode': 'list,form',
+            'domain': domain,
+        }
+        return action
+
+    def action_view_related_buffers(self):
+        self.ensure_one()
+        domain = [('simulation_id', '=', self.id)]
+        action = {
+            'name': _('Buffers of the Simulation'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'stock.buffer',
+            'view_type': 'list',
+            'view_mode': 'list,form',
+            'domain': domain,
+        }
+        return action
 
     def action_view_related_simulation_lines(self):
         self.ensure_one()
@@ -752,14 +348,18 @@ class DdmrpSimulation(models.Model):
                 simulation_product_id.button_statistics()
 
             result_ids = record.simulation_product_ids.result_ids
-            average_on_hand = result_ids.filtered(lambda x: x.code == 'average_on_hand')
-            average_on_hand_value = result_ids.filtered(lambda x: x.code == 'average_on_hand_value')
+            average_on_hand = result_ids.filtered(
+                lambda x: x.code == 'average_on_hand')
+            average_on_hand_value = result_ids.filtered(
+                lambda x: x.code == 'average_on_hand_value')
             total_demand = result_ids.filtered(lambda x: x.code == 'total_demand')
             turnover = result_ids.filtered(lambda x: x.code == 'turnover')
             peak_demand = result_ids.filtered(lambda x: x.code == 'peak_demand')
             supply_orders = result_ids.filtered(lambda x: x.code == 'supply_orders')
-            average_order_size = result_ids.filtered(lambda x: x.code == 'average_order_size')
-            minimum_on_hand = result_ids.filtered(lambda x: x.code == 'minimum_on_hand')
+            average_order_size = result_ids.filtered(
+                lambda x: x.code == 'average_order_size')
+            minimum_on_hand = result_ids.filtered(
+                lambda x: x.code == 'minimum_on_hand')
             max_on_hand = result_ids.filtered(lambda x: x.code == 'max_on_hand')
             service_level = result_ids.filtered(lambda x: x.code == 'service_level')
             days_stock_out = result_ids.filtered(lambda x: x.code == 'days_stock_out')
@@ -776,7 +376,8 @@ class DdmrpSimulation(models.Model):
                 (0, 0, {
                     'code': 'average_on_hand_value',
                     'name': 'Average On Hand - Value ($)',
-                    'current': statistics.mean(average_on_hand_value.mapped('current')),
+                    'current':
+                        statistics.mean(average_on_hand_value.mapped('current')),
                     'simulation':
                         statistics.mean(average_on_hand_value.mapped('simulation')),
                 }),
@@ -845,3 +446,149 @@ class DdmrpSimulation(models.Model):
             record.write({
                 'result_ids': results,
             })
+
+    def _import_file_forecast(self, data):
+        pass
+
+    def _import_file_historical_stock(self, data):
+        data = data.set_index(["Part number", 'Date'])
+        for index, row in data.iterrows():
+            product_id = self.env['product.product'].search([
+                ('default_code', '=', index[0])
+            ])
+            if not product_id:
+                raise UserError(
+                    _('Part number not found when processing sheet Historical Stock'))
+
+            simulation_line_id = self.simulation_line_ids.search([
+                ('simulation_id', '=', self.id),
+                ('product_id', '=', product_id.id),
+                ('date', '=', index[1].date()),
+            ])
+            if simulation_line_id:
+                simulation_line_id.on_hand = row['Qty']
+            else:
+                self.simulation_line_ids.create({
+                    'simulation_id': self.id,
+                    'product_id': product_id.id,
+                    'date': index[1].date(),
+                    'on_hand': row['Qty'],
+                })
+
+    def _import_file_demand_history(self, data):
+        data = data.set_index(["Part number", 'Date consumed'])
+        for index, row in data.iterrows():
+            product_id = self.env['product.product'].search([
+                ('default_code', '=', index[0])
+            ])
+            if not product_id:
+                raise UserError(
+                    _('Part number not found when processing sheet Demand History'))
+
+            self.simulation_line_ids.create({
+                'simulation_id': self.id,
+                'product_id': product_id.id,
+                'date': index[1].date(),
+                'demand': row['Qty'],
+            })
+
+    def _import_file_bill_of_material(self, data):
+        pass
+
+    def _create_simulation_product(self, product_id):
+        self.write({
+            'product_ids': [(4, product_id.id)],
+            'simulation_product_ids': [(0, 0, {
+                'simulation_id': self.id,
+                'product_id': product_id.id,
+                'seller_id': product_id.seller_ids[0].id
+            })]
+        })
+
+    def _create_product_product(self, default_code, name, seller_id=False,
+                                leadtime=False, moq=False, price=0):
+        product_id = self.env['product.product']
+        product_id = product_id.search([
+            ('default_code', '=', default_code),
+        ])
+        if not product_id:
+            product_vals = {
+                'name': name,
+                'default_code': default_code,
+                'type': 'product',
+                'standard_price': price,
+            }
+            if seller_id:
+                product_vals['seller_ids'] = [
+                    (6, 0, {}),
+                    (0, 0, {
+                        'name': seller_id.id,
+                        'delay': leadtime,
+                        'min_qty': moq,
+                        'price': price,
+                    })
+                ]
+            product_id = product_id.create(product_vals)
+        return product_id
+
+    def _create_supplier(self, name):
+        partner_id = self.env['res.partner']
+        partner_id = partner_id.search([
+            ('name', '=', name),
+        ])
+        if not partner_id:
+            partner_id = partner_id.create({
+                'name': name,
+            })
+        return partner_id
+
+    def _import_file_master_data(self, data):
+        data = data.set_index(["Part number"])
+        for index, row in data.iterrows():
+            supplier_id = self._create_supplier(name=row['Supplier'])
+            product_id = self._create_product_product(
+                default_code=index,
+                name=row['Part Name'],
+                seller_id=supplier_id,
+                leadtime=row['Leadtime'],
+                moq=row['Minimum order quantity'],
+                price=row['Material cost'],
+            )
+            self._create_simulation_product(product_id)
+
+    def _import_file(self):
+        for record in self:
+            if not record.simulation_file:
+                raise UserError(_(
+                    "Please insert a file to start the simulation",
+                ))
+            record.simulation_product_ids.unlink()
+            record.simulation_line_ids.unlink()
+
+            inputx = io.BytesIO(base64.decodebytes(record.simulation_file))
+            record._import_file_master_data(
+                pd.read_excel(inputx.getvalue(), sheet_name='MasterData'))
+            record._import_file_bill_of_material(
+                pd.read_excel(inputx.getvalue(), sheet_name='BillOfMaterial'))
+            record._import_file_demand_history(
+                pd.read_excel(inputx.getvalue(), sheet_name='DemandHistory'))
+            record._import_file_historical_stock(
+                pd.read_excel(inputx.getvalue(), sheet_name='HistoricalStock'))
+            record._import_file_forecast(
+                pd.read_excel(inputx.getvalue(), sheet_name='Forecast'))
+
+            record._create_stock_buffers()
+            record.simulation_date_start = min(
+                record.simulation_line_ids.mapped('date'))
+            record.simulation_date_end = max(
+                record.simulation_line_ids.mapped('date'))
+            record.state = 'imported'
+
+    def import_master_data(self):
+        to_import = self.filtered(lambda x: x.simulation_type == 'file')
+        if to_import:
+            to_import._import_file()
+
+    def action_start_simulation(self):
+        for record in self:
+            record.import_master_data()
