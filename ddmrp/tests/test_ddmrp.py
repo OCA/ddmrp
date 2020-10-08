@@ -134,7 +134,6 @@ class TestDdmrp(TestDdmrpCommon):
         date_move = self.calendar.plan_days(-1 * days - 1, datetime.today())
         pickingInternals += self.create_pickinginternalA(date_move, 60)
         for picking in pickingInternals:
-            picking.action_confirm()
             picking.action_assign()
             picking.action_done()
 
@@ -163,7 +162,6 @@ class TestDdmrp(TestDdmrpCommon):
         days = 60
         date_move = self.calendar.plan_days(+1 * days + 1, datetime.today())
         pickingOuts += self.create_pickingoutA(date_move, 60)
-        pickingOuts.action_confirm()
 
         self.bufferModel.cron_ddmrp_adu()
         to_assert_value = (60 + 60) / 120
@@ -302,8 +300,7 @@ class TestDdmrp(TestDdmrpCommon):
         or today's demand."""
         date_move = datetime.today()
         expected_result = self.buffer_a.order_spike_threshold * 2
-        pickingOut1 = self.create_pickingoutA(date_move, expected_result)
-        pickingOut1.action_confirm()
+        self.create_pickingoutA(date_move, expected_result)
         self.bufferModel.cron_ddmrp()
         self.assertEqual(self.buffer_a.qualified_demand, expected_result)
 
@@ -320,10 +317,7 @@ class TestDdmrp(TestDdmrpCommon):
         """Moves within order spike horizon, above threshold. Should have an
         effect on the qualified demand"""
         date_move = datetime.today() + timedelta(days=10)
-        picikingoutA = self.create_pickingoutA(
-            date_move, self.buffer_a.order_spike_threshold * 2
-        )
-        picikingoutA.action_confirm()
+        self.create_pickingoutA(date_move, self.buffer_a.order_spike_threshold * 2)
         self.bufferModel.cron_ddmrp()
         expected_result = self.buffer_a.order_spike_threshold * 2
         self.assertEqual(self.buffer_a.qualified_demand, expected_result)
@@ -342,10 +336,23 @@ class TestDdmrp(TestDdmrpCommon):
         should not be considered demand."""
         date_move = datetime.today()
         expected_result = 0
-        pickingInternal = self.create_pickinginternalA(date_move, expected_result)
-        pickingInternal.action_confirm()
+        self.create_pickinginternalA(date_move, expected_result)
         self.bufferModel.cron_ddmrp()
         self.assertEqual(self.buffer_a.qualified_demand, expected_result)
+
+    def test_15_incoming_quantity_1(self):
+        date_move = datetime.today() + timedelta(days=5)
+        self.create_pickinginA(date_move, 20)
+        self.bufferModel.cron_ddmrp()
+        self.assertEqual(self.buffer_a.incoming_dlt_qty, 20.0)
+
+    def test_16_incoming_quantity_2(self):
+        """Moves outside the DLT horizon are ignored as supply"""
+        date_move = datetime.today() + timedelta(days=100)
+        self.create_pickinginA(date_move, 20)
+        self.bufferModel.cron_ddmrp()
+        self.assertEqual(self.buffer_a.incoming_dlt_qty, 0.0)
+        self.assertEqual(self.buffer_a.incoming_outside_dlt_qty, 20.0)
 
     # TEST GROUP 2: Buffer zones and procurement
 
@@ -446,7 +453,6 @@ class TestDdmrp(TestDdmrpCommon):
         # Now we prepare the shipment of 150
         date_move = datetime.today()
         pickingOut = self.create_pickingoutA(date_move, 150)
-        pickingOut.action_confirm()
         pickingOut.move_lines.quantity_done = 150
         pickingOut.action_done()
         self.bufferModel.cron_ddmrp()
@@ -584,7 +590,6 @@ class TestDdmrp(TestDdmrpCommon):
         # Now we prepare the shipment of 150
         date_move = datetime.today()
         pickingOut = self.create_pickingoutA(date_move, 150)
-        pickingOut.action_confirm()
 
         self.bufferModel.cron_ddmrp()
 
@@ -710,7 +715,6 @@ class TestDdmrp(TestDdmrpCommon):
         # Provoke an stockout:
         date_move = datetime.today()
         p_out_1 = self.create_picking_out(self.product_purchased, date_move, 10)
-        p_out_1.action_confirm()
         self._do_picking(p_out_1, date_move)
         # A RFQ should have been created.
         self.assertEqual(self.buffer_purchase.net_flow_position, -10)
@@ -779,12 +783,10 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(initial_nfp, 200)
         self.assertEqual(self.buffer_a.product_location_qty_available_not_res, 200)
         date_move = datetime.today()
-        p_out_1 = self.create_pickingoutA(date_move, 120)
-        p_out_1.action_confirm()
+        self.create_pickingoutA(date_move, 120)
         # NFP hasn't been updated.
         self.assertEqual(self.buffer_a.net_flow_position, initial_nfp)
-        p_in_1 = self.create_pickinginA(date_move, 35)
-        p_in_1.action_confirm()
+        self.create_pickinginA(date_move, 35)
         # NFP hasn't been updated.
         self.assertEqual(self.buffer_a.net_flow_position, initial_nfp)
         # Update buffer, expected NFP = 200 - 120 + 35 = 115
@@ -798,12 +800,10 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(initial_nfp, 200)
         self.assertEqual(self.buffer_a.product_location_qty_available_not_res, 200)
         date_move = datetime.today()
-        p_out_1 = self.create_pickingoutA(date_move, 120)
-        p_out_1.action_confirm()
+        self.create_pickingoutA(date_move, 120)
         # NFP has been updated after picking confirmation.
         self.assertEqual(self.buffer_a.net_flow_position, 80)
-        p_in_1 = self.create_pickinginA(date_move, 35)
-        p_in_1.action_confirm()
+        self.create_pickinginA(date_move, 35)
         # NFP has been updated after picking confirmation.
         expected = 200 - 120 + 35
         self.assertEqual(self.buffer_a.net_flow_position, expected)
