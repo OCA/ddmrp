@@ -206,6 +206,7 @@ class TestDdmrpCommon(common.SavepointCase):
                 "adu_calculation_method": cls.adu_fixed.id,
                 "adu_fixed": 4.0,
                 "lead_days": 10.0,
+                "order_spike_horizon": 10.0,
             }
         )
         cls.buffer_purchase = cls.bufferModel.create(
@@ -268,11 +269,12 @@ class TestDdmrpCommon(common.SavepointCase):
         return user
 
     def create_pickingoutA(self, date_move, qty):
-        return self.pickingModel.with_user(self.user).create(
+        picking = self.pickingModel.with_user(self.user).create(
             {
                 "picking_type_id": self.ref("stock.picking_type_out"),
                 "location_id": self.binA.id,
                 "location_dest_id": self.customer_location.id,
+                "scheduled_date": date_move,
                 "move_lines": [
                     (
                         0,
@@ -291,13 +293,16 @@ class TestDdmrpCommon(common.SavepointCase):
                 ],
             }
         )
+        picking.action_confirm()
+        return picking
 
     def create_pickinginA(self, date_move, qty):
-        return self.pickingModel.with_user(self.user).create(
+        picking = self.pickingModel.with_user(self.user).create(
             {
                 "picking_type_id": self.ref("stock.picking_type_in"),
                 "location_id": self.supplier_location.id,
                 "location_dest_id": self.binA.id,
+                "scheduled_date": date_move,
                 "move_lines": [
                     (
                         0,
@@ -316,13 +321,16 @@ class TestDdmrpCommon(common.SavepointCase):
                 ],
             }
         )
+        picking.action_confirm()
+        return picking
 
     def create_pickinginternalA(self, date_move, qty):
-        return self.pickingModel.with_user(self.user).create(
+        picking = self.pickingModel.with_user(self.user).create(
             {
                 "picking_type_id": self.ref("stock.picking_type_internal"),
                 "location_id": self.binA.id,
                 "location_dest_id": self.binB.id,
+                "scheduled_date": date_move,
                 "move_lines": [
                     (
                         0,
@@ -341,13 +349,16 @@ class TestDdmrpCommon(common.SavepointCase):
                 ],
             }
         )
+        picking.action_confirm()
+        return picking
 
     def create_picking_out(self, product, date_move, qty):
-        return self.pickingModel.with_user(self.user).create(
+        picking = self.pickingModel.with_user(self.user).create(
             {
                 "picking_type_id": self.ref("stock.picking_type_out"),
                 "location_id": self.binA.id,
                 "location_dest_id": self.customer_location.id,
+                "scheduled_date": date_move,
                 "move_lines": [
                     (
                         0,
@@ -366,6 +377,8 @@ class TestDdmrpCommon(common.SavepointCase):
                 ],
             }
         )
+        picking.action_confirm()
+        return picking
 
     def _do_picking(self, picking, date):
         """Do picking with only one move on the given date."""
