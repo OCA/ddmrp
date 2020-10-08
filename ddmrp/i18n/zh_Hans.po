@@ -520,6 +520,11 @@ msgid "Group By"
 msgstr ""
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Has Long Term Supply"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__id
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__id
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__id
@@ -545,6 +550,11 @@ msgid ""
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__incoming_outside_dlt_qty
+msgid "Incoming (Outside DLT)"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__incoming_dlt_qty
 msgid "Incoming (Within DLT)"
 msgstr "进入(在 DLT 内)"
@@ -557,8 +567,13 @@ msgstr "进入在 DLT 内"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
-msgid "Incoming within DLT"
-msgstr "进入在 DLT 内"
+msgid "Incoming Outside DLT"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid "Incoming Within DLT"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method__source_future
@@ -1091,6 +1106,16 @@ msgid "Quantity to release"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_outside_dlt_qty
+msgid "RFQ Qty (Outside DLT)"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid "RFQ Qty Outside DLT"
+msgstr ""
+
+#. module: ddmrp
 #: model:product.product,name:ddmrp.product_product_rm01
 #: model:product.template,name:ddmrp.product_product_rm01_product_template
 msgid "RM-01"
@@ -1167,6 +1192,13 @@ msgid "Request Procurement"
 msgstr "创建补货"
 
 #. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__rfq_outside_dlt_qty
+msgid ""
+"Request for Quotation total quantity that is planned outside of the DLT "
+"horizon."
+msgstr ""
+
+#. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "Run ADU calculation"
 msgstr "运行ADU计算"
@@ -1222,6 +1254,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_coverage_days
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid "Shows the current on-hand for stock buffers expressed as coverage days."
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid ""
+"Some incoming quantities are outside of the DLT Horizon and may require "
+"rescheduling. Press this button to display the involved supply orders"
 msgstr ""
 
 #. module: ddmrp
@@ -1528,6 +1567,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr ""
+
+#~ msgid "Incoming within DLT"
+#~ msgstr "进入在 DLT 内"
 
 #~ msgid "Buffer monitor"
 #~ msgstr "缓冲监视器"
