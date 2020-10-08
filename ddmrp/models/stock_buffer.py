@@ -569,7 +569,9 @@ class StockBuffer(models.Model):
             mrp_data = rec._get_qualified_mrp_moves()
             supply_data = rec._get_incoming_by_days()
             width = timedelta(days=0.4)
-            date_format = self.env["res.lang"]._lang_get(self.env.lang).date_format
+            date_format = (
+                self.env["res.lang"]._lang_get(self.env.lang or "en_US").date_format
+            )
 
             # Plot demand data:
             if demand_data or mrp_data:
