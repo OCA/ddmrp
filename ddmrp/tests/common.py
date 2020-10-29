@@ -12,6 +12,16 @@ class TestDdmrpCommon(common.SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
 
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context,
+                tracking_disable=True,
+                # compatibility with ddmrp_cron_actions_as_job,
+                # that would delay calls to "cron_actions" in these tests
+                test_queue_job_no_delay=True,
+            )
+        )
+
         # Models
         cls.productModel = cls.env["product.product"]
         cls.templateModel = cls.env["product.template"]
