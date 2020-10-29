@@ -1,0 +1,7 @@
+<odoo noupdate="1">
+    <record id="job_function_stock_buffer_cron_actions" model="queue.job.function">
+        <field name="model_id" ref="ddmrp.model_stock_buffer" />
+        <field name="method">cron_actions</field>
+        <field name="channel_id" ref="channel_ddmrp" />
+    </record>
+</odoo>
