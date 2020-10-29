@@ -1,7 +1,7 @@
 # Copyright 2019-20 ForgeFlow S.L. (http://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class StockMove(models.Model):
@@ -29,6 +29,24 @@ class StockMove(models.Model):
             # access to write stock buffers, thus we do it with sudo.
             self.sudo()._update_ddmrp_nfp()
         return res
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        moves = super(StockMove, self).create(vals_list)
+        # TODO should we use @api.model_create_single instead?
+        moves_to_update_ids = []
+        for vals, move in zip(vals_list, moves):
+            if (
+                "state" in vals
+                and move.state not in ("draft", "cancel")
+                and self.env.company.ddmrp_auto_update_nfp
+            ):
+                moves_to_update_ids.append(move.id)
+        # Stock moves state changes can be triggered by users without
+        # access to write stock buffers, thus we do it with sudo.
+        if moves_to_update_ids:
+            self.browse(moves_to_update_ids).sudo()._update_ddmrp_nfp()
+        return moves
 
     def _update_ddmrp_nfp(self):
         if self.env.context.get("no_ddmrp_auto_update_nfp"):
