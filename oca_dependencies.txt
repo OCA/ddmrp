@@ -2,3 +2,4 @@ stock-logistics-warehouse
 web
 manufacture
 server-tools
+queue
