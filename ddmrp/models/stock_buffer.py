@@ -1067,9 +1067,6 @@ class StockBuffer(models.Model):
         self.ensure_one()
         horizon = self.order_spike_horizon
         date_to = self.warehouse_id.wh_plan_days(datetime.now(), horizon)
-        locations = self.env["stock.location"].search(
-            [("id", "child_of", [self.location_id.id])]
-        )
         return [
             ("product_id", "=", self.product_id.id),
             (
@@ -1077,10 +1074,17 @@ class StockBuffer(models.Model):
                 "in",
                 ["waiting", "confirmed", "partially_available", "assigned"],
             ),
-            ("location_id", "in", locations.ids),
-            ("location_dest_id", "not in", locations.ids),
             ("date_expected", "<=", date_to),
         ]
+
+    def _search_stock_moves_qualified_demand(self):
+        domain = self._search_stock_moves_qualified_demand_domain()
+        moves = self.env["stock.move"].search(domain)
+        moves = moves.filtered(
+            lambda move: move.location_id.is_sublocation_of(self.location_id)
+            and not move.location_dest_id.is_sublocation_of(self.location_id)
+        )
+        return moves
 
     def _get_incoming_supply_date_limit(self):
         # The safety factor allows to control the date limit
@@ -1093,18 +1097,12 @@ class StockBuffer(models.Model):
         ):
             date_to = self.warehouse_id.wh_plan_days(datetime.now(), horizon)
         else:
-            date_to = fields.Date.to_string(
-                fields.date.today() + timedelta(days=horizon)
-            )
+            date_to = fields.date.today() + timedelta(days=horizon)
         return date_to
 
     def _search_stock_moves_incoming_domain(self, outside_dlt=False):
-        self.ensure_one()
         date_to = self._get_incoming_supply_date_limit()
-        locations = self.env["stock.location"].search(
-            [("id", "child_of", [self.location_id.id])]
-        )
-        date_operator = outside_dlt and ">" or "<="
+        date_operator = ">" if outside_dlt else "<="
         return [
             ("product_id", "=", self.product_id.id),
             (
@@ -1112,15 +1110,21 @@ class StockBuffer(models.Model):
                 "in",
                 ["waiting", "confirmed", "partially_available", "assigned"],
             ),
-            ("location_id", "not in", locations.ids),
-            ("location_dest_id", "in", locations.ids),
             ("date_expected", date_operator, date_to),
         ]
 
+    def _search_stock_moves_incoming(self, outside_dlt=False):
+        domain = self._search_stock_moves_incoming_domain(outside_dlt=outside_dlt)
+        moves = self.env["stock.move"].search(domain)
+        moves = moves.filtered(
+            lambda move: not move.location_id.is_sublocation_of(self.location_id)
+            and move.location_dest_id.is_sublocation_of(self.location_id)
+        )
+        return moves
+
     def _get_incoming_by_days(self):
         self.ensure_one()
-        incoming_dom = self._search_stock_moves_incoming_domain()
-        moves = self.env["stock.move"].search(incoming_dom)
+        moves = self._search_stock_moves_incoming()
         incoming_by_days = {}
         move_dates = [dt.date() for dt in moves.mapped("date_expected")]
         for move_date in move_dates:
@@ -1132,8 +1136,7 @@ class StockBuffer(models.Model):
 
     def _get_demand_by_days(self):
         self.ensure_one()
-        domain = self._search_stock_moves_qualified_demand_domain()
-        moves = self.env["stock.move"].search(domain)
+        moves = self._search_stock_moves_qualified_demand()
         demand_by_days = {}
         move_dates = [dt.date() for dt in moves.mapped("date_expected")]
         for move_date in move_dates:
@@ -1147,20 +1150,25 @@ class StockBuffer(models.Model):
         self.ensure_one()
         horizon = self.order_spike_horizon
         date_to = self.warehouse_id.wh_plan_days(datetime.now(), horizon)
-        locations = self.env["stock.location"].search(
-            [("id", "child_of", [self.location_id.id])]
-        )
         return [
             ("product_id", "=", self.product_id.id),
-            ("mrp_area_id.location_id", "in", locations.ids),
             ("mrp_type", "=", "d"),
             ("mrp_date", "<=", date_to),
         ]
 
-    def _get_qualified_mrp_moves(self):
-        self.ensure_one()
+    def _search_mrp_moves_qualified_demand(self):
         domain = self._search_mrp_moves_qualified_demand_domain()
         moves = self.env["mrp.move"].search(domain)
+        moves = moves.filtered(
+            lambda move: move.mrp_area_id.location_id.is_sublocation_of(
+                self.location_id
+            )
+        )
+        return moves
+
+    def _get_qualified_mrp_moves(self):
+        self.ensure_one()
+        moves = self._search_mrp_moves_qualified_demand()
         mrp_moves_by_days = {}
         move_dates = [dt for dt in moves.mapped("mrp_date")]
         for move_date in move_dates:
@@ -1192,12 +1200,10 @@ class StockBuffer(models.Model):
 
     def _calc_incoming_dlt_qty(self):
         for rec in self:
-            domain = rec._search_stock_moves_incoming_domain()
-            moves = self.env["stock.move"].search(domain)
+            moves = self._search_stock_moves_incoming()
             rec.incoming_dlt_qty = sum(moves.mapped("product_qty"))
-            out_domain = rec._search_stock_moves_incoming_domain(outside_dlt=True)
-            moves = self.env["stock.move"].search(out_domain)
-            rec.incoming_outside_dlt_qty = sum(moves.mapped("product_qty"))
+            outside_dlt_moves = self._search_stock_moves_incoming(outside_dlt=True)
+            rec.incoming_outside_dlt_qty = sum(outside_dlt_moves.mapped("product_qty"))
             if rec.item_type == "purchased":
                 cut_date = rec._get_incoming_supply_date_limit()
                 # FIXME: filter using order_id.state while
@@ -1293,8 +1299,7 @@ class StockBuffer(models.Model):
                 lambda l: l.date_planned > fields.Datetime.to_datetime(cut_date)
                 and l.order_id.state in ("draft", "sent")
             )
-            out_domain = self._search_stock_moves_incoming_domain(outside_dlt=True)
-            moves = self.env["stock.move"].search(out_domain)
+            moves = self._search_stock_moves_incoming(outside_dlt=True)
             pos = pols.mapped("order_id") + moves.mapped("purchase_line_id.order_id")
             action = self.env.ref("purchase.purchase_rfq")
             result = action.read()[0]
@@ -1302,16 +1307,14 @@ class StockBuffer(models.Model):
             result["context"] = {}
             result["domain"] = [("id", "in", pos.ids)]
         elif self.item_type == "manufactured":
-            out_domain = self._search_stock_moves_incoming_domain(outside_dlt=True)
-            moves = self.env["stock.move"].search(out_domain)
+            moves = self._search_stock_moves_incoming(outside_dlt=True)
             mos = moves.mapped("production_id")
             action = self.env.ref("mrp.mrp_production_action")
             result = action.read()[0]
             result["context"] = {}
             result["domain"] = [("id", "in", mos.ids)]
         else:
-            out_domain = self._search_stock_moves_incoming_domain(outside_dlt=True)
-            moves = self.env["stock.move"].search(out_domain)
+            moves = self._search_stock_moves_incoming(outside_dlt=True)
             picks = moves.mapped("picking_id")
             action = self.env.ref("stock.action_picking_tree_all")
             result = action.read()[0]
