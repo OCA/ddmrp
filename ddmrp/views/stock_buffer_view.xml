@@ -222,6 +222,7 @@
                                     class="oe_inline"
                                 /> %
                             </div>
+                            <field name="product_location_qty_available_not_res" />
                             <field name="incoming_dlt_qty" />
                             <field name="qualified_demand" />
                         </group>

@@ -354,6 +354,53 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_a.incoming_dlt_qty, 0.0)
         self.assertEqual(self.buffer_a.incoming_outside_dlt_qty, 20.0)
 
+    def test_17_on_hand_qty_1(self):
+        """Outgoing moves should be ignored once reserved as well as the
+        reserved qty."""
+        date_move = datetime.today()
+        outgoing_qty = 50
+        picking = self.create_pickingoutA(date_move, outgoing_qty)
+        self.buffer_a.cron_actions()
+        self.assertEqual(self.buffer_a.qualified_demand, outgoing_qty)
+        expected_on_hand = 200
+        self.assertEqual(
+            self.buffer_a.product_location_qty_available_not_res, expected_on_hand
+        )
+        # Once reserved, the outgoing qty is not considered for qualified
+        # demand and it is excluded from on hand position:
+        picking.action_assign()
+        self.buffer_a.invalidate_cache()
+        self.buffer_a.cron_actions()
+        self.assertEqual(self.buffer_a.qualified_demand, 0)
+        expected_on_hand = 200
+        self.assertEqual(
+            self.buffer_a.product_location_qty_available_not_res,
+            expected_on_hand - outgoing_qty,
+        )
+
+    def test_18_on_hand_qty_2(self):
+        """Internal moves should not affect in any way the on hand position of
+        a buffer."""
+        date_move = datetime.today()
+        internal_qty = 50
+        picking = self.create_pickinginternalA(date_move, internal_qty)
+        self.buffer_a.cron_actions()
+        self.assertEqual(self.buffer_a.qualified_demand, 0)
+        expected_on_hand = 200
+        self.assertEqual(
+            self.buffer_a.product_location_qty_available_not_res, expected_on_hand
+        )
+        # Once reserved, the internal qty is still considered in the on hand position:
+        picking.action_assign()
+        self.buffer_a.invalidate_cache()
+        self.buffer_a.cron_actions()
+        self.assertEqual(picking.move_lines.reserved_availability, internal_qty)
+        self.assertEqual(self.buffer_a.qualified_demand, 0)
+        expected_on_hand = 200
+        self.assertEqual(
+            self.buffer_a.product_location_qty_available_not_res, expected_on_hand
+        )
+
     # TEST GROUP 2: Buffer zones and procurement
 
     def _check_red_zone(
