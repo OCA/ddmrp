@@ -15,7 +15,6 @@
     "depends": [
         "purchase_stock",
         "mrp_bom_location",
-        "stock_available_unreserved",
         "stock_demand_estimate",
         "web_widget_bokeh_chart",
         "mrp_multi_level",
