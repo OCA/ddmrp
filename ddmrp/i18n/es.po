@@ -1078,14 +1078,21 @@ msgid "Quantity"
 msgstr "Cantidad"
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_location_qty_available_not_res
+msgid "Quantity On Hand (Unreserved)"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_location_qty
 msgid "Quantity On Location"
 msgstr "Cantidad en Ubicación"
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_location_qty_available_not_res
-msgid "Quantity On Location (Unreserved)"
-msgstr "Cantidad en Ubicación (No Reservada)"
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__product_location_qty_available_not_res
+msgid ""
+"Quantity available in this stock buffer, this is the total quantity on hand "
+"minus the outgoing reservations."
+msgstr ""
 
 #. module: ddmrp
 #: code:addons/ddmrp/wizards/make_procurement_buffer.py:0
@@ -1573,6 +1580,9 @@ msgstr "minutos"
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr "o"
+
+#~ msgid "Quantity On Location (Unreserved)"
+#~ msgstr "Cantidad en Ubicación (No Reservada)"
 
 #~ msgid "Incoming within DLT"
 #~ msgstr "Entrante dentro de LTD"
