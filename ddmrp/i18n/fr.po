@@ -1064,13 +1064,20 @@ msgid "Quantity"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_location_qty_available_not_res
+msgid "Quantity On Hand (Unreserved)"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_location_qty
 msgid "Quantity On Location"
 msgstr ""
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_location_qty_available_not_res
-msgid "Quantity On Location (Unreserved)"
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__product_location_qty_available_not_res
+msgid ""
+"Quantity available in this stock buffer, this is the total quantity on hand "
+"minus the outgoing reservations."
 msgstr ""
 
 #. module: ddmrp
