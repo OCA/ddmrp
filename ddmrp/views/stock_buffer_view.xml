@@ -162,6 +162,10 @@
                                 name="red_override"
                                 attrs="{'invisible': [('replenish_method', '!=', 'replenish_override')]}"
                             />
+                            <label for="extra_lead_time" />
+                            <div name="extra_lead_time">
+                                <field name="extra_lead_time" class="oe_inline" /> days
+                            </div>
                             <label for="dlt" />
                             <div name="dlt">
                                 <field name="dlt" class="oe_inline" /> days
