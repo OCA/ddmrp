@@ -707,17 +707,18 @@ class StockBuffer(models.Model):
             limit=1,
         )
 
-    @api.depends("lead_days", "product_id.seller_ids.delay")
+    @api.depends("lead_days", "product_id.seller_ids.delay", "extra_lead_time")
     def _compute_dlt(self):
         for rec in self:
             if rec.buffer_profile_id.item_type == "manufactured":
                 bom = rec._get_manufactured_bom()
-                rec.dlt = bom.dlt
+                dlt = bom.dlt
             elif rec.buffer_profile_id.item_type == "distributed":
-                rec.dlt = rec.lead_days
+                dlt = rec.lead_days
             else:
                 sellers = rec._get_product_sellers()
-                rec.dlt = sellers and fields.first(sellers).delay or rec.lead_days
+                dlt = sellers and fields.first(sellers).delay or rec.lead_days
+            rec.dlt = dlt + rec.extra_lead_time
 
     def _get_product_sellers(self):
         """:returns the default sellers for a single buffer."""
@@ -906,6 +907,20 @@ class StockBuffer(models.Model):
         ],
         default="standard",
         required=True,
+    )
+    extra_lead_time = fields.Float(
+        string="Extra lead time",
+        default=0.0,
+        help="When defined, this lead time will be added to the decoupled "
+        "lead time.\n"
+        "This is particularily useful in situations of infrequent but "
+        "periodic demand. E.g. We receive a large order every 30 days, "
+        "whereas the supplier takes 10 days to supply. \n"
+        "In this case the yellow zone must cover for the "
+        "entire cycle of 30 days of demand.\n"
+        "In situations with infrequent demand the ADU tends to be very"
+        " small, and every new order would be treated as a spike, when \n"
+        "in reality this is not an exceptional situation.",
     )
 
     @api.onchange("adu_fixed", "adu_calculation_method")
