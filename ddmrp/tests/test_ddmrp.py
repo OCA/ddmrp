@@ -864,6 +864,11 @@ class TestDdmrp(TestDdmrpCommon):
         # Fall back to no-variant supplier info
         self.assertEqual(self.buffer_c_orange.dlt, 8)
 
+    def test_36_dlt_extra_lead_time(self):
+        # Add extra lead time
+        self.buffer_c_blue.extra_lead_time = 20
+        self.assertEqual(self.buffer_c_blue.dlt, 25)
+
     def test_40_bokeh_charts(self):
         """Check bokeh chart computation."""
         date_move = datetime.today()
