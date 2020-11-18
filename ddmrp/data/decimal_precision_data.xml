@@ -8,4 +8,12 @@
         <field name="name">Lead Time</field>
         <field name="digits" eval="0" />
     </record>
+    <record
+        forcecreate="True"
+        id="average_daily_usage_decimal_precision"
+        model="decimal.precision"
+    >
+        <field name="name">Average Daily Usage</field>
+        <field name="digits" eval="3" />
+    </record>
 </odoo>

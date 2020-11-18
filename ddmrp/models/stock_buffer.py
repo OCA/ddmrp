@@ -765,7 +765,7 @@ class StockBuffer(models.Model):
     adu = fields.Float(
         string="ADU",
         default=0.0,
-        digits="Product Unit of Measure",
+        digits="Average Daily Usage",
         readonly=True,
         help="Average Daily Usage",
     )
