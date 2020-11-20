@@ -873,3 +873,28 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertTrue(self.buffer_a.ddmrp_chart)
         self.assertTrue(self.buffer_a.ddmrp_demand_chart)
         self.assertTrue(self.buffer_a.ddmrp_supply_chart)
+
+    def test_41_archive_template(self):
+        # archive a product template:
+        self.template_c.toggle_active()
+        self.assertFalse(self.template_c.active)
+        self.assertFalse(self.product_c_blue.active)
+        self.assertFalse(self.product_c_orange.active)
+        self.assertFalse(self.buffer_c_blue.active)
+        self.assertFalse(self.buffer_c_orange.active)
+
+    def test_42_archive_variant(self):
+        # archive a variant
+        self.product_c_blue.toggle_active()
+        self.assertTrue(self.template_c.active)
+        self.assertFalse(self.product_c_blue.active)
+        self.assertTrue(self.product_c_orange.active)
+        self.assertFalse(self.buffer_c_blue.active)
+        self.assertTrue(self.buffer_c_orange.active)
+        # toggle a buffer before toggling product:
+        self.buffer_c_blue.toggle_active()
+        self.assertTrue(self.buffer_c_blue.active)
+        self.assertFalse(self.product_c_blue.active)
+        self.product_c_blue.toggle_active()
+        self.assertTrue(self.buffer_c_blue.active)
+        self.assertTrue(self.product_c_blue.active)
