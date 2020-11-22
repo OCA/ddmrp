@@ -203,14 +203,12 @@ msgstr "DDMRP 图表"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_ddmrp_demand_chart
 #, fuzzy
-#| msgid "DDMRP Chart"
 msgid "DDMRP Demand Chart"
 msgstr "DDMRP 图表"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint_ddmrp_supply_chart
 #, fuzzy
-#| msgid "DDMRP Chart"
 msgid "DDMRP Supply Chart"
 msgstr "DDMRP 图表"
 
