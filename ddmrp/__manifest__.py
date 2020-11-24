@@ -43,6 +43,7 @@
         "views/mrp_bom_view.xml",
         "views/stock_move_views.xml",
         "views/stock_buffer_view.xml",
+        "views/stock_picking.xml",
         "views/ddmrp_assets_backend.xml",
         "report/mrp_report_bom_structure.xml",
         "data/ir_cron.xml",
