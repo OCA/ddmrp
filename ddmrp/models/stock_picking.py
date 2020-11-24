@@ -9,12 +9,17 @@ class StockPickgin(models.Model):
 
     def action_stock_buffer_open(self):
         """Open a sock.buffer list related to products of the stock.picking."""
-        product_ids = self.mapped("move_lines.product_id.id")
+        self.ensure_one()
+        domain = [
+            ("product_id", "in", self.mapped("move_lines.product_id.id")),
+            ("warehouse_id", "=", self.picking_type_id.warehouse_id.id),
+            ("company_id", "=", self.company_id.id),
+        ]
         return {
             "type": "ir.actions.act_window",
             "name": "Stock Buffers",
             "res_model": "stock.buffer",
             "view_mode": "tree,form",
-            "domain": [("product_id", "in", product_ids)],
+            "domain": domain,
             "context": {"search_default_procure_recommended": 1},
         }
