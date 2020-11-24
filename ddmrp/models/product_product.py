@@ -10,3 +10,17 @@ class Product(models.Model):
     buffer_ids = fields.One2many(
         comodel_name="stock.buffer", string="Stock Buffers", inverse_name="product_id",
     )
+
+    def write(self, values):
+        res = super().write(values)
+        if "active" in values:
+            buffers = self.env["stock.buffer"].search(
+                [
+                    ("product_id", "in", self.ids),
+                    "|",
+                    ("active", "=", True),
+                    ("active", "=", False),
+                ]
+            )
+            buffers.write({"active": values.get("active")})
+        return res
