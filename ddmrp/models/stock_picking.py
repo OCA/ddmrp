@@ -12,14 +12,9 @@ class StockPickgin(models.Model):
         self.ensure_one()
         domain = [
             ("product_id", "in", self.mapped("move_lines.product_id.id")),
-            ("warehouse_id", "=", self.picking_type_id.warehouse_id.id),
             ("company_id", "=", self.company_id.id),
         ]
-        return {
-            "type": "ir.actions.act_window",
-            "name": "Stock Buffers",
-            "res_model": "stock.buffer",
-            "view_mode": "tree,form",
-            "domain": domain,
-            "context": {"search_default_procure_recommended": 1},
-        }
+        action = self.env.ref("ddmrp.action_stock_buffer").read()[0]
+        action["domain"] = domain
+        action["context"] = {"search_default_procure_recommended": 1}
+        return action

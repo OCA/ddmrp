@@ -9,7 +9,7 @@
                 <button
                     name="action_stock_buffer_open"
                     type="object"
-                    string="Stock Buffers"
+                    string="Product Buffers"
                     class="oe_stat_button"
                     icon="fa-tasks"
                 />
