@@ -24,10 +24,16 @@ class StockMove(models.Model):
 
     def write(self, vals):
         res = super(StockMove, self).write(vals)
-        if "state" in vals and self.env.company.ddmrp_auto_update_nfp:
-            # Stock moves state changes can be triggered by users without
+        if self and self.env.company.ddmrp_auto_update_nfp:
+            # Stock moves changes can be triggered by users without
             # access to write stock buffers, thus we do it with sudo.
-            self.sudo()._update_ddmrp_nfp()
+            if "state" in vals:
+                self.sudo()._update_ddmrp_nfp()
+            elif "location_id" in vals or "location_dest_id" in vals:
+                self.sudo().filtered(
+                    lambda m: m.state
+                    in ("confirmed", "partially_available", "assigned")
+                )._update_ddmrp_nfp()
         return res
 
     @api.model_create_multi
