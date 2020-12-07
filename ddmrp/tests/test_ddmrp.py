@@ -20,7 +20,9 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_a.adu, to_assert_value)
 
     def test_02_adu_calculation_past_120_days(self):
-        """Test ADU calculation method that uses actual past stock moves."""
+        """Test ADU calculation method that uses actual past stock moves,
+        excepting inventory loss moves.
+        """
         method = self.env.ref("ddmrp.adu_calculation_method_past_120")
         self.buffer_a.adu_calculation_method = method.id
         self.bufferModel.cron_ddmrp_adu()
@@ -28,6 +30,8 @@ class TestDdmrp(TestDdmrpCommon):
         # Create past moves and process them.
         days = 30
         date_move = self.calendar.plan_days(-1 * days - 1, datetime.today())
+        move_inv_loss = self.create_inventorylossA(date_move, 10)
+        self._do_move(move_inv_loss, date_move)
         pick_out_1 = self.create_pickingoutA(date_move, 60)
         self._do_picking(pick_out_1, date_move)
         days = 60
@@ -36,7 +40,7 @@ class TestDdmrp(TestDdmrpCommon):
         self._do_picking(pick_out_2, date_move)
         # Compute ADU again and check result.
         self.bufferModel.cron_ddmrp_adu()
-        to_assert_value = (60 + 60) / 120
+        to_assert_value = (60 + 60) / 120  # Doesn't include inventory loss qty
         self.assertEqual(self.buffer_a.adu, to_assert_value)
 
     def test_03_adu_calculation_window_past(self):
@@ -143,7 +147,9 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_a.adu, to_assert_value)
 
     def test_06_adu_calculation_future_120_days_actual(self):
-        """Test ADU calculation method that uses actual future stock moves."""
+        """Test ADU calculation method that uses actual future stock moves,
+        excepting inventory loss moves.
+        """
         method = self.aducalcmethodModel.create(
             {
                 "name": "Future actual demand (120 days)",
@@ -158,13 +164,15 @@ class TestDdmrp(TestDdmrpCommon):
         pickingOuts = self.pickingModel
         days = 30
         date_move = self.calendar.plan_days(+1 * days + 1, datetime.today())
+        move_inv_loss = self.create_inventorylossA(date_move, 10)
+        self._do_move(move_inv_loss, date_move)
         pickingOuts += self.create_pickingoutA(date_move, 60)
         days = 60
         date_move = self.calendar.plan_days(+1 * days + 1, datetime.today())
         pickingOuts += self.create_pickingoutA(date_move, 60)
 
         self.bufferModel.cron_ddmrp_adu()
-        to_assert_value = (60 + 60) / 120
+        to_assert_value = (60 + 60) / 120  # Doesn't include inventory loss qty
         self.assertEqual(self.buffer_a.adu, to_assert_value)
 
         # Create a move more than 120 days in the future
