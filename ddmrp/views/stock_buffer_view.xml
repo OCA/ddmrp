@@ -71,6 +71,15 @@
                     type="object"
                     attrs="{'invisible':[('incoming_outside_dlt_qty', '=', 0), ('rfq_outside_dlt_qty', '=', 0)]}"
                 />
+                <button
+                    string="No stock available on source location for distributed buffer"
+                    name="action_dummy"
+                    icon="fa-warning"
+                    type="object"
+                    attrs="{'invisible':['|', ('distributed_source_location_id', '=', False), ('distributed_source_location_qty', '>', 0)]}"
+                />
+                <field name="distributed_source_location_id" optional="hide" />
+                <field name="distributed_source_location_qty" optional="hide" />
                 <field name="item_type" optional="show" />
                 <field name="main_supplier_id" optional="show" />
                 <field name="adu" />
@@ -232,6 +241,14 @@
                         </group>
                         <group name="misc_info" string="Other Information">
                             <field name="main_supplier_id" />
+                            <field
+                                name="distributed_source_location_id"
+                                attrs="{'invisible': ['|', ('item_type', '!=', 'distributed'), ('distributed_source_location_id', '=', False)]}"
+                            />
+                            <field
+                                name="distributed_source_location_qty"
+                                attrs="{'invisible': ['|', ('item_type', '!=', 'distributed'), ('distributed_source_location_id', '=', False)]}"
+                            />
                         </group>
                     </group>
                     <notebook>
@@ -368,6 +385,12 @@
                     name="has_long_term_supply"
                     string="Has Long Term Supply"
                     domain="['|', ('incoming_outside_dlt_qty', '>', 0), ('rfq_outside_dlt_qty', '>', 0)]"
+                />
+                <separator />
+                <filter
+                    name="has_distributed_source_location_qty"
+                    string="Has Stock In Source Location"
+                    domain="[('distributed_source_location_qty', '>', 0)]"
                 />
                 <separator />
                 <filter
