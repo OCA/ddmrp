@@ -58,3 +58,15 @@ class StockBuffer(models.Model):
         res = super()._prepare_procurement_values(product_qty, date=date, group=group)
         res["route_ids"] = self.route_id
         return res
+
+    def _values_source_location_from_route(self):
+        values = super()._values_source_location_from_route()
+        if self.route_id:
+            values["route_ids"] = self.route_id
+        return values
+
+    def write(self, vals):
+        res = super().write(vals)
+        if "route_id" in vals:
+            self._calc_distributed_source_location()
+        return res
