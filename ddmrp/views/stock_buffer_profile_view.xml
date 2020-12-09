@@ -29,6 +29,12 @@
                                 options="{'no_create': True}"
                             />
                         </group>
+                        <group
+                            name="distributed_options"
+                            attrs="{'invisible': [('item_type', '!=', 'distributed')]}"
+                        >
+                            <field name="replenish_distributed_limit_to_free_qty" />
+                        </group>
                     </group>
                 </sheet>
             </form>

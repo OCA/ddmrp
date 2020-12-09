@@ -7,7 +7,7 @@ from collections import defaultdict
 from datetime import datetime, timedelta
 from math import pi
 
-from odoo import _, api, fields, models
+from odoo import _, api, exceptions, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import float_compare, float_round
 
@@ -27,6 +27,7 @@ OPERATORS = {
     "<=": py_operator.le,
     ">=": py_operator.ge,
     "==": py_operator.eq,
+    "=": py_operator.eq,
     "!=": py_operator.ne,
 }
 
@@ -922,6 +923,52 @@ class StockBuffer(models.Model):
         " small, and every new order would be treated as a spike, when \n"
         "in reality this is not an exceptional situation.",
     )
+    distributed_source_location_id = fields.Many2one(
+        string="Replenishment Location",
+        comodel_name="stock.location",
+        readonly=True,
+        help="Source location from where goods will be replenished. "
+        "Computed when buffer is refreshed from following the Stock Rules.",
+    )
+    distributed_source_location_qty = fields.Float(
+        string="Source Location Free Quantity (distributed)",
+        compute="_compute_distributed_source_location_qty",
+        search="_search_distributed_source_location_qty",
+        help="Quantity free for distributed buffer in the source location. "
+        "When a procurement is requested, if the option is active on the profile,"
+        " it will be limited to this quantity.",
+    )
+
+    @api.depends(
+        "distributed_source_location_id",
+        "distributed_source_location_id.quant_ids.quantity",
+        "distributed_source_location_id.quant_ids.reserved_quantity",
+    )
+    def _compute_distributed_source_location_qty(self):
+        to_compute_per_location = {}
+        for record in self:
+            location = record.distributed_source_location_id
+            if not location:
+                record.distributed_source_location_qty = 0.0
+                continue
+            to_compute_per_location.setdefault(location.id, set())
+            to_compute_per_location[location.id].add(record.id)
+
+        # batch computation per location
+        for location_id, buffer_ids in to_compute_per_location.items():
+            buffers = self.browse(buffer_ids).with_context(location=location_id)
+            for buf in buffers:
+                buf.distributed_source_location_qty = buf.product_id.free_qty
+
+    def _search_distributed_source_location_qty(self, operator, value):
+        if operator not in OPERATORS:
+            raise exceptions.UserError(_("Unsupported operator %s") % (operator,))
+        buffers = self.search([("distributed_source_location_id", "!=", False)])
+        operator_func = OPERATORS[operator]
+        buffers = buffers.filtered(
+            lambda buf: operator_func(buf.distributed_source_location_qty, value)
+        )
+        return [("id", "in", buffers.ids)]
 
     @api.onchange("adu_fixed", "adu_calculation_method")
     def onchange_adu(self):
@@ -1258,6 +1305,24 @@ class StockBuffer(models.Model):
             rec.net_flow_position_percent = usage
         return True
 
+    def _calc_distributed_source_location(self):
+        """Compute source location used for replenishment of distributed buffer
+
+        It follows the rules of the default route until it finds a "Take from
+        stock" rule. The source location depends on many factors (route on
+        warehouse, product, category, ...), that's why it is updated only
+        on refresh of the buffer.
+        """
+        for record in self:
+            if record.item_type != "distributed":
+                record.distributed_source_location_id = self.env[
+                    "stock.location"
+                ].browse()
+                continue
+
+            source_location = record._source_location_from_route()
+            record.distributed_source_location_id = source_location
+
     def _calc_planning_priority(self):
         for rec in self:
             if rec.net_flow_position >= rec.top_of_yellow:
@@ -1285,6 +1350,12 @@ class StockBuffer(models.Model):
                 )
             else:
                 rec.on_hand_percent = 0.0
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        records._calc_distributed_source_location()
+        return records
 
     def write(self, vals):
         res = super().write(vals)
@@ -1381,6 +1452,7 @@ class StockBuffer(models.Model):
         if not only_nfp or only_nfp == "in":
             self._calc_incoming_dlt_qty()
         self._calc_net_flow_position()
+        self._calc_distributed_source_location()
         self._calc_planning_priority()
         self._calc_execution_priority()
         self.mrp_production_ids._calc_execution_priority()
@@ -1415,3 +1487,28 @@ class StockBuffer(models.Model):
                     raise
         _logger.info("End cron_ddmrp.")
         return True
+
+    def _values_source_location_from_route(self):
+        return {"warehouse_id": self.warehouse_id}
+
+    def _source_location_from_route(self, route=None):
+        """Return the replenishment source location for distributed buffers
+
+        If no route is passed, it follows the source location of the rules of
+        all the routes it finds until it can no longer find a path.
+        If a route is passed, it stops at the final source location of the
+        rules of this route only.
+        """
+        current_location = self.location_id
+        rule_values = self._values_source_location_from_route()
+        while current_location:
+            rule = self.env["procurement.group"]._get_rule(
+                self.product_id, current_location, rule_values
+            )
+            if rule.procure_method == "make_to_stock":
+                return rule.location_src_id
+            current_location = rule.location_src_id
+
+    def action_dummy(self):
+        # no action, used to show an image in the tree view
+        return
