@@ -55,3 +55,10 @@ class StockBufferProfile(models.Model):
         comodel_name="stock.buffer.profile.variability", string="Variability Factor"
     )
     company_id = fields.Many2one("res.company", "Company",)
+
+    replenish_distributed_limit_to_free_qty = fields.Boolean(
+        string="Limit replenishment to free quantity",
+        default=False,
+        help="When activated, the recommended quantity will be maxed at "
+        "the quantity available in the replenishment source location.",
+    )

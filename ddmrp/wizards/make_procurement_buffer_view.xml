@@ -12,6 +12,11 @@
                     this may trigger a draft purchase order, a manufacturing
                     order or a transfer picking.
                 </p>
+                <p class="oe_gray">
+                    By default, the qty is equal to the recommended quantity.
+                    For distributed buffers, when the option on the profile is active,
+                    the quantity is limited to the free quantity.
+                </p>
                 <group>
                     <field
                         name="partner_id"
@@ -32,6 +37,7 @@
                                 groups="stock.group_stock_multi_locations"
                             />
                             <field name="product_id" />
+                            <field name="recommended_qty" />
                             <field name="qty" />
                             <field name="qty_without_security" invisible="1" />
                             <field name="uom_id" groups="uom.group_uom" />
