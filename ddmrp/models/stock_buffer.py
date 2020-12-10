@@ -779,7 +779,7 @@ class StockBuffer(models.Model):
         related="adu_calculation_method.method",
     )
     adu_fixed = fields.Float(
-        string="Fixed ADU", default=1.0, digits="Product Unit of Measure",
+        string="Fixed ADU", default=1.0, digits="Average Daily Usage",
     )
     order_cycle = fields.Float(string="Minimum Order Cycle (days)")
     minimum_order_quantity = fields.Float(
