@@ -37,6 +37,7 @@
                             attrs="{'invisible': [('item_type', '!=', 'distributed')]}"
                         >
                             <field name="replenish_distributed_limit_to_free_qty" />
+                            <field name="distributed_reschedule_max_proc_time" />
                         </group>
                     </group>
                 </sheet>
