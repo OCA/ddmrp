@@ -116,13 +116,7 @@ class MakeProcurementBuffer(models.TransientModel):
                 raise ValidationError(_("Quantity must be positive."))
             if not item.buffer_id:
                 raise ValidationError(_("No stock buffer found."))
-            values = item.buffer_id._prepare_procurement_values(item.qty)
-            values.update(
-                {
-                    "date_planned": fields.Datetime.to_string(item.date_planned),
-                    "supplier_id": self.partner_id if self.partner_id else False,
-                }
-            )
+            values = item._prepare_values_make_procurement()
             procurements.append(
                 pg_obj.Procurement(
                     item.buffer_id.product_id,
@@ -168,10 +162,7 @@ class MakeProcurementBufferItem(models.TransientModel):
         string="Unit of Measure",
         comodel_name="uom.uom",
     )
-    date_planned = fields.Date(
-        string="Planned Date",
-        required=False,
-    )
+    date_planned = fields.Datetime(string="Planned Date", required=False)
     buffer_id = fields.Many2one(
         string="Stock Buffer",
         comodel_name="stock.buffer",
@@ -199,3 +190,10 @@ class MakeProcurementBufferItem(models.TransientModel):
             rec.qty = rec.buffer_id.product_uom._compute_quantity(
                 rec.buffer_id.procure_recommended_qty, rec.uom_id
             )
+
+    def _prepare_values_make_procurement(self):
+        values = self.buffer_id._prepare_procurement_values(self.qty)
+        values.update(
+            {"date_planned": self.date_planned, "supplier_id": self.wiz_id.partner_id}
+        )
+        return values
