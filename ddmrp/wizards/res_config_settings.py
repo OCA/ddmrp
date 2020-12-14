@@ -25,3 +25,6 @@ class ResConfigSettings(models.TransientModel):
     ddmrp_auto_update_nfp = fields.Boolean(
         related="company_id.ddmrp_auto_update_nfp", readonly=False
     )
+    ddmrp_adu_calc_include_scrap = fields.Boolean(
+        related="company_id.ddmrp_adu_calc_include_scrap", readonly=False
+    )
