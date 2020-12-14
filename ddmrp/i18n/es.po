@@ -562,6 +562,12 @@ msgstr ""
 "positivos y sumar exactamente 1.0."
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_company__ddmrp_adu_calc_include_scrap
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__ddmrp_adu_calc_include_scrap
+msgid "Include scrap locations in ADU calculation"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__incoming_outside_dlt_qty
 msgid "Incoming (Outside DLT)"
 msgstr ""
