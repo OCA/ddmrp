@@ -13,3 +13,6 @@ class ResCompany(models.Model):
         help="Transfer status changes can trigger the update of relevant "
         "buffer's NFP.",
     )
+    ddmrp_adu_calc_include_scrap = fields.Boolean(
+        string="Include scrap locations in ADU calculation",
+    )
