@@ -19,6 +19,7 @@ class TestDdmrpCommon(common.SavepointCase):
         cls.bomlineModel = cls.env["mrp.bom.line"]
         cls.bufferModel = cls.env["stock.buffer"]
         cls.pickingModel = cls.env["stock.picking"]
+        cls.moveModel = cls.env["stock.move"]
         cls.quantModel = cls.env["stock.quant"]
         cls.estimateModel = cls.env["stock.demand.estimate"]
         cls.aducalcmethodModel = cls.env["product.adu.calculation.method"]
@@ -36,6 +37,10 @@ class TestDdmrpCommon(common.SavepointCase):
         cls.location_shelf1 = cls.env.ref("stock.stock_location_components")
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
+        cls.inventory_location = cls.env["stock.location"].search(
+            [("usage", "=", "inventory"), ("company_id", "=", cls.main_company.id)],
+            limit=1,
+        )
         cls.uom_unit = cls.env.ref("uom.product_uom_unit")
         cls.buffer_profile_pur = cls.env.ref(
             "ddmrp.stock_buffer_profile_replenish_purchased_medium_medium"
@@ -402,3 +407,24 @@ class TestDdmrpCommon(common.SavepointCase):
         )
         wizard.make_procurement()
         return wizard
+
+    def create_inventorylossA(self, date_move, qty):
+        move = self.moveModel.with_user(self.user).create(
+            {
+                "name": "Test inventory move",
+                "product_id": self.productA.id,
+                "date_expected": date_move,
+                "date": date_move,
+                "product_uom": self.productA.uom_id.id,
+                "product_uom_qty": qty,
+                "location_id": self.binA.id,
+                "location_dest_id": self.inventory_location.id,
+            },
+        )
+        return move
+
+    def _do_move(self, move, date):
+        move._action_confirm()
+        move.move_line_ids.quantity_done = move.move_line_ids.product_uom_qty
+        move._action_done()
+        move.date = date
