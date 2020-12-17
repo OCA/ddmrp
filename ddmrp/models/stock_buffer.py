@@ -1363,13 +1363,37 @@ class StockBuffer(models.Model):
             self._calc_adu()
         return res
 
+    def _procure_qty_to_order(self):
+        qty_to_order = self.procure_recommended_qty
+        rounding = self.procure_uom_id.rounding or self.product_uom.rounding
+        if (
+            self.item_type == "distributed"
+            and self.buffer_profile_id.replenish_distributed_limit_to_free_qty
+        ):
+            # If we don't procure more than what we have in stock, we prevent
+            # backorders on the replenishment
+            if (
+                float_compare(
+                    self.distributed_source_location_qty,
+                    self.procure_min_qty,
+                    precision_rounding=rounding,
+                )
+                < 0
+            ):
+                # the free qty is below the minimum we want to move, do not
+                # move anything
+                return 0
+            else:
+                # move only what we have in stock
+                return min(qty_to_order, self.distributed_source_location_qty)
+        return qty_to_order
+
     def do_auto_procure(self):
         if not self.auto_procure:
             return False
         rounding = self.product_uom.rounding
-        if float_compare(
-            self.procure_recommended_qty, 0.0, precision_rounding=rounding
-        ) > 0 and (
+        qty_to_order = self._procure_qty_to_order()
+        if float_compare(qty_to_order, 0.0, precision_rounding=rounding) > 0 and (
             (
                 self.auto_procure_option == "stockout"
                 and float_compare(
