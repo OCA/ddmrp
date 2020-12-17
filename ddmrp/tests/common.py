@@ -48,6 +48,9 @@ class TestDdmrpCommon(common.SavepointCase):
         cls.buffer_profile_mmm = cls.env.ref(
             "ddmrp.stock_buffer_profile_replenish_manufactured_medium_medium"
         )
+        cls.buffer_profile_distr = cls.env.ref(
+            "ddmrp.stock_buffer_profile_replenish_distributed_medium_medium"
+        )
         cls.adu_fixed = cls.env.ref("ddmrp.adu_calculation_method_fixed")
         cls.group_stock_manager = cls.env.ref("stock.group_stock_manager")
         cls.group_mrp_user = cls.env.ref("mrp.group_mrp_user")
@@ -393,7 +396,7 @@ class TestDdmrpCommon(common.SavepointCase):
         for move in picking.move_lines:
             move.date = date
 
-    def create_orderpoint_procurement(self, buffer):
+    def create_orderpoint_procurement(self, buffer, make_procurement=True):
         """Make Procurement from Reordering Rule"""
         context = {
             "active_model": "stock.buffer",
@@ -405,7 +408,8 @@ class TestDdmrpCommon(common.SavepointCase):
             .with_context(context)
             .create({})
         )
-        wizard.make_procurement()
+        if make_procurement:
+            wizard.make_procurement()
         return wizard
 
     def create_inventorylossA(self, date_move, qty):
