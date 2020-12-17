@@ -193,6 +193,15 @@ msgid "Buffers"
 msgstr "缓冲"
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
+msgid ""
+"By default, the qty is equal to the recommended quantity.\n"
+"                    For distributed buffers, when the option on the profile "
+"is active,\n"
+"                    the quantity is limited to the free quantity."
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__method
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method_type
 msgid "Calculation method"
@@ -530,6 +539,11 @@ msgid "Has Long Term Supply"
 msgstr ""
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Has Stock In Source Location"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__id
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__id
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__id
@@ -690,6 +704,11 @@ msgid "Length-of-period horizon in days looking past."
 msgstr "视界时期长度，按天"
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__replenish_distributed_limit_to_free_qty
+msgid "Limit replenishment to free quantity"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_move__buffer_ids
 #, fuzzy
 msgid "Linked Stock Buffers"
@@ -822,6 +841,11 @@ msgstr "净流位置 (% of TOG)"
 #: code:addons/ddmrp/models/stock_buffer.py:0
 #, python-format
 msgid "No demand detected."
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid "No stock available on source location for distributed buffer"
 msgstr ""
 
 #. module: ddmrp
@@ -1113,6 +1137,14 @@ msgid ""
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__distributed_source_location_qty
+msgid ""
+"Quantity free for distributed buffer in the source location. When a "
+"procurement is requested, if the option is active on the profile, it will be "
+"limited to this quantity."
+msgstr ""
+
+#. module: ddmrp
 #: code:addons/ddmrp/wizards/make_procurement_buffer.py:0
 #, python-format
 msgid "Quantity must be positive."
@@ -1143,6 +1175,11 @@ msgstr ""
 #: model:product.product,name:ddmrp.product_product_rm02
 #: model:product.template,name:ddmrp.product_product_rm02_product_template
 msgid "RM-02"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__recommended_qty
+msgid "Recommended Qty"
 msgstr ""
 
 #. module: ddmrp
@@ -1196,6 +1233,11 @@ msgstr "补给"
 #: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer_profile__replenish_method__replenish_override
 msgid "Replenished Override"
 msgstr "补给覆盖"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__distributed_source_location_id
+msgid "Replenishment Location"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__replenish_method
@@ -1279,6 +1321,18 @@ msgstr ""
 msgid ""
 "Some incoming quantities are outside of the DLT Horizon and may require "
 "rescheduling. Press this button to display the involved supply orders"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__distributed_source_location_qty
+msgid "Source Location Free Quantity (distributed)"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__distributed_source_location_id
+msgid ""
+"Source location from where goods will be replenished. Computed when buffer "
+"is refreshed from following the Stock Rules."
 msgstr ""
 
 #. module: ddmrp
@@ -1443,6 +1497,12 @@ msgid "Units"
 msgstr ""
 
 #. module: ddmrp
+#: code:addons/ddmrp/models/stock_buffer.py:0
+#, python-format
+msgid "Unsupported operator %s"
+msgstr ""
+
+#. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "UoM"
 msgstr ""
@@ -1488,6 +1548,13 @@ msgstr "厂商"
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
 msgid "Warehouse"
 msgstr "仓库"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer_profile__replenish_distributed_limit_to_free_qty
+msgid ""
+"When activated, the recommended quantity will be maxed at the quantity "
+"available in the replenishment source location."
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__extra_lead_time
