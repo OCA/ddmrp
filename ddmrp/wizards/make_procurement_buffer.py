@@ -63,33 +63,7 @@ class MakeProcurementBuffer(models.TransientModel):
         items = []
         for line in buffer_obj.browse(buffer_ids):
             max_order = line.procure_max_qty
-            qty_to_order = line.procure_recommended_qty
-
-            rounding = line.procure_uom_id.rounding or line.product_uom.rounding
-            limit_to_free_qty = False
-            if (
-                line.item_type == "distributed"
-                and line.buffer_profile_id.replenish_distributed_limit_to_free_qty
-            ):
-                # If we don't procure more than what we have in stock, we prevent
-                # backorders on the replenishment
-                limit_to_free_qty = True
-                if (
-                    float_compare(
-                        line.distributed_source_location_qty,
-                        line.procure_min_qty,
-                        precision_rounding=rounding,
-                    )
-                    < 0
-                ):
-                    # the free qty is below the minimum we want to move, do not
-                    # move anything
-                    qty_to_order = 0
-                else:
-                    # move only what we have in stock
-                    qty_to_order = min(
-                        qty_to_order, line.distributed_source_location_qty
-                    )
+            qty_to_order = line._procure_qty_to_order()
 
             if max_order and max_order < qty_to_order:
                 # split the procurement in batches:
@@ -97,6 +71,14 @@ class MakeProcurementBuffer(models.TransientModel):
                     if qty_to_order > max_order:
                         qty = max_order
                     else:
+                        rounding = (
+                            line.procure_uom_id.rounding or line.product_uom.rounding
+                        )
+                        profile = line.buffer_profile_id
+                        limit_to_free_qty = (
+                            line.item_type == "distributed"
+                            and profile.replenish_distributed_limit_to_free_qty
+                        )
                         if limit_to_free_qty:
                             if (
                                 float_compare(
