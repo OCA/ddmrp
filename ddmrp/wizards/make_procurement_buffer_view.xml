@@ -79,5 +79,6 @@
         <field name="view_mode">form</field>
         <field name="target">new</field>
         <field name="binding_model_id" ref="ddmrp.model_stock_buffer" />
+        <field name="view_id" ref="ddmrp.view_make_procurement_buffer_wizard" />
     </record>
 </odoo>
