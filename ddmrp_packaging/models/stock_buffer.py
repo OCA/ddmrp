@@ -17,6 +17,10 @@ class StockBuffer(models.Model):
         "('company_id', '=', company_id)]",
     )
     package_multiple = fields.Float()
+    # make qty_multiple a stored computed field:
+    qty_multiple = fields.Float(
+        compute="_compute_qty_multiple", store=True, readonly=False,
+    )
 
     @api.constrains("product_id", "packaging_id")
     def _check_product_packaging(self):
@@ -28,6 +32,12 @@ class StockBuffer(models.Model):
                 raise ValidationError(
                     _("Please, select a packaging of the buffered product.")
                 )
+
+    @api.depends("packaging_id", "packaging_id.qty", "package_multiple")
+    def _compute_qty_multiple(self):
+        for rec in self:
+            if rec.packaging_id.qty:
+                rec.qty_multiple = rec.packaging_id.qty * rec.package_multiple
 
     @api.onchange("product_id")
     def onchange_product_id(self):
@@ -44,12 +54,6 @@ class StockBuffer(models.Model):
             if self.packaging_id.qty:
                 self.package_multiple = self.qty_multiple / self.packaging_id.qty
         return res
-
-    @api.onchange("package_multiple")
-    def _onchange_package_multiple(self):
-        for rec in self:
-            if rec.packaging_id.qty:
-                rec.qty_multiple = rec.package_multiple * rec.packaging_id.qty
 
     def _check_package(self):
         pack = self.packaging_id
