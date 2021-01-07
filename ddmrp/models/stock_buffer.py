@@ -226,7 +226,10 @@ class StockBuffer(models.Model):
         self.ensure_one()
         profile = self.buffer_profile_id
         dlt = int(self.dlt)
-        max_proc_time = profile.distributed_reschedule_max_proc_time
+        if profile.item_type == "distributed":
+            max_proc_time = profile.distributed_reschedule_max_proc_time
+        else:
+            max_proc_time = 0
         # For purchased items we always consider calendar days,
         # not work days.
         if profile.item_type == "purchased":
