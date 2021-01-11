@@ -30,8 +30,20 @@ msgid "Please, select a packaging of the buffered product."
 msgstr ""
 
 #. module: ddmrp_packaging
+#: model:ir.model.fields,field_description:ddmrp_packaging.field_stock_buffer__qty_multiple
+msgid "Qty Multiple"
+msgstr ""
+
+#. module: ddmrp_packaging
 #: model:ir.model,name:ddmrp_packaging.model_stock_buffer
 msgid "Stock Buffer"
+msgstr ""
+
+#. module: ddmrp_packaging
+#: model:ir.model.fields,help:ddmrp_packaging.field_stock_buffer__qty_multiple
+msgid ""
+"The procurement quantity will be rounded up to this multiple. If it is 0, "
+"the exact quantity will be used."
 msgstr ""
 
 #. module: ddmrp_packaging
