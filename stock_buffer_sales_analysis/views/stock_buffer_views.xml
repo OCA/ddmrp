@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 Camptocamp SA
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl) -->
+<odoo>
+    <record id="stock_buffer_view_form" model="ir.ui.view">
+        <field name="name">stock.buffer.form</field>
+        <field name="model">stock.buffer</field>
+        <field name="inherit_id" ref="ddmrp.stock_buffer_view_form" />
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <field name="product_id_sale_ok" invisible="1" />
+                <button
+                    class="oe_stat_button"
+                    name="action_view_sales"
+                    type="object"
+                    icon="fa-signal"
+                    groups="sales_team.group_sale_salesman"
+                    help="Sold in the last 365 days"
+                    attrs="{'invisible': [('product_id_sale_ok', '=', False)]}"
+                >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field
+                                name="product_id_sales_count"
+                                widget="statinfo"
+                                nolabel="1"
+                                class="mr4"
+                            />
+                            <field name="product_uom_name" />
+                        </span>
+                        <span class="o_stat_text">Sold</span>
+                    </div>
+                </button>
+            </div>
+        </field>
+    </record>
+</odoo>
