@@ -358,7 +358,7 @@ class StockBuffer(models.Model):
     )
     def _compute_red_zone(self):
         for rec in self:
-            if rec.replenish_method in ["replenish", "min_max"]:
+            if rec.product_id and rec.replenish_method in ["replenish", "min_max"]:
                 rec.red_base_qty = float_round(
                     rec.dlt * rec.adu * rec.buffer_profile_id.lead_time_id.factor,
                     precision_rounding=rec.product_uom.rounding,
@@ -368,8 +368,10 @@ class StockBuffer(models.Model):
                     precision_rounding=rec.product_uom.rounding,
                 )
                 rec.red_zone_qty = rec.red_base_qty + rec.red_safety_qty
-            else:
+            elif rec.product_id and rec.replenish_method == "replenish_override":
                 rec.red_zone_qty = rec.red_override
+            else:
+                rec.red_zone_qty = 0.0
 
     @api.depends(
         "dlt",
@@ -383,7 +385,7 @@ class StockBuffer(models.Model):
     )
     def _compute_green_zone(self):
         for rec in self:
-            if rec.replenish_method in ["replenish", "min_max"]:
+            if rec.product_id and rec.replenish_method in ["replenish", "min_max"]:
                 # Using imposed or desired minimum order cycle
                 rec.green_zone_oc = float_round(
                     rec.order_cycle * rec.adu,
@@ -405,8 +407,10 @@ class StockBuffer(models.Model):
                 rec.green_zone_qty = max(
                     rec.green_zone_oc, rec.green_zone_lt_factor, rec.green_zone_moq
                 )
-            else:
+            elif rec.product_id and rec.replenish_method == "replenish_override":
                 rec.green_zone_qty = rec.green_override
+            else:
+                rec.green_zone_qty = 0.0
             rec.top_of_green = rec.green_zone_qty + rec.top_of_yellow
 
     @api.depends(
@@ -423,14 +427,16 @@ class StockBuffer(models.Model):
     )
     def _compute_yellow_zone(self):
         for rec in self:
-            if rec.replenish_method == "min_max":
+            if rec.product_id and rec.replenish_method == "min_max":
                 rec.yellow_zone_qty = 0
-            elif rec.replenish_method == "replenish":
+            elif rec.product_id and rec.replenish_method == "replenish":
                 rec.yellow_zone_qty = float_round(
                     rec.dlt * rec.adu, precision_rounding=rec.product_uom.rounding
                 )
-            else:
+            elif rec.product_id and rec.replenish_method == "replenish_override":
                 rec.yellow_zone_qty = rec.yellow_override
+            else:
+                rec.yellow_zone_qty = 0.0
             rec.top_of_yellow = rec.yellow_zone_qty + rec.red_zone_qty
 
     @api.depends(
