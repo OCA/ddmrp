@@ -49,6 +49,8 @@ class StockBuffer(models.Model):
     _description = "Stock Buffer"
     _order = "planning_priority_level asc, net_flow_position asc"
 
+    CRON_DDMRP_CHUNKS = 50
+
     @api.model
     def default_get(self, fields):
         res = super().default_get(fields)
@@ -1468,8 +1470,8 @@ class StockBuffer(models.Model):
         buffer_ids = self.search([]).ids
         i = 0
         j = len(buffer_ids)
-        for buffer_chunk_ids in split_every(50, buffer_ids):
-            for b in self.browse(buffer_chunk_ids):
+        for buffer_chunk_ids in split_every(self.CRON_DDMRP_CHUNKS, buffer_ids):
+            for b in self.browse(buffer_chunk_ids).exists():
                 try:
                     i += 1
                     _logger.debug("ddmrp cron_adu: {}. ({}/{})".format(b.name, i, j))
@@ -1478,12 +1480,12 @@ class StockBuffer(models.Model):
                             b._calc_adu()
                     else:
                         b._calc_adu()
-                    if auto_commit:
-                        self._cr.commit()
                 except Exception:
                     _logger.exception("Fail to compute ADU for buffer %s", b.name)
                     if not automatic:
                         raise
+            if auto_commit:
+                self._cr.commit()
         _logger.info("End cron_ddmrp_adu.")
         return True
 
@@ -1514,27 +1516,24 @@ class StockBuffer(models.Model):
         auto_commit = not getattr(threading.currentThread(), "testing", False)
         _logger.info("Start cron_ddmrp.")
         buffer_ids = self.search([]).ids
-
         i = 0
         j = len(buffer_ids)
-        for buffer_chunk_ids in split_every(50, buffer_ids):
-            for b in self.browse(buffer_chunk_ids):
+        for buffer_chunk_ids in split_every(self.CRON_DDMRP_CHUNKS, buffer_ids):
+            for b in self.browse(buffer_chunk_ids).exists():
                 i += 1
                 _logger.debug("ddmrp cron: {}. ({}/{})".format(b.name, i, j))
                 try:
                     if automatic:
                         with self.env.cr.savepoint():
-                            b.refresh()
                             b.cron_actions()
                     else:
-                        b.refresh()
                         b.cron_actions()
-                    if auto_commit:
-                        self._cr.commit()
                 except Exception:
                     _logger.exception("Fail updating buffer %s", b.name)
                     if not automatic:
                         raise
+            if auto_commit:
+                self._cr.commit()
         _logger.info("End cron_ddmrp.")
         return True
 
