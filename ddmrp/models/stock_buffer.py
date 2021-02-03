@@ -1493,6 +1493,18 @@ class StockBuffer(models.Model):
         """This method is meant to be inherited by other modules in order to
         enhance extensibility."""
         self.ensure_one()
+        self.invalidate_cache(
+            fnames=[
+                "product_location_qty",
+                "incoming_location_qty",
+                "outgoing_location_qty",
+                "virtual_location_qty",
+                "product_location_qty_available_not_res",
+                "dlt",
+                "distributed_source_location_qty",
+            ],
+            ids=self.ids,
+        )
         if not only_nfp or only_nfp == "out":
             self._calc_qualified_demand()
         if not only_nfp or only_nfp == "in":
