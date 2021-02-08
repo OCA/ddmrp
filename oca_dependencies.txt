@@ -3,3 +3,4 @@ web
 manufacture
 server-tools
 queue
+sale-workflow
