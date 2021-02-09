@@ -20,6 +20,7 @@
         "mrp_multi_level",
         "base_cron_exclusion",
         "stock_warehouse_calendar",
+        "stock_helper",
     ],
     "data": [
         "data/product_adu_calculation_method_data.xml",
