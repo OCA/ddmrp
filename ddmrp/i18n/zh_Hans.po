@@ -611,12 +611,6 @@ msgid "Information source used for past calculation."
 msgstr ""
 
 #. module: ddmrp
-#: model:ir.model,name:ddmrp.model_stock_location
-#, fuzzy
-msgid "Inventory Locations"
-msgstr "进入在 DLT 内"
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__item_type
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__item_type
 msgid "Item Type"
@@ -1666,6 +1660,10 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Inventory Locations"
+#~ msgstr "进入在 DLT 内"
 
 #~ msgid "Incoming within DLT"
 #~ msgstr "进入在 DLT 内"

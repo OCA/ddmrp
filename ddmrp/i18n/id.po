@@ -603,11 +603,6 @@ msgid "Information source used for past calculation."
 msgstr ""
 
 #. module: ddmrp
-#: model:ir.model,name:ddmrp.model_stock_location
-msgid "Inventory Locations"
-msgstr ""
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__item_type
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__item_type
 msgid "Item Type"
