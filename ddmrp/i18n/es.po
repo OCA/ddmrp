@@ -617,12 +617,6 @@ msgid "Information source used for past calculation."
 msgstr "Fuente de información para cálculo a pasado."
 
 #. module: ddmrp
-#: model:ir.model,name:ddmrp.model_stock_location
-#, fuzzy
-msgid "Inventory Locations"
-msgstr "Entrante en Ubicación"
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__item_type
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__item_type
 msgid "Item Type"
@@ -1672,6 +1666,10 @@ msgstr "minutos"
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr "o"
+
+#, fuzzy
+#~ msgid "Inventory Locations"
+#~ msgstr "Entrante en Ubicación"
 
 #~ msgid "Quantity On Location (Unreserved)"
 #~ msgstr "Cantidad en Ubicación (No Reservada)"
