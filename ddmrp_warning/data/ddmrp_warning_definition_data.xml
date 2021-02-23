@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record
+        id="ddmrp_warning_definition_dlt_and_spike_horizon"
+        model="ddmrp.warning.definition"
+    >
+        <field name="name">Spike horizon is smaller than DLT</field>
+        <field name="python_code">buffer.order_spike_horizon &lt; buffer.dlt</field>
+        <field name="severity">3_high</field>
+    </record>
+    <record
+        id="ddmrp_warning_definition_moq_and_qty_multiple"
+        model="ddmrp.warning.definition"
+    >
+        <field name="name">Quantity multiple bigger than MOQ</field>
+        <field
+            name="python_code"
+        >buffer.minimum_order_quantity &lt; buffer.qty_multiple</field>
+        <field name="severity">2_mid</field>
+    </record>
+    <record
+        id="ddmrp_warning_definition_moq_and_procure_min_qty"
+        model="ddmrp.warning.definition"
+    >
+        <field name="name">Minimum Procure Batch bigger than MOQ</field>
+        <field
+            name="python_code"
+        >buffer.minimum_order_quantity &lt; buffer.procure_min_qty</field>
+        <field name="severity">2_mid</field>
+    </record>
+    <record id="ddmrp_warning_definition_adu_zero" model="ddmrp.warning.definition">
+        <field name="name">ADU is zero</field>
+        <field name="python_code">buffer.adu == 0.0</field>
+        <field name="severity">1_low</field>
+    </record>
+</odoo>
