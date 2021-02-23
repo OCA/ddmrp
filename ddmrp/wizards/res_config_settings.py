@@ -21,6 +21,9 @@ class ResConfigSettings(models.TransientModel):
     module_stock_buffer_capacity_limit = fields.Boolean(
         string="Storage Capacity Limits",
     )
+    module_ddmrp_warning = fields.Boolean(
+        string="Configuration Warnings in Stock Buffers",
+    )
     module_ddmrp_chatter = fields.Boolean(string="Chatter in Stock Buffers",)
     ddmrp_auto_update_nfp = fields.Boolean(
         related="company_id.ddmrp_auto_update_nfp", readonly=False
