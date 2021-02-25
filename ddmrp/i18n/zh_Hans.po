@@ -265,6 +265,11 @@ msgid "Config Settings"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_warning
+msgid "Configuration Warnings in Stock Buffers"
+msgstr ""
+
+#. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "Create Procurement"
 msgstr "创建补货"
@@ -470,6 +475,11 @@ msgstr ""
 #, python-format
 msgid "Future-looking"
 msgstr "未来样子"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Get configuration warnings for stock buffers."
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__mrp_production__execution_priority_level__3_green
