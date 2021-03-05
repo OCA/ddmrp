@@ -4,12 +4,12 @@
 {
     "name": "DDMRP Adjustment",
     "summary": "Allow to apply factor adjustments to buffers.",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "development_status": "Beta",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],
     "website": "https://github.com/OCA/ddmrp",
-    "category": "Warehouse Management",
+    "category": "Warehouse",
     "depends": ["ddmrp", "web_widget_x2many_2d_matrix", "date_range"],
     "data": [
         "security/ir.model.access.csv",
