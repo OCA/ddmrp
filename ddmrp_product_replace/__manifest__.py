@@ -8,17 +8,14 @@
     "version": "11.0.1.0.1",
     "development_status": "Beta",
     "author": "Eficent, Odoo Community Association (OCA)",
-    "maintainers": ['jbeficent', 'lreficent'],
+    "maintainers": ["jbeficent", "lreficent"],
     "website": "https://github.com/OCA/ddmrp",
     "category": "Warehouse Management",
-    "depends": [
-        "ddmrp",
-        "stock_putaway_product",
-    ],
+    "depends": ["ddmrp", "stock_putaway_product",],
     "data": [
         "wizards/ddmrp_product_replace_view.xml",
         "views/stock_warehouse_orderpoint_view.xml",
     ],
     "license": "AGPL-3",
-    'installable': True,
+    "installable": True,
 }

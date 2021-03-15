@@ -1,58 +1,68 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2017 Eficent Business and IT Consulting Services S.L.
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
 <odoo>
-
     <record id="view_ddmrp_adjustment_sheet_wizard_form" model="ir.ui.view">
         <field name="name">ddmrp.product.replace.form</field>
         <field name="model">ddmrp.product.replace</field>
         <field name="arch" type="xml">
             <form string="Product Replacement Tool">
-                <group name="old_product"
-                       string="Select Replaced Products">
-                    <field name="old_product_id"/>
+                <group name="old_product" string="Select Replaced Products">
+                    <field name="old_product_id" />
                     <field name="orderpoint_ids">
                         <tree>
-                            <field name="name"/>
-                            <field name="warehouse_id"/>
-                            <field name="location_id"/>
-                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="name" />
+                            <field name="warehouse_id" />
+                            <field name="location_id" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
                         </tree>
                     </field>
                 </group>
                 <group name="new_product" string="Select Replacing Product">
-                    <field name="use_existing"/>
-                    <field name="new_product_id"
-                           attrs="{'invisible': [('use_existing', '!=', 'existing')]}"/>
-                    <field name="new_product_default_code"
-                           attrs="{'invisible': [('use_existing', '!=', 'new')]}"/>
-                    <field name="new_product_name"
-                           attrs="{'invisible': [('use_existing', '!=', 'new')]}"/>
-                    <field name="copy_route"/>
-                    <field name="copy_putaway"/>
-                    <field name="consider_past_demand"/>
+                    <field name="use_existing" />
+                    <field
+                        name="new_product_id"
+                        attrs="{'invisible': [('use_existing', '!=', 'existing')]}"
+                    />
+                    <field
+                        name="new_product_default_code"
+                        attrs="{'invisible': [('use_existing', '!=', 'new')]}"
+                    />
+                    <field
+                        name="new_product_name"
+                        attrs="{'invisible': [('use_existing', '!=', 'new')]}"
+                    />
+                    <field name="copy_route" />
+                    <field name="copy_putaway" />
+                    <field name="consider_past_demand" />
                 </group>
                 <footer>
-                    <button name="button_validate" string="Validate"
-                            type="object" class="oe_highlight"/> or
-                    <button string="Cancel" class="oe_link" special="cancel"/>
+                    <button
+                        name="button_validate"
+                        string="Validate"
+                        type="object"
+                        class="oe_highlight"
+                    /> or
+                    <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>
             </form>
-      </field>
+        </field>
     </record>
-
     <act_window
         id="action_ddmrp_product_replace_wizard"
         name="Product Replacement Tool"
         res_model="ddmrp.product.replace"
         src_model="ddmrp.product.replace"
         view_mode="form"
-        target="new"/>
-
+        target="new"
+    />
     <menuitem
         id="menu_ddmrp_product_replace"
         parent="ddmrp.menu_ddmrp_config"
         action="action_ddmrp_product_replace_wizard"
-        groups="stock.group_stock_manager"/>
-
+        groups="stock.group_stock_manager"
+    />
 </odoo>
