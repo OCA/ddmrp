@@ -1,21 +1,17 @@
-# Copyright 2017-18 Eficent Business and IT Consulting Services S.L.
-#   (http://www.eficent.com)
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+# Copyright 2017-21 ForgeFlow S.L. (https://www.forgeflow.com)
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 {
     "name": "DDMRP Product Replace",
     "summary": "Provides a assisting tool for product replacement.",
-    "version": "11.0.1.0.1",
+    "version": "13.0.1.0.0",
     "development_status": "Beta",
-    "author": "Eficent, Odoo Community Association (OCA)",
-    "maintainers": ["jbeficent", "lreficent"],
+    "author": "ForgeFlow, Odoo Community Association (OCA)",
+    "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],
     "website": "https://github.com/OCA/ddmrp",
     "category": "Warehouse Management",
-    "depends": ["ddmrp", "stock_putaway_product",],
-    "data": [
-        "wizards/ddmrp_product_replace_view.xml",
-        "views/stock_warehouse_orderpoint_view.xml",
-    ],
-    "license": "AGPL-3",
+    "depends": ["ddmrp"],
+    "data": ["wizards/ddmrp_product_replace_view.xml", "views/stock_buffer_view.xml"],
+    "license": "LGPL-3",
     "installable": True,
 }

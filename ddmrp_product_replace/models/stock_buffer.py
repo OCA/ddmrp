@@ -1,14 +1,12 @@
-# Copyright 2017 Eficent Business and IT Consulting Services S.L.
-#   (http://www.eficent.com)
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-
+# Copyright 2019-21 ForgeFlow S.L. (https://www.forgeflow.com)
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
-class StockWarehouseOrderpoint(models.Model):
-    _inherit = "stock.warehouse.orderpoint"
+class StockBuffer(models.Model):
+    _inherit = "stock.buffer"
 
     demand_product_ids = fields.Many2many(
         comodel_name="product.product",
@@ -25,15 +23,14 @@ class StockWarehouseOrderpoint(models.Model):
                     _("Buffered product must be considered as demand.")
                 )
 
-    @api.multi
     def _past_moves_domain(self, date_from, date_to, locations):
         if not self.demand_product_ids:
             return super()._past_moves_domain(date_from, date_to, locations)
-        return [
-            ("state", "=", "done"),
-            ("location_id", "in", locations.ids),
-            ("location_dest_id", "not in", locations.ids),
-            ("product_id", "in", self.demand_product_ids.ids),
-            ("date", ">=", date_from),
-            ("date", "<=", date_to),
-        ]
+        domain = super()._past_moves_domain(date_from, date_to, locations)
+        index_replace = False
+        for n, clause in enumerate(domain):
+            if isinstance(clause, tuple) and clause[0] == "product_id":
+                index_replace = n
+        if index_replace:
+            domain[index_replace] = ("product_id", "in", self.demand_product_ids.ids)
+        return domain
