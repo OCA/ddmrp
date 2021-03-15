@@ -1,18 +1,17 @@
-# Copyright 2017 Eficent Business and IT Consulting Services S.L.
-#   (http://www.eficent.com)
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+# Copyright 2017-21 ForgeFlow S.L. (https://www.forgeflow.com)
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import _, api, fields, models
 
 
 class DdmrpProductReplace(models.TransientModel):
     _name = "ddmrp.product.replace"
+    _description = "DDMRP Product Replace"
 
-    @api.multi
     @api.depends("old_product_id")
-    def _compute_orderpoint_ids(self):
+    def _compute_buffer_ids(self):
         for rec in self:
-            rec.orderpoint_ids = self.env["stock.warehouse.orderpoint"].search(
+            rec.buffer_ids = self.env["stock.buffer"].search(
                 [("product_id", "=", rec.old_product_id.id)]
             )
 
@@ -23,11 +22,11 @@ class DdmrpProductReplace(models.TransientModel):
         required=True,
         ondelete="cascade",
     )
-    orderpoint_ids = fields.Many2many(
-        comodel_name="stock.warehouse.orderpoint",
+    buffer_ids = fields.Many2many(
+        comodel_name="stock.buffer",
         string="Affected Buffers",
         readonly=True,
-        compute="_compute_orderpoint_ids",
+        compute="_compute_buffer_ids",
     )
     new_product_id = fields.Many2one(
         comodel_name="product.product",
@@ -49,25 +48,6 @@ class DdmrpProductReplace(models.TransientModel):
         default=True,
     )
 
-    def _prepare_copy_putaway_dict(self, from_product, to_product):
-        putaways = (
-            from_product.product_putaway_ids
-            or from_product.product_tmpl_id.product_putaway_ids
-        )
-        return [
-            (
-                0,
-                0,
-                {
-                    "putaway_id": p.putaway_id.id,
-                    "fixed_location_id": p.fixed_location_id.id,
-                    "product_tmpl_id": to_product.product_tmpl_id.id,
-                },
-            )
-            for p in putaways
-        ]
-
-    @api.multi
     def button_validate(self):
         self.ensure_one()
         if self.use_existing == "new":
@@ -77,34 +57,22 @@ class DdmrpProductReplace(models.TransientModel):
             if not self.copy_route:
                 default["route_ids"] = None
             self.new_product_id = self.old_product_id.copy(default=default)
-            if self.copy_putaway and (
-                self.old_product_id.product_putaway_ids
-                or self.old_product_id.product_tmpl_id.product_putaway_ids
-            ):
-                self.new_product_id.write(
-                    {
-                        "product_putaway_ids": self._prepare_copy_putaway_dict(
-                            self.old_product_id, self.new_product_id
-                        )
-                    }
-                )
         elif self.use_existing == "existing":
             if self.copy_route:
                 self.new_product_id.write(
-                    {"route_ids": [(6, 0, self.old_product_id.route_ids.ids)],}
+                    {"route_ids": [(6, 0, self.old_product_id.route_ids.ids)]}
                 )
-            if self.copy_putaway and (
-                self.old_product_id.product_putaway_ids
-                or self.old_product_id.product_tmpl_id.product_putaway_ids
-            ):
-                self.new_product_id.write(
-                    {
-                        "product_putaway_ids": self._prepare_copy_putaway_dict(
-                            self.old_product_id, self.new_product_id
-                        ),
-                    }
-                )
-        if self.orderpoint_ids:
+        # Check if copy putaway strategies is True
+        if self.copy_putaway:
+            # Check if there exist putaway strategies for the from product
+            putaway_ids = self.env["stock.putaway.rule"].search(
+                [("product_id", "=", self.old_product_id.id)]
+            )
+            if putaway_ids:
+                # Copy putaway strategies
+                default_putaway = dict(product_id=self.new_product_id.id,)
+                putaway_ids.copy(default=default_putaway)
+        if self.buffer_ids:
             vals = {
                 "product_id": self.new_product_id.id,
             }
@@ -112,7 +80,7 @@ class DdmrpProductReplace(models.TransientModel):
                 vals["demand_product_ids"] = [
                     (6, 0, (self.old_product_id + self.new_product_id).ids)
                 ]
-            self.orderpoint_ids.write(vals)
+            self.buffer_ids.write(vals)
         return {
             "name": _("Replacing Product"),
             "res_id": self.new_product_id.id,
