@@ -5,19 +5,15 @@
 {
     "name": "DDMRP Exclude Moves ADU Calc",
     "summary": "Define additional rules to exclude certain moves from ADU "
-               "calculation",
+    "calculation",
     "version": "11.0.1.0.0",
-    "author": "Eficent,"
-              "Odoo Community Association (OCA)",
-    "maintainers": ['jbeficent', 'lreficent'],
+    "author": "Eficent," "Odoo Community Association (OCA)",
+    "maintainers": ["jbeficent", "lreficent"],
     "website": "https://github.com/OCA/ddmrp",
     "category": "Warehouse Management",
     "depends": ["ddmrp"],
-    "data": [
-        "views/stock_move_view.xml",
-        "views/stock_location_view.xml",
-    ],
+    "data": ["views/stock_move_view.xml", "views/stock_location_view.xml",],
     "license": "AGPL-3",
-    'installable': True,
-    'application': False,
+    "installable": True,
+    "application": False,
 }
