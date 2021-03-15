@@ -9,7 +9,8 @@ class StockLocation(models.Model):
     _inherit = "stock.location"
 
     exclude_from_adu = fields.Boolean(
-        string='Exclude this location from ADU calculation', copy=False,
+        string="Exclude this location from ADU calculation",
+        copy=False,
         help="If this flag is set stock moves into this location will be "
-             "excluded from ADU calculation in the origin location buffer.",
+        "excluded from ADU calculation in the origin location buffer.",
     )
