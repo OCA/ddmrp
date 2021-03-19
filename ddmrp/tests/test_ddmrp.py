@@ -138,7 +138,7 @@ class TestDdmrp(TestDdmrpCommon):
         pickingInternals += self.create_pickinginternalA(date_move, 60)
         for picking in pickingInternals:
             picking.action_assign()
-            picking.action_done()
+            picking._action_done()
 
         self.bufferModel.cron_ddmrp_adu()
 
@@ -508,7 +508,7 @@ class TestDdmrp(TestDdmrpCommon):
         date_move = datetime.today()
         pickingOut = self.create_pickingoutA(date_move, 150)
         pickingOut.move_lines.quantity_done = 150
-        pickingOut.action_done()
+        pickingOut._action_done()
         self.bufferModel.cron_ddmrp()
 
         expected_value = 40.0
@@ -672,7 +672,7 @@ class TestDdmrp(TestDdmrpCommon):
         # Now we confirm the shipment of the 150
         pickingOut.action_assign()
         pickingOut.move_lines.quantity_done = 150
-        pickingOut.action_done()
+        pickingOut._action_done()
         self.bufferModel.cron_ddmrp()
 
         # On hand/TOR = (50 / 30) * 100 = 166.67
@@ -691,7 +691,7 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_a.procure_recommended_qty, expected_value)
 
         # Now we ship them
-        pickingOut.action_done()
+        pickingOut._action_done()
         self.bufferModel.cron_ddmrp()
 
         # Net Flow Position = on hand + incoming - qualified demand = 200 + 0

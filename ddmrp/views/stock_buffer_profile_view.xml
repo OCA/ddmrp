@@ -8,6 +8,9 @@
                 <sheet>
                     <div class="oe_edit_only">
                         <label for="name" class="oe_inline" />
+                        <h1>
+                        <field name="name" />
+                        </h1>
                     </div>
                     <group>
                         <group name="replenish_method">

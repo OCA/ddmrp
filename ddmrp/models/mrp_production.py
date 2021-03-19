@@ -31,7 +31,6 @@ class MrpProduction(models.Model):
         move.write(
             {
                 "date": self.date_planned_finished,
-                "date_expected": self.date_planned_finished,
             }
         )
 
