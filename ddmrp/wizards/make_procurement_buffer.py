@@ -164,19 +164,33 @@ class MakeProcurementBufferItem(models.TransientModel):
     recommended_qty = fields.Float(string="Recommended Qty", readonly=True)
     qty = fields.Float(string="Qty")
     qty_without_security = fields.Float(string="Quantity")
-    uom_id = fields.Many2one(string="Unit of Measure", comodel_name="uom.uom",)
-    date_planned = fields.Date(string="Planned Date", required=False,)
+    uom_id = fields.Many2one(
+        string="Unit of Measure",
+        comodel_name="uom.uom",
+    )
+    date_planned = fields.Date(
+        string="Planned Date",
+        required=False,
+    )
     buffer_id = fields.Many2one(
-        string="Stock Buffer", comodel_name="stock.buffer", readonly=False,
+        string="Stock Buffer",
+        comodel_name="stock.buffer",
+        readonly=False,
     )
     product_id = fields.Many2one(
-        string="Product", comodel_name="product.product", readonly=True,
+        string="Product",
+        comodel_name="product.product",
+        readonly=True,
     )
     warehouse_id = fields.Many2one(
-        string="Warehouse", comodel_name="stock.warehouse", readonly=True,
+        string="Warehouse",
+        comodel_name="stock.warehouse",
+        readonly=True,
     )
     location_id = fields.Many2one(
-        string="Location", comodel_name="stock.location", readonly=True,
+        string="Location",
+        comodel_name="stock.location",
+        readonly=True,
     )
 
     @api.onchange("uom_id")

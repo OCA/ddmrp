@@ -1,4 +1,4 @@
-odoo.define("ddmrp.list_renderer_buffer_info", function(require) {
+odoo.define("ddmrp.list_renderer_buffer_info", function (require) {
     "use strict";
 
     var ListRenderer = require("web.ListRenderer");
@@ -10,7 +10,7 @@ odoo.define("ddmrp.list_renderer_buffer_info", function(require) {
          *
          * @override
          */
-        init: function(parent, state) {
+        init: function (parent, state) {
             this.detailDP = new concurrency.DropPrevious();
             this.openedPopovers = [];
             this.field_buffer_type = "One2many";
@@ -20,7 +20,7 @@ odoo.define("ddmrp.list_renderer_buffer_info", function(require) {
             }
             this._super.apply(this, arguments);
         },
-        _renderBodyCell: function(record, node, colIndex, options) {
+        _renderBodyCell: function (record, node, colIndex, options) {
             var $td = this._super.apply(this, arguments);
             options = node.attrs.options;
             if (typeof options === "string") {
@@ -54,7 +54,7 @@ odoo.define("ddmrp.list_renderer_buffer_info", function(require) {
             }
             return $td;
         },
-        _updateNodeStyle: function($td, record, node, color_field) {
+        _updateNodeStyle: function ($td, record, node, color_field) {
             var text = $td.text();
             $td.text("");
             $td.css("text-align", "center");
@@ -73,7 +73,7 @@ odoo.define("ddmrp.list_renderer_buffer_info", function(require) {
                 $td.append(span);
             }
         },
-        _dismissAllPopovers: function() {
+        _dismissAllPopovers: function () {
             // Remove popovers for all elements with class circle
             for (var i = 0; i < this.openedPopovers.length; i++) {
                 var popover = $("#" + this.openedPopovers[i].attr("aria-describedby"));
@@ -87,13 +87,13 @@ odoo.define("ddmrp.list_renderer_buffer_info", function(require) {
 
         // HANDLERS
 
-        _onBodyClickListener: function() {
+        _onBodyClickListener: function () {
             if (this.openedPopovers.length !== 0) {
                 this._dismissAllPopovers();
             }
         },
 
-        _onCellClickListener: function(event) {
+        _onCellClickListener: function (event) {
             // Stop from going to the form view
             event.preventDefault();
             event.stopPropagation();
@@ -122,7 +122,7 @@ odoo.define("ddmrp.list_renderer_buffer_info", function(require) {
                     model: "stock.buffer",
                     method: "get_ddmrp_chart",
                     args: [id],
-                }).then(function(result) {
+                }).then(function (result) {
                     var content = result[0];
                     var script = result[1];
                     var scriptCode = script.substring(
@@ -158,7 +158,7 @@ odoo.define("ddmrp.list_renderer_buffer_info", function(require) {
                 })
             );
         },
-        _onMouseLeaveListener: function() {
+        _onMouseLeaveListener: function () {
             this._dismissAllPopovers();
         },
     });
