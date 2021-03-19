@@ -123,8 +123,7 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertAlmostEqual(self.buffer_a.adu, to_assert_value, places=2)
 
     def test_05_adu_calculation_internal_past_120_days(self):
-        """Test that internal moves will not affect ADU calculation.
-        """
+        """Test that internal moves will not affect ADU calculation."""
         method = self.env.ref("ddmrp.adu_calculation_method_past_120")
         self.buffer_a.adu_calculation_method = method.id
         self.bufferModel.cron_ddmrp_adu()
@@ -331,7 +330,7 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_a.qualified_demand, expected_result)
 
     def test_13_qualified_demand_4(self):
-        """ Moves outside of order spike horizon, above threshold. Should
+        """Moves outside of order spike horizon, above threshold. Should
         have no effect on the qualified demand"""
         date_move = datetime.today() + timedelta(days=100)
         self.create_pickingoutA(date_move, self.buffer_a.order_spike_threshold * 2)
