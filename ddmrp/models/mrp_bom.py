@@ -17,9 +17,14 @@ class MrpBom(models.Model):
         help="True when the product has an DDMRP buffer associated.",
     )
     buffer_id = fields.Many2one(
-        comodel_name="stock.buffer", string="Stock Buffer", compute="_compute_buffer",
+        comodel_name="stock.buffer",
+        string="Stock Buffer",
+        compute="_compute_buffer",
     )
-    dlt = fields.Float(string="Decoupled Lead Time (days)", compute="_compute_dlt",)
+    dlt = fields.Float(
+        string="Decoupled Lead Time (days)",
+        compute="_compute_dlt",
+    )
 
     def _get_search_buffer_domain(self):
         product = self.product_id
@@ -113,7 +118,10 @@ class MrpBomLine(models.Model):
         string="Stock Buffer",
         compute="_compute_is_buffered",
     )
-    dlt = fields.Float(string="Decoupled Lead Time (days)", compute="_compute_dlt",)
+    dlt = fields.Float(
+        string="Decoupled Lead Time (days)",
+        compute="_compute_dlt",
+    )
 
     def _get_search_buffer_domain(self):
         product = self.product_id or self.product_tmpl_id.product_variant_ids[0]
