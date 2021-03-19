@@ -8,7 +8,9 @@ class Product(models.Model):
     _inherit = "product.product"
 
     buffer_ids = fields.One2many(
-        comodel_name="stock.buffer", string="Stock Buffers", inverse_name="product_id",
+        comodel_name="stock.buffer",
+        string="Stock Buffers",
+        inverse_name="product_id",
     )
 
     def write(self, values):
