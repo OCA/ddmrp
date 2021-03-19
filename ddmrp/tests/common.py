@@ -300,7 +300,6 @@ class TestDdmrpCommon(common.SavepointCase):
                         {
                             "name": "Test move",
                             "product_id": self.productA.id,
-                            "date_expected": date_move,
                             "date": date_move,
                             "product_uom": self.productA.uom_id.id,
                             "product_uom_qty": qty,
@@ -328,7 +327,6 @@ class TestDdmrpCommon(common.SavepointCase):
                         {
                             "name": "Test move",
                             "product_id": self.productA.id,
-                            "date_expected": date_move,
                             "date": date_move,
                             "product_uom": self.productA.uom_id.id,
                             "product_uom_qty": qty,
@@ -356,7 +354,6 @@ class TestDdmrpCommon(common.SavepointCase):
                         {
                             "name": "Test move",
                             "product_id": self.productA.id,
-                            "date_expected": date_move,
                             "date": date_move,
                             "product_uom": self.productA.uom_id.id,
                             "product_uom_qty": qty,
@@ -384,7 +381,6 @@ class TestDdmrpCommon(common.SavepointCase):
                         {
                             "name": "Test move",
                             "product_id": product.id,
-                            "date_expected": date_move,
                             "date": date_move,
                             "product_uom": product.uom_id.id,
                             "product_uom_qty": qty,
@@ -402,7 +398,7 @@ class TestDdmrpCommon(common.SavepointCase):
         """Do picking with only one move on the given date."""
         picking.action_confirm()
         picking.move_lines.quantity_done = picking.move_lines.product_uom_qty
-        picking.action_done()
+        picking._action_done()
         for move in picking.move_lines:
             move.date = date
 
@@ -427,7 +423,6 @@ class TestDdmrpCommon(common.SavepointCase):
             {
                 "name": "Test inventory move",
                 "product_id": self.productA.id,
-                "date_expected": date_move,
                 "date": date_move,
                 "product_uom": self.productA.uom_id.id,
                 "product_uom_qty": qty,
@@ -439,6 +434,6 @@ class TestDdmrpCommon(common.SavepointCase):
 
     def _do_move(self, move, date):
         move._action_confirm()
-        move.move_line_ids.quantity_done = move.move_line_ids.product_uom_qty
+        move.move_line_ids.qty_done = move.move_line_ids.product_uom_qty
         move._action_done()
         move.date = date

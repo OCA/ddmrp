@@ -27,7 +27,7 @@
                     options='{"color_from": "execution_priority_level"}'
                 />
                 <button
-                    string="Refresh Buffer"
+                    title="Refresh Buffer"
                     name="cron_actions"
                     icon="fa-refresh"
                     type="object"
@@ -49,7 +49,7 @@
                     optional="hide"
                 />
                 <button
-                    string="Open Non-completed Moves"
+                    title="Open Non-completed Moves"
                     name="open_moves"
                     icon="fa-exchange"
                     type="object"
@@ -59,20 +59,20 @@
                 <field name="procure_recommended_qty" />
                 <field name="procure_uom_id" groups="uom.group_uom" optional="show" />
                 <button
-                    string="Create Procurement"
+                    title="Create Procurement"
                     name="%(ddmrp.act_make_procurement_from_buffer)d"
                     icon="fa-cogs"
                     type="action"
                 />
                 <button
-                    string="Some incoming quantities are outside of the DLT Horizon and may require rescheduling. Press this button to display the involved supply orders"
+                    title="Some incoming quantities are outside of the DLT Horizon and may require rescheduling. Press this button to display the involved supply orders"
                     name="action_view_supply_outside_dlt_window"
                     icon="fa-warning"
                     type="object"
                     attrs="{'invisible':[('incoming_outside_dlt_qty', '=', 0), ('rfq_outside_dlt_qty', '=', 0)]}"
                 />
                 <button
-                    string="No stock available on source location for distributed buffer"
+                    title="No stock available on source location for distributed buffer"
                     name="action_dummy"
                     icon="fa-warning"
                     type="object"
@@ -114,7 +114,7 @@
                             attrs="{'invisible': [('item_type', '!=', 'purchased')]}"
                         />
                         <button
-                            string="Refresh Buffer"
+                            title="Refresh Buffer"
                             name="cron_actions"
                             class="oe_stat_button"
                             icon="fa-refresh"

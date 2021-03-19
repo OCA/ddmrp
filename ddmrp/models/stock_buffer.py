@@ -1,6 +1,7 @@
 # Copyright 2019-20 ForgeFlow S.L. (http://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
+
 import logging
 import operator as py_operator
 import threading
@@ -1150,8 +1151,8 @@ class StockBuffer(models.Model):
             ("location_dest_id", "not in", locations.ids),
             ("location_dest_id.usage", "!=", "inventory"),
             ("product_id", "=", self.product_id.id),
-            ("date_expected", ">=", date_from),
-            ("date_expected", "<=", date_to),
+            ("date", ">=", date_from),
+            ("date", "<=", date_to),
         ]
         if not self.env.company.ddmrp_adu_calc_include_scrap:
             domain.append(("location_id.scrap_location", "=", False))
@@ -1220,7 +1221,7 @@ class StockBuffer(models.Model):
                 "in",
                 ["waiting", "confirmed", "partially_available", "assigned"],
             ),
-            ("date_expected", "<=", date_to),
+            ("date", "<=", date_to),
         ]
 
     def _search_stock_moves_qualified_demand(self):
@@ -1256,7 +1257,7 @@ class StockBuffer(models.Model):
                 "in",
                 ["waiting", "confirmed", "partially_available", "assigned"],
             ),
-            ("date_expected", date_operator, date_to),
+            ("date", date_operator, date_to),
         ]
 
     def _search_stock_moves_incoming(self, outside_dlt=False):
@@ -1272,11 +1273,11 @@ class StockBuffer(models.Model):
         self.ensure_one()
         moves = self._search_stock_moves_incoming()
         incoming_by_days = {}
-        move_dates = [dt.date() for dt in moves.mapped("date_expected")]
+        move_dates = [dt.date() for dt in moves.mapped("date")]
         for move_date in move_dates:
             incoming_by_days[move_date] = 0.0
         for move in moves:
-            date = move.date_expected.date()
+            date = move.date.date()
             incoming_by_days[date] += move.product_qty
         return incoming_by_days
 
@@ -1284,11 +1285,11 @@ class StockBuffer(models.Model):
         self.ensure_one()
         moves = self._search_stock_moves_qualified_demand()
         demand_by_days = {}
-        move_dates = [dt.date() for dt in moves.mapped("date_expected")]
+        move_dates = [dt.date() for dt in moves.mapped("date")]
         for move_date in move_dates:
             demand_by_days[move_date] = 0.0
         for move in moves:
-            date = move.date_expected.date()
+            date = move.date.date()
             demand_by_days[date] += move.product_qty - move.reserved_availability
         return demand_by_days
 
@@ -1539,7 +1540,7 @@ class StockBuffer(models.Model):
                     if not automatic:
                         raise
             if auto_commit:
-                self._cr.commit()
+                self._cr.commit()  # pylint: disable=E8102
         _logger.info("End cron_ddmrp_adu.")
         return True
 
@@ -1599,7 +1600,7 @@ class StockBuffer(models.Model):
                     if not automatic:
                         raise
             if auto_commit:
-                self._cr.commit()
+                self._cr.commit()  # pylint: disable=E8102
         _logger.info("End cron_ddmrp.")
         return True
 

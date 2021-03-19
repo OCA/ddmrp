@@ -11,7 +11,7 @@
     "author": "ForgeFlow, " "Odoo Community Association (OCA)",
     "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],
     "website": "https://github.com/OCA/ddmrp",
-    "category": "Warehouse Management",
+    "category": "Warehouse",
     "depends": [
         "purchase_stock",
         "mrp_bom_location",
