@@ -264,11 +264,6 @@ msgid "Config Settings"
 msgstr ""
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_warning
-msgid "Configuration Warnings in Stock Buffers"
-msgstr ""
-
-#. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "Create Procurement"
 msgstr ""
@@ -471,11 +466,6 @@ msgid "Future-looking"
 msgstr ""
 
 #. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
-msgid "Get configuration warnings for stock buffers."
-msgstr ""
-
-#. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__mrp_production__execution_priority_level__3_green
 #: model:ir.model.fields.selection,name:ddmrp.selection__purchase_order_line__execution_priority_level__3_green
 #: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer__execution_priority_level__3_green
@@ -610,6 +600,11 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method__source_past
 msgid "Information source used for past calculation."
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_location
+msgid "Inventory Locations"
 msgstr ""
 
 #. module: ddmrp

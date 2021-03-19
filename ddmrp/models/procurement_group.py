@@ -18,7 +18,7 @@ class ProcurementGroup(models.Model):
 
     # UOM: (stock_orderpoint_uom):
     @api.model
-    def run(self, procurements):
+    def run(self, procurements, raise_user_error=True):
         Proc = self.env["procurement.group"].Procurement
         indexes_to_pop = []
         new_procs = []
