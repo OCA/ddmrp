@@ -15,10 +15,15 @@ from odoo.tools.misc import split_every
 
 _logger = logging.getLogger(__name__)
 try:
-    from bokeh.plotting import figure
     from bokeh.embed import components
-    from bokeh.models import Legend, ColumnDataSource, LabelSet
-    from bokeh.models import HoverTool, DatetimeTickFormatter
+    from bokeh.models import (
+        ColumnDataSource,
+        DatetimeTickFormatter,
+        HoverTool,
+        LabelSet,
+        Legend,
+    )
+    from bokeh.plotting import figure
 except (ImportError, IOError) as err:
     _logger.debug(err)
 
@@ -209,9 +214,12 @@ class StockBuffer(models.Model):
         return {"domain": {"product_uom": []}}
 
     def _prepare_procurement_values(
-        self, product_qty, date=False, group=False,
+        self,
+        product_qty,
+        date=False,
+        group=False,
     ):
-        """ Prepare specific key for moves or other components that will be
+        """Prepare specific key for moves or other components that will be
         created from a stock rule comming from a buffer. This method could
         be override in order to add other custom key that could
         be used in move/po creation.
@@ -245,7 +253,10 @@ class StockBuffer(models.Model):
         compute="_compute_procure_recommended_qty",
         store=True,
     )
-    procure_uom_id = fields.Many2one(comodel_name="uom.uom", string="Procurement UoM",)
+    procure_uom_id = fields.Many2one(
+        comodel_name="uom.uom",
+        string="Procurement UoM",
+    )
 
     @api.constrains("product_id", "procure_uom_id")
     def _check_procure_uom(self):
@@ -757,10 +768,16 @@ class StockBuffer(models.Model):
                 rec.main_supplier_id = False
 
     buffer_profile_id = fields.Many2one(
-        comodel_name="stock.buffer.profile", string="Buffer Profile", required=True,
+        comodel_name="stock.buffer.profile",
+        string="Buffer Profile",
+        required=True,
     )
-    replenish_method = fields.Selection(related="buffer_profile_id.replenish_method",)
-    item_type = fields.Selection(related="buffer_profile_id.item_type",)
+    replenish_method = fields.Selection(
+        related="buffer_profile_id.replenish_method",
+    )
+    item_type = fields.Selection(
+        related="buffer_profile_id.item_type",
+    )
     main_supplier_id = fields.Many2one(
         comodel_name="res.partner",
         string="Main Supplier",
@@ -768,11 +785,19 @@ class StockBuffer(models.Model):
         store=True,
         index=True,
     )
-    green_override = fields.Float(string="Green Zone (Override)",)
-    yellow_override = fields.Float(string="Yellow Zone (Override)",)
-    red_override = fields.Float(string="Red Zone (Override)",)
+    green_override = fields.Float(
+        string="Green Zone (Override)",
+    )
+    yellow_override = fields.Float(
+        string="Yellow Zone (Override)",
+    )
+    red_override = fields.Float(
+        string="Red Zone (Override)",
+    )
     dlt = fields.Float(
-        string="DLT (days)", compute="_compute_dlt", help="Decoupled Lead Time (days)",
+        string="DLT (days)",
+        compute="_compute_dlt",
+        help="Decoupled Lead Time (days)",
     )
     adu = fields.Float(
         string="ADU",
@@ -790,11 +815,14 @@ class StockBuffer(models.Model):
         related="adu_calculation_method.method",
     )
     adu_fixed = fields.Float(
-        string="Fixed ADU", default=1.0, digits="Average Daily Usage",
+        string="Fixed ADU",
+        default=1.0,
+        digits="Average Daily Usage",
     )
     order_cycle = fields.Float(string="Minimum Order Cycle (days)")
     minimum_order_quantity = fields.Float(
-        string="Minimum Order Quantity", digits="Product Unit of Measure",
+        string="Minimum Order Quantity",
+        digits="Product Unit of Measure",
     )
     red_base_qty = fields.Float(
         string="Red Base Qty",
@@ -814,7 +842,11 @@ class StockBuffer(models.Model):
         digits="Product Unit of Measure",
         store=True,
     )
-    top_of_red = fields.Float(string="Top of Red", related="red_zone_qty", store=True,)
+    top_of_red = fields.Float(
+        string="Top of Red",
+        related="red_zone_qty",
+        store=True,
+    )
     green_zone_qty = fields.Float(
         string="Green Zone Qty",
         compute="_compute_green_zone",
@@ -866,11 +898,17 @@ class StockBuffer(models.Model):
         store=True,
     )
     qualified_demand = fields.Float(
-        string="Qualified demand", digits="Product Unit of Measure", readonly=True,
+        string="Qualified demand",
+        digits="Product Unit of Measure",
+        readonly=True,
     )
-    incoming_dlt_qty = fields.Float(string="Incoming (Within DLT)", readonly=True,)
+    incoming_dlt_qty = fields.Float(
+        string="Incoming (Within DLT)",
+        readonly=True,
+    )
     incoming_outside_dlt_qty = fields.Float(
-        string="Incoming (Outside DLT)", readonly=True,
+        string="Incoming (Outside DLT)",
+        readonly=True,
     )
     rfq_outside_dlt_qty = fields.Float(
         string="RFQ Qty (Outside DLT)",
@@ -879,13 +917,18 @@ class StockBuffer(models.Model):
         "the DLT horizon.",
     )
     net_flow_position = fields.Float(
-        string="Net flow position", digits="Product Unit of Measure", readonly=True,
+        string="Net flow position",
+        digits="Product Unit of Measure",
+        readonly=True,
     )
     net_flow_position_percent = fields.Float(
-        string="Net flow position (% of TOG)", readonly=True,
+        string="Net flow position (% of TOG)",
+        readonly=True,
     )
     planning_priority_level = fields.Selection(
-        string="Planning Priority Level", selection=_PRIORITY_LEVEL, readonly=True,
+        string="Planning Priority Level",
+        selection=_PRIORITY_LEVEL,
+        readonly=True,
     )
     execution_priority_level = fields.Selection(
         string="On-Hand Alert Level",
@@ -893,18 +936,27 @@ class StockBuffer(models.Model):
         store=True,
         readonly=True,
     )
-    on_hand_percent = fields.Float(string="On Hand/TOR (%)", store=True, readonly=True,)
+    on_hand_percent = fields.Float(
+        string="On Hand/TOR (%)",
+        store=True,
+        readonly=True,
+    )
     mrp_production_ids = fields.One2many(
         string="Manufacturing Orders",
         comodel_name="mrp.production",
         inverse_name="buffer_id",
     )
-    ddmrp_chart = fields.Text(string="DDMRP Chart", compute=_compute_ddmrp_chart,)
+    ddmrp_chart = fields.Text(
+        string="DDMRP Chart",
+        compute=_compute_ddmrp_chart,
+    )
     ddmrp_demand_chart = fields.Text(
-        string="DDMRP Demand Chart", compute="_compute_ddmrp_demand_supply_chart",
+        string="DDMRP Demand Chart",
+        compute="_compute_ddmrp_demand_supply_chart",
     )
     ddmrp_supply_chart = fields.Text(
-        string="DDMRP Supply Chart", compute="_compute_ddmrp_demand_supply_chart",
+        string="DDMRP Supply Chart",
+        compute="_compute_ddmrp_demand_supply_chart",
     )
     auto_procure = fields.Boolean(
         default=False,
@@ -1111,7 +1163,9 @@ class StockBuffer(models.Model):
         date_from = fields.Datetime.now()
         date_to = self.warehouse_id.wh_plan_days(date_from, horizon)
         date_to = date_to.replace(
-            hour=date_from.hour, minute=date_from.minute, second=date_from.second,
+            hour=date_from.hour,
+            minute=date_from.minute,
+            second=date_from.second,
         )
         locations = self.env["stock.location"].search(
             [("id", "child_of", [self.location_id.id])]

@@ -28,7 +28,8 @@ class ProductAduCalculationMethod(models.Model):
 
     name = fields.Char(string="Name", required=True)
     method = fields.Selection(
-        selection="_get_calculation_method", string="Calculation method",
+        selection="_get_calculation_method",
+        string="Calculation method",
     )
     source_past = fields.Selection(
         selection="_get_source_selection",
@@ -36,7 +37,8 @@ class ProductAduCalculationMethod(models.Model):
         help="Information source used for past calculation.",
     )
     horizon_past = fields.Float(
-        string="Past Horizon", help="Length-of-period horizon in days looking past.",
+        string="Past Horizon",
+        help="Length-of-period horizon in days looking past.",
     )
     factor_past = fields.Float(
         string="Past Factor",
@@ -59,7 +61,10 @@ class ProductAduCalculationMethod(models.Model):
         "assigned to the future part of the combination.",
         default=0.5,
     )
-    company_id = fields.Many2one(comodel_name="res.company", string="Company",)
+    company_id = fields.Many2one(
+        comodel_name="res.company",
+        string="Company",
+    )
 
     @api.constrains("method", "horizon_past", "horizon_future")
     def _check_horizon(self):
