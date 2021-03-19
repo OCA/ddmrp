@@ -11,12 +11,18 @@ class MrpProduction(models.Model):
     _inherit = "mrp.production"
 
     buffer_id = fields.Many2one(
-        comodel_name="stock.buffer", index=True, string="Stock Buffer",
+        comodel_name="stock.buffer",
+        index=True,
+        string="Stock Buffer",
     )
     execution_priority_level = fields.Selection(
-        string="Buffer On-Hand Alert Level", selection=_PRIORITY_LEVEL, readonly=True,
+        string="Buffer On-Hand Alert Level",
+        selection=_PRIORITY_LEVEL,
+        readonly=True,
     )
-    on_hand_percent = fields.Float(string="On Hand/TOR (%)",)
+    on_hand_percent = fields.Float(
+        string="On Hand/TOR (%)",
+    )
 
     # TODO: remove after PR https://github.com/odoo/odoo/pull/25424 has
     # been merged

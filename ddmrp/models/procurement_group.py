@@ -11,7 +11,7 @@ class ProcurementGroup(models.Model):
 
     @api.model
     def _run_scheduler_tasks(self, use_new_cursor=False, company_id=False):
-        """ Override the standard method to disable the possibility to
+        """Override the standard method to disable the possibility to
         automatically procure from orderpoints and to automatically
         reserve stock moves."""
         return True
