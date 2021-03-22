@@ -16,6 +16,7 @@ setuptools.setup(
         'odoo13-addon-ddmrp_exclude_moves_adu_calc',
         'odoo13-addon-ddmrp_history',
         'odoo13-addon-ddmrp_packaging',
+        'odoo13-addon-ddmrp_product_replace',
         'odoo13-addon-ddmrp_sale',
         'odoo13-addon-ddmrp_warning',
         'odoo13-addon-stock_buffer_capacity_limit',
