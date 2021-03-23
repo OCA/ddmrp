@@ -32,6 +32,11 @@
                         </h1>
                     </div>
                     <group>
+                        <field
+                            name="warning_domain"
+                            widget="domain"
+                            options="{'model': 'stock.buffer', 'in_dialog': true}"
+                        />
                         <field name="severity" />
                         <field name="python_code" />
                         <field name="active" invisible="1" />
