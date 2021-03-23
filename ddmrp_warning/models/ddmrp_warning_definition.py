@@ -26,7 +26,7 @@ class DdmrpWarningDefinition(models.Model):
     active = fields.Boolean(default=True)
     warning_domain = fields.Char(
         string="Buffer Applicable Domain",
-        default=[],
+        default="[]",
         help="Domain based on Stock Buffer, to define if the "
         "warning is applicable or not.",
     )
@@ -34,8 +34,8 @@ class DdmrpWarningDefinition(models.Model):
     def _eval_warning_domain(self, buffer, domain):
         buffer_domain = [("id", "=", buffer.id)]
         return bool(
-            self.env["stock.buffer"].search(
-                expression.AND([buffer_domain, domain]), limit=1
+            self.env["stock.buffer"].search_count(
+                expression.AND([buffer_domain, domain])
             )
         )
 
