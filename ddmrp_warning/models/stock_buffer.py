@@ -25,12 +25,16 @@ class Buffer(models.Model):
                 existing = item_model.search(
                     [("buffer_id", "=", rec.id), ("warning_definition_id", "=", d.id)]
                 )
-                warning_raised = d.evaluate_definition(rec)
-                if warning_raised and not existing:
-                    item_model.create(
-                        {"buffer_id": rec.id, "warning_definition_id": d.id}
-                    )
-                elif not warning_raised and existing:
+                warning_applicable = d._is_warning_applicable(rec)
+                if warning_applicable:
+                    warning_raised = d.evaluate_definition(rec)
+                    if warning_raised and not existing:
+                        item_model.create(
+                            {"buffer_id": rec.id, "warning_definition_id": d.id}
+                        )
+                    elif not warning_raised and existing:
+                        existing.unlink()
+                elif not warning_applicable and existing:
                     existing.unlink()
 
     def action_generate_warnings(self):

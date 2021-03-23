@@ -3,6 +3,7 @@
 
 from odoo import _, fields, models
 from odoo.exceptions import UserError
+from odoo.osv import expression
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -23,6 +24,26 @@ class DdmrpWarningDefinition(models.Model):
         default="mid",
     )
     active = fields.Boolean(default=True)
+    warning_domain = fields.Char(
+        string="Buffer Applicable Domain",
+        default="[]",
+        help="Domain based on Stock Buffer, to define if the "
+        "warning is applicable or not.",
+    )
+
+    def _eval_warning_domain(self, buffer, domain):
+        buffer_domain = [("id", "=", buffer.id)]
+        return bool(
+            self.env["stock.buffer"].search_count(
+                expression.AND([buffer_domain, domain])
+            )
+        )
+
+    def _is_warning_applicable(self, buffer):
+        domain = safe_eval(self.warning_domain) or []
+        if domain:
+            return self._eval_warning_domain(buffer, domain)
+        return True
 
     def evaluate_definition(self, buffer):
         self.ensure_one()
