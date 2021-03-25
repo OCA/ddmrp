@@ -745,6 +745,9 @@ class StockBuffer(models.Model):
         if not sellers:
             # fallback to all sellers
             sellers = all_sellers
+        # When the current transaction changed the sequence, it may happen that
+        # the sellers' recordset is not correctly sorted by default.
+        sellers = sellers.sorted(key="sequence")
         return sellers
 
     @api.depends("buffer_profile_id", "product_id.seller_ids")
