@@ -15,6 +15,9 @@ class StockBuffer(models.Model):
         domain="[('product_id', '=', product_id), "
         "'|', ('company_id', '=', False), "
         "('company_id', '=', company_id)]",
+        compute="_compute_packaging_id",
+        store=True,
+        readonly=False,
     )
     package_multiple = fields.Float()
     # make qty_multiple a stored computed field:
@@ -39,12 +42,15 @@ class StockBuffer(models.Model):
             if rec.packaging_id.qty:
                 rec.qty_multiple = rec.packaging_id.qty * rec.package_multiple
 
-    @api.onchange("product_id")
-    def onchange_product_id(self):
-        res = super().onchange_product_id()
-        if self.product_id:
-            self.packaging_id = False
-        return res
+    @api.depends("product_id")
+    def _compute_packaging_id(self):
+        for rec in self:
+            if (
+                rec.product_id
+                and rec.packaging_id
+                and rec.packaging_id.product_id != rec.product_id
+            ):
+                rec.packaging_id = False
 
     @api.onchange("packaging_id", "procure_uom_id", "qty_multiple")
     def _onchange_packaging_id(self):
