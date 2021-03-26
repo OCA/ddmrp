@@ -53,7 +53,7 @@ DDMRP_COLOR = {
 class StockBuffer(models.Model):
     _name = "stock.buffer"
     _description = "Stock Buffer"
-    _order = "planning_priority_level asc, net_flow_position asc"
+    _order = "planning_priority_level asc, net_flow_position_percent asc"
 
     CRON_DDMRP_CHUNKS = 50
 
