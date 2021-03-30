@@ -35,3 +35,6 @@ class ResConfigSettings(models.TransientModel):
     ddmrp_adu_calc_include_scrap = fields.Boolean(
         related="company_id.ddmrp_adu_calc_include_scrap", readonly=False
     )
+    ddmrp_qty_multiple_tolerance = fields.Float(
+        related="company_id.ddmrp_qty_multiple_tolerance", readonly=False
+    )
