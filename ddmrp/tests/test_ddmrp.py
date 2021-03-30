@@ -776,6 +776,39 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(len(pol), 1)
         self.assertEqual(self.buffer_purchase.procure_recommended_qty, 0)
 
+    def test_27_qty_multiple_tolerance(self):
+        buffer = self.bufferModel.create(
+            {
+                "buffer_profile_id": self.buffer_profile_override.id,
+                "product_id": self.product_purchased.id,
+                "location_id": self.stock_location.id,
+                "warehouse_id": self.warehouse.id,
+                "qty_multiple": 250.0,
+                "adu_calculation_method": self.adu_fixed.id,
+                "adu_fixed": 5.0,
+                "green_override": 250.0,
+                "yellow_override": 10.0,
+                "red_override": 10.0,
+            }
+        )
+        date_move = datetime.today()
+        self.create_picking_out(self.product_purchased, date_move, 2)
+        buffer.cron_actions()
+        self.assertEqual(buffer.net_flow_position, -2.0)
+        self.assertEqual(buffer.procure_recommended_qty, 500)
+        # Set the tolerance
+        buffer.company_id.ddmrp_qty_multiple_tolerance = 10.0
+        # Tolerance: 10% 250 = 25, strictly needed 272 (under tolerance)
+        buffer.cron_actions()
+        self.assertEqual(buffer.procure_recommended_qty, 250)
+        # Add more demand
+        self.create_picking_out(self.product_purchased, date_move, 20)
+        buffer.cron_actions()
+        self.assertEqual(buffer.net_flow_position, -22.0)
+        # Tolerance: 10% 250 = 25, strictly needed 294 (above tolerance)
+        buffer.cron_actions()
+        self.assertEqual(buffer.procure_recommended_qty, 500)
+
     # TEST SECTION 3: DLT, BoM's and misc
 
     def test_30_bom_buffer_fields(self):
