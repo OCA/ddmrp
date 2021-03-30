@@ -61,6 +61,9 @@ class TestDdmrpCommon(common.SavepointCase):
         cls.buffer_profile_distr = cls.env.ref(
             "ddmrp.stock_buffer_profile_replenish_distributed_medium_medium"
         )
+        cls.buffer_profile_override = cls.env.ref(
+            "ddmrp.stock_buffer_profile_replenish_override_purchased_short_low"
+        )
         cls.adu_fixed = cls.env.ref("ddmrp.adu_calculation_method_fixed")
         cls.group_stock_manager = cls.env.ref("stock.group_stock_manager")
         cls.group_mrp_user = cls.env.ref("mrp.group_mrp_user")
