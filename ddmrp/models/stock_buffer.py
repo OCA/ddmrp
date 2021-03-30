@@ -485,8 +485,16 @@ class StockBuffer(models.Model):
         # Apply qty multiple and minimum quantity (maximum quantity
         # applies on the procure wizard)
         remainder = self.qty_multiple > 0 and adjusted_qty % self.qty_multiple or 0.0
-        if float_compare(remainder, 0.0, precision_rounding=rounding) > 0:
+        multiple_tolerance = self.qty_multiple * (
+            self.company_id.ddmrp_qty_multiple_tolerance / 100
+        )
+        if (
+            float_compare(remainder, multiple_tolerance, precision_rounding=rounding)
+            > 0
+        ):
             adjusted_qty += self.qty_multiple - remainder
+        elif float_compare(remainder, 0.0, precision_rounding=rounding) > 0:
+            adjusted_qty -= remainder
         if (
             float_compare(
                 adjusted_qty, self.procure_min_qty, precision_rounding=rounding
