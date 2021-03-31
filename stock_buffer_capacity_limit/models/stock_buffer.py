@@ -21,7 +21,7 @@ class StockBuffer(models.Model):
         for rec in self.filtered(lambda b: b.storage_capacity_limit > 0.0):
             recommendation_limit = max(
                 rec.storage_capacity_limit
-                - rec.product_id.qty_available
+                - rec.product_id.with_context(location=rec.location_id.id).qty_available
                 - rec.incoming_dlt_qty,
                 0,
             )
