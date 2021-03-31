@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import api, fields, models
+from odoo.tools import float_compare
 
 
 class StockBuffer(models.Model):
@@ -25,6 +26,14 @@ class StockBuffer(models.Model):
                 - rec.incoming_dlt_qty,
                 0,
             )
-            qty = min(rec.procure_recommended_qty, recommendation_limit)
-            rec.procure_recommended_qty = qty
+            if self.procure_uom_id:
+                rounding = self.procure_uom_id.rounding
+            else:
+                rounding = self.product_uom.rounding
+            if float_compare(rec.procure_recommended_qty, recommendation_limit, precision_rounding=rounding) > 0:
+                if float_compare(rec.procure_min_qty, recommendation_limit, precision_rounding=rounding) > 0:
+                    recommendation_limit = 0
+                elif rec.qty_multiple:
+                    recommendation_limit = recommendation_limit - recommendation_limit % rec.qty_multiple
+                rec.procure_recommended_qty = recommendation_limit
         return res
