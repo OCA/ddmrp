@@ -30,10 +30,26 @@ class StockBuffer(models.Model):
                 rounding = self.procure_uom_id.rounding
             else:
                 rounding = self.product_uom.rounding
-            if float_compare(rec.procure_recommended_qty, recommendation_limit, precision_rounding=rounding) > 0:
-                if float_compare(rec.procure_min_qty, recommendation_limit, precision_rounding=rounding) > 0:
+            if (
+                float_compare(
+                    rec.procure_recommended_qty,
+                    recommendation_limit,
+                    precision_rounding=rounding,
+                )
+                > 0
+            ):
+                if (
+                    float_compare(
+                        rec.procure_min_qty,
+                        recommendation_limit,
+                        precision_rounding=rounding,
+                    )
+                    > 0
+                ):
                     recommendation_limit = 0
                 elif rec.qty_multiple:
-                    recommendation_limit = recommendation_limit - recommendation_limit % rec.qty_multiple
+                    recommendation_limit = (
+                        recommendation_limit - recommendation_limit % rec.qty_multiple
+                    )
                 rec.procure_recommended_qty = recommendation_limit
         return res
