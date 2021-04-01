@@ -26,10 +26,10 @@ class StockBuffer(models.Model):
                 - rec.incoming_dlt_qty,
                 0,
             )
-            if self.procure_uom_id:
-                rounding = self.procure_uom_id.rounding
+            if rec.procure_uom_id:
+                rounding = rec.procure_uom_id.rounding
             else:
-                rounding = self.product_uom.rounding
+                rounding = rec.product_uom.rounding
             if (
                 float_compare(
                     rec.procure_recommended_qty,
