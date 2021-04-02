@@ -17,10 +17,7 @@ class StockBuffer(models.Model):
     )
 
     @api.depends(
-        "storage_capacity_limit",
-        "product_location_qty",
-        "incoming_dlt_qty",
-        "procure_min_qty",
+        "storage_capacity_limit", "incoming_dlt_qty", "procure_min_qty",
     )
     def _compute_procure_recommended_qty(self):
         res = super()._compute_procure_recommended_qty()
