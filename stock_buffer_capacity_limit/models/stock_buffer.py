@@ -16,7 +16,12 @@ class StockBuffer(models.Model):
         "execution alerts.",
     )
 
-    @api.depends("storage_capacity_limit")
+    @api.depends(
+        "storage_capacity_limit",
+        "product_location_qty",
+        "incoming_dlt_qty",
+        "procure_min_qty",
+    )
     def _compute_procure_recommended_qty(self):
         res = super()._compute_procure_recommended_qty()
         for rec in self.filtered(lambda b: b.storage_capacity_limit > 0.0):
