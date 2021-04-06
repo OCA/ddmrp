@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="product_product_fp01" model="product.product">
+        <field name="name">FP-01</field>
+        <field name="categ_id" ref="product_category_ddmrp" />
+        <field name="type">product</field>
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
+        <field name="produce_delay">2</field>
+        <field
+            name="route_ids"
+            eval="[(6, 0, [ref('mrp.route_warehouse0_manufacture')])]"
+        />
+    </record>
+    <record id="product_product_as01" model="product.product">
+        <field name="name">AS-01</field>
+        <field name="categ_id" ref="product_category_ddmrp" />
+        <field name="type">product</field>
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
+        <field name="produce_delay">6</field>
+        <field
+            name="route_ids"
+            eval="[(6, 0, [ref('mrp.route_warehouse0_manufacture')])]"
+        />
+    </record>
+    <record id="product_product_rm01" model="product.product">
+        <field name="name">RM-01</field>
+        <field name="categ_id" ref="product_category_ddmrp" />
+        <field name="type">product</field>
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
+        <field
+            name="route_ids"
+            eval="[(6, 0, [ref('purchase_stock.route_warehouse0_buy')])]"
+        />
+    </record>
+    <record id="product_product_rm02" model="product.product">
+        <field name="name">RM-02</field>
+        <field name="categ_id" ref="product_category_ddmrp" />
+        <field name="type">product</field>
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
+        <field
+            name="route_ids"
+            eval="[(6, 0, [ref('purchase_stock.route_warehouse0_buy')])]"
+        />
+    </record>
+</odoo>

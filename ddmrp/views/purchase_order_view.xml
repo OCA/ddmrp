@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+<!-- Copyright 2017-20 ForgeFlow S.L. (http://www.forgeflow.com)
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="purchase_order_form" model="ir.ui.view">
+        <field name="name">purchase.order.form - ddmrp</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='order_line']//field[@name='date_planned']"
+                position="after"
+            >
+                <field name="buffer_ids" invisible="1" />
+                <field name="execution_priority_level" invisible="1" />
+                <field
+                    name="on_hand_percent"
+                    options='{"buffer_ids": "buffer_ids", "color_from": "execution_priority_level"}'
+                />
+            </xpath>
+            <xpath
+                expr="//page[@name='purchase_delivery_invoice']/group/group"
+                position="inside"
+            >
+                <field name="ddmrp_comment" />
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//notebook" position="inside">
+                <page
+                    name="buffers"
+                    string="Stock Buffers"
+                    groups="stock.group_stock_user"
+                >
+                    <field name="buffer_ids" />
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_purchase_order_filter" model="ir.ui.view">
+        <field name="name">request.quotation.select - ddmrp</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter" />
+        <field name="arch" type="xml">
+            <filter name="order_date" position="before">
+                <filter
+                    name="execution_priority_level_red"
+                    string="On-Hand Alert: Red"
+                    domain="[('order_line.execution_priority_level', '=', '1_red')]"
+                />
+                <filter
+                    name="execution_priority_level_yellow"
+                    string="On-Hand Alert: Yellow"
+                    domain="[('order_line.execution_priority_level', '=', '2_yellow')]"
+                />
+                <separator />
+            </filter>
+        </field>
+    </record>
+    <record id="purchase_order_line_form2" model="ir.ui.view">
+        <field name="name">purchase.order.line.form2</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase.purchase_order_line_form2" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <separator string="Stock Buffers" />
+                <field name="buffer_ids" />
+            </field>
+        </field>
+    </record>
+</odoo>
