@@ -11,7 +11,11 @@
     "website": "https://github.com/OCA/ddmrp",
     "category": "Warehouse Management",
     "depends": ["ddmrp"],
-    "data": ["wizards/ddmrp_product_replace_view.xml", "views/stock_buffer_view.xml"],
+    "data": [
+        "wizards/ddmrp_product_replace_view.xml",
+        "wizards/make_procurement_buffer_view.xml",
+        "views/stock_buffer_view.xml",
+    ],
     "license": "LGPL-3",
     "installable": True,
 }

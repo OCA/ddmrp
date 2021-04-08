@@ -7,18 +7,77 @@
         <field name="model">stock.buffer</field>
         <field name="inherit_id" ref="ddmrp.stock_buffer_view_form" />
         <field name="arch" type="xml">
+            <sheet position="before">
+                <div
+                    class="alert alert-danger"
+                    role="alert"
+                    attrs="{'invisible': [('replaced_by_id', '=', False)]}"
+                    style="margin-bottom:0px;"
+                >
+                    <p>
+                        <i class="fa fa-info-circle" style="margin-right:5px" />
+                        <field name="replaced_by_alert_text" />
+                    </p>
+                </div>
+            </sheet>
+            <div name="button_box" position="inside">
+                <button
+                    type="object"
+                    name="action_view_buffers_replaced"
+                    class="oe_stat_button"
+                    icon="fa-signal"
+                    attrs="{'invisible': [('replacement_for_count', '=', 0)]}"
+                >
+                    <field
+                        name="replacement_for_count"
+                        widget="statinfo"
+                        string="Replacement for"
+                    />
+                </button>
+            </div>
+            <field name="product_id" position="after">
+                <field name="replaced_by_id" />
+            </field>
             <notebook position="inside">
                 <page
                     name="product_replacement"
                     string="Product Replacement"
-                    attrs="{'invisible': [('demand_product_ids','=',[])]}"
+                    attrs="{'invisible': [('demand_product_ids','=',[]), ('replacement_for_count', '=', 0)]}"
                     groups="stock.group_stock_manager"
                 >
                     <group>
                         <field name="demand_product_ids" widget="many2many_tags" />
+                        <field name="is_replacement_product" />
+                        <field name="use_replacement_for_buffer_status" />
                     </group>
                 </page>
             </notebook>
+        </field>
+    </record>
+    <record id="stock_buffer_view_tree" model="ir.ui.view">
+        <field name="name">stock.buffer.tree - ddmrp_product_replace</field>
+        <field name="model">stock.buffer</field>
+        <field name="inherit_id" ref="ddmrp.stock_buffer_view_tree" />
+        <field name="arch" type="xml">
+            <field name="top_of_green" position="after">
+                <field name="replaced_by_id" optional="hide" />
+                <field name="is_replacement_product" optional="hide" />
+            </field>
+        </field>
+    </record>
+    <record id="stock_buffer_search" model="ir.ui.view">
+        <field name="name">stock.buffer.search - ddmrp_product_replace</field>
+        <field name="model">stock.buffer</field>
+        <field name="inherit_id" ref="ddmrp.stock_buffer_search" />
+        <field name="arch" type="xml">
+            <filter name="has_distributed_source_location_qty" position="after">
+                <separator />
+                <filter
+                    name="is_replacement_product_filter"
+                    string="Replacement Product"
+                    domain="[('is_replacement_product', '=', True)]"
+                />
+            </filter>
         </field>
     </record>
 </odoo>

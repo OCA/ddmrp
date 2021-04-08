@@ -7,10 +7,31 @@
         <field name="model">ddmrp.product.replace</field>
         <field name="arch" type="xml">
             <form string="Product Replacement Tool">
+                <group>
+                    <field name="mode" />
+                </group>
                 <group name="old_product" string="Select Replaced Products">
-                    <field name="old_product_id" />
+                    <field
+                        name="old_product_ids"
+                        widget="many2many_tags"
+                        options="{'no_create': True}"
+                    />
+                    <field name="multi_product" invisible="1" />
+                    <div
+                        attrs="{'invisible': [('multi_product', '=', False)]}"
+                        colspan="2"
+                    >
+                        <p> <i class="fa fa-info-circle" style="margin-right:5px" />
+                            When there are more than one product replaced, only the buffer(s) of the primary product in
+                            this list will be used to create the buffer(s) and/or product(s) for replacement.
+                        </p>
+                    </div>
+                    <field
+                        name="primary_old_product_id"
+                        attrs="{'invisible': [('multi_product', '=', False)]}"
+                    />
                     <field name="buffer_ids">
-                        <tree>
+                        <tree decoration-danger="replaced_by_id">
                             <field name="name" />
                             <field name="warehouse_id" />
                             <field name="location_id" />
@@ -18,8 +39,10 @@
                                 name="company_id"
                                 groups="base.group_multi_company"
                             />
+                            <field name="replaced_by_id" optional="hide" />
                         </tree>
                     </field>
+                    <field name="is_already_replaced" invisible="1" />
                 </group>
                 <group name="new_product" string="Select Replacing Product">
                     <field name="use_existing" />
