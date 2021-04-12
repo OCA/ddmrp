@@ -1109,6 +1109,12 @@ msgid "Qty Multiple"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_company__ddmrp_qty_multiple_tolerance
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__ddmrp_qty_multiple_tolerance
+msgid "Qty Multiple Tolerance"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.constraint,message:ddmrp.constraint_stock_buffer_qty_multiple_check
 msgid "Qty Multiple must be greater than or equal to zero."
 msgstr ""
@@ -1297,6 +1303,18 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_search
 msgid "Search Buffer Profiles"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid ""
+"Set a tolerance value to apply to quantity multiple in stock buffers.\n"
+"                                    If the quantity needed is below this "
+"tolerance threshold, the recommended\n"
+"                                    quantity will be reduced a bit instead "
+"of adding another bucket.\n"
+"                                    The value is a percentage of the "
+"quantity multiple."
 msgstr ""
 
 #. module: ddmrp
