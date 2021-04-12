@@ -16,3 +16,4 @@ class ResCompany(models.Model):
     ddmrp_adu_calc_include_scrap = fields.Boolean(
         string="Include scrap locations in ADU calculation",
     )
+    ddmrp_qty_multiple_tolerance = fields.Float(string="Qty Multiple Tolerance",)
