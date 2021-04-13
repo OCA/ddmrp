@@ -41,6 +41,9 @@ class StockBuffer(models.Model):
         for rec in self:
             if rec.packaging_id.qty:
                 rec.qty_multiple = rec.packaging_id.qty * rec.package_multiple
+            else:
+                # Default value on parent definition
+                rec.qty_multiple = 1
 
     @api.depends("product_id")
     def _compute_packaging_id(self):
