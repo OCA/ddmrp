@@ -19,7 +19,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[ddmrp](ddmrp/) | 14.0.1.0.0 | Demand Driven Material Requirements Planning
+[ddmrp](ddmrp/) | 14.0.1.1.0 | Demand Driven Material Requirements Planning
 
 [//]: # (end addons)
 
