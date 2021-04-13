@@ -264,6 +264,11 @@ msgid "Config Settings"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_warning
+msgid "Configuration Warnings in Stock Buffers"
+msgstr ""
+
+#. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "Create Procurement"
 msgstr ""
@@ -377,11 +382,27 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_move__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_multi_level__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_procurement_group__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_product_product__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_product_template__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_report_mrp_report_bom_structure__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_res_company__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_rule__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -466,6 +487,11 @@ msgid "Future-looking"
 msgstr ""
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Get configuration warnings for stock buffers."
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__mrp_production__execution_priority_level__3_green
 #: model:ir.model.fields.selection,name:ddmrp.selection__purchase_order_line__execution_priority_level__3_green
 #: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer__execution_priority_level__3_green
@@ -540,11 +566,27 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__id
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__id
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_move__id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_multi_level__id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_production__id
+#: model:ir.model.fields,field_description:ddmrp.field_procurement_group__id
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__id
+#: model:ir.model.fields,field_description:ddmrp.field_product_product__id
+#: model:ir.model.fields,field_description:ddmrp.field_product_template__id
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order__id
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:ddmrp.field_report_mrp_report_bom_structure__id
+#: model:ir.model.fields,field_description:ddmrp.field_res_company__id
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_rule__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse__id
 msgid "ID"
 msgstr ""
 
@@ -603,11 +645,6 @@ msgid "Information source used for past calculation."
 msgstr ""
 
 #. module: ddmrp
-#: model:ir.model,name:ddmrp.model_stock_location
-msgid "Inventory Locations"
-msgstr ""
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__item_type
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__item_type
 msgid "Item Type"
@@ -628,11 +665,27 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_move____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_multi_level____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_production____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_procurement_group____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_product_product____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_product_template____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_report_mrp_report_bom_structure____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_res_company____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_stock_rule____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse____last_update
 msgid "Last Modified on"
 msgstr ""
 
@@ -1080,6 +1133,12 @@ msgid "Qty Multiple"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_company__ddmrp_qty_multiple_tolerance
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__ddmrp_qty_multiple_tolerance
+msgid "Qty Multiple Tolerance"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.constraint,message:ddmrp.constraint_stock_buffer_qty_multiple_check
 msgid "Qty Multiple must be greater than or equal to zero."
 msgstr ""
@@ -1267,6 +1326,18 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_search
 msgid "Search Buffer Profiles"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid ""
+"Set a tolerance value to apply to quantity multiple in stock buffers.\n"
+"                                    If the quantity needed is below this "
+"tolerance threshold, the recommended\n"
+"                                    quantity will be reduced a bit instead "
+"of adding another bucket.\n"
+"                                    The value is a percentage of the "
+"quantity multiple."
 msgstr ""
 
 #. module: ddmrp
