@@ -28,7 +28,7 @@
                 />
                 <button
                     string="Refresh Buffer"
-                    name="cron_actions"
+                    name="refresh_buffer"
                     icon="fa-refresh"
                     type="object"
                 />
@@ -115,7 +115,7 @@
                         />
                         <button
                             string="Refresh Buffer"
-                            name="cron_actions"
+                            name="refresh_buffer"
                             class="oe_stat_button"
                             icon="fa-refresh"
                             type="object"
