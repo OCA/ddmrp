@@ -1052,6 +1052,11 @@ msgid "Product Average Daily Usage calculation method"
 msgstr "Método de cálculo del Consumo Medio Diario de Producto"
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_picking_form
+msgid "Product Buffers"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model,name:ddmrp.model_product_template
 msgid "Product Template"
 msgstr "Plantilla de producto"
@@ -1487,6 +1492,11 @@ msgstr "Tope de Amarillo"
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "Total Incoming"
 msgstr "Total Entrante"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_picking
+msgid "Transfer"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_res_company__ddmrp_auto_update_nfp

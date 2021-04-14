@@ -1039,6 +1039,11 @@ msgid "Product Average Daily Usage calculation method"
 msgstr ""
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_picking_form
+msgid "Product Buffers"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model,name:ddmrp.model_product_template
 msgid "Product Template"
 msgstr ""
@@ -1462,6 +1467,11 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "Total Incoming"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_picking
+msgid "Transfer"
 msgstr ""
 
 #. module: ddmrp
