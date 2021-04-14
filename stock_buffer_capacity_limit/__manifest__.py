@@ -4,7 +4,7 @@
 {
     "name": "Stock Buffer Capacity Limit",
     "summary": "Ensures that the limits of storage are never surpassed",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.1.0",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "development_status": "Beta",
     "maintainers": ["LoisRForgeFlow"],
