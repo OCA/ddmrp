@@ -31,6 +31,11 @@ msgid "Buffer"
 msgstr ""
 
 #. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__warning_domain
+msgid "Buffer Applicable Domain"
+msgstr ""
+
+#. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__create_uid
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__create_uid
 msgid "Created by"
@@ -88,6 +93,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__display_name
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,help:ddmrp_warning.field_ddmrp_warning_definition__warning_domain
+msgid ""
+"Domain based on Stock Buffer, to define if the warning is applicable or not."
 msgstr ""
 
 #. module: ddmrp_warning
