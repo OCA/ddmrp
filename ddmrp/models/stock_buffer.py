@@ -748,7 +748,15 @@ class StockBuffer(models.Model):
         sellers = sellers.sorted(key="sequence")
         return sellers
 
-    @api.depends("buffer_profile_id", "product_id.seller_ids")
+    @api.depends(
+        "buffer_profile_id",
+        "item_type",
+        "product_id.seller_ids",
+        "product_id.seller_ids.company_id",
+        "product_id.seller_ids.name",
+        "product_id.seller_ids.product_id",
+        "product_id.seller_ids.sequence",
+    )
     def _compute_main_supplier(self):
         for rec in self:
             if rec.item_type == "purchased":
