@@ -745,7 +745,7 @@ class StockBuffer(models.Model):
             sellers = all_sellers
         # When the current transaction changed the sequence, it may happen that
         # the sellers' recordset is not correctly sorted by default.
-        sellers = sellers.sorted(key="sequence")
+        sellers = sellers.sorted(key=lambda s: (s.sequence, -s.min_qty, s.price))
         return sellers
 
     @api.depends(
@@ -756,6 +756,8 @@ class StockBuffer(models.Model):
         "product_id.seller_ids.name",
         "product_id.seller_ids.product_id",
         "product_id.seller_ids.sequence",
+        "product_id.seller_ids.min_qty",
+        "product_id.seller_ids.price",
     )
     def _compute_main_supplier(self):
         for rec in self:
@@ -773,6 +775,11 @@ class StockBuffer(models.Model):
     main_supplier_id = fields.Many2one(
         comodel_name="res.partner",
         string="Main Supplier",
+        help=(
+            "The main supplier is the first listed supplier defined "
+            "on the product that is valid for this product variant. "
+            "Any date restrictions are not taken into account."
+        ),
         compute="_compute_main_supplier",
         store=True,
         index=True,
