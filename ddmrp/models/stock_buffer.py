@@ -237,17 +237,38 @@ class StockBuffer(models.Model):
 
     def _get_date_planned(self):
         self.ensure_one()
+        profile = self.buffer_profile_id
         dlt = int(self.dlt)
+        if profile.item_type == "distributed":
+            max_proc_time = profile.distributed_reschedule_max_proc_time
+        else:
+            max_proc_time = 0
         # For purchased items we always consider calendar days,
         # not work days.
-        if (
-            self.warehouse_id.calendar_id
-            and self.buffer_profile_id.item_type != "purchased"
-        ):
-            dt_planned = self.warehouse_id.wh_plan_days(datetime.now(), dlt)
+        if profile.item_type == "purchased":
+            dt_planned = fields.datetime.today() + timedelta(days=dlt)
         else:
-            dt_planned = fields.date.today() + timedelta(days=dlt)
-        return fields.Date.to_date(dt_planned)
+            if self.warehouse_id.calendar_id:
+                dt_planned = self.warehouse_id.wh_plan_days(fields.datetime.now(), dlt)
+                if max_proc_time:
+                    calendar = self.warehouse_id.calendar_id
+                    # We found the day with "wh_plan_day", now determine
+                    # the first available hour in the day (wh_plan_day returns
+                    # the stop hour), and add the procurement time.
+                    dt_planned = calendar.plan_hours(
+                        # expect hours
+                        max_proc_time / 60,
+                        # start from the first working hours available
+                        dt_planned.replace(hour=0, minute=0, second=0),
+                    )
+
+            else:
+                dt_planned = (
+                    fields.datetime.now()
+                    + timedelta(days=dlt)
+                    + timedelta(minutes=max_proc_time)
+                )
+        return dt_planned
 
     procure_recommended_qty = fields.Float(
         string="Procure Recommendation",

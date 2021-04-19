@@ -28,11 +28,12 @@ class StockBufferProfile(models.Model):
         "variability_id",
         "variability_id.name",
         "variability_id.factor",
+        "distributed_reschedule_max_proc_time",
     )
     def _compute_name(self):
         """Get the right summary for this job."""
         for rec in self:
-            rec.name = "{} {}, {}({}), {}({})".format(
+            name = "{} {}, {}({}), {}({})".format(
                 rec.replenish_method,
                 rec.item_type,
                 rec.lead_time_id.name,
@@ -40,6 +41,9 @@ class StockBufferProfile(models.Model):
                 rec.variability_id.name,
                 rec.variability_id.factor,
             )
+            if rec.distributed_reschedule_max_proc_time > 0.0:
+                name += ", {}min".format(rec.distributed_reschedule_max_proc_time)
+            rec.name = name
 
     name = fields.Char(string="Name", compute="_compute_name", store=True)
     replenish_method = fields.Selection(
@@ -64,4 +68,12 @@ class StockBufferProfile(models.Model):
         default=False,
         help="When activated, the recommended quantity will be maxed at "
         "the quantity available in the replenishment source location.",
+    )
+    distributed_reschedule_max_proc_time = fields.Float(
+        string="Re-Schedule Procurement Max Proc. Time (minutes)",
+        default=0.0,
+        help="When you request procurement from a buffer, their scheduled"
+        " date is rescheduled to now + this procurement time (in minutes)."
+        " Their scheduled date represents the latest the transfers should"
+        " be done, and therefore, past this timestamp, considered late.",
     )
