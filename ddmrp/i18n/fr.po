@@ -1429,6 +1429,14 @@ msgid ""
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__main_supplier_id
+msgid ""
+"The main supplier is the first listed supplier defined on the product that "
+"is valid for this product variant. Any date restrictions are not taken into "
+"account."
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__qty_multiple
 msgid ""
 "The procurement quantity will be rounded up to this multiple. If it is 0, "
