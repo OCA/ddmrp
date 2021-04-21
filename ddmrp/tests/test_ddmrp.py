@@ -905,9 +905,28 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_c_orange.dlt, 8)
 
     def test_36_dlt_extra_lead_time(self):
-        # Add extra lead time
-        self.buffer_c_blue.extra_lead_time = 20
-        self.assertEqual(self.buffer_c_blue.dlt, 25)
+        dlt = 5
+        adu = 5
+        self.assertEqual(self.buffer_c_blue.dlt, dlt)
+        self.assertEqual(self.buffer_c_blue.adu, adu)
+        # Profile: Purchased, med, med
+        previous_red = dlt * adu * 0.5 + dlt * adu * 0.5 * 0.5
+        self.assertEqual(self.buffer_c_blue.red_zone_qty, previous_red)
+        previous_yellow = dlt * adu
+        self.assertEqual(self.buffer_c_blue.yellow_zone_qty, previous_yellow)
+        previous_green = dlt * adu * 0.5
+        self.assertEqual(self.buffer_c_blue.green_zone_qty, previous_green)
+        # Add extra lead time.
+        extra = 2
+        self.buffer_c_blue.extra_lead_time = extra
+        self.buffer_c_blue.cron_actions()
+        self.assertEqual(self.buffer_c_blue.dlt, 5)
+        new_red = (dlt + extra) * adu * 0.5 + (dlt + extra) * adu * 0.5 * 0.5
+        self.assertEqual(self.buffer_c_blue.red_zone_qty, new_red)
+        new_yellow = (dlt + extra) * adu
+        self.assertEqual(self.buffer_c_blue.yellow_zone_qty, new_yellow)
+        new_green = (dlt + extra) * adu * 0.5
+        self.assertEqual(self.buffer_c_blue.green_zone_qty, new_green)
 
     def test_40_bokeh_charts(self):
         """Check bokeh chart computation."""
