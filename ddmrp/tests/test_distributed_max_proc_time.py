@@ -1,4 +1,5 @@
-# Copyright 2020 Camptocamp
+# Copyright 2020 Camptocamp (https://www.camptocamp.com)
+# Copyright 2021 ForgeFlow S.L. (http://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from freezegun import freeze_time
@@ -126,3 +127,17 @@ class TestDdmrpMaxProcTime(TestDdmrpCommon):
                 {"date_expected": fields.Datetime.to_datetime("2020-12-11 08:30:00")},
             ],
         )
+
+    @freeze_time("2020-12-10 23:00:00")
+    def test_03_reschedule_to_next_day(self):
+        self.buffer_profile_distr.distributed_reschedule_max_proc_time = 90
+        self.warehouse.calendar_id = False
+        buffer = self.buffer_dist
+        self.assertEqual(buffer.dlt, 1)
+        self.assertEqual(buffer.incoming_dlt_qty, 0)
+        # Create a picking with date planned.
+        date_move = buffer._get_date_planned()
+        self.create_picking_in(buffer.product_id, date_move, 15.0)
+        # Picking should be in the DLT window.
+        buffer.cron_actions()
+        self.assertEqual(buffer.incoming_dlt_qty, 15.0)

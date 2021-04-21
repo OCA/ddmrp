@@ -401,6 +401,34 @@ class TestDdmrpCommon(common.SavepointCase):
         picking.action_confirm()
         return picking
 
+    def create_picking_in(self, product, date_move, qty):
+        picking = self.pickingModel.with_user(self.user).create(
+            {
+                "picking_type_id": self.ref("stock.picking_type_in"),
+                "location_id": self.supplier_location.id,
+                "location_dest_id": self.binA.id,
+                "scheduled_date": date_move,
+                "move_lines": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Test move",
+                            "product_id": product.id,
+                            "date_expected": date_move,
+                            "date": date_move,
+                            "product_uom": product.uom_id.id,
+                            "product_uom_qty": qty,
+                            "location_id": self.supplier_location.id,
+                            "location_dest_id": self.binA.id,
+                        },
+                    )
+                ],
+            }
+        )
+        picking.action_confirm()
+        return picking
+
     def _do_picking(self, picking, date):
         """Do picking with only one move on the given date."""
         picking.action_confirm()
