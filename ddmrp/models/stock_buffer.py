@@ -373,6 +373,7 @@ class StockBuffer(models.Model):
 
     @api.depends(
         "dlt",
+        "extra_lead_time",
         "adu",
         "buffer_profile_id.lead_time_id.factor",
         "red_override",
@@ -384,8 +385,9 @@ class StockBuffer(models.Model):
     def _compute_red_zone(self):
         for rec in self:
             if rec.product_id and rec.replenish_method in ["replenish", "min_max"]:
+                dlt = rec.dlt + rec.extra_lead_time
                 rec.red_base_qty = float_round(
-                    rec.dlt * rec.adu * rec.buffer_profile_id.lead_time_id.factor,
+                    dlt * rec.adu * rec.buffer_profile_id.lead_time_id.factor,
                     precision_rounding=rec.product_uom.rounding,
                 )
                 rec.red_safety_qty = float_round(
@@ -400,6 +402,7 @@ class StockBuffer(models.Model):
 
     @api.depends(
         "dlt",
+        "extra_lead_time",
         "adu",
         "buffer_profile_id.lead_time_id.factor",
         "order_cycle",
@@ -417,8 +420,9 @@ class StockBuffer(models.Model):
                     precision_rounding=rec.product_uom.rounding,
                 )
                 # Using lead time factor
+                dlt = rec.dlt + rec.extra_lead_time
                 rec.green_zone_lt_factor = float_round(
-                    rec.dlt * rec.adu * rec.buffer_profile_id.lead_time_id.factor,
+                    dlt * rec.adu * rec.buffer_profile_id.lead_time_id.factor,
                     precision_rounding=rec.product_uom.rounding,
                 )
                 # Using minimum order quantity
@@ -440,6 +444,7 @@ class StockBuffer(models.Model):
 
     @api.depends(
         "dlt",
+        "extra_lead_time",
         "adu",
         "buffer_profile_id.lead_time_id.factor",
         "buffer_profile_id.variability_id.factor",
@@ -455,8 +460,9 @@ class StockBuffer(models.Model):
             if rec.product_id and rec.replenish_method == "min_max":
                 rec.yellow_zone_qty = 0
             elif rec.product_id and rec.replenish_method == "replenish":
+                dlt = rec.dlt + rec.extra_lead_time
                 rec.yellow_zone_qty = float_round(
-                    rec.dlt * rec.adu, precision_rounding=rec.product_uom.rounding
+                    dlt * rec.adu, precision_rounding=rec.product_uom.rounding
                 )
             elif rec.product_id and rec.replenish_method == "replenish_override":
                 rec.yellow_zone_qty = rec.yellow_override
@@ -747,7 +753,7 @@ class StockBuffer(models.Model):
             limit=1,
         )
 
-    @api.depends("lead_days", "product_id.seller_ids.delay", "extra_lead_time")
+    @api.depends("lead_days", "product_id.seller_ids.delay")
     def _compute_dlt(self):
         for rec in self:
             if rec.buffer_profile_id.item_type == "manufactured":
@@ -758,7 +764,7 @@ class StockBuffer(models.Model):
             else:
                 sellers = rec._get_product_sellers()
                 dlt = sellers and fields.first(sellers).delay or rec.lead_days
-            rec.dlt = dlt + rec.extra_lead_time
+            rec.dlt = dlt
 
     def _get_product_sellers(self):
         """:returns the default sellers for a single buffer."""
@@ -965,11 +971,12 @@ class StockBuffer(models.Model):
         required=True,
     )
     extra_lead_time = fields.Float(
-        string="Extra lead time",
+        string="Extra lead time (for Sizing)",
         default=0.0,
         help="When defined, this lead time will be added to the decoupled "
-        "lead time.\n"
-        "This is particularily useful in situations of infrequent but "
+        "lead time for the computation of the zones size (it won't affect "
+        "planned date for procurements).\n"
+        "This is particularly useful in situations of infrequent but "
         "periodic demand. E.g. We receive a large order every 30 days, "
         "whereas the supplier takes 10 days to supply. \n"
         "In this case the yellow zone must cover for the "
