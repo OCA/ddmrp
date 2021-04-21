@@ -235,10 +235,12 @@ class StockBuffer(models.Model):
 
     # MANUAL PROCUREMENT AND UOM
 
-    def _get_date_planned(self):
+    def _get_date_planned(self, force_lt=None):
         self.ensure_one()
         profile = self.buffer_profile_id
         dlt = int(self.dlt)
+        if force_lt and isinstance(force_lt, (int, float)):
+            dlt = force_lt
         if profile.item_type == "distributed":
             max_proc_time = profile.distributed_reschedule_max_proc_time
         else:
@@ -1282,15 +1284,7 @@ class StockBuffer(models.Model):
         # The safety factor allows to control the date limit
         factor = self.warehouse_id.nfp_incoming_safety_factor or 1
         horizon = int(self.dlt) * factor
-        # For purchased products we use calendar days, not work days
-        if (
-            self.warehouse_id.calendar_id
-            and self.buffer_profile_id.item_type != "purchased"
-        ):
-            date_to = self.warehouse_id.wh_plan_days(datetime.now(), horizon)
-        else:
-            date_to = fields.date.today() + timedelta(days=horizon)
-        return date_to
+        return self._get_date_planned(force_lt=horizon)
 
     def _search_stock_moves_incoming_domain(self, outside_dlt=False):
         date_to = self._get_incoming_supply_date_limit()
