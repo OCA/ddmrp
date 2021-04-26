@@ -435,7 +435,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__extra_lead_time
-msgid "Extra lead time"
+msgid "Extra lead time (for Sizing)"
 msgstr ""
 
 #. module: ddmrp
@@ -1614,10 +1614,12 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__extra_lead_time
 msgid ""
-"When defined, this lead time will be added to the decoupled lead time.\n"
-"This is particularily useful in situations of infrequent but periodic "
-"demand. E.g. We receive a large order every 30 days, whereas the supplier "
-"takes 10 days to supply. \n"
+"When defined, this lead time will be added to the decoupled lead time for "
+"the computation of the zones size (it won't affect planned date for "
+"procurements).\n"
+"This is particularly useful in situations of infrequent but periodic demand. "
+"E.g. We receive a large order every 30 days, whereas the supplier takes 10 "
+"days to supply. \n"
 "In this case the yellow zone must cover for the entire cycle of 30 days of "
 "demand.\n"
 "In situations with infrequent demand the ADU tends to be very small, and "
