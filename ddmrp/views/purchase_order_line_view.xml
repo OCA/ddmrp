@@ -11,6 +11,7 @@
                 create="false"
                 editable="top"
                 delete="false"
+                multi_edit="1"
             >
                 <field name="order_id" widget="many2one" readonly="True" />
                 <field name="partner_id" string="Vendor" />
@@ -19,6 +20,7 @@
                     name="on_hand_percent"
                     options='{"buffer_ids": "buffer_ids", "color_from": "execution_priority_level"}'
                 />
+                <field name="product_qty" readonly="True" />
                 <field name="product_id" readonly="True" />
                 <field
                     name="buffer_ids"
@@ -26,7 +28,7 @@
                     widget="many2many_tags"
                     readonly="1"
                 />
-                <field name="date_planned" widget="date" readonly="True" />
+                <field name="date_planned" widget="date" />
                 <field name="state" />
                 <field name="ddmrp_comment" />
             </tree>
