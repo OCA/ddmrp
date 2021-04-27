@@ -106,12 +106,15 @@ class MakeProcurementBuffer(models.TransientModel):
     def make_procurement(self):
         self.ensure_one()
         errors = []
-        # TODO: migrate this feature below
-        # User requesting the procurement is passed by context to be able to
-        # update final MO, PO or trasfer with that information.
-        pg_obj = self.env["procurement.group"].with_context(requested_uid=self.env.user)
+        pg_obj = self.env["procurement.group"]
         procurements = []
         for item in self.item_ids:
+            # As procurement is processed with SUPERUSER_ID (see _run_buy and
+            # _run_manufacture), ensure the current user has write access on
+            # the buffer to make a procurement. Otherwise, any user can request
+            # a procurement on any buffer
+            item.buffer_id.check_access_rights("write")
+            item.buffer_id.check_access_rule("write")
             if item.qty <= 0.0:
                 raise ValidationError(_("Quantity must be positive."))
             if not item.buffer_id:
