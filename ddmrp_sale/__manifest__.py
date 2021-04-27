@@ -4,7 +4,7 @@
 {
     "name": "DDMRP Sale",
     "summary": "DDMRP integration with Sales app.",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.1.0",
     "development_status": "Beta",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "maintainers": ["LoisRForgeFlow"],
