@@ -19,6 +19,23 @@ msgid "Can Serve Sales"
 msgstr ""
 
 #. module: ddmrp_sale
+#: model:ir.model.fields,field_description:ddmrp_sale.field_sale_order_line__exclude_from_adu
+msgid "Exclude from ADU calculation"
+msgstr ""
+
+#. module: ddmrp_sale
+#: model:ir.model.fields,help:ddmrp_sale.field_sale_order_line__exclude_from_adu
+msgid ""
+"If this flag is set related stock moves will be excluded from ADU "
+"calculation"
+msgstr ""
+
+#. module: ddmrp_sale
+#: model:ir.model,name:ddmrp_sale.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: ddmrp_sale
 #: model:ir.model,name:ddmrp_sale.model_stock_buffer
 msgid "Stock Buffer"
 msgstr ""
