@@ -30,7 +30,7 @@ class PurchaseOrderLine(models.Model):
         string="On Hand/TOR (%)",
         readonly=True,
     )
-    ddmrp_comment = fields.Text(related="order_id.ddmrp_comment")
+    ddmrp_comment = fields.Text(related="order_id.ddmrp_comment", readonly=False)
 
     def create(self, vals):
         record = super().create(vals)
