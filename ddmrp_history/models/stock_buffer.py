@@ -12,9 +12,9 @@ _logger = logging.getLogger(__name__)
 try:
     import numpy as np
     import pandas as pd
-    from bokeh.plotting import figure
     from bokeh.embed import components
-    from bokeh.models import HoverTool, DatetimeTickFormatter
+    from bokeh.models import DatetimeTickFormatter, HoverTool
+    from bokeh.plotting import figure
 except (ImportError, IOError) as err:
     _logger.debug(err)
 
@@ -39,10 +39,12 @@ class StockBuffer(models.Model):
     _inherit = "stock.buffer"
 
     planning_history_chart = fields.Text(
-        string="Historical Chart", compute="_compute_history_chart",
+        string="Historical Chart",
+        compute="_compute_history_chart",
     )
     execution_history_chart = fields.Text(
-        string="Execution Historical Chart", compute="_compute_execution_history_chart",
+        string="Execution Historical Chart",
+        compute="_compute_execution_history_chart",
     )
 
     def _prepare_history_data(self):
