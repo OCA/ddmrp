@@ -25,6 +25,7 @@ try:
         Legend,
     )
     from bokeh.plotting import figure
+    from bokeh.util.serialization import convert_datetime_type
 except (ImportError, IOError) as err:
     _logger.debug(err)
 
@@ -555,7 +556,11 @@ class StockBuffer(models.Model):
         p.xaxis.visible = False
         p.toolbar.logo = None
         red = p.vbar(
-            x=1, bottom=0, top=self.top_of_red, width=1, color="red", legend=False
+            x=1,
+            bottom=0,
+            top=self.top_of_red,
+            width=1,
+            color="red",
         )
         yellow = p.vbar(
             x=1,
@@ -563,7 +568,6 @@ class StockBuffer(models.Model):
             top=self.top_of_yellow,
             width=1,
             color="yellow",
-            legend=False,
         )
         green = p.vbar(
             x=1,
@@ -571,7 +575,6 @@ class StockBuffer(models.Model):
             top=self.top_of_green,
             width=1,
             color="green",
-            legend=False,
         )
         net_flow = p.line(
             [0, 2], [self.net_flow_position, self.net_flow_position], line_width=2
@@ -647,9 +650,9 @@ class StockBuffer(models.Model):
 
             # Plot demand data:
             if demand_data or mrp_data:
-                x_demand = list(demand_data.keys())
+                x_demand = list(convert_datetime_type(x) for x in demand_data.keys())
                 y_demand = list(demand_data.values())
-                x_mrp = list(mrp_data.keys())
+                x_mrp = list(convert_datetime_type(x) for x in mrp_data.keys())
                 y_mrp = list(mrp_data.values())
 
                 p = figure(
@@ -704,7 +707,7 @@ class StockBuffer(models.Model):
 
             # Plot supply data:
             if supply_data:
-                x_supply = list(supply_data.keys())
+                x_supply = list(convert_datetime_type(x) for x in supply_data.keys())
                 y_supply = list(supply_data.values())
 
                 p = figure(
