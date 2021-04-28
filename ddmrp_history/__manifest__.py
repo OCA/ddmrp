@@ -4,7 +4,7 @@
 {
     "name": "DDMRP History",
     "summary": "Allow to store historical data of DDMRP buffers.",
-    "version": "13.0.1.2.0",
+    "version": "14.0.1.0.0",
     "development_status": "Beta",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],
@@ -17,7 +17,7 @@
         "views/stock_buffer_view.xml",
     ],
     "demo": ["demo/ddmrp.history.csv"],
-    "external_dependencies": {"python": ["pandas"]},
+    "external_dependencies": {"python": ["pandas>=0.25.3"]},
     "license": "LGPL-3",
     "installable": True,
 }
