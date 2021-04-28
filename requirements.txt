@@ -1,2 +1,2 @@
 # generated from manifests external_dependencies
-pandas
+pandas>=0.25.3
