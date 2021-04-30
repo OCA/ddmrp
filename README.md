@@ -20,6 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [ddmrp](ddmrp/) | 14.0.1.4.0 | Demand Driven Material Requirements Planning
+[ddmrp_history](ddmrp_history/) | 14.0.1.0.0 | Allow to store historical data of DDMRP buffers.
 
 [//]: # (end addons)
 
