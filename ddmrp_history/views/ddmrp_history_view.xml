@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2017 ForgeFlow S.L. (https://www.forgeflow.com)
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="view_ddmrp_history_tree" model="ir.ui.view">
+        <field name="name">ddmrp.history.tree</field>
+        <field name="model">ddmrp.history</field>
+        <field name="arch" type="xml">
+            <tree create="0">
+                <field name="buffer_id" />
+                <field name="adu" />
+                <field name="top_of_green" />
+                <field name="top_of_yellow" />
+                <field name="top_of_red" />
+                <field name="net_flow_position" />
+                <field name="on_hand_position" />
+                <field name="date" />
+            </tree>
+        </field>
+    </record>
+    <record id="view_ddmrp_history_search" model="ir.ui.view">
+        <field name="name">ddmrp.history.search</field>
+        <field name="model">ddmrp.history</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="buffer_id" />
+            </search>
+        </field>
+    </record>
+    <record id="action_ddmrp_history" model="ir.actions.act_window">
+        <field name="name">DDMRP Buffer History</field>
+        <field name="res_model">ddmrp.history</field>
+        <field name="view_mode">tree,pivot,graph</field>
+    </record>
+    <menuitem
+        name="DDMRP Buffer History"
+        parent="stock.menu_warehouse_report"
+        action="action_ddmrp_history"
+        id="menu_ddmrp_history"
+    />
+</odoo>
