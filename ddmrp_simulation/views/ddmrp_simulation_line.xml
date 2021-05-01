@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 KMEE
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="ddmrp_simulation_line_form_view">
+        <field name="name">ddmrp.simulation.line.form (in ddmrp_simulation)</field>
+        <field name="model">ddmrp.simulation.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <!-- TODO -->
+                </header>
+                <sheet>
+                    <group col="4" modifiers="{}">
+                        <field name="simulation_id"/>
+                        <field name="product_id"/>
+                        <field name="date"/>
+                        <field name="on_hand"/>
+                        <field name="demand"/>
+                        <separator modifiers="{}"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter"></div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ddmrp_simulation_line_tree_view">
+        <field name="name">ddmrp.simulation.line.tree (in ddmrp_simulation)</field>
+        <field name="model">ddmrp.simulation.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="simulation_id"/>
+                <field name="product_id"/>
+                <field name="date"/>
+                <field name="on_hand"/>
+                <field name="demand"/>
+            </tree>
+        </field>
+    </record>
+
+
+</odoo>

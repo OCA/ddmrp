@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 KMEE
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="ddmrp_simulation_form_view">
+        <field name="name">ddmrp.simulation.form (in ddmrp_simulation)</field>
+        <field name="model">ddmrp.simulation</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button name="action_start_simulation" string="Start" type="object" class="oe_highlight" groups="stock.group_stock_user" states="draft"/>
+                    <button name="action_run_simulation" string="Run Step" type="object" class="oe_highlight" groups="stock.group_stock_user" states="imported" context="{'step': True}"/>
+                    <button name="action_run_simulation" string="Run All" type="object" class="btn-secondary" groups="stock.group_stock_user" states="imported"/>
+                    <button name="action_compute_results" string="Compute Results" type="object" class="oe_highlight" groups="stock.group_stock_user" states="ready"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button string="Products" type="object" name="action_view_related_products" class="oe_stat_button"  icon="fa-cubes"  context="{'no_reference': True}"/>
+                        <button string="Buffers" type="object" name="action_view_related_buffers" class="oe_stat_button"  icon="fa-refresh" context="{'no_reference': True}"/>
+                        <button string="Line Results" type="object" name="action_view_related_simulation_lines" class="oe_stat_button" icon="fa-exchange" context="{'no_reference': True}"/>
+                    </div>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group name="main">
+                        <group name="main_left">
+                            <field name="simulation_type"/>
+                            <field name="simulation_file_name" invisible="1"/>
+                            <field name="simulation_file" filename="simulation_file_name"/>
+                        </group>
+                        <group name="main_right">
+                            <field name="simulation_date_start"/>
+                            <field name="simulation_date_end"/>
+                            <field name="simulation_step"/>
+                            <field name="simulation_date_current"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Master Data">
+                            <field name="simulation_product_ids">
+                                <tree editable="top">
+                                    <field name="simulation_id" invisible="1"/>
+                                    <field name="product_tmpl_id" invisible="1"/>
+                                    <field name="product_id"/>
+                                    <field name="reference"/>
+                                    <field name="name"/>
+                                    <field name="standard_price"/>
+                                    <field name="seller_id" context="{'default_product_id': product_id, 'default_product_tmpl_id': product_tmpl_id}"/>
+                                    <field name="lead_time"/>
+                                    <field name="replenish_method"/>
+                                    <field name="item_type"/>
+                                    <field name="lead_time_id"/>
+                                    <field name="variability_id"/>
+                                    <field name="stock_buffer_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Bill of Materials">
+
+                        </page>
+                        <page string="On Hand / Demand History">
+                            <field name="simulation_line_ids">
+                                <tree>
+                                    <field name="simulation_id" invisible="1"/>
+                                    <field name="product_id"/>
+                                    <field name="date"/>
+                                    <field name="on_hand"/>
+                                    <field name="demand"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Results">
+                            <group>
+                                <group>
+                                    <field name="initial_inventory_id"/>
+                                </group>
+                                <group>
+                                    <field name="date_start"/>
+                                    <field name="date_end"/>
+                                    <field name="duration"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="result_ids" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter"></div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ddmrp_simulation_search_view">
+        <field name="name">ddmrp.simulation.search (in ddmrp_simulation)</field>
+        <field name="model">ddmrp.simulation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="state"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ddmrp_simulation_tree_view">
+        <field name="name">ddmrp.simulation.tree (in ddmrp_simulation)</field>
+        <field name="model">ddmrp.simulation</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="simulation_type"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="ddmrp_simulation_act_window">
+        <field name="name">DDMRP Simulation</field>
+        <field name="res_model">ddmrp.simulation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem
+        name="DDMRP Simulation"
+        parent="stock.menu_warehouse_report"
+        action="ddmrp_simulation_act_window"
+        id="ddmrp_simulation_menu"
+    />
+
+</odoo>

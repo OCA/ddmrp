@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 KMEE
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="ddmrp_simulation_product_result_tree_view">
+        <field name="name">ddmrp.simulation.product.result.tree (in ddmrp_simulation)</field>
+        <field name="model">ddmrp.simulation.product.result</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="simulation_id" invisible="1"/>
+                <field name="product_id" invisible="1"/>
+                <field name="code" invisible="1"/>
+                <field name="name"/>
+                <field name="current"/>
+                <field name="simulation"/>
+                <field name="percent"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>
