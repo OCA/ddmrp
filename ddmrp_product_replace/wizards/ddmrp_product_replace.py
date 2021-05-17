@@ -55,6 +55,7 @@ class DdmrpProductReplace(models.TransientModel):
     new_product_default_code = fields.Char(string="New Product Internal Ref.")
     copy_route = fields.Boolean(string="Copy Routes")
     copy_putaway = fields.Boolean(string="Copy Put Away Strategy")
+    copy_packaging = fields.Boolean(string="Copy Packaging")
     consider_past_demand = fields.Boolean(
         string="Consider Old Product Demand",
         help="Consider Old product moves as demand for new product",
@@ -198,7 +199,16 @@ class DdmrpProductReplace(models.TransientModel):
             if putaway_ids:
                 # Copy putaway strategies
                 default_putaway = dict(product_id=self.new_product_id.id,)
-                putaway_ids.copy(default=default_putaway)
+                for pa in putaway_ids:
+                    pa.copy(default=default_putaway)
+        if self.copy_packaging:
+            packs = self.env["product.packaging"].search(
+                [("product_id", "=", primary_old.id)]
+            )
+            if packs:
+                default_packs = dict(product_id=self.new_product_id.id,)
+                for pack in packs:
+                    pack.copy(default=default_packs)
 
         if self.mode == "use_existing":
             res = self._do_replacement_use_existing()
