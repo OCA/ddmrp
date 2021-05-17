@@ -59,6 +59,11 @@ msgid "Considered As Demand"
 msgstr ""
 
 #. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__copy_packaging
+msgid "Copy Packaging"
+msgstr ""
+
+#. module: ddmrp_product_replace
 #: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__copy_putaway
 msgid "Copy Put Away Strategy"
 msgstr ""
