@@ -60,6 +60,7 @@
                     />
                     <field name="copy_route" />
                     <field name="copy_putaway" />
+                    <field name="copy_packaging" />
                     <field name="consider_past_demand" />
                 </group>
                 <footer>
