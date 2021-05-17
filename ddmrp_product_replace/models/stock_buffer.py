@@ -149,6 +149,15 @@ class StockBuffer(models.Model):
             )
         return domain
 
+    def _search_stock_moves_qualified_demand_domain(self):
+        domain = super()._search_stock_moves_qualified_demand_domain()
+        if not self.demand_product_ids:
+            return domain
+        domain = [x for x in domain if x[0] != "product_id"] + [
+            ("product_id", "in", self.demand_product_ids.ids)
+        ]
+        return domain
+
     def action_view_buffers_replaced(self):
         action = self.env.ref("ddmrp.action_stock_buffer")
         result = action.read()[0]

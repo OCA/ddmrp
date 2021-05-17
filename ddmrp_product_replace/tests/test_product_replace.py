@@ -132,3 +132,11 @@ class TestDDMRPProductReplace(TestDdmrpCommon):
             old_onhand, new_buffer.product_location_qty_available_not_res
         )
         self.assertNotEqual(old_incoming, new_buffer.incoming_dlt_qty)
+        # Demand:
+        self.assertIn(self.old_product, new_buffer.demand_product_ids)
+        self.assertEqual(new_buffer.qualified_demand, 0)
+        self.create_picking_out(self.old_product, datetime.today(), 11)
+        self.buffer.cron_actions()
+        self.assertEqual(self.buffer.qualified_demand, 11)
+        new_buffer.cron_actions()
+        self.assertEqual(new_buffer.qualified_demand, 11)
