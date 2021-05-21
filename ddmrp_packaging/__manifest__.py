@@ -6,7 +6,7 @@
     "summary": "DDMRP integration with packaging",
     "version": "13.0.1.6.0",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
-    "website": "https://www.forgeflow.com",
+    "website": "https://github.com/OCA/ddmrp",
     "category": "Warehouse Management",
     "depends": ["ddmrp"],
     "data": ["views/stock_buffer_view.xml"],

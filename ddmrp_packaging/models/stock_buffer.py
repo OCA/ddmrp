@@ -22,7 +22,9 @@ class StockBuffer(models.Model):
     package_multiple = fields.Float()
     # make qty_multiple a stored computed field:
     qty_multiple = fields.Float(
-        compute="_compute_qty_multiple", store=True, readonly=False,
+        compute="_compute_qty_multiple",
+        store=True,
+        readonly=False,
     )
 
     @api.constrains("product_id", "packaging_id")
@@ -84,7 +86,10 @@ class StockBuffer(models.Model):
         return {}
 
     def _prepare_procurement_values(
-        self, product_qty, date=False, group=False,
+        self,
+        product_qty,
+        date=False,
+        group=False,
     ):
         values = super()._prepare_procurement_values(
             product_qty=product_qty, date=date, group=group
