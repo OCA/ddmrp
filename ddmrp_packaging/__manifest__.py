@@ -4,7 +4,7 @@
 {
     "name": "DDMRP Packaging",
     "summary": "DDMRP integration with packaging",
-    "version": "13.0.1.6.0",
+    "version": "14.0.1.0.0",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/ddmrp",
     "category": "Warehouse Management",
