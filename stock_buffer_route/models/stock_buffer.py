@@ -9,7 +9,9 @@ class StockBuffer(models.Model):
     _inherit = "stock.buffer"
 
     route_ids = fields.Many2many(
-        "stock.location.route", string="Allowed routes", compute="_compute_route_ids",
+        "stock.location.route",
+        string="Allowed routes",
+        compute="_compute_route_ids",
     )
     route_id = fields.Many2one(
         "stock.location.route",
