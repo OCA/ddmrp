@@ -22,7 +22,7 @@ class PurchaseOrderLine(models.Model):
         string="Buffer On-Hand Status Level", selection=_PRIORITY_LEVEL, readonly=True,
     )
     on_hand_percent = fields.Float(string="On Hand/TOR (%)", readonly=True,)
-    ddmrp_comment = fields.Text(related="order_id.ddmrp_comment")
+    ddmrp_comment = fields.Text(related="order_id.ddmrp_comment", readonly=False)
 
     def create(self, vals):
         record = super().create(vals)
