@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo14-addon-ddmrp',
+        'odoo14-addon-ddmrp_chatter',
         'odoo14-addon-ddmrp_history',
     ],
     classifiers=[
