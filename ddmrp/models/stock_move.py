@@ -54,9 +54,7 @@ class StockMove(models.Model):
             self.browse(moves_to_update_ids).sudo()._update_ddmrp_nfp()
         return moves
 
-    def _update_ddmrp_nfp(self):
-        if self.env.context.get("no_ddmrp_auto_update_nfp"):
-            return True
+    def _find_buffers_to_update_nfp(self):
         # Find buffers that can be affected. `out_buffers` will see the move as
         # outgoing and `in_buffers` as incoming.
         out_buffers = in_buffers = self.env["stock.buffer"]
@@ -73,7 +71,12 @@ class StockMove(models.Model):
                     and move.location_dest_id.is_sublocation_of(buffer.location_id)
                 )
             )
+        return out_buffers, in_buffers
 
+    def _update_ddmrp_nfp(self):
+        if self.env.context.get("no_ddmrp_auto_update_nfp"):
+            return True
+        out_buffers, in_buffers = self._find_buffers_to_update_nfp()
         for buffer in out_buffers.with_context(no_ddmrp_history=True):
             buffer.cron_actions(only_nfp="out")
         for buffer in in_buffers.with_context(no_ddmrp_history=True):
