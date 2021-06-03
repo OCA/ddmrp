@@ -47,6 +47,13 @@ class StockBuffer(models.Model):
         "NFP.",
     )
 
+    @api.constrains("replaced_by_id")
+    def _check_replaced_by_id(self):
+        if not self._check_recursion(parent="replaced_by_id"):
+            raise ValidationError(
+                _('You cannot create recursive "Replaced by" chains.')
+            )
+
     @api.constrains("demand_product_ids")
     def _check_demand_product_ids(self):
         for rec in self:

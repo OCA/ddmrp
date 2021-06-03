@@ -293,6 +293,11 @@ msgid "Stock Buffer"
 msgstr ""
 
 #. module: ddmrp_product_replace
+#: model:ir.model,name:ddmrp_product_replace.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: ddmrp_product_replace
 #: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__new_product_id
 msgid "Substitute Product"
 msgstr ""
@@ -335,6 +340,12 @@ msgstr ""
 #. module: ddmrp_product_replace
 #: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.view_ddmrp_adjustment_sheet_wizard_form
 msgid "Validate"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: code:addons/ddmrp_product_replace/models/stock_buffer.py:0
+#, python-format
+msgid "You cannot create recursive \"Replaced by\" chains."
 msgstr ""
 
 #. module: ddmrp_product_replace
