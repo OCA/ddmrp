@@ -182,6 +182,11 @@ msgid "Buffer zones"
 msgstr "缓冲区"
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_line_search
+msgid "Buffered"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__is_buffered
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__is_buffered
 msgid "Buffered?"
