@@ -1,0 +1,894 @@
+<?xml version="1.0" ?>
+<odoo noupdate="1">
+    <record
+        id="stock_buffer_profile_replenish_purchased_short_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_manufactured_short_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_distributed_short_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_purchased_short_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_manufactured_short_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_distributed_short_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_purchased_short_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_manufactured_short_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_distributed_short_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_purchased_medium_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_manufactured_medium_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_distributed_medium_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_purchased_medium_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_manufactured_medium_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_distributed_medium_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_purchased_medium_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_manufactured_medium_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_distributed_medium_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_purchased_long_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_manufactured_long_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_distributed_long_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_purchased_long_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_manufactured_long_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_distributed_long_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_purchased_long_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_manufactured_long_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_distributed_long_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_purchased_short_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_manufactured_short_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_distributed_short_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_purchased_short_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_manufactured_short_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_distributed_short_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_purchased_short_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_manufactured_short_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_distributed_short_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_purchased_medium_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_manufactured_medium_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_distributed_medium_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_purchased_medium_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_manufactured_medium_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_distributed_medium_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_purchased_medium_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_manufactured_medium_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_distributed_medium_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_purchased_long_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_manufactured_long_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_distributed_long_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_purchased_long_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_manufactured_long_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_distributed_long_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_purchased_long_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_manufactured_long_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_min_max_distributed_long_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">min_max</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_purchased_short_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_manufactured_short_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_distributed_short_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_purchased_short_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_manufactured_short_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_distributed_short_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_purchased_short_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_manufactured_short_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_distributed_short_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_short" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_purchased_medium_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_manufactured_medium_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_distributed_medium_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_purchased_medium_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_manufactured_medium_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_distributed_medium_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_purchased_medium_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_manufactured_medium_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_distributed_medium_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_medium" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_purchased_long_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_manufactured_long_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_distributed_long_low"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field name="variability_id" ref="ddmrp.stock_buffer_profile_variability_low" />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_purchased_long_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_manufactured_long_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_distributed_long_medium"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_medium"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_purchased_long_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">purchased</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_manufactured_long_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">manufactured</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+    <record
+        id="stock_buffer_profile_replenish_override_distributed_long_high"
+        model="stock.buffer.profile"
+    >
+        <field name="replenish_method">replenish_override</field>
+        <field
+            name="variability_id"
+            ref="ddmrp.stock_buffer_profile_variability_high"
+        />
+        <field name="item_type">distributed</field>
+        <field name="lead_time_id" ref="ddmrp.stock_buffer_profile_lead_time_long" />
+    </record>
+</odoo>
