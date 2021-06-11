@@ -176,6 +176,11 @@ msgid "Minimum qty for a single procurement"
 msgstr ""
 
 #. module: ddmrp_chatter
+#: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: ddmrp_chatter
 #: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__activity_date_deadline
 msgid "Next Activity Deadline"
 msgstr ""
