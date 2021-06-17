@@ -25,6 +25,7 @@ addon | version | summary
 [ddmrp_coverage_days](ddmrp_coverage_days/) | 14.0.1.0.0 | Implements Coverage Days.
 [ddmrp_history](ddmrp_history/) | 14.0.1.0.0 | Allow to store historical data of DDMRP buffers.
 [ddmrp_packaging](ddmrp_packaging/) | 14.0.1.0.0 | DDMRP integration with packaging
+[stock_buffer_capacity_limit](stock_buffer_capacity_limit/) | 14.0.1.0.0 | Ensures that the limits of storage are never surpassed
 
 [//]: # (end addons)
 
