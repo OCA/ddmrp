@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+ddmrp_adjustment_access_user,ddmrp.adjustment.user,model_ddmrp_adjustment,stock.group_stock_user,1,0,0,0
+ddmrp_adjustment_access_manager,ddmrp.adjustment.manager,model_ddmrp_adjustment,stock.group_stock_manager,1,1,1,1
+ddmrp_adjustment_access_sheet_user,ddmrp.adjustment.sheet.user,model_ddmrp_adjustment_sheet,stock.group_stock_user,1,0,0,0
+ddmrp_adjustment_access_sheet_manager,ddmrp.adjustment.sheet.manager,model_ddmrp_adjustment_sheet,stock.group_stock_manager,1,1,1,1
+ddmrp_adjustment_access_sheet_line_user,ddmrp.adjustment.sheet.line.user,model_ddmrp_adjustment_sheet_line,stock.group_stock_user,1,0,0,0
+ddmrp_adjustment_access_sheet_line_manager,ddmrp.adjustment.sheet.line.manager,model_ddmrp_adjustment_sheet_line,stock.group_stock_manager,1,1,1,1
+ddmrp_adjustment_access_demand_user,ddmrp.adjustment.demand.user,model_ddmrp_adjustment_demand,stock.group_stock_user,1,0,0,0
+ddmrp_adjustment_access_demand_manager,ddmrp.adjustment.demand.manager,model_ddmrp_adjustment_demand,stock.group_stock_manager,1,1,1,1
