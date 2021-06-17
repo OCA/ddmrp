@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo14-addon-ddmrp',
         'odoo14-addon-ddmrp_adjustment',
         'odoo14-addon-ddmrp_chatter',
+        'odoo14-addon-ddmrp_coverage_days',
         'odoo14-addon-ddmrp_history',
         'odoo14-addon-ddmrp_packaging',
     ],
