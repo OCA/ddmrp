@@ -20,6 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [ddmrp](ddmrp/) | 14.0.1.6.0 | Demand Driven Material Requirements Planning
+[ddmrp_adjustment](ddmrp_adjustment/) | 14.0.1.0.0 | Allow to apply factor adjustments to buffers.
 [ddmrp_chatter](ddmrp_chatter/) | 14.0.1.0.0 | Adds chatter and activities to stock buffers.
 [ddmrp_history](ddmrp_history/) | 14.0.1.0.0 | Allow to store historical data of DDMRP buffers.
 
