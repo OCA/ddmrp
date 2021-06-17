@@ -27,6 +27,7 @@ addon | version | summary
 [ddmrp_history](ddmrp_history/) | 14.0.1.0.0 | Allow to store historical data of DDMRP buffers.
 [ddmrp_packaging](ddmrp_packaging/) | 14.0.1.0.0 | DDMRP integration with packaging
 [stock_buffer_capacity_limit](stock_buffer_capacity_limit/) | 14.0.1.0.0 | Ensures that the limits of storage are never surpassed
+[stock_buffer_route](stock_buffer_route/) | 14.0.1.0.0 | Allows to force a route to be used when procuring from Stock Buffers
 
 [//]: # (end addons)
 
