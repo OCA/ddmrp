@@ -120,6 +120,19 @@
                             icon="fa-refresh"
                             type="object"
                         />
+                        <button
+                            class="oe_stat_button"
+                            name="action_used_in_bom"
+                            type="object"
+                            attrs="{'invisible':['|',('product_type', 'not in', ['product', 'consu']), ('used_in_bom_count', '=', 0)]}"
+                            icon="fa-level-up"
+                        >
+                            <field
+                                string="Used In"
+                                name="used_in_bom_count"
+                                widget="statinfo"
+                            />
+                        </button>
                     </div>
                     <widget
                         name="web_ribbon"
@@ -132,6 +145,7 @@
                             <field name="active" invisible="1" />
                             <field name="name" />
                             <field name="product_id" />
+                            <field name="product_type" invisible="1" />
                         </group>
                         <group>
                             <field
