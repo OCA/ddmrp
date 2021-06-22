@@ -19,7 +19,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[ddmrp](ddmrp/) | 14.0.1.6.0 | Demand Driven Material Requirements Planning
+[ddmrp](ddmrp/) | 14.0.1.6.1 | Demand Driven Material Requirements Planning
 [ddmrp_adjustment](ddmrp_adjustment/) | 14.0.1.0.0 | Allow to apply factor adjustments to buffers.
 [ddmrp_chatter](ddmrp_chatter/) | 14.0.1.0.0 | Adds chatter and activities to stock buffers.
 [ddmrp_coverage_days](ddmrp_coverage_days/) | 14.0.1.0.0 | Implements Coverage Days.
