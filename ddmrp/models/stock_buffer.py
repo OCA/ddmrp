@@ -828,6 +828,18 @@ class StockBuffer(models.Model):
             else:
                 rec.main_supplier_id = False
 
+    @api.depends("main_supplier_id", "product_id.seller_ids")
+    def _compute_product_vendor_code(self):
+        for rec in self:
+            if not rec.main_supplier_id:
+                rec.product_vendor_code = False
+                continue
+            supplier_info = rec._get_product_sellers().filtered(
+                lambda r: r.name == rec.main_supplier_id
+                and r.product_id == rec.product_id
+            )
+            rec.product_vendor_code = fields.first(supplier_info).product_code
+
     buffer_profile_id = fields.Many2one(
         comodel_name="stock.buffer.profile",
         string="Buffer Profile",
@@ -859,6 +871,9 @@ class StockBuffer(models.Model):
     )
     red_override = fields.Float(
         string="Red Zone (Override)",
+    )
+    product_vendor_code = fields.Char(
+        compute="_compute_product_vendor_code", string="Vendor Code"
     )
     dlt = fields.Float(
         string="DLT (days)",
