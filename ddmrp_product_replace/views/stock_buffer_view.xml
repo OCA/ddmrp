@@ -35,7 +35,7 @@
                     />
                 </button>
             </div>
-            <field name="product_id" position="after">
+            <field name="product_vendor_code" position="after">
                 <field name="replaced_by_id" />
             </field>
             <notebook position="inside">
