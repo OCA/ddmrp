@@ -27,4 +27,25 @@
             </field>
         </field>
     </record>
+    <record id="view_move_consumption_pivot" model="ir.ui.view">
+        <field name="name">stock.move.consumption.pivot</field>
+        <field name="model">stock.move</field>
+        <field name="arch" type="xml">
+            <pivot string="Stock Moves Yearly Consumption">
+                <field name="date" interval="month" type="row" />
+                <field name="location_dest_id" type="col" />
+                <field name="product_uom_qty" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="stock_move_year_consumption_action" model="ir.actions.act_window">
+        <field name="name">Stock Move Last Year Consumption</field>
+        <field name="res_model">stock.move</field>
+        <field name="view_id" ref="ddmrp.view_move_consumption_pivot" />
+        <field
+            name="context"
+        >{"time_ranges": {"field": "date", "range": "last_365_days"}}</field>
+        <field name="domain" />
+        <field name="view_mode">pivot</field>
+    </record>
 </odoo>
