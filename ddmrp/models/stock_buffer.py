@@ -183,6 +183,16 @@ class StockBuffer(models.Model):
         result["domain"] = [("id", "in", purchase_ids.ids)]
         return result
 
+    def action_view_yearly_consumption(self):
+        action = self.env.ref("ddmrp.stock_move_year_consumption_action")
+        result = action.read()[0]
+        result["domain"] = [
+            ("product_id", "=", self.product_id.id),
+            ("state", "=", "done"),
+            ("location_dest_id.usage", "in", ["customer", "production"]),
+        ]
+        return result
+
     @api.constrains("product_id")
     def _check_product_uom(self):
         if any(
