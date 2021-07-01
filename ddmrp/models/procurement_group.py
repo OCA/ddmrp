@@ -52,4 +52,6 @@ class ProcurementGroup(models.Model):
                 procurements.pop(index)
             procurements.extend(new_procs)
 
-        return super(ProcurementGroup, self).run(procurements)
+        return super(ProcurementGroup, self).run(
+            procurements, raise_user_error=raise_user_error
+        )
