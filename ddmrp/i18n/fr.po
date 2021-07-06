@@ -17,6 +17,11 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__used_in_bom_count
+msgid "# BoM Where Used"
+msgstr ""
+
+#. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
@@ -26,6 +31,15 @@ msgstr ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Les valeurs définies ici sont "
 "dépendantes de la société.\" role=\"img\" aria-label=\"Les valeurs définies "
 "ici sont dépendantes de la société.\" groups=\"base.group_multi_company\"/>"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__product_type
+msgid ""
+"A storable product is a product for which you manage stock. The Inventory "
+"app has to be installed.\n"
+"A consumable product is a product for which stock is not managed.\n"
+"A service is a non-material product you provide."
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu
@@ -1054,6 +1068,11 @@ msgid "Product Template"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_type
+msgid "Product Type"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_uom
 msgid "Product Unit of Measure"
 msgstr ""
@@ -1551,6 +1570,11 @@ msgid ""
 "                    this may trigger a draft purchase order, a "
 "manufacturing\n"
 "                    order or a transfer picking."
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Used In"
 msgstr ""
 
 #. module: ddmrp

@@ -18,11 +18,25 @@ msgstr ""
 "X-Generator: Poedit 2.3\n"
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__used_in_bom_count
+msgid "# BoM Where Used"
+msgstr ""
+
+#. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
 "specific.\" role=\"img\" aria-label=\"Values set here are company-specific."
 "\" groups=\"base.group_multi_company\"/>"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__product_type
+msgid ""
+"A storable product is a product for which you manage stock. The Inventory "
+"app has to be installed.\n"
+"A consumable product is a product for which stock is not managed.\n"
+"A service is a non-material product you provide."
 msgstr ""
 
 #. module: ddmrp
@@ -1067,6 +1081,11 @@ msgid "Product Template"
 msgstr "Plantilla de producto"
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_type
+msgid "Product Type"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_uom
 msgid "Product Unit of Measure"
 msgstr "Unidad de Medida del Producto"
@@ -1580,6 +1599,11 @@ msgstr ""
 "                    búfer. De acuerdo con la configuración del producto,\n"
 "                    esto podría generar un pedido de compra en borrador, una "
 "orden de producción o un albarán interno."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Used In"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__variability_id
