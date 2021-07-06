@@ -371,6 +371,15 @@ class StockBuffer(models.Model):
         result["domain"] = [("id", "in", mrp_production_ids.ids)]
         return result
 
+    product_type = fields.Selection(related="product_id.type", readonly=True)
+    used_in_bom_count = fields.Integer(related="product_id.used_in_bom_count")
+
+    def action_used_in_bom(self):
+        self.ensure_one()
+        action = self.env.ref("mrp.mrp_bom_form_action").read()[0]
+        action["domain"] = [("bom_line_ids.product_id", "=", self.product_id.id)]
+        return action
+
     # DDMRP SPECIFIC:
 
     @api.depends(
