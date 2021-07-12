@@ -114,7 +114,7 @@
                             attrs="{'invisible': [('item_type', '!=', 'purchased')]}"
                         />
                         <button
-                            title="Refresh Buffer"
+                            string="Refresh Buffer"
                             name="cron_actions"
                             class="oe_stat_button"
                             icon="fa-refresh"
