@@ -11,6 +11,11 @@ class PurchaseOrder(models.Model):
 
     ddmrp_comment = fields.Text(string="Follow-up Notes")
 
+    def action_ddmrp_line_details(self):
+        action = self.env.ref("ddmrp.po_line_execution_action").read()[0]
+        action["domain"] = [("id", "in", self.order_line.ids)]
+        return action
+
 
 class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
