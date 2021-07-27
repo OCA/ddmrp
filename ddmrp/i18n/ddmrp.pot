@@ -1610,6 +1610,11 @@ msgid "Vendor"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_vendor_code
+msgid "Vendor Code"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_warehouse
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__warehouse_id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__warehouse_id
