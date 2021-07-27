@@ -90,6 +90,61 @@
             </tree>
         </field>
     </record>
+    <record id="stock_buffer_basic_view_tree" model="ir.ui.view">
+        <field name="name">stock.buffer.basic.tree</field>
+        <field name="model">stock.buffer</field>
+        <field name="priority">80</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="procure_recommended_qty &gt; 0">
+                <field name="product_id" />
+                <field name="product_vendor_code" optional="hide" />
+                <field name="planning_priority_level" invisible="1" />
+                <field
+                    name="net_flow_position_percent"
+                    options='{"color_from": "planning_priority_level"}'
+                />
+                <field name="execution_priority_level" invisible="1" />
+                <field
+                    name="on_hand_percent"
+                    options='{"color_from": "execution_priority_level"}'
+                />
+                <button
+                    string="Refresh Buffer"
+                    name="refresh_buffer"
+                    icon="fa-refresh"
+                    type="object"
+                />
+                <field name="incoming_dlt_qty" string="Incoming Within DLT" />
+                <field
+                    name="incoming_location_qty"
+                    string="Total Incoming"
+                    optional="show"
+                />
+                <field
+                    name="rfq_outside_dlt_qty"
+                    string="RFQ Qty Outside DLT"
+                    optional="hide"
+                />
+                <button
+                    string="Open Non-completed Moves"
+                    name="open_moves"
+                    icon="fa-exchange"
+                    type="object"
+                />
+                <field name="qualified_demand" />
+                <field name="net_flow_position" />
+                <field name="procure_recommended_qty" />
+                <button
+                    string="Create Procurement"
+                    name="%(ddmrp.act_make_procurement_from_buffer)d"
+                    icon="fa-cogs"
+                    type="action"
+                />
+                <field name="item_type" optional="show" />
+                <field name="main_supplier_id" optional="show" />
+            </tree>
+        </field>
+    </record>
     <record id="stock_buffer_view_form" model="ir.ui.view">
         <field name="name">stock.buffer.form</field>
         <field name="model">stock.buffer</field>
@@ -438,7 +493,7 @@
         </field>
     </record>
     <record id="action_stock_buffer" model="ir.actions.act_window">
-        <field name="name">Stock Buffers</field>
+        <field name="name">Stock Buffers Details</field>
         <field name="res_model">stock.buffer</field>
         <field name="view_mode">tree,form</field>
     </record>
@@ -446,5 +501,16 @@
         id="menu_stock_buffer"
         parent="stock.menu_stock_inventory_control"
         action="action_stock_buffer"
+    />
+    <record id="action_stock_buffer_basic" model="ir.actions.act_window">
+        <field name="name">Stock Buffers</field>
+        <field name="res_model">stock.buffer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="stock_buffer_basic_view_tree" />
+    </record>
+    <menuitem
+        id="menu_stock_buffer_basic"
+        parent="stock.menu_stock_inventory_control"
+        action="action_stock_buffer_basic"
     />
 </odoo>
