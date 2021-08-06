@@ -8,20 +8,24 @@
             <tree decoration-danger="procure_recommended_qty &gt; 0">
                 <field name="product_id" />
                 <field name="product_vendor_code" optional="hide" />
-                <field name="warehouse_id" />
+                <field name="warehouse_id" optional="show" />
                 <field name="location_id" groups="stock.group_stock_multi_locations" />
                 <field
                     name="product_uom"
                     string="UoM"
                     groups="uom.group_uom"
-                    optional="show"
+                    optional="hide"
                 />
                 <field name="planning_priority_level" invisible="1" />
                 <field
                     name="net_flow_position_percent"
                     options='{"color_from": "planning_priority_level"}'
                 />
-                <field name="product_location_qty_available_not_res" string="On-Hand" />
+                <field
+                    name="product_location_qty_available_not_res"
+                    string="On-Hand"
+                    optional="show"
+                />
                 <field name="execution_priority_level" invisible="1" />
                 <field
                     name="on_hand_percent"
@@ -83,11 +87,11 @@
                 <field name="distributed_source_location_qty" optional="hide" />
                 <field name="item_type" optional="show" />
                 <field name="main_supplier_id" optional="show" />
-                <field name="adu" />
-                <field name="dlt" />
-                <field name="top_of_red" optional="show" />
-                <field name="top_of_yellow" optional="show" />
-                <field name="top_of_green" optional="show" />
+                <field name="adu" optional="hide" />
+                <field name="dlt" optional="hide" />
+                <field name="top_of_red" optional="hide" />
+                <field name="top_of_yellow" optional="hide" />
+                <field name="top_of_green" optional="hide" />
             </tree>
         </field>
     </record>
@@ -386,6 +390,24 @@
                         name="execution_priority_level_green"
                         string="Green"
                         domain="[('execution_priority_level', '=', '3_green')]"
+                    />
+                </group>
+                <separator />
+                <group name="item_type" string="Type">
+                    <filter
+                        name="item_type_manufactured"
+                        string="Manufactured"
+                        domain="[('item_type', '=', 'manufactured')]"
+                    />
+                    <filter
+                        name="item_type_purchased"
+                        string="Purchased"
+                        domain="[('item_type', '=', 'purchased')]"
+                    />
+                    <filter
+                        name="item_type_distributed"
+                        string="Distributed"
+                        domain="[('item_type', '=', 'distributed')]"
                     />
                 </group>
                 <separator />
