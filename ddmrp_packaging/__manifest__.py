@@ -9,7 +9,7 @@
     "website": "https://www.forgeflow.com",
     "category": "Warehouse Management",
     "depends": ["ddmrp"],
-    "data": ["views/stock_buffer_view.xml"],
+    "data": ["views/stock_buffer_view.xml", "wizards/make_procurement_buffer_view.xml"],
     "license": "LGPL-3",
     "installable": True,
     "auto_install": False,

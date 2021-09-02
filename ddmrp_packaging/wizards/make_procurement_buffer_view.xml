@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="view_make_procurement_buffer_wizard" model="ir.ui.view">
+        <field name="name">Request Procurement Packaging</field>
+        <field name="inherit_id" ref="ddmrp.view_make_procurement_buffer_wizard" />
+        <field name="model">make.procurement.buffer</field>
+        <field name="arch" type="xml">
+            <field name="recommended_qty" position="after">
+                <field name="packaging_id" domain="[('product_id', '=', product_id)]" />
+                <field name="packaging_qty" />
+            </field>
+        </field>
+    </record>
+    <record id="view_make_procure_without_security" model="ir.ui.view">
+        <field name="name">Request Procurement Packaging</field>
+        <field name="model">make.procurement.buffer</field>
+        <field name="inherit_id" ref="ddmrp.view_make_procure_without_security" />
+        <field name="arch" type="xml">
+            <field name="packaging_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="packaging_qty" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
