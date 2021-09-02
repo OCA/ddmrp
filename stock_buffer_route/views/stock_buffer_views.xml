@@ -17,4 +17,22 @@
             </field>
         </field>
     </record>
+    <record id="stock_buffer_search" model="ir.ui.view">
+        <field name="name">stock.buffer.search.inherit</field>
+        <field name="model">stock.buffer</field>
+        <field name="inherit_id" ref="ddmrp.stock_buffer_search" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//filter[@name='main_supplier_group_filter']"
+                position="before"
+            >
+                <filter
+                    name="route_id"
+                    string="Route"
+                    domain="[]"
+                    context="{'group_by': 'route_id'}"
+                />
+            </xpath>
+        </field>
+    </record>
 </odoo>
