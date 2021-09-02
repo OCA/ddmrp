@@ -20,6 +20,7 @@ msgstr ""
 
 #. module: stock_buffer_route
 #: model:ir.model.fields,field_description:stock_buffer_route.field_stock_buffer__route_id
+#: model_terms:ir.ui.view,arch_db:stock_buffer_route.stock_buffer_search
 msgid "Route"
 msgstr ""
 
