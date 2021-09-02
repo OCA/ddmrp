@@ -100,6 +100,13 @@
                     <div class="oe_button_box" name="button_box">
                         <button
                             type="object"
+                            name="action_view_yearly_consumption"
+                            class="oe_stat_button"
+                            string="Consumption"
+                            icon="fa-fire"
+                        />
+                        <button
+                            type="object"
                             name="action_view_mrp_productions"
                             class="oe_stat_button"
                             string="Manufacturing Orders"
