@@ -962,3 +962,9 @@ class TestDdmrp(TestDdmrpCommon):
         self.product_c_blue.toggle_active()
         self.assertTrue(self.buffer_c_blue.active)
         self.assertTrue(self.product_c_blue.active)
+
+    def test_43_test_button_actions(self):
+        """Quick and simple tests for secondary actions."""
+        # Consumption:
+        action = self.buffer_a.action_view_yearly_consumption()
+        self.assertTrue(isinstance(action, dict))
