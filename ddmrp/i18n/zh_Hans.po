@@ -432,6 +432,7 @@ msgstr "显示名称"
 
 #. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer_profile__item_type__distributed
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
 msgid "Distributed"
 msgstr "分布"
 
@@ -821,6 +822,7 @@ msgstr "从订购点创造补货"
 
 #. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer_profile__item_type__manufactured
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
 msgid "Manufactured"
 msgstr "制造"
 
@@ -1167,6 +1169,7 @@ msgstr "采购订单"
 
 #. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer_profile__item_type__purchased
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
 msgid "Purchased"
 msgstr "已采购"
 
@@ -1584,6 +1587,11 @@ msgstr ""
 #: model:ir.model.fields,help:ddmrp.field_mrp_bom__is_buffered
 #: model:ir.model.fields,help:ddmrp.field_mrp_bom_line__is_buffered
 msgid "True when the product has an DDMRP buffer associated."
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Type"
 msgstr ""
 
 #. module: ddmrp
