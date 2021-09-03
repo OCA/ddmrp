@@ -16,7 +16,7 @@
         <field name="inherit_id" ref="ddmrp.stock_buffer_view_tree" />
         <field name="arch" type="xml">
             <field name="product_location_qty_available_not_res" position="after">
-                <field name="coverage_days" string="Days of Coverage" />
+                <field name="coverage_days" string="Days of Coverage" optional="hide" />
             </field>
         </field>
     </record>
