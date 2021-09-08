@@ -179,11 +179,14 @@ class StockBuffer(models.Model):
     def action_view_yearly_consumption(self):
         action = self.env.ref("ddmrp.stock_move_year_consumption_action")
         result = action.read()[0]
-        result["domain"] = [
-            ("product_id", "=", self.product_id.id),
-            ("state", "=", "done"),
-            ("location_dest_id.usage", "in", ["customer", "production"]),
-        ]
+        locations = self.env["stock.location"].search(
+            [("id", "child_of", [self.location_id.id])]
+        )
+        date_to = fields.Date.today()
+        # We take last five years, even though they will be initially
+        # filtered in the action to show only last year.
+        date_from = date_to - timedelta(days=5 * 365)
+        result["domain"] = self._past_moves_domain(date_from, date_to, locations)
         return result
 
     @api.constrains("product_id")
