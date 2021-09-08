@@ -288,6 +288,11 @@ msgid "Configuration Warnings in Stock Buffers"
 msgstr ""
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Consumption"
+msgstr ""
+
+#. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "Create Procurement"
 msgstr ""
@@ -1454,6 +1459,16 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_move
 msgid "Stock Move"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.stock_move_year_consumption_action
+msgid "Stock Move Last Year Consumption"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_move_consumption_pivot
+msgid "Stock Moves Yearly Consumption"
 msgstr ""
 
 #. module: ddmrp
