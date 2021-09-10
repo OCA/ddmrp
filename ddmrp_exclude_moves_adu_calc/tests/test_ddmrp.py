@@ -120,7 +120,6 @@ class TestDdmrp(common.TransactionCase):
                         {
                             "name": "Test move",
                             "product_id": self.product_a.id,
-                            "date_expected": date_move,
                             "date": date_move,
                             "product_uom": self.product_a.uom_id.id,
                             "product_uom_qty": qty,
@@ -146,7 +145,6 @@ class TestDdmrp(common.TransactionCase):
                         {
                             "name": "Test move",
                             "product_id": self.product_a.id,
-                            "date_expected": date_move,
                             "date": date_move,
                             "product_uom": self.product_a.uom_id.id,
                             "product_uom_qty": qty,
@@ -161,7 +159,7 @@ class TestDdmrp(common.TransactionCase):
     def _do_picking(self, picking, date):
         picking.action_confirm()
         picking.move_lines.quantity_done = picking.move_lines.product_uom_qty
-        picking.action_done()
+        picking._action_done()
         for move in picking.move_lines:
             move.date = date
 
