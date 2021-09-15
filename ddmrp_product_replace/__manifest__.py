@@ -4,7 +4,7 @@
 {
     "name": "DDMRP Product Replace",
     "summary": "Provides a assisting tool for product replacement.",
-    "version": "13.0.2.2.0",
+    "version": "14.0.1.0.0",
     "development_status": "Beta",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],

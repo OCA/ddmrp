@@ -19,11 +19,17 @@ class StockBuffer(models.Model):
         " and C where B only aggregates C",
         tracking=True,
     )
-    replaced_by_alert_text = fields.Char(compute="_compute_replaced_by_alert_text",)
-    replacement_for_ids = fields.One2many(
-        string="Replaces", comodel_name="stock.buffer", inverse_name="replaced_by_id",
+    replaced_by_alert_text = fields.Char(
+        compute="_compute_replaced_by_alert_text",
     )
-    replacement_for_count = fields.Integer(compute="_compute_replacement_for_count",)
+    replacement_for_ids = fields.One2many(
+        string="Replaces",
+        comodel_name="stock.buffer",
+        inverse_name="replaced_by_id",
+    )
+    replacement_for_count = fields.Integer(
+        compute="_compute_replacement_for_count",
+    )
     is_replacement_product = fields.Boolean(
         string="Replacement Product",
         compute="_compute_is_replacement_product",
@@ -115,8 +121,7 @@ class StockBuffer(models.Model):
 
     @api.model
     def _recursive_replacement_for_ids(self, buffers):
-        """ Returns the list of buffers being replaced recursively.
-        """
+        """Returns the list of buffers being replaced recursively."""
         res = self.env["stock.buffer"]
         for rec in buffers:
             if rec.replacement_for_ids:
