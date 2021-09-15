@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 from odoo.exceptions import ValidationError
 
-from odoo.addons.ddmrp.tests.common import TestDdmrpCommon
+from .common import TestDdmrpCommon
 
 
 class TestDdmrp(TestDdmrpCommon):
