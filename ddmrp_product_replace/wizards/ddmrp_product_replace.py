@@ -32,7 +32,9 @@ class DdmrpProductReplace(models.TransientModel):
         compute="_compute_buffer_ids",
         store=True,
     )
-    is_already_replaced = fields.Boolean(compute="_compute_is_already_replaced",)
+    is_already_replaced = fields.Boolean(
+        compute="_compute_is_already_replaced",
+    )
     new_product_id = fields.Many2one(
         comodel_name="product.product",
         string="Substitute Product",
@@ -180,7 +182,8 @@ class DdmrpProductReplace(models.TransientModel):
         primary_old = self.primary_old_product_id
         if self.use_existing == "new":
             default = dict(
-                name=self.new_product_name, default_code=self.new_product_default_code,
+                name=self.new_product_name,
+                default_code=self.new_product_default_code,
             )
             if not self.copy_route:
                 default["route_ids"] = None
@@ -198,7 +201,9 @@ class DdmrpProductReplace(models.TransientModel):
             )
             if putaway_ids:
                 # Copy putaway strategies
-                default_putaway = dict(product_id=self.new_product_id.id,)
+                default_putaway = dict(
+                    product_id=self.new_product_id.id,
+                )
                 for pa in putaway_ids:
                     pa.copy(default=default_putaway)
         if self.copy_packaging:
@@ -206,7 +211,9 @@ class DdmrpProductReplace(models.TransientModel):
                 [("product_id", "=", primary_old.id)]
             )
             if packs:
-                default_packs = dict(product_id=self.new_product_id.id,)
+                default_packs = dict(
+                    product_id=self.new_product_id.id,
+                )
                 for pack in packs:
                     pack.copy(default=default_packs)
 
