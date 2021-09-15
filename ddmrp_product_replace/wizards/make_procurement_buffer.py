@@ -7,8 +7,12 @@ from odoo import _, api, fields, models
 class MakeProcurementBuffer(models.TransientModel):
     _inherit = "make.procurement.buffer"
 
-    has_replaced_buffers = fields.Boolean(compute="_compute_replaced_by_alert_text",)
-    replaced_by_alert_text = fields.Text(compute="_compute_replaced_by_alert_text",)
+    has_replaced_buffers = fields.Boolean(
+        compute="_compute_replaced_by_alert_text",
+    )
+    replaced_by_alert_text = fields.Text(
+        compute="_compute_replaced_by_alert_text",
+    )
 
     @api.depends("item_ids")
     def _compute_replaced_by_alert_text(self):
