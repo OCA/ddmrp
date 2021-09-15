@@ -75,14 +75,13 @@
             </form>
         </field>
     </record>
-    <act_window
-        id="action_ddmrp_product_replace_wizard"
-        name="Product Replacement Tool"
-        res_model="ddmrp.product.replace"
-        binding_model="ddmrp.product.replace"
-        view_mode="form"
-        target="new"
-    />
+    <record model="ir.actions.act_window" id="action_ddmrp_product_replace_wizard">
+        <field name="name">Product Replacement Tool</field>
+        <field name="res_model">ddmrp.product.replace</field>
+        <field name="binding_model_id" ref="model_ddmrp_product_replace" />
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
     <menuitem
         id="menu_ddmrp_product_replace"
         parent="ddmrp.menu_ddmrp_config"
