@@ -13,7 +13,11 @@
                     style="margin-bottom:0px;"
                 >
                     <p>
-                        <span class="fa fa-info-circle" style="margin-right:5px" />
+                        <span
+                            class="fa fa-info-circle"
+                            title="fa fa-info-circle"
+                            style="margin-right:5px"
+                        />
                         <field name="replaced_by_alert_text" style="display:inline;" />
                     </p>
                 </div>

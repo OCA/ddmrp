@@ -12,6 +12,7 @@
     "category": "Warehouse Management",
     "depends": ["ddmrp"],
     "data": [
+        "security/ir.model.access.csv",
         "wizards/ddmrp_product_replace_view.xml",
         "wizards/make_procurement_buffer_view.xml",
         "views/stock_buffer_view.xml",
