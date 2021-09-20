@@ -12,6 +12,7 @@
     "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],
     "website": "https://github.com/OCA/ddmrp",
     "category": "Warehouse",
+    "external_dependencies": {"python": ["bokeh==2.3.1"]},
     "depends": [
         "purchase_stock",
         "mrp_bom_location",
