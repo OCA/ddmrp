@@ -18,6 +18,7 @@ setuptools.setup(
         'odoo14-addon-ddmrp_packaging',
         'odoo14-addon-stock_buffer_capacity_limit',
         'odoo14-addon-stock_buffer_route',
+        'odoo14-addon-stock_buffer_sales_analysis',
     ],
     classifiers=[
         'Programming Language :: Python',
