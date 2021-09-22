@@ -29,6 +29,7 @@ addon | version | maintainers | summary
 [ddmrp_packaging](ddmrp_packaging/) | 14.0.1.1.0 |  | DDMRP integration with packaging
 [stock_buffer_capacity_limit](stock_buffer_capacity_limit/) | 14.0.1.0.0 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) | Ensures that the limits of storage are never surpassed
 [stock_buffer_route](stock_buffer_route/) | 14.0.1.1.0 |  | Allows to force a route to be used when procuring from Stock Buffers
+[stock_buffer_sales_analysis](stock_buffer_sales_analysis/) | 14.0.1.0.0 |  | Allows to access the Sales Analysis from Stock Buffers
 
 [//]: # (end addons)
 
