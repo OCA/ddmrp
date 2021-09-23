@@ -24,8 +24,9 @@ class StockMove(models.Model):
 
     def write(self, vals):
         res = super(StockMove, self).write(vals)
-        if "state" in vals and self.company_id.ddmrp_auto_update_nfp:
-            self._update_ddmrp_nfp()
+        if "state" in vals:
+            for move in self.filtered(lambda m: m.company_id.ddmrp_auto_update_nfp):
+                move._update_ddmrp_nfp()
         return res
 
     def _update_ddmrp_nfp(self):
