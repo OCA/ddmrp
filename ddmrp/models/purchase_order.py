@@ -30,10 +30,17 @@ class PurchaseOrderLine(models.Model):
         return record
 
     def _calc_execution_priority(self):
-        # TODO: handle serveral buffers? worst scenario, average?
-        to_compute = self.filtered(
-            lambda r: r.buffer_ids and r.state not in ["done", "cancel"]
-        )
+        # TODO: handle several buffers? worst scenario, average?
+        if len(self) > 0 and self[0].company_id.po_lock:
+            to_compute = self.filtered(
+                lambda r: r.buffer_ids
+                and r.state != "cancel"
+                and r.qty_received < r.product_qty
+            )
+        else:
+            to_compute = self.filtered(
+                lambda r: r.buffer_ids and r.state not in ["done", "cancel"]
+            )
         for rec in to_compute:
             rec.execution_priority_level = rec.buffer_ids[0].execution_priority_level
             rec.on_hand_percent = rec.buffer_ids[0].on_hand_percent
