@@ -14,7 +14,9 @@ class Buffer(models.Model):
     _inherit = "stock.buffer"
 
     ddmrp_warning_item_ids = fields.One2many(
-        comodel_name="ddmrp.warning.item", inverse_name="buffer_id", readonly=True,
+        comodel_name="ddmrp.warning.item",
+        inverse_name="buffer_id",
+        readonly=True,
     )
 
     def _generate_ddmrp_warnings(self):
