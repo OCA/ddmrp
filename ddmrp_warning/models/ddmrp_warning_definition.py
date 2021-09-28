@@ -11,7 +11,9 @@ class DdmrpWarningDefinition(models.Model):
     _name = "ddmrp.warning.definition"
     _description = "DDMRP Warning Definition"
 
-    name = fields.Char(string="Description",)
+    name = fields.Char(
+        string="Description",
+    )
     python_code = fields.Text(
         string="Warning Expression",
         help="Write Python code that defines when this warning should "
