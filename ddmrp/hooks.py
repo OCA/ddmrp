@@ -21,12 +21,12 @@ def post_load_hook():
                 unfolded=False,
             )
 
-        data = self._get_bom(bom_id=bom_id, product_id=product_id.id, line_qty=qty)
+        data = self._get_bom(bom_id=bom_id, product_id=product_id, line_qty=qty)
 
         def new_get_sub_lines(bom, product_id, line_qty, line_id, level):
             data = self._get_bom(
                 bom_id=bom.id,
-                product_id=product_id.id,
+                product_id=product_id,
                 line_qty=line_qty,
                 line_id=line_id,
                 level=level,
