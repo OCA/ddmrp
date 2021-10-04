@@ -1,0 +1,354 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ddmrp_product_replace
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ddmrp_product_replace
+#: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.view_ddmrp_adjustment_sheet_wizard_form
+msgid ""
+"<i class=\"fa fa-info-circle\" style=\"margin-right:5px\"/>\n"
+"                            When there are more than one product replaced, only the buffer(s) of the primary product in\n"
+"                            this list will be used to create the buffer(s) and/or product(s) for replacement."
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__buffer_ids
+msgid "Affected Buffers"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: code:addons/ddmrp_product_replace/models/stock_buffer.py:0
+#, python-format
+msgid "Buffered product must be considered as demand."
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: code:addons/ddmrp_product_replace/models/stock_buffer.py:0
+#, python-format
+msgid "Buffers Replaced"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.view_ddmrp_adjustment_sheet_wizard_form
+msgid "Cancel"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__consider_past_demand
+msgid "Consider Old Product Demand"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,help:ddmrp_product_replace.field_ddmrp_product_replace__consider_past_demand
+msgid "Consider Old product moves as demand for new product"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_stock_buffer__demand_product_ids
+msgid "Considered As Demand"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__copy_packaging
+msgid "Copy Packaging"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__copy_putaway
+msgid "Copy Put Away Strategy"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__copy_route
+msgid "Copy Routes"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields.selection,name:ddmrp_product_replace.selection__ddmrp_product_replace__use_existing__new
+msgid "Create New Product"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields.selection,name:ddmrp_product_replace.selection__ddmrp_product_replace__mode__new_buffer
+msgid "Create a new buffer for the replacing product."
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model,name:ddmrp_product_replace.model_ddmrp_product_replace
+msgid "DDMRP Product Replace"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_make_procurement_buffer__has_replaced_buffers
+msgid "Has Replaced Buffers"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__id
+msgid "ID"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,help:ddmrp_product_replace.field_stock_buffer__use_replacement_for_buffer_status
+msgid ""
+"If you tick this option, the buffer will consider the incoming and on-hand "
+"of all products it replaces and this will impact its NFP."
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_stock_buffer__use_replacement_for_buffer_status
+msgid "Include Incoming & On-Hands of replaced products"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__is_already_replaced
+msgid "Is Already Replaced"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model,name:ddmrp_product_replace.model_make_procurement_buffer
+msgid "Make Procurements from Stock Buffers"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__mode
+msgid "Mode"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__multi_product
+msgid "Multi Product"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__new_product_default_code
+msgid "New Product Internal Ref."
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__new_product_name
+msgid "New Product Name"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: code:addons/ddmrp_product_replace/wizards/ddmrp_product_replace.py:0
+#, python-format
+msgid "New Stock Buffers"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: code:addons/ddmrp_product_replace/wizards/ddmrp_product_replace.py:0
+#, python-format
+msgid "No affected buffers found."
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__primary_old_product_id
+msgid "Primary Replaced Product"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.stock_buffer_view_form
+msgid "Product Replacement"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.actions.act_window,name:ddmrp_product_replace.action_ddmrp_product_replace_wizard
+#: model:ir.ui.menu,name:ddmrp_product_replace.menu_ddmrp_product_replace
+#: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.view_ddmrp_adjustment_sheet_wizard_form
+msgid "Product Replacement Tool"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,help:ddmrp_product_replace.field_ddmrp_product_replace__new_product_id
+msgid "Product that is going to replace the other one."
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,help:ddmrp_product_replace.field_ddmrp_product_replace__old_product_ids
+msgid "Product to be replaced."
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields.selection,name:ddmrp_product_replace.selection__ddmrp_product_replace__mode__use_existing
+msgid "Replace product in existing buffers"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_make_procurement_buffer__replaced_by_alert_text
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_stock_buffer__replaced_by_alert_text
+msgid "Replaced By Alert Text"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__old_product_ids
+msgid "Replaced Products"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_stock_buffer__replaced_by_id
+msgid "Replaced by"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_stock_buffer__replacement_for_count
+msgid "Replacement For Count"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_stock_buffer__is_replacement_product
+#: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.stock_buffer_search
+msgid "Replacement Product"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.stock_buffer_view_form
+msgid "Replacement for"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_stock_buffer__replacement_for_ids
+msgid "Replaces"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: code:addons/ddmrp_product_replace/wizards/ddmrp_product_replace.py:0
+#, python-format
+msgid "Replacing Product"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.view_ddmrp_adjustment_sheet_wizard_form
+msgid "Select Replaced Products"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.view_ddmrp_adjustment_sheet_wizard_form
+msgid "Select Replacing Product"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: code:addons/ddmrp_product_replace/wizards/ddmrp_product_replace.py:0
+#, python-format
+msgid ""
+"Some of the affected buffers have a different product than the replaced "
+"ones."
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: code:addons/ddmrp_product_replace/wizards/ddmrp_product_replace.py:0
+#, python-format
+msgid "Some of the buffers have already been replaced."
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: code:addons/ddmrp_product_replace/wizards/make_procurement_buffer.py:0
+#, python-format
+msgid "Some products are being replaced:"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model,name:ddmrp_product_replace.model_stock_buffer
+msgid "Stock Buffer"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model,name:ddmrp_product_replace.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__new_product_id
+msgid "Substitute Product"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,help:ddmrp_product_replace.field_stock_buffer__replaced_by_id
+msgid ""
+"The product in this buffer is replaced by the product of selected buffer. When you replace another buffer:\n"
+" - Past Demand of the replacement buffer will include the past demand of this product\n"
+" - Several buffers can be replaced in chained and coexist at the same time: A replaces B that replaces C, then A aggregates both B and C where B only aggregates C"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,help:ddmrp_product_replace.field_stock_buffer__is_replacement_product
+msgid "The product of this buffer is replacing another product"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,help:ddmrp_product_replace.field_stock_buffer__demand_product_ids
+msgid ""
+"This field is used for a correct product replacement within a DDMRP buffer."
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: code:addons/ddmrp_product_replace/models/stock_buffer.py:0
+#, python-format
+msgid "This product is replaced by %s."
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields.selection,name:ddmrp_product_replace.selection__ddmrp_product_replace__use_existing__existing
+msgid "Use Existing Product"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__use_existing
+msgid "Use Existing/New Product"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.view_ddmrp_adjustment_sheet_wizard_form
+msgid "Validate"
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: code:addons/ddmrp_product_replace/models/stock_buffer.py:0
+#, python-format
+msgid "You cannot create recursive \"Replaced by\" chains."
+msgstr ""
+
+#. module: ddmrp_product_replace
+#: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.view_ddmrp_adjustment_sheet_wizard_form
+msgid "or"
+msgstr ""
