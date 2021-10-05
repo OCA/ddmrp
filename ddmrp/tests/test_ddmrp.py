@@ -4,6 +4,7 @@
 
 from datetime import datetime, time, timedelta
 
+from odoo import fields
 from odoo.exceptions import ValidationError
 
 from .common import TestDdmrpCommon
@@ -968,8 +969,32 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertTrue(self.buffer_c_blue.active)
         self.assertTrue(self.product_c_blue.active)
 
-    def test_43_test_button_actions(self):
-        """Quick and simple tests for secondary actions."""
-        # Consumption:
-        action = self.buffer_a.action_view_yearly_consumption()
-        self.assertTrue(isinstance(action, dict))
+    def test_43_get_product_sellers(self):
+        seller = self.product_purchased.seller_ids
+        vendor = seller.name
+        today = fields.Date.context_today(seller)
+        tomorrow = fields.Date.add(today, days=1)
+        yesterday = fields.Date.subtract(today, days=1)
+        # Simple case: one seller available on the product
+        self.assertEqual(self.buffer_purchase._get_product_sellers(), seller)
+        # Create new sellers with different 'date_start'
+        seller2 = self.supinfo_model.create(
+            {
+                "product_tmpl_id": self.product_purchased.product_tmpl_id.id,
+                "name": vendor.id,
+                "date_start": tomorrow,
+            }
+        )
+        seller3 = self.supinfo_model.create(
+            {
+                "product_tmpl_id": self.product_purchased.product_tmpl_id.id,
+                "name": vendor.id,
+                "date_start": yesterday,
+            }
+        )
+        self.assertEqual(self.buffer_purchase._get_product_sellers(), seller | seller3)
+        # Set a 'date_end' on the sellers
+        seller2.date_start = False
+        seller2.date_end = today
+        seller.date_end = seller3.date_end = yesterday
+        self.assertEqual(self.buffer_purchase._get_product_sellers(), seller2)
