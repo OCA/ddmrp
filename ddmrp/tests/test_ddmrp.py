@@ -2,7 +2,7 @@
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from datetime import datetime, timedelta
+from datetime import datetime, time, timedelta
 
 from odoo.exceptions import ValidationError
 
@@ -99,16 +99,21 @@ class TestDdmrp(TestDdmrpCommon):
         picking_1 = self.create_pickingoutA(date_move_1, 20)
         self._do_picking(picking_1, date_move_1)
         # The next moves should be considered
+        today = datetime.today()
+        # 8:00 AM is the start of working time for today.
+        # 7:59 AM will make odoo to use the start of woking time for previous
+        # days, which is 1:00 PM of yesterday.
+        day_dt = datetime.combine(today.date(), time(8, 0, 0))
         days = 2
-        date_move_2 = self.calendar.plan_days(-1 * days - 1, datetime.today())
+        date_move_2 = self.calendar.plan_days(-1 * days - 1, day_dt)
         picking_2 = self.create_pickingoutA(date_move_2, 20)
         self._do_picking(picking_2, date_move_2)
         days = 4
-        date_move_3 = self.calendar.plan_days(-1 * days - 1, datetime.today())
+        date_move_3 = self.calendar.plan_days(-1 * days - 1, day_dt)
         picking_3 = self.create_pickingoutA(date_move_3, 20)
         self._do_picking(picking_3, date_move_3)
         days = 6
-        date_move_4 = self.calendar.plan_days(-1 * days - 1, datetime.today())
+        date_move_4 = self.calendar.plan_days(-1 * days - 1, day_dt)
         picking_4 = self.create_pickingoutA(date_move_4, 10)
         self._do_picking(picking_4, date_move_4)
         # This move should be ignored
