@@ -796,8 +796,15 @@ class StockBuffer(models.Model):
         all_sellers = self.product_id.seller_ids.filtered(
             lambda r: not r.company_id or r.company_id == self.company_id
         )
+        today = fields.Date.context_today(self)
         sellers = all_sellers.filtered(
-            lambda s: s.product_id == self.product_id or not s.product_id
+            lambda s: (
+                (s.product_id == self.product_id or not s.product_id)
+                and (
+                    (s.date_start <= today if s.date_start else True)
+                    and (s.date_end >= today if s.date_end else True)
+                )
+            )
         )
         if not sellers:
             # fallback to all sellers
