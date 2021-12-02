@@ -89,8 +89,10 @@ class TestDDMRPProductReplace(TestDdmrpCommon):
         self.assertEqual(len(self.buffer.demand_product_ids), 0)
         old_onhand = self.buffer.product_location_qty_available_not_res
         self.assertEqual(old_onhand, -60.0)
-        old_incoming = self.buffer.incoming_dlt_qty
-        self.assertEqual(old_incoming, 30.0)
+        old_incoming_dlt_qty = self.buffer.incoming_dlt_qty
+        self.assertEqual(old_incoming_dlt_qty, 30.0)
+        old_incoming_qty = self.buffer.incoming_location_qty
+        self.assertEqual(old_incoming_qty, 30.0)
         wiz = self.env["ddmrp.product.replace"].create(
             {
                 "mode": "new_buffer",
@@ -124,14 +126,16 @@ class TestDDMRPProductReplace(TestDdmrpCommon):
         # Check buffer values:
         self.buffer.cron_actions()
         self.assertEqual(old_onhand, new_buffer.product_location_qty_available_not_res)
-        self.assertEqual(old_incoming, new_buffer.incoming_dlt_qty)
+        self.assertEqual(old_incoming_dlt_qty, new_buffer.incoming_dlt_qty)
+        self.assertEqual(old_incoming_qty, new_buffer.incoming_location_qty)
         new_buffer.invalidate_cache()
         new_buffer.use_replacement_for_buffer_status = False
         new_buffer.cron_actions()
         self.assertNotEqual(
             old_onhand, new_buffer.product_location_qty_available_not_res
         )
-        self.assertNotEqual(old_incoming, new_buffer.incoming_dlt_qty)
+        self.assertNotEqual(old_incoming_dlt_qty, new_buffer.incoming_dlt_qty)
+        self.assertNotEqual(old_incoming_qty, new_buffer.incoming_location_qty)
         # Demand:
         self.assertIn(self.old_product, new_buffer.demand_product_ids)
         self.assertEqual(new_buffer.qualified_demand, 0)
