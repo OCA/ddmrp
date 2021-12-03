@@ -425,6 +425,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_move__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_rule__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse__display_name
 msgid "Display Name"
@@ -610,6 +611,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_move__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_picking__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_rule__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse__id
 msgid "ID"
@@ -709,6 +711,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_move____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_stock_picking____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_rule____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse____last_update
 msgid "Last Modified on"
@@ -1106,6 +1109,11 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_product_adu_calculation_method
 msgid "Product Average Daily Usage calculation method"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_picking_form
+msgid "Product Buffers"
 msgstr ""
 
 #. module: ddmrp
@@ -1556,6 +1564,11 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "Total Incoming"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_picking
+msgid "Transfer"
 msgstr ""
 
 #. module: ddmrp
