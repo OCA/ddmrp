@@ -135,12 +135,20 @@ class StockBuffer(models.Model):
             if not (rec.use_replacement_for_buffer_status and rec.replacement_for_ids):
                 continue
             for buffer in rec.replacement_for_ids:
-                replacements_qty = buffer.product_uom._compute_quantity(
+                # Update 'incoming_location_qty'
+                replacements_incoming_qty = buffer.product_uom._compute_quantity(
+                    buffer.incoming_location_qty,
+                    rec.product_uom,
+                    round=False,
+                )
+                rec.incoming_location_qty += replacements_incoming_qty
+                # Update 'product_location_qty_available_not_res'
+                replacements_qty_not_res = buffer.product_uom._compute_quantity(
                     buffer.product_location_qty_available_not_res,
                     rec.product_uom,
                     round=False,
                 )
-                rec.product_location_qty_available_not_res += replacements_qty
+                rec.product_location_qty_available_not_res += replacements_qty_not_res
         return res
 
     def _search_stock_moves_incoming_domain(self, outside_dlt=False):
