@@ -165,6 +165,8 @@ class StockBuffer(models.Model):
         )
         for poline in polines:
             for buffer in poline.buffer_ids:
+                if buffer.id not in self.ids:
+                    continue
                 res[buffer.id] += poline.product_uom._compute_quantity(
                     poline.product_qty, buffer.product_uom, round=False
                 )
