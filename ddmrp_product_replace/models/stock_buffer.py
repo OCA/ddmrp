@@ -179,8 +179,7 @@ class StockBuffer(models.Model):
         return domain
 
     def action_view_buffers_replaced(self):
-        action = self.env.ref("ddmrp.action_stock_buffer")
-        result = action.read()[0]
+        result = self.env["ir.actions.actions"]._for_xml_id("ddmrp.action_stock_buffer")
         result["name"] = _("Buffers Replaced")
         result["domain"] = [("id", "in", self.replacement_for_ids.ids)]
         return result
