@@ -171,20 +171,20 @@ class StockBuffer(models.Model):
         return res
 
     def action_view_purchase(self):
-        action = self.env.ref("purchase.purchase_rfq")
-        result = action.read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id("purchase.purchase_rfq")
         # Remove the context since the action basically display RFQ and not PO.
-        result["context"] = {}
+        action["context"] = {}
         order_line_ids = self.env["purchase.order.line"].search(
             [("buffer_ids", "in", self.ids)]
         )
         purchase_ids = order_line_ids.mapped("order_id")
-        result["domain"] = [("id", "in", purchase_ids.ids)]
-        return result
+        action["domain"] = [("id", "in", purchase_ids.ids)]
+        return action
 
     def action_view_yearly_consumption(self):
-        action = self.env.ref("ddmrp.stock_move_year_consumption_action")
-        result = action.read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "ddmrp.stock_move_year_consumption_action"
+        )
         locations = self.env["stock.location"].search(
             [("id", "child_of", [self.location_id.id])]
         )
@@ -192,8 +192,8 @@ class StockBuffer(models.Model):
         # We take last five years, even though they will be initially
         # filtered in the action to show only last year.
         date_from = date_to - timedelta(days=5 * 365)
-        result["domain"] = self._past_moves_domain(date_from, date_to, locations)
-        return result
+        action["domain"] = self._past_moves_domain(date_from, date_to, locations)
+        return action
 
     @api.constrains("product_id")
     def _check_product_uom(self):
@@ -387,8 +387,7 @@ class StockBuffer(models.Model):
     # MRP LINK:
 
     def action_view_mrp_productions(self):
-        action = self.env.ref("mrp.mrp_production_action")
-        result = action.read()[0]
+        result = self.env["ir.actions.actions"]._for_xml_id("mrp.mrp_production_action")
         result["context"] = {}
         mrp_production_ids = self.env["mrp.production"].search(
             [("buffer_id", "=", self.id)]
@@ -401,7 +400,7 @@ class StockBuffer(models.Model):
 
     def action_used_in_bom(self):
         self.ensure_one()
-        action = self.env.ref("mrp.mrp_bom_form_action").read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id("mrp.mrp_bom_form_action")
         action["domain"] = [("bom_line_ids.product_id", "=", self.product_id.id)]
         return action
 
@@ -1599,23 +1598,24 @@ class StockBuffer(models.Model):
             )
             moves = self._search_stock_moves_incoming(outside_dlt=True)
             pos = pols.mapped("order_id") + moves.mapped("purchase_line_id.order_id")
-            action = self.env.ref("purchase.purchase_rfq")
-            result = action.read()[0]
+            result = self.env["ir.actions.actions"]._for_xml_id("purchase.purchase_rfq")
             # Remove the context since the action display RFQ and not PO.
             result["context"] = {}
             result["domain"] = [("id", "in", pos.ids)]
         elif self.item_type == "manufactured":
             moves = self._search_stock_moves_incoming(outside_dlt=True)
             mos = moves.mapped("production_id")
-            action = self.env.ref("mrp.mrp_production_action")
-            result = action.read()[0]
+            result = self.env["ir.actions.actions"]._for_xml_id(
+                "mrp.mrp_production_action"
+            )
             result["context"] = {}
             result["domain"] = [("id", "in", mos.ids)]
         else:
             moves = self._search_stock_moves_incoming(outside_dlt=True)
             picks = moves.mapped("picking_id")
-            action = self.env.ref("stock.action_picking_tree_all")
-            result = action.read()[0]
+            result = self.env["ir.actions.actions"]._for_xml_id(
+                "stock.action_picking_tree_all"
+            )
             result["context"] = {}
             result["domain"] = [("id", "in", picks.ids)]
         return result
