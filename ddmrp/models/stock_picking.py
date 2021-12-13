@@ -14,7 +14,7 @@ class StockPickgin(models.Model):
             ("product_id", "in", self.mapped("move_lines.product_id.id")),
             ("company_id", "=", self.company_id.id),
         ]
-        action = self.env.ref("ddmrp.action_stock_buffer").read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id("ddmrp.action_stock_buffer")
         action["domain"] = domain
         action["context"] = {"search_default_procure_recommended": 1}
         return action
