@@ -276,7 +276,7 @@ class TestDdmrpCommon(common.SavepointCase):
 
     @classmethod
     def _create_user(cls, login, groups):
-        """ Create a user."""
+        """Create a user."""
         group_ids = [group.id for group in groups]
         user = cls.user_model.with_context({"no_reset_password": True}).create(
             {
