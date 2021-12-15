@@ -9,7 +9,7 @@ class MultiLevelMrp(models.TransientModel):
 
     @api.model
     def _exclude_from_mrp(self, product, mrp_area):
-        """ Exclude from MRP scheduler products that are buffered. """
+        """Exclude from MRP scheduler products that are buffered."""
         res = super()._exclude_from_mrp(product, mrp_area)
         ddmrp = self.env["stock.buffer"].search(
             [
