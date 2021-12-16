@@ -158,8 +158,8 @@ class MakeProcurementBufferItem(models.TransientModel):
         ondelete="cascade",
         readonly=True,
     )
-    recommended_qty = fields.Float(string="Recommended Qty", readonly=True)
-    qty = fields.Float(string="Qty")
+    recommended_qty = fields.Float(readonly=True)
+    qty = fields.Float()
     qty_without_security = fields.Float(string="Quantity")
     uom_id = fields.Many2one(
         string="Unit of Measure",
