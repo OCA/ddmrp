@@ -45,13 +45,11 @@ class StockBufferProfile(models.Model):
                 name += ", {}min".format(rec.distributed_reschedule_max_proc_time)
             rec.name = name
 
-    name = fields.Char(string="Name", compute="_compute_name", store=True)
+    name = fields.Char(compute="_compute_name", store=True)
     replenish_method = fields.Selection(
         string="Replenishment method", selection=_REPLENISH_METHODS, required=True
     )
-    item_type = fields.Selection(
-        string="Item Type", selection=_ITEM_TYPES, required=True
-    )
+    item_type = fields.Selection(selection=_ITEM_TYPES, required=True)
     lead_time_id = fields.Many2one(
         comodel_name="stock.buffer.profile.lead.time", string="Lead Time Factor"
     )
