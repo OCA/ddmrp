@@ -9,7 +9,7 @@ class StockBufferProfileVariability(models.Model):
     _name = "stock.buffer.profile.variability"
     _description = "Stock Buffer Profile Variability Factor"
 
-    name = fields.Char(string="Name", required=True)
+    name = fields.Char(required=True)
     factor = fields.Float(string="Variability Factor", required=True)
     company_id = fields.Many2one(
         "res.company",

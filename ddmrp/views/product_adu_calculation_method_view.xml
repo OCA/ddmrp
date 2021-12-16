@@ -4,7 +4,7 @@
         <field name="name">product.adu.calculation.method.tree</field>
         <field name="model">product.adu.calculation.method</field>
         <field name="arch" type="xml">
-            <tree string="ADU Calculation Method">
+            <tree>
                 <field name="name" />
             </tree>
         </field>

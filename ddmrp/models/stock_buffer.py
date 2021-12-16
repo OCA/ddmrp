@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 
+import json
 import logging
 import operator as py_operator
 import threading
@@ -72,7 +73,6 @@ class StockBuffer(models.Model):
         return res
 
     name = fields.Char(
-        string="Name",
         copy=False,
         required=True,
         default=lambda self: self.env["ir.sequence"].next_by_code("stock.buffer"),
@@ -118,7 +118,6 @@ class StockBuffer(models.Model):
         help="Maximum qty for a single procurement",
     )
     qty_multiple = fields.Float(
-        string="Qty Multiple",
         digits="Product Unit of Measure",
         default=1,
         required=True,
@@ -577,7 +576,14 @@ class StockBuffer(models.Model):
     def _compute_ddmrp_chart(self):
         """This method use the Bokeh library to create a buffer depiction."""
         for rec in self:
-            rec.ddmrp_chart = "%s%s" % rec.get_ddmrp_chart()
+            div, script = rec.get_ddmrp_chart()
+            json_data = json.dumps(
+                {
+                    "div": div,
+                    "script": script,
+                }
+            )
+            rec.ddmrp_chart = json_data
 
     def get_ddmrp_chart(self):
         p = figure(plot_width=300, plot_height=400, y_axis_label="Quantity")
@@ -623,7 +629,7 @@ class StockBuffer(models.Model):
                 ("Green zone", [green]),
                 ("Net Flow Position", [net_flow]),
                 ("On-Hand Position (Unreserved)", [on_hand]),
-            ]
+            ],
         )
         labels_source_data = {
             "height": [
@@ -635,11 +641,11 @@ class StockBuffer(models.Model):
             ],
             "weight": [0.25, 1.75, 1, 1, 1],
             "names": [
-                self.net_flow_position,
-                self.product_location_qty_available_not_res,
-                self.top_of_red,
-                self.top_of_yellow,
-                self.top_of_green,
+                str(self.net_flow_position),
+                str(self.product_location_qty_available_not_res),
+                str(self.top_of_red),
+                str(self.top_of_yellow),
+                str(self.top_of_green),
             ],
         }
         source = ColumnDataSource(data=labels_source_data)
@@ -656,7 +662,7 @@ class StockBuffer(models.Model):
         p.add_layout(labels)
         p.add_layout(legend, "below")
 
-        script, div = components(p)
+        script, div = components(p, wrap_script=False)
         return div, script
 
     def _compute_ddmrp_demand_supply_chart(self):
@@ -728,8 +734,14 @@ class StockBuffer(models.Model):
                 )
                 p.add_tools(hover)
 
-                script, div = components(p)
-                rec.ddmrp_demand_chart = "{}{}".format(div, script)
+                script, div = components(p, wrap_script=False)
+                json_data = json.dumps(
+                    {
+                        "div": div,
+                        "script": script,
+                    }
+                )
+                rec.ddmrp_demand_chart = json_data
             else:
                 rec.ddmrp_demand_chart = _("No demand detected.")
 
@@ -775,8 +787,14 @@ class StockBuffer(models.Model):
                 )
                 p.add_tools(hover)
 
-                script, div = components(p)
-                rec.ddmrp_supply_chart = "{}{}".format(div, script)
+                script, div = components(p, wrap_script=False)
+                json_data = json.dumps(
+                    {
+                        "div": div,
+                        "script": script,
+                    }
+                )
+                rec.ddmrp_supply_chart = json_data
             else:
                 rec.ddmrp_supply_chart = _("No supply detected.")
 
@@ -928,34 +946,28 @@ class StockBuffer(models.Model):
     )
     order_cycle = fields.Float(string="Minimum Order Cycle (days)")
     minimum_order_quantity = fields.Float(
-        string="Minimum Order Quantity",
         digits="Product Unit of Measure",
     )
     red_base_qty = fields.Float(
-        string="Red Base Qty",
         compute="_compute_red_zone",
         digits="Product Unit of Measure",
         store=True,
     )
     red_safety_qty = fields.Float(
-        string="Red Safety Qty",
         compute="_compute_red_zone",
         digits="Product Unit of Measure",
         store=True,
     )
     red_zone_qty = fields.Float(
-        string="Red Zone Qty",
         compute="_compute_red_zone",
         digits="Product Unit of Measure",
         store=True,
     )
     top_of_red = fields.Float(
-        string="Top of Red",
         related="red_zone_qty",
         store=True,
     )
     green_zone_qty = fields.Float(
-        string="Green Zone Qty",
         compute="_compute_green_zone",
         digits="Product Unit of Measure",
         store=True,
@@ -980,32 +992,27 @@ class StockBuffer(models.Model):
         help="Green zone qty option considering desired Order Cycle",
     )
     yellow_zone_qty = fields.Float(
-        string="Yellow Zone Qty",
         compute="_compute_yellow_zone",
         digits="Product Unit of Measure",
         store=True,
     )
     top_of_yellow = fields.Float(
-        string="Top of Yellow",
         compute="_compute_yellow_zone",
         digits="Product Unit of Measure",
         store=True,
     )
     top_of_green = fields.Float(
-        string="Top of Green",
         compute="_compute_green_zone",
         digits="Product Unit of Measure",
         store=True,
     )
-    order_spike_horizon = fields.Float(string="Order Spike Horizon")
+    order_spike_horizon = fields.Float()
     order_spike_threshold = fields.Float(
-        string="Order Spike Threshold",
         compute="_compute_order_spike_threshold",
         digits="Product Unit of Measure",
         store=True,
     )
     qualified_demand = fields.Float(
-        string="Qualified demand",
         digits="Product Unit of Measure",
         readonly=True,
     )
@@ -1024,7 +1031,6 @@ class StockBuffer(models.Model):
         "the DLT horizon.",
     )
     net_flow_position = fields.Float(
-        string="Net flow position",
         digits="Product Unit of Measure",
         readonly=True,
     )
@@ -1033,7 +1039,6 @@ class StockBuffer(models.Model):
         readonly=True,
     )
     planning_priority_level = fields.Selection(
-        string="Planning Priority Level",
         selection=_PRIORITY_LEVEL,
         readonly=True,
     )
@@ -1575,13 +1580,12 @@ class StockBuffer(models.Model):
             )
             or self.auto_procure_option == "standard"
         ):
-            context = {
-                "active_model": "stock.buffer",
-                "active_ids": self.ids,
-                "active_id": self.id,
-            }
             wizard = (
-                self.env["make.procurement.buffer"].with_context(context).create({})
+                self.env["make.procurement.buffer"]
+                .with_context(
+                    active_model="stock.buffer", active_ids=self.ids, active_id=self.id
+                )
+                .create({})
             )
             wizard.make_procurement()
         return True
@@ -1661,6 +1665,7 @@ class StockBuffer(models.Model):
                 "product_location_qty_available_not_res",
                 "dlt",
                 "distributed_source_location_qty",
+                "qualified_demand",
             ],
             ids=self.ids,
         )

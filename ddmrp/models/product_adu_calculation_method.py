@@ -26,7 +26,7 @@ class ProductAduCalculationMethod(models.Model):
             ("estimates", "Use Demand Estimates"),
         ]
 
-    name = fields.Char(string="Name", required=True)
+    name = fields.Char(required=True)
     method = fields.Selection(
         selection="_get_calculation_method",
         string="Calculation method",

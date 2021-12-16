@@ -7,7 +7,7 @@ from datetime import datetime
 import odoo.tests.common as common
 
 
-class TestDdmrpCommon(common.SavepointCase):
+class TestDdmrpCommon(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -50,6 +50,19 @@ class TestDdmrpCommon(common.SavepointCase):
         cls.inventory_location = cls.env["stock.location"].search(
             [("usage", "=", "inventory"), ("company_id", "=", cls.main_company.id)],
             limit=1,
+        )
+        cls.picking_type_out = cls.env.ref("stock.picking_type_out").copy(
+            {
+                "reservation_method": "manual",
+                "sequence_code": "DDMRP-OUT",
+            }
+        )
+        cls.picking_type_in = cls.env.ref("stock.picking_type_in")
+        cls.picking_type_internal = cls.env.ref("stock.picking_type_internal").copy(
+            {
+                "reservation_method": "manual",
+                "sequence_code": "DDMRP-INTERNAL",
+            }
         )
         cls.uom_unit = cls.env.ref("uom.product_uom_unit")
         cls.buffer_profile_pur = cls.env.ref(
@@ -141,9 +154,10 @@ class TestDdmrpCommon(common.SavepointCase):
                 "location_id": cls.binA.id,
                 "company_id": cls.main_company.id,
                 "product_id": cls.productA.id,
-                "quantity": 200.0,
+                "inventory_quantity": 200.0,
             }
         )
+        cls.quant.action_apply_inventory()
 
         # Product B (purchased):
         buy_route = cls.env.ref("purchase_stock.route_warehouse0_buy")
@@ -278,7 +292,7 @@ class TestDdmrpCommon(common.SavepointCase):
     def _create_user(cls, login, groups):
         """Create a user."""
         group_ids = [group.id for group in groups]
-        user = cls.user_model.with_context({"no_reset_password": True}).create(
+        user = cls.user_model.with_context(no_reset_password=True).create(
             {
                 "name": "Test User",
                 "login": login,
@@ -292,7 +306,7 @@ class TestDdmrpCommon(common.SavepointCase):
     def create_pickingoutA(self, date_move, qty):
         picking = self.pickingModel.with_user(self.user).create(
             {
-                "picking_type_id": self.ref("stock.picking_type_out"),
+                "picking_type_id": self.picking_type_out.id,
                 "location_id": self.binA.id,
                 "location_dest_id": self.customer_location.id,
                 "scheduled_date": date_move,
@@ -319,7 +333,7 @@ class TestDdmrpCommon(common.SavepointCase):
     def create_pickinginA(self, date_move, qty):
         picking = self.pickingModel.with_user(self.user).create(
             {
-                "picking_type_id": self.ref("stock.picking_type_in"),
+                "picking_type_id": self.picking_type_in.id,
                 "location_id": self.supplier_location.id,
                 "location_dest_id": self.binA.id,
                 "scheduled_date": date_move,
@@ -331,6 +345,7 @@ class TestDdmrpCommon(common.SavepointCase):
                             "name": "Test move",
                             "product_id": self.productA.id,
                             "date": date_move,
+                            "date_deadline": date_move,
                             "product_uom": self.productA.uom_id.id,
                             "product_uom_qty": qty,
                             "location_id": self.supplier_location.id,
@@ -346,7 +361,7 @@ class TestDdmrpCommon(common.SavepointCase):
     def create_pickinginternalA(self, date_move, qty):
         picking = self.pickingModel.with_user(self.user).create(
             {
-                "picking_type_id": self.ref("stock.picking_type_internal"),
+                "picking_type_id": self.picking_type_internal.id,
                 "location_id": self.binA.id,
                 "location_dest_id": self.binB.id,
                 "scheduled_date": date_move,
@@ -373,7 +388,7 @@ class TestDdmrpCommon(common.SavepointCase):
     def create_picking_out(self, product, date_move, qty):
         picking = self.pickingModel.with_user(self.user).create(
             {
-                "picking_type_id": self.ref("stock.picking_type_out"),
+                "picking_type_id": self.picking_type_out.id,
                 "location_id": self.binA.id,
                 "location_dest_id": self.customer_location.id,
                 "scheduled_date": date_move,
@@ -400,7 +415,7 @@ class TestDdmrpCommon(common.SavepointCase):
     def create_picking_in(self, product, date_move, qty):
         picking = self.pickingModel.with_user(self.user).create(
             {
-                "picking_type_id": self.ref("stock.picking_type_in"),
+                "picking_type_id": self.picking_type_in.id,
                 "location_id": self.supplier_location.id,
                 "location_dest_id": self.binA.id,
                 "scheduled_date": date_move,
@@ -434,14 +449,11 @@ class TestDdmrpCommon(common.SavepointCase):
 
     def create_orderpoint_procurement(self, buffer, make_procurement=True):
         """Make Procurement from Reordering Rule"""
-        context = {
-            "active_model": "stock.buffer",
-            "active_ids": buffer.ids,
-            "active_id": buffer.id,
-        }
         wizard = (
             self.make_procurement_wiz.with_user(self.user)
-            .with_context(context)
+            .with_context(
+                active_model="stock.buffer", active_ids=buffer.ids, active_id=buffer.id
+            )
             .create({})
         )
         if make_procurement:
