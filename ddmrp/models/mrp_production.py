@@ -33,6 +33,7 @@ class MrpProduction(models.Model):
                 "date": self.date_planned_finished,
             }
         )
+        return move
 
     @api.model
     def create(self, vals):

@@ -1,4 +1,5 @@
-We strongly recommend to **uninstall** ``procurement_jit`` (so deliveries
+We strongly recommend to modify the configuration of the reservation method
+to manual in the outgoing operation types (so deliveries
 related to Sales Orders aren't automatically reserved) and to avoid to
 reserve stock for specific moves, buffers are in fact a reservation of stock.
 However, while **reservation is discouraged**, it is still available to be

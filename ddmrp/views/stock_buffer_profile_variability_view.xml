@@ -28,7 +28,7 @@
         <field name="name">stock.buffer.profile.variability.tree</field>
         <field name="model">stock.buffer.profile.variability</field>
         <field name="arch" type="xml">
-            <tree string="Buffer Profile Variability Factor">
+            <tree>
                 <field name="name" />
                 <field name="factor" />
                 <field name="company_id" groups="base.group_multi_company" />

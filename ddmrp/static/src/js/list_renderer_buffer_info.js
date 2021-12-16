@@ -6,6 +6,15 @@ odoo.define("ddmrp.list_renderer_buffer_info", function (require) {
     var pyUtils = require("web.py_utils");
 
     ListRenderer.include({
+        jsLibs: [
+            "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-2.4.2.min.js",
+            "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-2.4.2.min.js",
+            "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-2.4.2.min.js",
+            "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-tables-2.4.2.min.js",
+            "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-mathjax-2.4.2.min.js",
+            "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-2.4.2.min.js",
+        ],
+
         /**
          * Extend module to allow coloring taking into account the option attribute color_from
          *
@@ -120,11 +129,7 @@ odoo.define("ddmrp.list_renderer_buffer_info", function (require) {
                     args: [id],
                 }).then(function (result) {
                     var content = result[0];
-                    var script = result[1];
-                    var scriptCode = script.substring(
-                        script.lastIndexOf('t">') + 4,
-                        script.lastIndexOf("</script>")
-                    );
+                    var scriptCode = result[1];
                     var options = {
                         placement: "right",
                         trigger: "manual",
