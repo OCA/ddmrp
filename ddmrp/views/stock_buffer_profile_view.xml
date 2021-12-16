@@ -48,7 +48,7 @@
         <field name="name">stock.buffer.profile.tree</field>
         <field name="model">stock.buffer.profile</field>
         <field name="arch" type="xml">
-            <tree string="Buffer Profile">
+            <tree>
                 <field name="name" />
                 <field name="replenish_method" />
                 <field name="item_type" />
