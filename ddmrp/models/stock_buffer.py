@@ -1097,6 +1097,7 @@ class StockBuffer(models.Model):
         string="Replenishment Location",
         comodel_name="stock.location",
         readonly=True,
+        index=True,
         help="Source location from where goods will be replenished. "
         "Computed when buffer is refreshed from following the Stock Rules.",
     )
