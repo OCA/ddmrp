@@ -123,15 +123,18 @@ class DdmrpProductReplace(models.TransientModel):
             "type": "ir.actions.act_window",
         }
 
+    def _get_new_buffer_default_value(self, replaced_buffer):
+        return dict(
+            product_id=self.new_product_id.id,
+            auto_procure=False,
+            demand_product_ids=False,
+        )
+
     def _do_replacement_new_buffer(self):
         primary_old = self.primary_old_product_id
         new_buffers = self.env["stock.buffer"]
         for replaced in self.buffer_ids.filtered(lambda b: b.product_id == primary_old):
-            default = dict(
-                product_id=self.new_product_id.id,
-                auto_procure=False,
-                demand_product_ids=False,
-            )
+            default = self._get_new_buffer_default_value(replaced)
             replacing = replaced.copy(default=default)
             replaced.write({"replaced_by_id": replacing.id})
             new_buffers |= replacing
