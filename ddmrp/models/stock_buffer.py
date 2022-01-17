@@ -1668,6 +1668,7 @@ class StockBuffer(models.Model):
             self._calc_qualified_demand()
         if not only_nfp or only_nfp == "in":
             self._calc_incoming_dlt_qty()
+        old_net_flow_position = self.net_flow_position
         self._calc_net_flow_position()
         self._calc_distributed_source_location()
         self._calc_planning_priority()
@@ -1677,7 +1678,22 @@ class StockBuffer(models.Model):
         if not only_nfp:
             # re-compoute red to force in cascade the recalculation of zones.
             self._compute_red_zone()
-        self.do_auto_procure()
+        rounding = self.procure_uom_id.rounding or self.product_uom.rounding
+        # In case of in/out moves change, only trigger auto procure when the
+        # need is increased (e.g. in move canceled or out move created).
+        # When an in move is created, it must not trigger an auto procure as
+        # this cron_actions is called before distributed_source_location_qty is
+        # updated (quants reservation at source location is performed after the
+        # in move creation).
+        if not only_nfp or (
+            float_compare(
+                old_net_flow_position,
+                self.net_flow_position,
+                precision_rounding=rounding,
+            )
+            > 0
+        ):
+            self.do_auto_procure()
         return True
 
     @api.model

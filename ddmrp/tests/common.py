@@ -464,6 +464,6 @@ class TestDdmrpCommon(common.SavepointCase):
 
     def _do_move(self, move, date):
         move._action_confirm()
-        move.move_line_ids.qty_done = move.move_line_ids.product_uom_qty
+        move.quantity_done = move.product_uom_qty
         move._action_done()
         move.date = date

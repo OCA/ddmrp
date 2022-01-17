@@ -1,5 +1,8 @@
 # Copyright 2020 Camptocamp (https://www.camptocamp.com)
+# Copyright 2022 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
+
+from datetime import datetime
 
 from .common import TestDdmrpCommon
 
@@ -129,6 +132,43 @@ class TestDdmrpDistributedSourceLocation(TestDdmrpCommon):
                     "qty": 4000,
                 }
             ],
+        )
+
+    def test_distributed_source_limit_replenish_auto_procure(self):
+        """When the buffer is in auto procure with a recommended qty, test it
+        triggers a replenishment when the qty increases at the replenishment
+        source location
+        """
+        self.assertEqual(self.buffer_dist.distributed_source_location_qty, 0)
+        self.main_company.ddmrp_auto_update_nfp = True
+        self.buffer_dist.auto_procure = True
+        self.buffer_dist.auto_procure_option = "standard"
+        date_move = datetime.today()
+        initial_recommended_qty = 5000
+        self.create_picking_out(
+            self.product_c_orange, date_move, initial_recommended_qty
+        )
+        self.assertEqual(
+            self.buffer_dist.procure_recommended_qty, initial_recommended_qty
+        )
+
+        # Increase stock at replenishment location. That should trigger a
+        # replenishment move
+        source_location_qty = 2000
+        move = self.moveModel.with_user(self.user).create(
+            {
+                "name": "Test inventory move",
+                "product_id": self.product_c_orange.id,
+                "product_uom": self.product_c_orange.uom_id.id,
+                "product_uom_qty": source_location_qty,
+                "location_id": self.inventory_location.id,
+                "location_dest_id": self.replenish_location.id,
+            },
+        )
+        self._do_move(move, move.date)
+        self.assertEqual(
+            self.buffer_dist.procure_recommended_qty,
+            initial_recommended_qty - source_location_qty,
         )
 
     def test_distributed_source_limit_replenish_with_batch_limit_max(self):
