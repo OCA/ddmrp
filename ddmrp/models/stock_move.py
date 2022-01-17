@@ -1,4 +1,5 @@
 # Copyright 2019-20 ForgeFlow S.L. (http://www.forgeflow.com)
+# Copyright 2022 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import api, fields, models
@@ -34,6 +35,10 @@ class StockMove(models.Model):
                     lambda m: m.state
                     in ("confirmed", "partially_available", "assigned")
                 )._update_ddmrp_nfp()
+            if vals.get("state") == "done":
+                in_buffers = self._find_buffers_to_auto_procure()
+                for in_buffer in in_buffers.with_context(no_ddmrp_history=True):
+                    in_buffer.do_auto_procure()
         return res
 
     @api.model_create_multi
@@ -72,6 +77,24 @@ class StockMove(models.Model):
                 )
             )
         return out_buffers, in_buffers
+
+    def _find_buffers_to_auto_procure(self):
+        # If a quantity is increased at a buffer replenishment location, this
+        # could release a new auto procure
+        in_buffers = self.env["stock.buffer"]
+        for move in self:
+            in_buffers |= move.mapped("product_id.buffer_ids").filtered(
+                lambda buffer: (
+                    buffer.distributed_source_location_id
+                    and not move.location_id.is_sublocation_of(
+                        buffer.distributed_source_location_id
+                    )
+                    and move.location_dest_id.is_sublocation_of(
+                        buffer.distributed_source_location_id
+                    )
+                )
+            )
+        return in_buffers
 
     def _update_ddmrp_nfp(self):
         if self.env.context.get("no_ddmrp_auto_update_nfp"):
