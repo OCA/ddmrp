@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<!-- pylint:disable=dangerous-view-replace-wo-priority -->
+<!-- Using replace, because hidding the fields would still -->
+<!-- cause them to be loaded by the system. -->
+<!-- And that would be conterintuitive for performance. -->
+<odoo>
+    <record id="purchase_order_form" model="ir.ui.view">
+        <field
+            name="name"
+        >purchase.order.form - ddmrp purchase hide onhand status</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="ddmrp.purchase_order_form" />
+        <field name="arch" type="xml">
+          <xpath
+                expr="//field[@name='order_line']//field[@name='buffer_ids']"
+                position="replace"
+            />
+          <xpath
+                expr="//field[@name='order_line']//field[@name='execution_priority_level']"
+                position="replace"
+            />
+          <xpath
+                expr="//field[@name='order_line']//field[@name='on_hand_percent']"
+                position="replace"
+            />
+          <div name="button_box" position="inside">
+            <button
+                    name="action_ddmrp_line_details"
+                    type="object"
+                    string="Line On-Hand Status"
+                    class="oe_stat_button"
+                    icon="fa-tasks"
+                />
+          </div>
+        </field>
+    </record>
+</odoo>
