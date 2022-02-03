@@ -13,14 +13,9 @@ class Product(models.Model):
 
     def write(self, values):
         res = super().write(values)
-        if "active" in values:
-            buffers = self.env["stock.buffer"].search(
-                [
-                    ("product_id", "in", self.ids),
-                    "|",
-                    ("active", "=", True),
-                    ("active", "=", False),
-                ]
+        if values.get("active") is False:
+            buffers = (
+                self.env["stock.buffer"].sudo().search([("product_id", "in", self.ids)])
             )
-            buffers.write({"active": values.get("active")})
+            buffers.write({"active": False})
         return res
