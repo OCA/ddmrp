@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="report_mrpbomstructure_ddmrp"
+        inherit_id="mrp_bom_location.report_mrpbomstructure_location"
+    >
+        <xpath expr="//thead/tr/th[last()]" position="before">
+            <th
+                t-if="data['report_structure'] != 'bom_cost'"
+                class="o_mrp_prod_cost text-right"
+                title="Lead time of the product"
+            >LT</th>
+            <th
+                t-if="data['report_structure'] != 'bom_cost'"
+                class="o_mrp_prod_cost text-right"
+                title="Decoupled lead time of the BoM"
+            >DLT</th>
+        </xpath>
+        <xpath expr="//tbody/tr/td[1]" position="inside">
+            <span t-if="data['bom'].is_buffered">
+                <img
+                    src='/ddmrp/static/img/is_buffered.png'
+                    style="width:30px;height:30px;padding:5px"
+                />
+            </span>
+        </xpath>
+        <xpath expr="//tbody/tr/td[last()]" position="before">
+            <td
+                t-if="data['report_structure'] != 'bom_cost'"
+                class="o_mrp_prod_cost text-right"
+            >
+                <span>
+                    <t
+                        t-esc="data['bom'].product_tmpl_id.produce_delay"
+                        t-options='{"widget": "float", "decimal_precision": "Lead Time"}'
+                    />
+                </span>
+            </td>
+            <td
+                t-if="data['report_structure'] != 'bom_cost'"
+                class="o_mrp_prod_cost text-right"
+            >
+                <span>
+                    <t
+                        t-esc="data['bom'].dlt"
+                        t-options='{"widget": "float", "decimal_precision": "Lead Time"}'
+                    />
+                </span>
+            </td>
+        </xpath>
+    </template>
+    <template
+        id="report_mrp_bom_line"
+        inherit_id="mrp_bom_location.report_mrp_bom_line"
+    >
+        <xpath expr="//tr/td[last()]" position="before">
+            <td class="o_mrp_prod_cost text-right">
+                <span>
+                    <t
+                        t-esc="l['lead_time']"
+                        t-options='{"widget": "float", "decimal_precision": "Lead Time"}'
+                    />
+                </span>
+            </td>
+            <td class="o_mrp_prod_cost text-right">
+                <span>
+                    <t
+                        t-esc="l['dlt']"
+                        t-options='{"widget": "float", "decimal_precision": "Lead Time"}'
+                    />
+                </span>
+            </td>
+        </xpath>
+        <xpath
+            expr="//tr[hasclass('o_mrp_bom_report_line', 'o_mrp_bom_cost')]"
+            position="inside"
+        >
+            <td />
+            <td />
+        </xpath>
+        <xpath expr="//tr/td[1]" position="inside">
+            <span t-if="l['is_buffered']">
+                <img
+                    src='/ddmrp/static/img/is_buffered.png'
+                    style="width:30px;height:30px;padding:5px"
+                />
+            </span>
+        </xpath>
+    </template>
+    <template
+        id="report_mrp_bom_pdf_line"
+        inherit_id="mrp_bom_location.report_mrp_bom_pdf_line"
+    >
+        <xpath expr="//tr" position="inside">
+            <t t-if="l['type'] == 'bom'">
+                <td
+                    t-if="data['report_structure'] != 'bom_structure'"
+                    class="o_mrp_bom_cost text-right"
+                >
+                    <span>
+                        <t
+                            t-if="'lead_time' in l"
+                            t-esc="l['lead_time']"
+                            t-options='{"widget": "float", "decimal_precision": "Lead Time"}'
+                        />
+                    </span>
+                </td>
+                <td
+                    t-if="data['report_structure'] != 'bom_structure'"
+                    class="o_mrp_bom_cost text-right"
+                >
+                    <span>
+                        <t
+                            t-if="'dlt' in l"
+                            t-esc="l['dlt']"
+                            t-options='{"widget": "float", "decimal_precision": "Lead Time"}'
+                        />
+                    </span>
+                </td>
+            </t>
+        </xpath>
+        <xpath expr="//tr/td[1]" position="inside">
+            <span t-if="'is_buffered' in l and l['is_buffered']">
+                <img
+                    src='/ddmrp/static/img/is_buffered.png'
+                    style="width:30px;height:30px;padding:5px"
+                />
+            </span>
+        </xpath>
+    </template>
+</odoo>
