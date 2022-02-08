@@ -78,20 +78,6 @@ class StockRule(models.Model):
             vals["buffer_ids"] = [(4, o.id) for o in values["buffer_ids"]]
         return vals
 
-    def _prepare_purchase_order_line(
-        self, product_id, product_qty, product_uom, company_id, values, po
-    ):
-        vals = super()._prepare_purchase_order_line(
-            product_id, product_qty, product_uom, company_id, values, po
-        )
-        # If the procurement was run directly by a reordering rule.
-        if "buffer_id" in values:
-            vals["buffer_ids"] = [(4, values["buffer_id"].id)]
-        # If the procurement was run by a stock move.
-        elif "buffer_ids" in values:
-            vals["buffer_ids"] = [(4, o.id) for o in values["buffer_ids"]]
-        return vals
-
     def _update_purchase_order_line(
         self, product_id, product_qty, product_uom, company_id, values, line
     ):
