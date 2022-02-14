@@ -1,6 +1,7 @@
 # Copyright 2017-20 ForgeFlow S.L. (https://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
+import json
 import logging
 from math import pi
 
@@ -147,8 +148,14 @@ class StockBuffer(models.Model):
             p.line(dates, data["net_flow_position"], line_width=3)
             p.line(dates, data["on_hand_position"], line_width=3, line_dash="dotted")
 
-            script, div = components(p)
-            rec.planning_history_chart = "{}{}".format(div, script)
+            script, div = components(p, wrap_script=False)
+            json_data = json.dumps(
+                {
+                    "div": div,
+                    "script": script,
+                }
+            )
+            rec.planning_history_chart = json_data
 
     def _compute_execution_history_chart(self):
         start_stack = 0
@@ -274,5 +281,11 @@ class StockBuffer(models.Model):
 
             p.line(dates, data["on_hand_position"], line_width=3, line_dash="dotted")
 
-            script, div = components(p)
-            rec.execution_history_chart = "{}{}".format(div, script)
+            script, div = components(p, wrap_script=False)
+            json_data = json.dumps(
+                {
+                    "div": div,
+                    "script": script,
+                }
+            )
+            rec.execution_history_chart = json_data
