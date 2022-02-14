@@ -14,9 +14,7 @@ class DdmrpHistory(models.Model):
         ondelete="cascade",
         index=True,
     )
-    date = fields.Datetime(
-        string="Date",
-    )
+    date = fields.Datetime()
     top_of_red = fields.Float(
         string="TOR",
         help="Top of Red",
