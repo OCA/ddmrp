@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo14-addon-ddmrp_history',
         'odoo14-addon-ddmrp_packaging',
         'odoo14-addon-ddmrp_product_replace',
+        'odoo14-addon-ddmrp_purchase_hide_onhand_status',
         'odoo14-addon-ddmrp_warning',
         'odoo14-addon-stock_buffer_capacity_limit',
         'odoo14-addon-stock_buffer_route',
