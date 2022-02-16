@@ -23,14 +23,15 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" role=\"img\" aria-label=\"Values set here are company-"
-"specific.\" groups=\"base.group_multi_company\"/>"
+"specific.\" role=\"img\" aria-label=\"Values set here are company-specific."
+"\" groups=\"base.group_multi_company\"/>"
 msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__product_type
 msgid ""
-"A storable product is a product for which you manage stock. The Inventory app has to be installed.\n"
+"A storable product is a product for which you manage stock. The Inventory "
+"app has to be installed.\n"
 "A consumable product is a product for which stock is not managed.\n"
 "A service is a non-material product you provide."
 msgstr ""
@@ -209,7 +210,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
 msgid ""
 "By default, the qty is equal to the recommended quantity.\n"
-"                    For distributed buffers, when the option on the profile is active,\n"
+"                    For distributed buffers, when the option on the profile "
+"is active,\n"
 "                    the quantity is limited to the free quantity."
 msgstr ""
 
@@ -578,6 +580,16 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
 msgid "Has Stock In Source Location"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_purchase_hide_onhand_status
+msgid "Hide Purchase On-Hand Status"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Hides on-hand status from purchase order line."
 msgstr ""
 
 #. module: ddmrp
@@ -1206,8 +1218,8 @@ msgstr ""
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__distributed_source_location_qty
 msgid ""
 "Quantity free for distributed buffer in the source location. When a "
-"procurement is requested, if the option is active on the profile, it will be"
-" limited to this quantity."
+"procurement is requested, if the option is active on the profile, it will be "
+"limited to this quantity."
 msgstr ""
 
 #. module: ddmrp
@@ -1369,9 +1381,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid ""
 "Set a tolerance value to apply to quantity multiple in stock buffers.\n"
-"                                    If the quantity needed is below this tolerance threshold, the recommended\n"
-"                                    quantity will be reduced a bit instead of adding another bucket.\n"
-"                                    The value is a percentage of the quantity multiple."
+"                                    If the quantity needed is below this "
+"tolerance threshold, the recommended\n"
+"                                    quantity will be reduced a bit instead "
+"of adding another bucket.\n"
+"                                    The value is a percentage of the "
+"quantity multiple."
 msgstr ""
 
 #. module: ddmrp
@@ -1392,8 +1407,7 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_coverage_days
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
-msgid ""
-"Shows the current on-hand for stock buffers expressed as coverage days."
+msgid "Shows the current on-hand for stock buffers expressed as coverage days."
 msgstr ""
 
 #. module: ddmrp
@@ -1502,8 +1516,8 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid ""
-"The green zone determines the average order frequency and the order size. It"
-" is determined as the maximum of the following three factors: Minimum Order "
+"The green zone determines the average order frequency and the order size. It "
+"is determined as the maximum of the following three factors: Minimum Order "
 "Cycle, Lead Time Factor and Minimum Order Quantity."
 msgstr ""
 
@@ -1526,8 +1540,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid ""
 "The red zone is the embedded safety in the buffer. The larger the "
-"variability associated with the product, the larger the red zone will be. It"
-" is composed of two sub-zones: Red base and red safety."
+"variability associated with the product, the larger the red zone will be. It "
+"is composed of two sub-zones: Red base and red safety."
 msgstr ""
 
 #. module: ddmrp
@@ -1627,7 +1641,8 @@ msgstr ""
 msgid ""
 "Use this assistant to generate a procurement request for this\n"
 "                    stock buffer. According to the product configuration,\n"
-"                    this may trigger a draft purchase order, a manufacturing\n"
+"                    this may trigger a draft purchase order, a "
+"manufacturing\n"
 "                    order or a transfer picking."
 msgstr ""
 
@@ -1671,10 +1686,16 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__extra_lead_time
 msgid ""
-"When defined, this lead time will be added to the decoupled lead time for the computation of the zones size (it won't affect planned date for procurements).\n"
-"This is particularly useful in situations of infrequent but periodic demand. E.g. We receive a large order every 30 days, whereas the supplier takes 10 days to supply. \n"
-"In this case the yellow zone must cover for the entire cycle of 30 days of demand.\n"
-"In situations with infrequent demand the ADU tends to be very small, and every new order would be treated as a spike, when \n"
+"When defined, this lead time will be added to the decoupled lead time for "
+"the computation of the zones size (it won't affect planned date for "
+"procurements).\n"
+"This is particularly useful in situations of infrequent but periodic demand. "
+"E.g. We receive a large order every 30 days, whereas the supplier takes 10 "
+"days to supply. \n"
+"In this case the yellow zone must cover for the entire cycle of 30 days of "
+"demand.\n"
+"In situations with infrequent demand the ADU tends to be very small, and "
+"every new order would be treated as a spike, when \n"
 "in reality this is not an exceptional situation."
 msgstr ""
 
@@ -1707,8 +1728,8 @@ msgstr ""
 msgid ""
 "When you request procurement from a buffer, their scheduled date is "
 "rescheduled to now + this procurement time (in minutes). Their scheduled "
-"date represents the latest the transfers should be done, and therefore, past"
-" this timestamp, considered late."
+"date represents the latest the transfers should be done, and therefore, past "
+"this timestamp, considered late."
 msgstr ""
 
 #. module: ddmrp
@@ -1774,7 +1795,7 @@ msgid "days"
 msgstr ""
 
 #. module: ddmrp
-#: code:addons/ddmrp/hooks.py:0 code:addons/ddmrp/hooks.py:0
+#: code:addons/ddmrp/hooks.py:0
 #, python-format
 msgid "minutes"
 msgstr ""
