@@ -22,20 +22,24 @@ msgid "# BoM Where Used"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_move_line__state
+msgid ""
+"* New: When the stock move is created and not yet confirmed.\n"
+"* Waiting Another Move: This state can be seen when a move is waiting for "
+"another one, for example in a chained flow.\n"
+"* Waiting Availability: This state is reached when the procurement "
+"resolution is not straight forward. It may need the scheduler to run, a "
+"component to be manufactured...\n"
+"* Available: When products are reserved, it is set to 'Available'.\n"
+"* Done: When the shipment is processed, the state is 'Done'."
+msgstr ""
+
+#. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
 "specific.\" role=\"img\" aria-label=\"Values set here are company-specific."
 "\" groups=\"base.group_multi_company\"/>"
-msgstr ""
-
-#. module: ddmrp
-#: model:ir.model.fields,help:ddmrp.field_stock_buffer__product_type
-msgid ""
-"A storable product is a product for which you manage stock. The Inventory "
-"app has to be installed.\n"
-"A consumable product is a product for which stock is not managed.\n"
-"A service is a non-material product you provide."
 msgstr ""
 
 #. module: ddmrp
@@ -45,7 +49,6 @@ msgstr "ADU"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_form
-#: model_terms:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_tree
 msgid "ADU Calculation Method"
 msgstr "Metode Perhitungan ADU"
 
@@ -155,7 +158,6 @@ msgstr "Tingkat Status Buffer di Tangan"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__buffer_profile_id
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_form
-#: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_tree
 msgid "Buffer Profile"
 msgstr "Profil Buffer"
 
@@ -163,7 +165,6 @@ msgstr "Profil Buffer"
 #: model:ir.actions.act_window,name:ddmrp.stock_buffer_profile_lead_time_form_action
 #: model:ir.ui.menu,name:ddmrp.menu_stock_buffer_profile_lead_time
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_lead_time_form
-#: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_lead_time_tree
 msgid "Buffer Profile Lead Time Factor"
 msgstr ""
 
@@ -171,7 +172,6 @@ msgstr ""
 #: model:ir.actions.act_window,name:ddmrp.stock_buffer_profile_variability_form_action
 #: model:ir.ui.menu,name:ddmrp.menu_stock_buffer_profile_variability
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_variability_form
-#: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_variability_tree
 msgid "Buffer Profile Variability Factor"
 msgstr ""
 
@@ -406,28 +406,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_move__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_multi_level__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_production__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_procurement_group__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_product_product__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_product_template__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_purchase_order__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_report_mrp_report_bom_structure__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_res_company__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_stock_move__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_stock_picking__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_stock_rule__display_name
-#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -592,28 +575,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__id
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__id
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__id
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__id
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__id
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_move__id
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_multi_level__id
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_production__id
-#: model:ir.model.fields,field_description:ddmrp.field_procurement_group__id
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__id
-#: model:ir.model.fields,field_description:ddmrp.field_product_product__id
-#: model:ir.model.fields,field_description:ddmrp.field_product_template__id
-#: model:ir.model.fields,field_description:ddmrp.field_purchase_order__id
-#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line__id
-#: model:ir.model.fields,field_description:ddmrp.field_report_mrp_report_bom_structure__id
-#: model:ir.model.fields,field_description:ddmrp.field_res_company__id
-#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__id
-#: model:ir.model.fields,field_description:ddmrp.field_stock_move__id
-#: model:ir.model.fields,field_description:ddmrp.field_stock_picking__id
-#: model:ir.model.fields,field_description:ddmrp.field_stock_rule__id
-#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse__id
 msgid "ID"
 msgstr ""
 
@@ -692,28 +658,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_move____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_multi_level____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_production____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_procurement_group____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_product_product____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_product_template____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_purchase_order____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_report_mrp_report_bom_structure____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_res_company____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_stock_move____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_stock_picking____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_stock_rule____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse____last_update
 msgid "Last Modified on"
 msgstr ""
 
@@ -884,6 +833,7 @@ msgid "Name"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__net_flow_position
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "Net Flow Position"
 msgstr ""
@@ -891,11 +841,6 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse__nfp_incoming_safety_factor
 msgid "Net Flow Position Incoming Safety Factor"
-msgstr ""
-
-#. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__net_flow_position
-msgid "Net flow position"
 msgstr ""
 
 #. module: ddmrp
@@ -1117,13 +1062,13 @@ msgid "Product Buffers"
 msgstr ""
 
 #. module: ddmrp
-#: model:ir.model,name:ddmrp.model_product_template
-msgid "Product Template"
+#: model:ir.model,name:ddmrp.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
 msgstr ""
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_type
-msgid "Product Type"
+#: model:ir.model,name:ddmrp.model_product_template
+msgid "Product Template"
 msgstr ""
 
 #. module: ddmrp
@@ -1185,7 +1130,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__qualified_demand
-msgid "Qualified demand"
+msgid "Qualified Demand"
 msgstr ""
 
 #. module: ddmrp
@@ -1289,6 +1234,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__red_zone_qty
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_red
 msgid "Red Zone Qty"
 msgstr ""
 
@@ -1426,6 +1372,11 @@ msgid ""
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move_line__state
+msgid "Status"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_buffer
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__buffer_id
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__buffer_id
@@ -1548,17 +1499,12 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_green
-msgid "Top of Green"
-msgstr ""
-
-#. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_red
-msgid "Top of Red"
+msgid "Top Of Green"
 msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_yellow
-msgid "Top of Yellow"
+msgid "Top Of Yellow"
 msgstr ""
 
 #. module: ddmrp
@@ -1586,6 +1532,7 @@ msgid "True when the product has an DDMRP buffer associated."
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_type
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
 msgid "Type"
 msgstr ""
@@ -1604,8 +1551,6 @@ msgstr ""
 #: model:product.template,uom_name:ddmrp.product_product_fp01_product_template
 #: model:product.template,uom_name:ddmrp.product_product_rm01_product_template
 #: model:product.template,uom_name:ddmrp.product_product_rm02_product_template
-#: model:stock.buffer,product_uom_name:ddmrp.stock_buffer_fp01
-#: model:stock.buffer,product_uom_name:ddmrp.stock_buffer_rm01
 msgid "Units"
 msgstr ""
 
