@@ -3,7 +3,7 @@
 
 {
     "name": "DDMRP Buffer Calculation as job",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "summary": "Run DDMRP Buffer Calculation as jobs",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/ddmrp",

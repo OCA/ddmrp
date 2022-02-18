@@ -14,7 +14,7 @@ class TestDdmrpCronActionsAsJob(TestDdmrpCommon):
     def test_cron_actions_delay_job(self):
         context = dict(self.env.context, auto_delay_ddmrp_cron_actions=True)
         del context["test_queue_job_no_delay"]
-        buffer_a = self.buffer_a.with_context(context)
+        buffer_a = self.buffer_a.with_context(**context)
 
         with mock_with_delay() as (delayable_cls, delayable):
             buffer_a.cron_actions(only_nfp=True)
@@ -36,7 +36,7 @@ class TestDdmrpCronActionsAsJob(TestDdmrpCommon):
     def test_calc_adu_delay_job(self):
         context = dict(self.env.context, auto_delay_ddmrp_calc_adu=True)
         del context["test_queue_job_no_delay"]
-        buffer_a = self.buffer_a.with_context(context)
+        buffer_a = self.buffer_a.with_context(**context)
 
         with mock_with_delay() as (delayable_cls, delayable):
             buffer_a._calc_adu()
