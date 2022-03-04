@@ -751,11 +751,6 @@ msgid "Location"
 msgstr ""
 
 #. module: ddmrp
-#: model:ir.model,name:ddmrp.model_mrp_move
-msgid "MRP Move"
-msgstr ""
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__main_supplier_id
 msgid "Main Supplier"
 msgstr ""
@@ -1191,11 +1186,6 @@ msgstr ""
 #: code:addons/ddmrp/wizards/make_procurement_buffer.py:0
 #, python-format
 msgid "Quantity must be positive."
-msgstr ""
-
-#. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_move__mrp_qty_to_procure
-msgid "Quantity to release"
 msgstr ""
 
 #. module: ddmrp

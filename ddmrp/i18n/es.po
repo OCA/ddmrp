@@ -753,11 +753,6 @@ msgid "Location"
 msgstr "Ubicación"
 
 #. module: ddmrp
-#: model:ir.model,name:ddmrp.model_mrp_move
-msgid "MRP Move"
-msgstr "Movimientos MRP"
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__main_supplier_id
 msgid "Main Supplier"
 msgstr "Proveedor Principal"
@@ -1185,11 +1180,6 @@ msgstr ""
 #, python-format
 msgid "Quantity must be positive."
 msgstr "La cantidad debe ser positiva."
-
-#. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_move__mrp_qty_to_procure
-msgid "Quantity to release"
-msgstr "Cantidad a liberar"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_outside_dlt_qty
@@ -1783,6 +1773,12 @@ msgstr "minutos"
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr "o"
+
+#~ msgid "MRP Move"
+#~ msgstr "Movimientos MRP"
+
+#~ msgid "Quantity to release"
+#~ msgstr "Cantidad a liberar"
 
 #~ msgid "Net flow position"
 #~ msgstr "Posición de flujo neto"
