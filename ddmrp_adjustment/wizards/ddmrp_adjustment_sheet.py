@@ -111,7 +111,6 @@ class DdmrpAdjustmentSheet(models.TransientModel):
             "domain": [("id", "in", res)],
             "name": _("DDMRP Buffer Adjustment"),
             "src_model": "ddmrp.adjustment.sheet",
-            "view_type": "form",
             "view_mode": "tree",
             "res_model": "ddmrp.adjustment",
             "type": "ir.actions.act_window",
@@ -126,7 +125,7 @@ class DdmrpAdjustmentSheetLine(models.TransientModel):
     sheet_id = fields.Many2one(comodel_name="ddmrp.adjustment.sheet")
     date_range_id = fields.Many2one(comodel_name="date.range", string="Period")
     factor = fields.Char(string="Factors")
-    value = fields.Float(string="Value")
+    value = fields.Float()
 
     @api.model
     def _prepare_adjustment_data(self, buf):
