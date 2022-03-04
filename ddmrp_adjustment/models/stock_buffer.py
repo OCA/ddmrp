@@ -114,7 +114,7 @@ class StockBuffer(models.Model):
         """Apply extra demand originated by Demand Adjustment Factors to
         components after the cron update of all the buffers."""
         self.env["ddmrp.adjustment.demand"].search([]).unlink()
-        super().cron_ddmrp_adu(automatic)
+        res = super().cron_ddmrp_adu(automatic)
         today = fields.Date.today()
         for op in self.search([]).filtered("extra_demand_ids"):
             to_add = sum(
@@ -129,6 +129,7 @@ class StockBuffer(models.Model):
                         op.name, to_add
                     )
                 )
+        return res
 
     def _ltaf_to_apply_domain(self):
         self.ensure_one()
@@ -170,7 +171,6 @@ class StockBuffer(models.Model):
             "name": _("Demand Allocated to Components"),
             "type": "ir.actions.act_window",
             "res_model": "ddmrp.adjustment.demand",
-            "view_type": "form",
             "view_mode": "tree",
             "domain": [("id", "in", demand_ids)],
         }
