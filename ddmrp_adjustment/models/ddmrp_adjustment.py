@@ -40,7 +40,5 @@ class DdmrpAdjustment(models.Model):
     value = fields.Float()
     company_id = fields.Many2one(
         comodel_name="res.company",
-        string="Company",
-        required=True,
-        default=lambda self: self.env.company,
+        related="buffer_id.company_id",
     )

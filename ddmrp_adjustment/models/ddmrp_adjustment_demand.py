@@ -21,7 +21,7 @@ class DdmrpAdjustmentDemand(models.Model):
         related="buffer_origin_id.product_id",
         string="Origin Product",
     )
-    extra_demand = fields.Float(string="Extra Demand")
+    extra_demand = fields.Float()
     product_uom_id = fields.Many2one(
         comodel_name="uom.uom",
         string="Unit of Measure",
