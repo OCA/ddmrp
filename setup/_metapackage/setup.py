@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo-addon-ddmrp>=15.0dev,<15.1dev',
+        'odoo-addon-ddmrp_adjustment>=15.0dev,<15.1dev',
         'odoo-addon-ddmrp_cron_actions_as_job>=15.0dev,<15.1dev',
         'odoo-addon-ddmrp_history>=15.0dev,<15.1dev',
     ],
