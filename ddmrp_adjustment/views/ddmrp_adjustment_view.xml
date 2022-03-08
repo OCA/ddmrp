@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2017-20 ForgeFlow S.L. (https://www.forgeflow.com)
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="view_ddmrp_adjustment_tree" model="ir.ui.view">
+        <field name="name">ddmrp.adjustment.tree</field>
+        <field name="model">ddmrp.adjustment</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="buffer_id" />
+                <field name="product_id" />
+                <field name="location_id" />
+                <field name="date_range_id" />
+                <field name="adjustment_type" />
+                <field name="value" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </tree>
+        </field>
+    </record>
+    <record id="view_ddmrp_adjustment_search" model="ir.ui.view">
+        <field name="name">ddmrp.adjustment.search</field>
+        <field name="model">ddmrp.adjustment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="buffer_id" />
+                <field name="product_id" />
+                <field name="location_id" />
+                <field name="adjustment_type" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <group expand="1" string="Group By">
+                    <filter
+                        string="Buffer"
+                        name="group_buffer"
+                        context="{'group_by':'buffer_id'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="ddmrp_adjustment_action" model="ir.actions.act_window">
+        <field name="name">Buffer Adjustments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ddmrp.adjustment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+        id="menu_ddmrp_adjustment"
+        parent="stock_demand_estimate.stock_demand_planning_menu"
+        action="ddmrp_adjustment_action"
+        sequence="50"
+    />
+</odoo>
