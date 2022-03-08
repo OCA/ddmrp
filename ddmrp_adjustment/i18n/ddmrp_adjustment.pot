@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -47,7 +47,6 @@ msgstr ""
 #. module: ddmrp_adjustment
 #: model:ir.actions.act_window,name:ddmrp_adjustment.ddmrp_adjustment_action
 #: model:ir.ui.menu,name:ddmrp_adjustment.menu_ddmrp_adjustment
-#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_tree
 msgid "Buffer Adjustments"
 msgstr ""
 
@@ -168,7 +167,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__display_name
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__display_name
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__display_name
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -210,7 +208,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__id
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__id
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__id
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__id
 msgid "ID"
 msgstr ""
 
@@ -219,7 +216,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand____last_update
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet____last_update
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line____last_update
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer____last_update
 msgid "Last Modified on"
 msgstr ""
 
