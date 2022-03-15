@@ -77,10 +77,10 @@ class StockBuffer(models.Model):
                 "warning": {
                     "title": _("Warning"),
                     "message": _(
-                        "This product is packaged by %.2f %s. You should "
-                        "set 'Qty Multiple' to %.2f %s."
-                    )
-                    % (pack.qty, self.product_uom.name, newqty, procure_uom.name),
+                        f"This product is packaged "
+                        f"by {pack.qty} {self.product_uom.name}. You should "
+                        f"set 'Qty Multiple' to {newqty} {procure_uom.name}."
+                    ),
                 },
             }
         return {}
