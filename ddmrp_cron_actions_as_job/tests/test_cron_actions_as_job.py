@@ -44,6 +44,7 @@ class TestDdmrpCronActionsAsJob(TestDdmrpCommon):
                 "test_queue_job_no_delay": False,
             }
         )
+        context.update({"test_queue_job_no_delay": False})
         buffer_a = self.buffer_a.with_context(**context)
 
         with mock_with_delay() as (delayable_cls, delayable):
