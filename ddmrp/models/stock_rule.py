@@ -59,8 +59,8 @@ class StockRule(models.Model):
         location_id,
         name,
         origin,
+        company_id,
         values,
-        group_id,
     ):
         vals = super()._get_stock_move_values(
             product_id,
@@ -69,8 +69,8 @@ class StockRule(models.Model):
             location_id,
             name,
             origin,
+            company_id,
             values,
-            group_id,
         )
         if "buffer_id" in values:
             vals["buffer_ids"] = [(4, values["buffer_id"].id)]
