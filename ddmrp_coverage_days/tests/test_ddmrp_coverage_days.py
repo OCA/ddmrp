@@ -4,62 +4,61 @@
 import odoo.tests.common as common
 
 
-class TestDdmrpCoverageDays(common.SavepointCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+class TestDdmrpCoverageDays(common.TransactionCase):
+    def setUp(self):
+        super().setUp()
 
         # Models
-        cls.productModel = cls.env["product.product"]
-        cls.bufferModel = cls.env["stock.buffer"]
-        cls.quantModel = cls.env["stock.quant"]
-        cls.locationModel = cls.env["stock.location"]
-        cls.adumethodModel = cls.env["product.adu.calculation.method"]
+        self.productModel = self.env["product.product"]
+        self.bufferModel = self.env["stock.buffer"]
+        self.quantModel = self.env["stock.quant"]
+        self.locationModel = self.env["stock.location"]
+        self.adumethodModel = self.env["product.adu.calculation.method"]
 
         # Refs
-        cls.main_company = cls.env.ref("base.main_company")
-        cls.warehouse = cls.env.ref("stock.warehouse0")
-        cls.stock_location = cls.env.ref("stock.stock_location_stock")
-        cls.uom_unit = cls.env.ref("uom.product_uom_unit")
-        cls.uom_unit.rounding = 1
-        purchase_route = cls.env.ref("purchase_stock.route_warehouse0_buy")
+        self.main_company = self.env.ref("base.main_company")
+        self.warehouse = self.env.ref("stock.warehouse0")
+        self.stock_location = self.env.ref("stock.stock_location_stock")
+        self.uom_unit = self.env.ref("uom.product_uom_unit")
+        self.uom_unit.rounding = 1
+        purchase_route = self.env.ref("purchase_stock.route_warehouse0_buy")
 
-        cls.productA = cls.productModel.create(
+        self.productA = self.productModel.create(
             {
                 "name": "product A",
                 "standard_price": 100.0,
                 "weight": 2.0,
                 "type": "product",
-                "uom_id": cls.uom_unit.id,
+                "uom_id": self.uom_unit.id,
                 "default_code": "A",
                 "route_ids": [(6, 0, purchase_route.ids)],
             }
         )
 
-        cls.quantModel.create(
+        self.quantModel.create(
             {
-                "location_id": cls.stock_location.id,
-                "company_id": cls.main_company.id,
-                "product_id": cls.productA.id,
+                "location_id": self.stock_location.id,
+                "company_id": self.main_company.id,
+                "product_id": self.productA.id,
                 "quantity": 650,
             }
         )
 
         # Create Buffers:
-        cls.method_fixed = cls.env.ref("ddmrp.adu_calculation_method_fixed")
-        cls.buffer_profile_override = cls.env.ref(
+        self.method_fixed = self.env.ref("ddmrp.adu_calculation_method_fixed")
+        self.buffer_profile_override = self.env.ref(
             "ddmrp.stock_buffer_profile_replenish_override_purchased_short_low"
         )
-        cls.buffer_a = cls.bufferModel.create(
+        self.buffer_a = self.bufferModel.create(
             {
-                "buffer_profile_id": cls.buffer_profile_override.id,
+                "buffer_profile_id": self.buffer_profile_override.id,
                 "green_override": 150.0,
                 "yellow_override": 30.0,
                 "red_override": 20.0,
-                "product_id": cls.productA.id,
-                "location_id": cls.stock_location.id,
-                "warehouse_id": cls.warehouse.id,
-                "adu_calculation_method": cls.method_fixed.id,
+                "product_id": self.productA.id,
+                "location_id": self.stock_location.id,
+                "warehouse_id": self.warehouse.id,
+                "adu_calculation_method": self.method_fixed.id,
                 "adu_fixed": 10.0,
                 "order_spike_horizon": 8,
                 "minimum_order_quantity": 20,
