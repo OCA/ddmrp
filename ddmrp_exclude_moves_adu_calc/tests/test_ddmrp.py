@@ -93,7 +93,7 @@ class TestDdmrp(common.TransactionCase):
         )
 
     def _create_user(self, login, groups):
-        """ Create a user."""
+        """Create a user."""
         group_ids = [group.id for group in groups]
         user = self.user_model.with_context({"no_reset_password": True}).create(
             {
