@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -64,18 +64,8 @@ msgid "Buffer Profile"
 msgstr ""
 
 #. module: ddmrp_chatter
-#: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__display_name
-msgid "Display Name"
-msgstr ""
-
-#. module: ddmrp_chatter
 #: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__message_follower_ids
 msgid "Followers"
-msgstr ""
-
-#. module: ddmrp_chatter
-#: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__message_channel_ids
-msgid "Followers (Channels)"
 msgstr ""
 
 #. module: ddmrp_chatter
@@ -89,8 +79,8 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr ""
 
 #. module: ddmrp_chatter
-#: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__id
-msgid "ID"
+#: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__has_message
+msgid "Has Message"
 msgstr ""
 
 #. module: ddmrp_chatter
@@ -118,11 +108,6 @@ msgstr ""
 #. module: ddmrp_chatter
 #: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__message_is_follower
 msgid "Is Follower"
-msgstr ""
-
-#. module: ddmrp_chatter
-#: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: ddmrp_chatter
