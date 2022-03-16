@@ -53,11 +53,11 @@ class DdmrpProductReplace(models.TransientModel):
         required=True,
         selection=[("existing", "Use Existing Product"), ("new", "Create New Product")],
     )
-    new_product_name = fields.Char(string="New Product Name")
+    new_product_name = fields.Char()
     new_product_default_code = fields.Char(string="New Product Internal Ref.")
     copy_route = fields.Boolean(string="Copy Routes")
     copy_putaway = fields.Boolean(string="Copy Put Away Strategy")
-    copy_packaging = fields.Boolean(string="Copy Packaging")
+    copy_packaging = fields.Boolean()
     consider_past_demand = fields.Boolean(
         string="Consider Old Product Demand",
         help="Consider Old product moves as demand for new product",
