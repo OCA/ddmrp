@@ -100,7 +100,7 @@ class TestStockBufferRoute(common.TransactionCase):
     def _create_user(self, name, group_ids, company_ids):
         return (
             self.env["res.users"]
-            .with_context({"no_reset_password": True})
+            .with_context(no_reset_password=True)
             .create(
                 {
                     "name": name,
@@ -134,7 +134,7 @@ class TestStockBufferRoute(common.TransactionCase):
         }
         wizard = (
             self.make_procurement_wiz.with_user(self.stock_manager)
-            .with_context(context)
+            .with_context(**context)
             .create({})
         )
         wizard.make_procurement()
