@@ -52,5 +52,8 @@ class DdmrpWarningDefinition(models.Model):
         try:
             res = safe_eval(self.python_code, globals_dict={"buffer": buffer})
         except Exception as error:
-            raise UserError(_("Error evaluating %s.\n %s") % (self._name, error))
+            raise UserError(
+                _("Error evaluating %(name)s.\n %(error)s")
+                % ({"name": self._name, "error": error})
+            ) from error
         return res
