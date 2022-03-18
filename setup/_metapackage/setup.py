@@ -15,6 +15,7 @@ setuptools.setup(
         'odoo-addon-ddmrp_cron_actions_as_job>=15.0dev,<15.1dev',
         'odoo-addon-ddmrp_exclude_moves_adu_calc>=15.0dev,<15.1dev',
         'odoo-addon-ddmrp_history>=15.0dev,<15.1dev',
+        'odoo-addon-ddmrp_warning>=15.0dev,<15.1dev',
         'odoo-addon-stock_buffer_capacity_limit>=15.0dev,<15.1dev',
         'odoo-addon-stock_buffer_route>=15.0dev,<15.1dev',
     ],
