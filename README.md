@@ -27,6 +27,7 @@ addon | version | maintainers | summary
 [ddmrp_exclude_moves_adu_calc](ddmrp_exclude_moves_adu_calc/) | 15.0.1.0.0 | [![JordiBForgeFlow](https://github.com/JordiBForgeFlow.png?size=30px)](https://github.com/JordiBForgeFlow) [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) | Define additional rules to exclude certain moves from ADU calculation
 [ddmrp_history](ddmrp_history/) | 15.0.1.0.0 | [![JordiBForgeFlow](https://github.com/JordiBForgeFlow.png?size=30px)](https://github.com/JordiBForgeFlow) [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) | Allow to store historical data of DDMRP buffers.
 [stock_buffer_capacity_limit](stock_buffer_capacity_limit/) | 15.0.1.0.0 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) | Ensures that the limits of storage are never surpassed
+[stock_buffer_route](stock_buffer_route/) | 15.0.1.0.0 |  | Allows to force a route to be used when procuring from Stock Buffers
 
 [//]: # (end addons)
 
