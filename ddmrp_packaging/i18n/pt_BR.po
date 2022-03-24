@@ -1,0 +1,95 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ddmrp_packaging
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+
+#. module: ddmrp_packaging
+#: model:ir.model.fields,field_description:ddmrp_packaging.field_make_procurement_buffer_item__display_name
+#: model:ir.model.fields,field_description:ddmrp_packaging.field_stock_buffer__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: ddmrp_packaging
+#: model:ir.model.fields,field_description:ddmrp_packaging.field_make_procurement_buffer_item__id
+#: model:ir.model.fields,field_description:ddmrp_packaging.field_stock_buffer__id
+msgid "ID"
+msgstr ""
+
+#. module: ddmrp_packaging
+#: model:ir.model.fields,field_description:ddmrp_packaging.field_make_procurement_buffer_item____last_update
+#: model:ir.model.fields,field_description:ddmrp_packaging.field_stock_buffer____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: ddmrp_packaging
+#: model:ir.model,name:ddmrp_packaging.model_make_procurement_buffer_item
+msgid "Make Procurements from Stock Buffer Item"
+msgstr ""
+
+#. module: ddmrp_packaging
+#: model:ir.model.fields,field_description:ddmrp_packaging.field_make_procurement_buffer_item__packaging_id
+msgid "Package"
+msgstr ""
+
+#. module: ddmrp_packaging
+#: model:ir.model.fields,field_description:ddmrp_packaging.field_stock_buffer__package_multiple
+msgid "Package Multiple"
+msgstr ""
+
+#. module: ddmrp_packaging
+#: model:ir.model.fields,field_description:ddmrp_packaging.field_make_procurement_buffer_item__packaging_qty
+msgid "Package Qty"
+msgstr ""
+
+#. module: ddmrp_packaging
+#: model:ir.model.fields,field_description:ddmrp_packaging.field_stock_buffer__packaging_id
+msgid "Packaging"
+msgstr ""
+
+#. module: ddmrp_packaging
+#: code:addons/ddmrp_packaging/models/stock_buffer.py:0
+#, python-format
+msgid "Please, select a packaging of the buffered product."
+msgstr ""
+
+#. module: ddmrp_packaging
+#: model:ir.model.fields,field_description:ddmrp_packaging.field_stock_buffer__qty_multiple
+msgid "Qty Multiple"
+msgstr ""
+
+#. module: ddmrp_packaging
+#: model:ir.model,name:ddmrp_packaging.model_stock_buffer
+msgid "Stock Buffer"
+msgstr ""
+
+#. module: ddmrp_packaging
+#: model:ir.model.fields,help:ddmrp_packaging.field_stock_buffer__qty_multiple
+msgid ""
+"The procurement quantity will be rounded up to this multiple. If it is 0, "
+"the exact quantity will be used."
+msgstr ""
+
+#. module: ddmrp_packaging
+#: code:addons/ddmrp_packaging/models/stock_buffer.py:0
+#, python-format
+msgid ""
+"This product is packaged by %.2f %s. You should set 'Qty Multiple' to %.2f "
+"%s."
+msgstr ""
+
+#. module: ddmrp_packaging
+#: code:addons/ddmrp_packaging/models/stock_buffer.py:0
+#, python-format
+msgid "Warning"
+msgstr ""
