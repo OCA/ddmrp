@@ -244,7 +244,7 @@ class StockBuffer(models.Model):
             top_y = max(tops)
             p = figure(
                 x_range=(dates[0], dates[-1]),
-                y_range=(start_stack, top_y),
+                y_range=(start_stack, top_y or 100),
                 x_axis_type="datetime",
             )
             p.sizing_mode = "stretch_both"
