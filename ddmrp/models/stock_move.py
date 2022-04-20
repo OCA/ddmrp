@@ -11,6 +11,8 @@ class StockMove(models.Model):
         comodel_name="stock.buffer",
         string="Linked Stock Buffers",
     )
+    # Add an index as '_find_buffer_link' method is using it as search criteria
+    created_purchase_line_id = fields.Many2one(index=True)
 
     def _prepare_procurement_values(self):
         res = super(StockMove, self)._prepare_procurement_values()
