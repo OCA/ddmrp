@@ -311,6 +311,11 @@ msgid "Create Procurement"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move__created_purchase_line_id
+msgid "Created Purchase Order Line"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__create_uid
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__create_uid
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__create_uid
