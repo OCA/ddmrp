@@ -211,7 +211,7 @@
                                 <field name="order_cycle" class="oe_inline" /> days
                             </div>
                             <field name="minimum_order_quantity" />
-                            <field name="adu" />
+                            <field name="adu" force_save="1" />
                             <field name="adu_calculation_method" />
                             <field name="adu_calculation_method_type" invisible="1" />
                             <field
