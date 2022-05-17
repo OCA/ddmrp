@@ -1569,6 +1569,8 @@ msgstr "Unidad de Medida"
 #: model:product.template,uom_name:ddmrp.product_product_fp01_product_template
 #: model:product.template,uom_name:ddmrp.product_product_rm01_product_template
 #: model:product.template,uom_name:ddmrp.product_product_rm02_product_template
+#: model:stock.buffer,product_uom_name:ddmrp.stock_buffer_fp01
+#: model:stock.buffer,product_uom_name:ddmrp.stock_buffer_rm01
 msgid "Units"
 msgstr ""
 
