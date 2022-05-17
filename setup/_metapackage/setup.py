@@ -19,6 +19,7 @@ setuptools.setup(
         'odoo-addon-ddmrp_warning>=15.0dev,<15.1dev',
         'odoo-addon-stock_buffer_capacity_limit>=15.0dev,<15.1dev',
         'odoo-addon-stock_buffer_route>=15.0dev,<15.1dev',
+        'odoo-addon-stock_buffer_sales_analysis>=15.0dev,<15.1dev',
     ],
     classifiers=[
         'Programming Language :: Python',
