@@ -98,12 +98,7 @@ class StockBuffer(models.Model):
         required=True,
     )
     product_uom = fields.Many2one(
-        comodel_name="uom.uom",
-        string="Product Unit of Measure",
         related="product_id.uom_id",
-        readonly=True,
-        required=True,
-        default=lambda self: self._context.get("product_uom", False),
     )
     # TODO: fix in method _compute_procure_recommended_qty.
     # not sure maybe they are useful for tweak batches like in multi level mrp
