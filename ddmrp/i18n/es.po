@@ -1084,11 +1084,6 @@ msgid "Product Template"
 msgstr "Plantilla de producto"
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_uom
-msgid "Product Unit of Measure"
-msgstr "Unidad de Medida del Producto"
-
-#. module: ddmrp
 #: model:ir.model,name:ddmrp.model_mrp_production
 msgid "Production Order"
 msgstr "Orden de producción"
@@ -1557,6 +1552,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__uom_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_uom
 msgid "Unit of Measure"
 msgstr "Unidad de Medida"
 
@@ -1775,6 +1771,9 @@ msgstr "minutos"
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr "o"
+
+#~ msgid "Product Unit of Measure"
+#~ msgstr "Unidad de Medida del Producto"
 
 #~ msgid "MRP Move"
 #~ msgstr "Movimientos MRP"
