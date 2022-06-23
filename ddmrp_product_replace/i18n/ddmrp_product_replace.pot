@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -114,9 +114,6 @@ msgstr ""
 
 #. module: ddmrp_product_replace
 #: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__display_name
-#: model:ir.model.fields,field_description:ddmrp_product_replace.field_make_procurement_buffer__display_name
-#: model:ir.model.fields,field_description:ddmrp_product_replace.field_stock_buffer__display_name
-#: model:ir.model.fields,field_description:ddmrp_product_replace.field_stock_move__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -127,9 +124,6 @@ msgstr ""
 
 #. module: ddmrp_product_replace
 #: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__id
-#: model:ir.model.fields,field_description:ddmrp_product_replace.field_make_procurement_buffer__id
-#: model:ir.model.fields,field_description:ddmrp_product_replace.field_stock_buffer__id
-#: model:ir.model.fields,field_description:ddmrp_product_replace.field_stock_move__id
 msgid "ID"
 msgstr ""
 
@@ -152,9 +146,6 @@ msgstr ""
 
 #. module: ddmrp_product_replace
 #: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace____last_update
-#: model:ir.model.fields,field_description:ddmrp_product_replace.field_make_procurement_buffer____last_update
-#: model:ir.model.fields,field_description:ddmrp_product_replace.field_stock_buffer____last_update
-#: model:ir.model.fields,field_description:ddmrp_product_replace.field_stock_move____last_update
 msgid "Last Modified on"
 msgstr ""
 
