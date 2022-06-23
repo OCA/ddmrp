@@ -1071,11 +1071,6 @@ msgid "Product Template"
 msgstr ""
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_uom
-msgid "Product Unit of Measure"
-msgstr ""
-
-#. module: ddmrp
 #: model:ir.model,name:ddmrp.model_mrp_production
 msgid "Production Order"
 msgstr ""
@@ -1533,6 +1528,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__uom_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_uom
 msgid "Unit of Measure"
 msgstr ""
 
