@@ -109,11 +109,14 @@ class StockBuffer(models.Model):
             tops = [
                 data[categories[0]][i] + data[categories[1]][i] + data[categories[2]][i]
                 for i in range(N)
-            ]
+            ] + [max(data["on_hand_position"]), max(data["net_flow_position"])]
             top_y = max(tops)
+            min_y = min(
+                [0, min(data["on_hand_position"]), min(data["net_flow_position"])]
+            )
             p = figure(
                 x_range=(dates[0], dates[-1]),
-                y_range=(0, top_y),
+                y_range=(min_y, top_y),
                 x_axis_type="datetime",
             )
             p.sizing_mode = "stretch_both"
@@ -248,7 +251,7 @@ class StockBuffer(models.Model):
             top_y = max(tops)
             p = figure(
                 x_range=(dates[0], dates[-1]),
-                y_range=(start_stack, top_y),
+                y_range=(start_stack, top_y or 100),
                 x_axis_type="datetime",
             )
             p.sizing_mode = "stretch_both"
