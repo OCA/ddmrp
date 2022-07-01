@@ -998,3 +998,57 @@ class TestDdmrp(TestDdmrpCommon):
         seller2.date_end = today
         seller.date_end = seller3.date_end = yesterday
         self.assertEqual(self.buffer_purchase._get_product_sellers(), seller2)
+
+    def test_44_resupply_from_another_warehouse(self):
+        route = self.env["stock.location.route"].create(
+            {
+                "name": "Warehouse 2: Supply from Warehouse",
+                "product_categ_selectable": True,
+                "product_selectable": True,
+                "warehouse_selectable": True,
+                "rule_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Warehouse: Stock → Inter-warehouse transit",
+                            "action": "pull",
+                            "picking_type_id": self.ref("stock.picking_type_internal"),
+                            "location_src_id": self.warehouse.lot_stock_id.id,
+                            "location_id": self.inter_wh.id,
+                            "procure_method": "make_to_stock",
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Warehouse2: Inter-warehouse transit → Stock",
+                            "action": "pull",
+                            "picking_type_id": self.ref("stock.picking_type_internal"),
+                            "location_src_id": self.inter_wh.id,
+                            "location_id": self.warehouse2.lot_stock_id.id,
+                            "procure_method": "make_to_order",
+                        },
+                    ),
+                ],
+            }
+        )
+        self.product_purchased.route_ids |= route
+        buffer_distributed = self.bufferModel.create(
+            {
+                "buffer_profile_id": self.buffer_profile_distr.id,
+                "product_id": self.product_purchased.id,
+                "location_id": self.warehouse2.lot_stock_id.id,
+                "warehouse_id": self.warehouse2.id,
+                "qty_multiple": 1.0,
+                "adu_calculation_method": self.adu_fixed.id,
+                "adu_fixed": 4.0,
+                "lead_days": 10.0,
+                "order_spike_horizon": 10.0,
+            }
+        )
+        self.assertEqual(
+            buffer_distributed.distributed_source_location_id,
+            self.warehouse.lot_stock_id,
+        )
