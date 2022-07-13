@@ -103,6 +103,15 @@ class MakeProcurementBuffer(models.TransientModel):
         res["item_ids"] = items
         return res
 
+    def _get_procurement_location(self, item):
+        return item.buffer_id.location_id
+
+    def _get_procurement_name(self, item):
+        return item.buffer_id.name
+
+    def _get_procurement_origin(self, item):
+        return item.buffer_id.name
+
     def make_procurement(self):
         self.ensure_one()
         errors = []
@@ -120,14 +129,17 @@ class MakeProcurementBuffer(models.TransientModel):
             if not item.buffer_id:
                 raise ValidationError(_("No stock buffer found."))
             values = item._prepare_values_make_procurement()
+            proc_location = self._get_procurement_location(item)
+            proc_name = self._get_procurement_name(item)
+            proc_origin = self._get_procurement_origin(item)
             procurements.append(
                 pg_obj.Procurement(
                     item.buffer_id.product_id,
                     item.qty,
                     item.uom_id,
-                    item.buffer_id.location_id,
-                    item.buffer_id.name,
-                    item.buffer_id.name,
+                    proc_location,
+                    proc_name,
+                    proc_origin,
                     item.buffer_id.company_id,
                     values,
                 )
