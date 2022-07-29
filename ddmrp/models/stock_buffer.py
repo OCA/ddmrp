@@ -1142,11 +1142,6 @@ class StockBuffer(models.Model):
         )
         return [("id", "in", buffers.ids)]
 
-    @api.onchange("adu_fixed", "adu_calculation_method")
-    def onchange_adu(self):
-        if self.adu_calculation_method.method == "fixed":
-            self._calc_adu()
-
     def _search_open_stock_moves_domain(self):
         self.ensure_one()
         return [
