@@ -6,9 +6,9 @@
 
 <!-- /!\ do not modify above this line -->
 
-# ddmrp
+# DDMRP
 
-TODO: add repo description.
+Demand Driven Material Requirements Planning implementation for Odoo.
 
 <!-- /!\ do not modify below this line -->
 
