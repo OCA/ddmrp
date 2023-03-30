@@ -114,6 +114,8 @@ class StockBuffer(models.Model):
             min_y = min(
                 [0, min(data["on_hand_position"]), min(data["net_flow_position"])]
             )
+            if top_y <= min_y:
+                top_y = min_y + 100
             p = figure(
                 x_range=(dates[0], dates[-1]),
                 y_range=(min_y, top_y),
