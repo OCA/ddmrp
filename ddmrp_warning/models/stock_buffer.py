@@ -45,7 +45,7 @@ class Buffer(models.Model):
 
     @api.model
     def cron_generate_ddmrp_warnings(self, automatic=False):
-        auto_commit = not getattr(threading.currentThread(), "testing", False)
+        auto_commit = not getattr(threading.current_thread(), "testing", False)
         buffer_ids = self.search([]).ids
         i = 0
         j = len(buffer_ids)
