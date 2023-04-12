@@ -37,28 +37,30 @@ class StockBuffer(models.Model):
     def _calc_adu(self):
         """Apply DAFs if existing for the buffer."""
         res = super()._calc_adu()
-        self.ensure_one()
-        dafs_to_apply = self.env["ddmrp.adjustment"].search(self._daf_to_apply_domain())
-        if dafs_to_apply:
-            daf = 1
-            values = dafs_to_apply.mapped("value")
-            for val in values:
-                daf *= val
-            prev = self.adu
-            self.adu *= daf
-            _logger.debug(
-                "DAF={} applied to {}. ADU: {} -> {}".format(
-                    daf, self.name, prev, self.adu
-                )
+        for rec in self:
+            dafs_to_apply = self.env["ddmrp.adjustment"].search(
+                rec._daf_to_apply_domain()
             )
-        # Compute generated demand to be applied to components:
-        dafs_to_explode = self.env["ddmrp.adjustment"].search(
-            self._daf_to_apply_domain(False)
-        )
-        for daf in dafs_to_explode:
-            prev = self.adu
-            increased_demand = prev * daf.value - prev
-            self.explode_demand_to_components(daf, increased_demand, self.product_uom)
+            if dafs_to_apply:
+                daf = 1
+                values = dafs_to_apply.mapped("value")
+                for val in values:
+                    daf *= val
+                prev = rec.adu
+                rec.adu *= daf
+                _logger.debug(
+                    "DAF={} applied to {}. ADU: {} -> {}".format(
+                        daf, rec.name, prev, rec.adu
+                    )
+                )
+            # Compute generated demand to be applied to components:
+            dafs_to_explode = self.env["ddmrp.adjustment"].search(
+                rec._daf_to_apply_domain(False)
+            )
+            for daf in dafs_to_explode:
+                prev = rec.adu
+                increased_demand = prev * daf.value - prev
+                rec.explode_demand_to_components(daf, increased_demand, rec.product_uom)
         return res
 
     def explode_demand_to_components(self, daf, demand, uom_id):
