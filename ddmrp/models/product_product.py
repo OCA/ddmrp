@@ -11,6 +11,8 @@ class Product(models.Model):
         comodel_name="stock.buffer", string="Stock Buffers", inverse_name="product_id",
     )
 
+    buffer_count = fields.Integer(compute="_compute_buffer_count")
+
     def write(self, values):
         res = super().write(values)
         if values.get("active") is False:
@@ -19,3 +21,14 @@ class Product(models.Model):
             )
             buffers.write({"active": False})
         return res
+
+    def _compute_buffer_count(self):
+        for rec in self:
+            rec.buffer_count = len(rec.buffer_ids)
+
+    def action_view_stock_buffers(self):
+        result = self.env.ref("ddmrp.action_stock_buffer")
+        action = result.read()[0]
+        action["context"] = {}
+        action["domain"] = [("id", "in", self.buffer_ids.ids)]
+        return action
