@@ -111,6 +111,22 @@
                         />
                         <button
                             type="object"
+                            name="action_view_stock_demand_estimates"
+                            class="oe_stat_button"
+                            string="Estimates"
+                            icon="fa-signal"
+                            attrs="{'invisible': [('adu_calculation_method_type', '!=', 'future')]}"
+                        />
+                        <button
+                            type="object"
+                            name="action_view_bom"
+                            class="oe_stat_button"
+                            string="Bill of Materials"
+                            icon="fa-flask"
+                            attrs="{'invisible': [('item_type', '!=', 'manufactured')]}"
+                        />
+                        <button
+                            type="object"
                             name="action_view_mrp_productions"
                             class="oe_stat_button"
                             string="Manufacturing Orders"
@@ -126,13 +142,6 @@
                             attrs="{'invisible': [('item_type', '!=', 'purchased')]}"
                         />
                         <button
-                            string="Refresh Buffer"
-                            name="refresh_buffer"
-                            class="oe_stat_button"
-                            icon="fa-refresh"
-                            type="object"
-                        />
-                        <button
                             class="oe_stat_button"
                             name="action_used_in_bom"
                             type="object"
@@ -145,6 +154,13 @@
                                 widget="statinfo"
                             />
                         </button>
+                        <button
+                            string="Refresh Buffer"
+                            name="refresh_buffer"
+                            class="oe_stat_button"
+                            icon="fa-refresh"
+                            type="object"
+                        />
                     </div>
                     <widget
                         name="web_ribbon"
