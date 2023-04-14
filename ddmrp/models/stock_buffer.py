@@ -198,6 +198,31 @@ class StockBuffer(models.Model):
         action["domain"] = self._past_moves_domain(date_from, date_to, locations)
         return action
 
+    def action_view_stock_demand_estimates(self):
+        result = self.env["ir.actions.actions"]._for_xml_id(
+            "stock_demand_estimate.stock_demand_estimate_action"
+        )
+        recs = self.env["stock.demand.estimate"].search(
+            [
+                ("product_id", "=", self.product_id.id),
+                ("location_id", "=", self.location_id.id),
+            ]
+        )
+        result["domain"] = [("id", "in", recs.ids)]
+        return result
+
+    def action_view_bom(self):
+        action = self.product_id.action_view_bom()
+        locations = self.env["stock.location"].search(
+            [("id", "child_of", [self.location_id.id])]
+        )
+        action["domain"] += [
+            "|",
+            ("location_id", "in", locations.ids),
+            ("location_id", "=", False),
+        ]
+        return action
+
     @api.constrains("product_id")
     def _check_product_uom(self):
         if any(
