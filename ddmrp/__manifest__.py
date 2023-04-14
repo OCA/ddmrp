@@ -41,6 +41,7 @@
         "views/mrp_production_view.xml",
         "views/purchase_order_view.xml",
         "views/purchase_order_line_view.xml",
+        "views/product_view.xml",
         "views/mrp_bom_view.xml",
         "views/stock_move_views.xml",
         "views/stock_buffer_view.xml",
