@@ -182,8 +182,10 @@ class StockBuffer(models.Model):
         action = self.env["ir.actions.actions"]._for_xml_id(
             "ddmrp.stock_move_year_consumption_action"
         )
-        locations = self.env["stock.location"].search(
-            [("id", "child_of", [self.location_id.id])]
+        locations = (
+            self.env["stock.location"]
+            .with_context(active_test=False)
+            .search([("id", "child_of", self.location_id.ids)])
         )
         date_to = fields.Date.today()
         # We take last five years, even though they will be initially
@@ -1422,8 +1424,10 @@ class StockBuffer(models.Model):
         # today is excluded to be sure that is a past day and all moves
         # for that day are done (or at least the expected date is in the past).
         date_from, date_to = self._get_dates_adu_past_demand(horizon)
-        locations = self.env["stock.location"].search(
-            [("id", "child_of", [self.location_id.id])]
+        locations = (
+            self.env["stock.location"]
+            .with_context(active_test=False)
+            .search([("id", "child_of", self.location_id.ids)])
         )
         if self.adu_calculation_method.source_past == "estimates":
             qty = 0.0
