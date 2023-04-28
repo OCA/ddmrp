@@ -150,10 +150,20 @@ msgid "Bill of Material Line"
 msgstr "Línea de Lista de Materiales"
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Bill of Materials"
+msgstr ""
+
+#. module: ddmrp
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
 #, python-format
 msgid "Blended"
 msgstr "Mezclado"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_product__buffer_count
+msgid "Buffer Count"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_production__execution_priority_level
@@ -472,6 +482,11 @@ msgid ""
 msgstr ""
 "Error: La Unidad de Medida por defecto del producto y la Unidad de Medida de "
 "abastecimiento deben pertenecer a la misma categoría."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Estimates"
+msgstr ""
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
@@ -1513,6 +1528,7 @@ msgstr "Factor de Variabilidad en Perfil de Búfer de Inventario"
 #: model:ir.model.fields,field_description:ddmrp.field_product_product__buffer_ids
 #: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line__buffer_ids
 #: model:ir.ui.menu,name:ddmrp.menu_stock_buffer
+#: model_terms:ir.ui.view,arch_db:ddmrp.product_normal_form_view_inherit
 #: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_form
 #: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_line_form2
 msgid "Stock Buffers"

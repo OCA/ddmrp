@@ -25,8 +25,11 @@ msgstr "# LdM Dónde se Utiliza"
 #: model:ir.model.fields,help:ddmrp.field_stock_move_line__state
 msgid ""
 "* New: When the stock move is created and not yet confirmed.\n"
-"* Waiting Another Move: This state can be seen when a move is waiting for another one, for example in a chained flow.\n"
-"* Waiting Availability: This state is reached when the procurement resolution is not straight forward. It may need the scheduler to run, a component to be manufactured...\n"
+"* Waiting Another Move: This state can be seen when a move is waiting for "
+"another one, for example in a chained flow.\n"
+"* Waiting Availability: This state is reached when the procurement "
+"resolution is not straight forward. It may need the scheduler to run, a "
+"component to be manufactured...\n"
 "* Available: When products are reserved, it is set to 'Available'.\n"
 "* Done: When the shipment is processed, the state is 'Done'."
 msgstr ""
@@ -44,8 +47,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" role=\"img\" aria-label=\"Values set here are company-"
-"specific.\" groups=\"base.group_multi_company\"/>"
+"specific.\" role=\"img\" aria-label=\"Values set here are company-specific."
+"\" groups=\"base.group_multi_company\"/>"
 msgstr ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Los valores configurados son "
 "específicos de la compañía.\" role=\"img\" aria-label=\"Los valores "
@@ -55,7 +58,8 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__product_type
 msgid ""
-"A storable product is a product for which you manage stock. The Inventory app has to be installed.\n"
+"A storable product is a product for which you manage stock. The Inventory "
+"app has to be installed.\n"
 "A consumable product is a product for which stock is not managed.\n"
 "A service is a non-material product you provide."
 msgstr ""
@@ -163,10 +167,20 @@ msgid "Bill of Material Line"
 msgstr "Línea de Lista de Materiales"
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Bill of Materials"
+msgstr ""
+
+#. module: ddmrp
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
 #, python-format
 msgid "Blended"
 msgstr "Mezclado"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_product__buffer_count
+msgid "Buffer Count"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_production__execution_priority_level
@@ -242,7 +256,8 @@ msgstr "Búferes"
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
 msgid ""
 "By default, the qty is equal to the recommended quantity.\n"
-"                    For distributed buffers, when the option on the profile is active,\n"
+"                    For distributed buffers, when the option on the profile "
+"is active,\n"
 "                    the quantity is limited to the free quantity."
 msgstr ""
 "De forma predeterminada, la cantidad es igual a la cantidad recomendada.\n"
@@ -287,7 +302,8 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.actions.act_window,help:ddmrp.stock_buffer_profile_variability_form_action
 msgid "Click to start a new buffer profile variability factor"
-msgstr "Pulse para comenzar un nuevo factor de variabilidad del perfil de búfer"
+msgstr ""
+"Pulse para comenzar un nuevo factor de variabilidad del perfil de búfer"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_res_company
@@ -484,6 +500,11 @@ msgid ""
 msgstr ""
 "Error: La Unidad de Medida por defecto del producto y la Unidad de Medida de "
 "abastecimiento deben pertenecer a la misma categoría."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Estimates"
+msgstr ""
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
@@ -1282,8 +1303,8 @@ msgstr ""
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__distributed_source_location_qty
 msgid ""
 "Quantity free for distributed buffer in the source location. When a "
-"procurement is requested, if the option is active on the profile, it will be"
-" limited to this quantity."
+"procurement is requested, if the option is active on the profile, it will be "
+"limited to this quantity."
 msgstr ""
 "Cantidad libre para el búfer distribuido en la ubicación de origen. Cuando "
 "se solicita una adquisición, si la opción está activa en el perfil, se "
@@ -1450,9 +1471,12 @@ msgstr "Buscar Perfiles de Búfer"
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid ""
 "Set a tolerance value to apply to quantity multiple in stock buffers.\n"
-"                                    If the quantity needed is below this tolerance threshold, the recommended\n"
-"                                    quantity will be reduced a bit instead of adding another bucket.\n"
-"                                    The value is a percentage of the quantity multiple."
+"                                    If the quantity needed is below this "
+"tolerance threshold, the recommended\n"
+"                                    quantity will be reduced a bit instead "
+"of adding another bucket.\n"
+"                                    The value is a percentage of the "
+"quantity multiple."
 msgstr ""
 "Establezca un valor de tolerancia para aplicar a la cantidad múltiple en los "
 "búferes de stock.\n"
@@ -1482,8 +1506,7 @@ msgstr "Muestra Días de Covertura en Búferes de Stock"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_coverage_days
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
-msgid ""
-"Shows the current on-hand for stock buffers expressed as coverage days."
+msgid "Shows the current on-hand for stock buffers expressed as coverage days."
 msgstr ""
 "Muestra el stock en-mano actual para los búferes de stock expresados como "
 "días de covertura."
@@ -1546,6 +1569,7 @@ msgstr "Factor de Variabilidad en Perfil de Búfer de Inventario"
 #: model:ir.model.fields,field_description:ddmrp.field_product_product__buffer_ids
 #: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line__buffer_ids
 #: model:ir.ui.menu,name:ddmrp.menu_stock_buffer
+#: model_terms:ir.ui.view,arch_db:ddmrp.product_normal_form_view_inherit
 #: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_form
 #: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_line_form2
 msgid "Stock Buffers"
@@ -1604,8 +1628,8 @@ msgstr "Suministro y Demanda"
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid ""
-"The green zone determines the average order frequency and the order size. It"
-" is determined as the maximum of the following three factors: Minimum Order "
+"The green zone determines the average order frequency and the order size. It "
+"is determined as the maximum of the following three factors: Minimum Order "
 "Cycle, Lead Time Factor and Minimum Order Quantity."
 msgstr ""
 "La zona verde determina la frecuencia media de pedidos y el tamaño de "
@@ -1636,8 +1660,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid ""
 "The red zone is the embedded safety in the buffer. The larger the "
-"variability associated with the product, the larger the red zone will be. It"
-" is composed of two sub-zones: Red base and red safety."
+"variability associated with the product, the larger the red zone will be. It "
+"is composed of two sub-zones: Red base and red safety."
 msgstr ""
 "La zona roja es la seguridad contenida en el búfer. Cuanto más grande sea la "
 "variabilidad asociada al producto."
@@ -1743,7 +1767,8 @@ msgstr "Usar empaquetados en búferes de stock."
 msgid ""
 "Use this assistant to generate a procurement request for this\n"
 "                    stock buffer. According to the product configuration,\n"
-"                    this may trigger a draft purchase order, a manufacturing\n"
+"                    this may trigger a draft purchase order, a "
+"manufacturing\n"
 "                    order or a transfer picking."
 msgstr ""
 "Use este asistente para generar peticiones de abastecimiento para este\n"
@@ -1793,10 +1818,16 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__extra_lead_time
 msgid ""
-"When defined, this lead time will be added to the decoupled lead time for the computation of the zones size (it won't affect planned date for procurements).\n"
-"This is particularly useful in situations of infrequent but periodic demand. E.g. We receive a large order every 30 days, whereas the supplier takes 10 days to supply. \n"
-"In this case the yellow zone must cover for the entire cycle of 30 days of demand.\n"
-"In situations with infrequent demand the ADU tends to be very small, and every new order would be treated as a spike, when \n"
+"When defined, this lead time will be added to the decoupled lead time for "
+"the computation of the zones size (it won't affect planned date for "
+"procurements).\n"
+"This is particularly useful in situations of infrequent but periodic demand. "
+"E.g. We receive a large order every 30 days, whereas the supplier takes 10 "
+"days to supply. \n"
+"In this case the yellow zone must cover for the entire cycle of 30 days of "
+"demand.\n"
+"In situations with infrequent demand the ADU tends to be very small, and "
+"every new order would be treated as a spike, when \n"
 "in reality this is not an exceptional situation."
 msgstr ""
 "Cuando está definido, este plazo de entrega se agregará al plazo de entrega "
@@ -1844,8 +1875,8 @@ msgstr ""
 msgid ""
 "When you request procurement from a buffer, their scheduled date is "
 "rescheduled to now + this procurement time (in minutes). Their scheduled "
-"date represents the latest the transfers should be done, and therefore, past"
-" this timestamp, considered late."
+"date represents the latest the transfers should be done, and therefore, past "
+"this timestamp, considered late."
 msgstr ""
 "Cuando solicita la adquisición de un búfer, su fecha programada se "
 "reprograma para ahora + este tiempo de adquisición (en minutos). Su fecha "
@@ -1919,7 +1950,7 @@ msgid "days"
 msgstr "días"
 
 #. module: ddmrp
-#: code:addons/ddmrp/hooks.py:0 code:addons/ddmrp/hooks.py:0
+#: code:addons/ddmrp/hooks.py:0
 #, python-format
 msgid "minutes"
 msgstr "minutos"
