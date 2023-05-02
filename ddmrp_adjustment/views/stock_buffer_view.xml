@@ -7,7 +7,10 @@
         <field name="model">stock.buffer</field>
         <field name="inherit_id" ref="ddmrp.stock_buffer_view_form" />
         <field name="arch" type="xml">
-            <div name="button_box" position="inside">
+            <xpath
+                expr="//div[@name='button_box']//button[@name='refresh_buffer']"
+                position="before"
+            >
                 <button
                     string="DAF Demand Allocation"
                     name="action_view_demand_to_components"
@@ -15,7 +18,7 @@
                     icon="fa-caret-square-o-down"
                     type="object"
                 />
-            </div>
+            </xpath>
         </field>
     </record>
 </odoo>
