@@ -8,7 +8,9 @@ from odoo.tools import float_round
 class Buffer(models.Model):
     _inherit = "stock.buffer"
 
-    coverage_days = fields.Float(compute="_compute_coverage_days")
+    coverage_days = fields.Float(
+        compute="_compute_coverage_days", string="Days of Coverage"
+    )
 
     def _compute_coverage_days(self):
         for rec in self:

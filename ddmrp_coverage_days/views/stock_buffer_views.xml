@@ -5,9 +5,12 @@
         <field name="model">stock.buffer</field>
         <field name="inherit_id" ref="ddmrp.stock_buffer_view_form" />
         <field name="arch" type="xml">
-            <field name="main_supplier_id" position="after">
-                <field name="coverage_days" string="Days of Coverage" />
-            </field>
+            <xpath expr="//div[@name='net_flow_position_percent']" position="after">
+                <label for="coverage_days" />
+                <div name="coverage_days">
+                    <field name="coverage_days" class="oe_inline" /> days
+                </div>
+            </xpath>
         </field>
     </record>
     <record id="stock_buffer_view_tree" model="ir.ui.view">
