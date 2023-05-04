@@ -1742,7 +1742,6 @@ class StockBuffer(models.Model):
 
     def _source_location_from_route(self, route=None):
         """Return the replenishment source location for distributed buffers
-
         If no route is passed, it follows the source location of the rules of
         all the routes it finds until it can no longer find a path.
         If a route is passed, it stops at the final source location of the
@@ -1756,6 +1755,27 @@ class StockBuffer(models.Model):
             )
             if rule.procure_method == "make_to_stock":
                 return rule.location_src_id
+            elif rule.procure_method == "make_to_order":
+                # If resupply from another warehouse, this rule can't be retrieved by
+                # method _get_rule, because that we try to get this rule bases on previous rule
+                pull_rule = self.env["stock.rule"].search(
+                    [
+                        ("action", "in", ("pull", "pull_push")),
+                        ("route_id", "=", rule.route_id.id),
+                        ("location_id", "=", rule.location_src_id.id),
+                    ]
+                )
+                if pull_rule:
+                    if pull_rule.procure_method in ("make_to_stock", "mts_else_mto"):
+                        return pull_rule.location_src_id
+                    elif pull_rule.procure_method == "make_to_order":
+                        current_location = pull_rule.location_src_id
+                        rule_values.update(
+                            {
+                                "warehouse_id": pull_rule.location_src_id.get_warehouse(),
+                            }
+                        )
+                        continue
             current_location = rule.location_src_id
 
     def action_dummy(self):
