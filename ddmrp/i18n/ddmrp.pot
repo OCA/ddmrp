@@ -124,6 +124,11 @@ msgid "Average Daily Usage"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__on_hand_target_position
+msgid "Avg On Hand Target Position"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model,name:ddmrp.model_report_mrp_report_bom_structure
 msgid "BOM Structure Report"
 msgstr ""
@@ -152,6 +157,11 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_product__buffer_count
 msgid "Buffer Count"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Buffer Information"
 msgstr ""
 
 #. module: ddmrp
@@ -195,17 +205,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
-msgid "Buffer size factors"
-msgstr ""
-
-#. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "Buffer summary"
-msgstr ""
-
-#. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
-msgid "Buffer zones"
 msgstr ""
 
 #. module: ddmrp
@@ -705,6 +705,23 @@ msgid "Information source used for past calculation."
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__on_hand_target_max
+msgid "It denotes how far you are on average from the target"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__on_hand_target_position
+msgid ""
+"It denotes what the target stock on hand is. The computation is: OH Target ="
+" TOR + Green Zone / 2 "
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__on_hand_target_min
+msgid "It denotes what the target stock on hand range is."
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__item_type
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__item_type
 msgid "Item Type"
@@ -829,6 +846,11 @@ msgid "MRP Move"
 msgstr ""
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Main Buffer size factors"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__main_supplier_id
 msgid "Main Supplier"
 msgstr ""
@@ -918,11 +940,6 @@ msgid "Name"
 msgstr ""
 
 #. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
-msgid "Net Flow Position"
-msgstr ""
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse__nfp_incoming_safety_factor
 msgid "Net Flow Position Incoming Safety Factor"
 msgstr ""
@@ -974,6 +991,16 @@ msgid "On Hand Alert Zones"
 msgstr ""
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "On Hand Target"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__on_hand_target_min
+msgid "On Hand Target Range"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_production__on_hand_percent
 #: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line__on_hand_percent
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__on_hand_percent
@@ -1019,16 +1046,6 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__order_spike_threshold
 msgid "Order Spike Threshold"
-msgstr ""
-
-#. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
-msgid "Other Information"
-msgstr ""
-
-#. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
-msgid "Other Settings"
 msgstr ""
 
 #. module: ddmrp
@@ -1121,6 +1138,11 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
 msgid "Procurement Request"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Procurement Settings"
 msgstr ""
 
 #. module: ddmrp
@@ -1220,6 +1242,21 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.constraint,message:ddmrp.constraint_stock_buffer_qty_multiple_check
 msgid "Qty Multiple must be greater than or equal to zero."
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Qualified Demand"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__qualified_demand_mrp_move_ids
+msgid "Qualified Demand Mrp Move"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__qualified_demand_stock_move_ids
+msgid "Qualified Demand Stock Move"
 msgstr ""
 
 #. module: ddmrp
@@ -1413,6 +1450,11 @@ msgid "Search Buffer Profiles"
 msgstr ""
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Secondary Buffer size factors"
+msgstr ""
+
+#. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid ""
 "Set a tolerance value to apply to quantity multiple in stock buffers.\n"
@@ -1550,6 +1592,11 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "Supply & Demand"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__on_hand_target_max
+msgid "Target On Hand (Max)"
 msgstr ""
 
 #. module: ddmrp
@@ -1704,6 +1751,31 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_vendor_code
 msgid "Vendor Code"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "View ADU (Future)"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "View ADU (Past)"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "View Incoming (Within DLT)"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "View Qualified Demand from MRP"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "View Qualified Demand from Pickings"
 msgstr ""
 
 #. module: ddmrp
