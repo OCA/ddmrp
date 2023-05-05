@@ -173,75 +173,105 @@
                             <field name="active" invisible="1" />
                             <field name="name" />
                             <field name="product_id" />
-                            <field name="product_vendor_code" />
+                            <field
+                                name="product_uom"
+                                options="{'no_open': True, 'no_create': True}"
+                                groups="uom.group_uom"
+                            />
                             <field name="product_type" invisible="1" />
                         </group>
                         <group>
+                            <field
+                                name="location_id"
+                                groups="stock.group_stock_multi_locations"
+                            />
                             <field
                                 name="warehouse_id"
                                 widget="selection"
                                 groups="stock.group_stock_multi_locations"
                             />
                             <field
-                                name="product_uom"
-                                options="{'no_open': True, 'no_create': True}"
-                                groups="uom.group_uom"
-                            />
-                            <field
-                                name="location_id"
-                                groups="stock.group_stock_multi_locations"
-                            />
-                            <field name="group_id" groups="stock.group_adv_location" />
-                            <field
                                 name="company_id"
                                 groups="base.group_multi_company"
                                 options="{'no_create': True}"
                             />
                         </group>
-                        <group name="buffer_size_factors" string="Buffer size factors">
-                            <field name="buffer_profile_id" />
-                            <field name="replenish_method" invisible="1" />
-                            <field name="item_type" invisible="1" />
-                            <field
-                                name="green_override"
-                                attrs="{'invisible': [('replenish_method', '!=', 'replenish_override')]}"
-                            />
-                            <field
-                                name="yellow_override"
-                                attrs="{'invisible': [('replenish_method', '!=', 'replenish_override')]}"
-                            />
-                            <field
-                                name="red_override"
-                                attrs="{'invisible': [('replenish_method', '!=', 'replenish_override')]}"
-                            />
-                            <label for="extra_lead_time" />
-                            <div name="extra_lead_time">
-                                <field name="extra_lead_time" class="oe_inline" /> days
-                            </div>
-                            <label for="dlt" />
-                            <div name="dlt">
-                                <field name="dlt" class="oe_inline" /> days
-                            </div>
-                            <label for="order_cycle" />
-                            <div name="order_cycle">
-                                <field name="order_cycle" class="oe_inline" /> days
-                            </div>
-                            <field name="minimum_order_quantity" />
-                            <field name="adu" force_save="1" />
-                            <field name="adu_calculation_method" />
-                            <field name="adu_calculation_method_type" invisible="1" />
-                            <field
-                                name="adu_fixed"
-                                attrs="{'invisible': [('adu_calculation_method_type', '!=', 'fixed')]}"
-                            />
-                            <label for="order_spike_horizon" />
-                            <div name="order_spike_horizon">
+                        <group name="buffer_size_factors">
+                            <group
+                                name="main_buffer_size_factors"
+                                string="Main Buffer size factors"
+                                colspan="2"
+                            >
+                                <field name="buffer_profile_id" />
+                                <field name="replenish_method" invisible="1" />
+                                <field name="item_type" invisible="1" />
                                 <field
-                                    name="order_spike_horizon"
-                                    class="oe_inline"
-                                /> days
-                            </div>
-                            <field name="order_spike_threshold" />
+                                    name="green_override"
+                                    attrs="{'invisible': [('replenish_method', '!=', 'replenish_override')]}"
+                                />
+                                <field
+                                    name="yellow_override"
+                                    attrs="{'invisible': [('replenish_method', '!=', 'replenish_override')]}"
+                                />
+                                <field
+                                    name="red_override"
+                                    attrs="{'invisible': [('replenish_method', '!=', 'replenish_override')]}"
+                                />
+                                <field name="adu_calculation_method" />
+                                <field
+                                    name="adu_calculation_method_type"
+                                    invisible="1"
+                                />
+                                <field
+                                    name="adu_fixed"
+                                    attrs="{'invisible': [('adu_calculation_method_type', '!=', 'fixed')]}"
+                                />
+                                <label for="adu" />
+                                <div name="adu" class="o_row">
+                                    <field name="adu" force_save="1" />
+                                    <button
+                                        title="View ADU (Past)"
+                                        name="action_view_past_adu"
+                                        icon="fa-search"
+                                        type="object"
+                                        attrs="{'invisible': ['|', ('adu_calculation_method_type', 'in', ['fixed', 'future']), ('adu', '=', 0)]}"
+                                    />
+                                    <button
+                                        title="View ADU (Future)"
+                                        name="action_view_future_adu"
+                                        icon="fa-search"
+                                        type="object"
+                                        attrs="{'invisible': ['|', ('adu_calculation_method_type', 'in', ['fixed', 'past']), ('adu', '=', 0)]}"
+                                    />
+                                </div>
+                                <field
+                                    name="lead_days"
+                                    attrs="{'invisible': [('item_type', '!=', 'distributed')]}"
+                                />
+                                <label for="dlt" />
+                                <div name="dlt">
+                                    <field name="dlt" class="oe_inline" /> days
+                                </div>
+                            </group>
+                            <group />
+                            <group
+                                name="secondary_buffer_size_factors"
+                                string="Secondary Buffer size factors"
+                                colspan="2"
+                            >
+                                <label for="extra_lead_time" />
+                                <div name="extra_lead_time">
+                                    <field
+                                        name="extra_lead_time"
+                                        class="oe_inline"
+                                    /> days
+                                </div>
+                                <field name="minimum_order_quantity" />
+                                <label for="order_cycle" />
+                                <div name="order_cycle">
+                                    <field name="order_cycle" class="oe_inline" /> days
+                                </div>
+                            </group>
                         </group>
                         <group name="ddmrp_chart" string="Buffer summary">
                             <div colspan="2">
@@ -252,46 +282,126 @@
                                 />
                             </div>
                         </group>
-                        <group name="other" string="Other Settings">
-                            <field name="procure_uom_id" groups="uom.group_uom" />
-                            <field name="qty_multiple" />
-                            <field name="procure_min_qty" />
-                            <field name="procure_max_qty" />
-                            <field name="lead_days" />
-                            <field name="auto_procure" />
-                            <field
-                                name="auto_procure_option"
-                                attrs="{'invisible': [('auto_procure', '=', False)]}"
-                            />
-                        </group>
-                        <group name="buffer_zones_summary" string="Buffer zones">
-                            <field name="top_of_green" />
-                            <field name="top_of_yellow" />
-                            <field name="top_of_red" />
-                        </group>
-                        <group name="net_flow_position" string="Net Flow Position">
-                            <field name="net_flow_position" />
-                            <label for="net_flow_position_percent" />
-                            <div name="net_flow_position_percent">
+                        <group name="execution_settings">
+                            <group
+                                name="qualified_demand"
+                                string="Qualified Demand"
+                                colspan="2"
+                            >
+                                <label for="order_spike_horizon" />
+                                <div name="order_spike_horizon">
+                                    <field
+                                        name="order_spike_horizon"
+                                        class="oe_inline"
+                                    /> days
+                                </div>
+                                <field name="order_spike_threshold" />
+                            </group>
+                            <group
+                                name="procurement_settings"
+                                string="Procurement Settings"
+                                colspan="2"
+                            >
+                                <field name="procure_uom_id" groups="uom.group_uom" />
+                                <field name="qty_multiple" />
+                                <field name="procure_min_qty" />
+                                <field name="procure_max_qty" />
                                 <field
-                                    name="net_flow_position_percent"
-                                    class="oe_inline"
-                                /> %
-                            </div>
-                            <field name="product_location_qty_available_not_res" />
-                            <field name="incoming_dlt_qty" />
-                            <field name="qualified_demand" />
+                                    name="group_id"
+                                    groups="stock.group_adv_location"
+                                />
+                                <field
+                                    name="distributed_source_location_id"
+                                    attrs="{'invisible': ['|', ('item_type', '!=', 'distributed'), ('distributed_source_location_id', '=', False)]}"
+                                />
+                                <field
+                                    name="distributed_source_location_qty"
+                                    attrs="{'invisible': ['|', ('item_type', '!=', 'distributed'), ('distributed_source_location_id', '=', False)]}"
+                                />
+                                <field
+                                    name="main_supplier_id"
+                                    attrs="{'invisible': [('item_type', '!=', 'purchased')]}"
+                                />
+                                <field
+                                    name="product_vendor_code"
+                                    attrs="{'invisible': [('product_vendor_code', '=', False)]}"
+                                />
+                                <field name="auto_procure" />
+                                <field
+                                    name="auto_procure_option"
+                                    attrs="{'invisible': [('auto_procure', '=', False)]}"
+                                />
+                            </group>
                         </group>
-                        <group name="misc_info" string="Other Information">
-                            <field name="main_supplier_id" />
-                            <field
-                                name="distributed_source_location_id"
-                                attrs="{'invisible': ['|', ('item_type', '!=', 'distributed'), ('distributed_source_location_id', '=', False)]}"
-                            />
-                            <field
-                                name="distributed_source_location_qty"
-                                attrs="{'invisible': ['|', ('item_type', '!=', 'distributed'), ('distributed_source_location_id', '=', False)]}"
-                            />
+                        <group name="buffer_summary">
+                            <group
+                                name="buffer_information"
+                                string="Buffer Information"
+                                colspan="2"
+                            >
+                                <field name="product_location_qty_available_not_res" />
+                                <label for="incoming_dlt_qty" />
+                                <div name="incoming_dlt_qty" class="o_row">
+                                    <field name="incoming_dlt_qty" />
+                                    <button
+                                        title="View Incoming (Within DLT)"
+                                        name="action_view_supply_inside_dlt_window"
+                                        icon="fa-search"
+                                        type="object"
+                                        attrs="{'invisible': [('incoming_dlt_qty', '=', 0)]}"
+                                    />
+                                </div>
+                                <label for="qualified_demand" />
+                                <div name="qualified_demand" class="o_row">
+                                    <field name="qualified_demand" />
+                                    <field
+                                        name="qualified_demand_stock_move_ids"
+                                        invisible="1"
+                                    />
+                                    <field
+                                        name="qualified_demand_mrp_move_ids"
+                                        invisible="1"
+                                    />
+                                    <button
+                                        title="View Qualified Demand from Pickings"
+                                        name="action_view_qualified_demand_pickings"
+                                        icon="fa-search"
+                                        type="object"
+                                        attrs="{'invisible': ['|', ('qualified_demand', '=', 0), ('qualified_demand_stock_move_ids', '=', [])]}"
+                                    />
+                                    <button
+                                        title="View Qualified Demand from MRP"
+                                        name="action_view_qualified_demand_mrp"
+                                        icon="fa-search"
+                                        type="object"
+                                        attrs="{'invisible': ['|', ('qualified_demand', '=', 0), ('qualified_demand_mrp_move_ids', '=', [])]}"
+                                    />
+                                </div>
+                                <field name="net_flow_position" />
+                                <label for="net_flow_position_percent" />
+                                <div name="net_flow_position_percent">
+                                    <field
+                                        name="net_flow_position_percent"
+                                        class="oe_inline"
+                                    /> %
+                                </div>
+                            </group>
+                            <group />
+                            <group
+                                name="buffer_target"
+                                string="On Hand Target"
+                                colspan="2"
+                            >
+                                <label for="on_hand_target_position" />
+                                <div name="on_hand_target_position_uom" class="o_row">
+                                    <field name="on_hand_target_position" />
+                                </div>
+                                <label for="on_hand_target_min" />
+                                <div name="on_hand_target_range" class="o_row">
+                                    <field name="on_hand_target_min" /> -
+                                    <field name="on_hand_target_max" />
+                                </div>
+                            </group>
                         </group>
                     </group>
                     <notebook>
