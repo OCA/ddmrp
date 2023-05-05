@@ -18,11 +18,6 @@ msgstr ""
 
 #. module: ddmrp_coverage_days
 #: model:ir.model.fields,field_description:ddmrp_coverage_days.field_stock_buffer__coverage_days
-msgid "Coverage Days"
-msgstr "Días de Cobertura"
-
-#. module: ddmrp_coverage_days
-#: model_terms:ir.ui.view,arch_db:ddmrp_coverage_days.stock_buffer_view_form
 #: model_terms:ir.ui.view,arch_db:ddmrp_coverage_days.stock_buffer_view_tree
 msgid "Days of Coverage"
 msgstr "Días de Cobertura"
@@ -46,3 +41,11 @@ msgstr "Última Modificación el"
 #: model:ir.model,name:ddmrp_coverage_days.model_stock_buffer
 msgid "Stock Buffer"
 msgstr "Búfer de Inventario"
+
+#. module: ddmrp_coverage_days
+#: model_terms:ir.ui.view,arch_db:ddmrp_coverage_days.stock_buffer_view_form
+msgid "days"
+msgstr ""
+
+#~ msgid "Coverage Days"
+#~ msgstr "Días de Cobertura"
