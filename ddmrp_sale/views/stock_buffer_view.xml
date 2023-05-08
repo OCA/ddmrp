@@ -7,9 +7,23 @@
         <field name="model">stock.buffer</field>
         <field name="inherit_id" ref="ddmrp.stock_buffer_view_form" />
         <field name="arch" type="xml">
-            <group name="misc_info" position="inside">
+            <xpath
+                expr="//div[@name='qualified_demand']"
+                position="inside"
+                class="o_row"
+            >
+                <field name="qualified_demand_sale_order_line_ids" invisible="1" />
+                <button
+                    title="View Qualified Demand from SO Lines"
+                    name="action_view_qualified_demand_so_lines"
+                    icon="fa-search"
+                    type="object"
+                    attrs="{'invisible': [('qualified_demand_sale_order_line_ids', '=', [])]}"
+                />
+            </xpath>
+            <field name="company_id" position="after">
                 <field name="can_serve_sales" />
-            </group>
+            </field>
         </field>
     </record>
 </odoo>
