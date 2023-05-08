@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+
+    <record id="base.user_demo" model="res.users">
+        <field eval="[(4, ref('group_stock_buffer_maintainer'))]" name="groups_id" />
+    </record>
+
+</odoo>
