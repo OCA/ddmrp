@@ -31,6 +31,11 @@ msgid ""
 msgstr ""
 
 #. module: ddmrp_sale
+#: model:ir.model.fields,field_description:ddmrp_sale.field_stock_buffer__qualified_demand_sale_order_line_ids
+msgid "Qualified Demand Sale Order Line"
+msgstr ""
+
+#. module: ddmrp_sale
 #: model:ir.model,name:ddmrp_sale.model_sale_order_line
 msgid "Sales Order Line"
 msgstr ""
@@ -38,4 +43,9 @@ msgstr ""
 #. module: ddmrp_sale
 #: model:ir.model,name:ddmrp_sale.model_stock_buffer
 msgid "Stock Buffer"
+msgstr ""
+
+#. module: ddmrp_sale
+#: model_terms:ir.ui.view,arch_db:ddmrp_sale.stock_buffer_view_form
+msgid "View Qualified Demand from SO Lines"
 msgstr ""
