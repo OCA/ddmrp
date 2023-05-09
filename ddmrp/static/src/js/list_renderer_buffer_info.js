@@ -63,7 +63,11 @@ odoo.define("ddmrp.list_renderer_buffer_info", function (require) {
             var text = $td.text();
             $td.text("");
             $td.css("text-align", "center");
-            var span = $('<span class="circle">' + text + " %</span>");
+            // When word "execution" is part of the field, we will display the execution chart.
+            var classes = color_field.includes("execution")
+                ? "circle execution"
+                : "circle";
+            var span = $('<span class="' + classes + '">' + text + " %</span>");
             if (record.data[color_field]) {
                 var color = record.data[color_field];
                 if (color === "1_red") {
@@ -121,11 +125,14 @@ odoo.define("ddmrp.list_renderer_buffer_info", function (require) {
             var genericCloseBtnHtml =
                 '<button onclick="$(this).closest(\'div.popover\').popover(\'hide\');" type="button" class="close">&times;</button>';
 
+            var method_name = target.classList.contains("execution")
+                ? "get_ddmrp_chart_execution"
+                : "get_ddmrp_chart";
             // Data request
             this.detailDP.add(
                 this._rpc({
                     model: "stock.buffer",
-                    method: "get_ddmrp_chart",
+                    method: method_name,
                     args: [id],
                 }).then(function (result) {
                     var content = result[0];
