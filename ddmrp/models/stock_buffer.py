@@ -613,31 +613,43 @@ class StockBuffer(models.Model):
                 }
             )
             rec.ddmrp_chart = json_data
+            div, script = rec.get_ddmrp_chart_execution()
+            json_data = json.dumps(
+                {
+                    "div": div,
+                    "script": script,
+                }
+            )
+            rec.ddmrp_chart_execution = json_data
+
+    def _get_colors_hex_map(self, pallete="planning"):
+        return DDMRP_COLOR
 
     def get_ddmrp_chart(self):
         p = figure(plot_width=300, plot_height=400, y_axis_label="Quantity")
         p.xaxis.visible = False
         p.toolbar.logo = None
+        hex_colors = self._get_colors_hex_map(pallete="planning")
         red = p.vbar(
             x=1,
             bottom=0,
             top=self.top_of_red,
             width=1,
-            color="red",
+            color=hex_colors.get("1_red", "red"),
         )
         yellow = p.vbar(
             x=1,
             bottom=self.top_of_red,
             top=self.top_of_yellow,
             width=1,
-            color="yellow",
+            color=hex_colors.get("2_yellow", "yellow"),
         )
         green = p.vbar(
             x=1,
             bottom=self.top_of_yellow,
             top=self.top_of_green,
             width=1,
-            color="green",
+            color=hex_colors.get("3_green", "green"),
         )
         net_flow = p.line(
             [0, 2], [self.net_flow_position, self.net_flow_position], line_width=2
@@ -675,6 +687,108 @@ class StockBuffer(models.Model):
                 str(self.top_of_red),
                 str(self.top_of_yellow),
                 str(self.top_of_green),
+            ],
+        }
+        source = ColumnDataSource(data=labels_source_data)
+        labels = LabelSet(
+            x="weight",
+            y="height",
+            text="names",
+            y_offset=1,
+            render_mode="canvas",
+            text_font_size="8pt",
+            source=source,
+            text_align="center",
+        )
+        p.add_layout(labels)
+        p.add_layout(legend, "below")
+
+        script, div = components(p, wrap_script=False)
+        return div, script
+
+    def get_ddmrp_chart_execution(self):
+        p = figure(plot_width=300, plot_height=400, y_axis_label="Quantity")
+        p.xaxis.visible = False
+        p.toolbar.logo = None
+        tor_exec = float_round(
+            self.top_of_red / 2,
+            precision_rounding=self.product_uom.rounding,
+        )
+        toy_exec = self.top_of_red
+        tog_exec = float_round(
+            self.top_of_red + self.green_zone_qty,
+            precision_rounding=self.product_uom.rounding,
+        )
+        toy2_exec = self.top_of_yellow
+        tor2_exec = self.top_of_green
+        hex_colors = self._get_colors_hex_map(pallete="execution")
+        red = p.vbar(
+            x=1,
+            bottom=0,
+            top=tor_exec,
+            width=1,
+            color=hex_colors.get("1_red", "red"),
+        )
+        yellow = p.vbar(
+            x=1,
+            bottom=tor_exec,
+            top=toy_exec,
+            width=1,
+            color=hex_colors.get("2_yellow", "yellow"),
+        )
+        green = p.vbar(
+            x=1,
+            bottom=toy_exec,
+            top=tog_exec,
+            width=1,
+            color=hex_colors.get("3_green", "green"),
+        )
+        yellow_2 = p.vbar(
+            x=1,
+            bottom=tog_exec,
+            top=toy2_exec,
+            width=1,
+            color=hex_colors.get("2_yellow", "yellow"),
+        )
+        red_2 = p.vbar(
+            x=1,
+            bottom=toy2_exec,
+            top=tor2_exec,
+            width=1,
+            color=hex_colors.get("1_red", "red"),
+        )
+        on_hand = p.line(
+            [0, 2],
+            [
+                self.product_location_qty_available_not_res,
+                self.product_location_qty_available_not_res,
+            ],
+            line_width=2,
+            line_dash="dotted",
+        )
+        legend = Legend(
+            items=[
+                ("Red zone (Execution)", [red, red_2]),
+                ("Yellow zone (Execution)", [yellow, yellow_2]),
+                ("Green zone (Execution)", [green]),
+                ("On-Hand Position (Unreserved)", [on_hand]),
+            ]
+        )
+        labels_source_data = {
+            "height": [
+                self.product_location_qty_available_not_res,
+                tor_exec,
+                toy_exec,
+                tog_exec,
+                toy2_exec,
+            ],
+            "weight": [0.25, 1, 1, 1, 1],
+            "names": [
+                str(self.product_location_qty_available_not_res),
+                str(tor_exec),
+                str(toy_exec),
+                str(tog_exec),
+                str(toy2_exec),
             ],
         }
         source = ColumnDataSource(data=labels_source_data)
@@ -1112,6 +1226,10 @@ class StockBuffer(models.Model):
         string="DDMRP Chart",
         compute=_compute_ddmrp_chart,
     )
+    ddmrp_chart_execution = fields.Text(
+        string="DDMRP Execution Chart", compute=_compute_ddmrp_chart
+    )
+    show_execution_chart = fields.Boolean()
     ddmrp_demand_chart = fields.Text(
         string="DDMRP Demand Chart",
         compute="_compute_ddmrp_demand_supply_chart",
