@@ -6,8 +6,6 @@ from math import pi
 
 from odoo import _, fields, models
 
-from odoo.addons.ddmrp.models.stock_buffer import DDMRP_COLOR
-
 _logger = logging.getLogger(__name__)
 try:
     import numpy as np
@@ -17,22 +15,6 @@ try:
     from bokeh.models import HoverTool, DatetimeTickFormatter
 except (ImportError, IOError) as err:
     _logger.debug(err)
-
-
-PLANING_COLORS = [
-    DDMRP_COLOR["1_red"],
-    DDMRP_COLOR["2_yellow"],
-    DDMRP_COLOR["3_green"],
-]
-EXECUTION_COLORS = [
-    DDMRP_COLOR["0_dark_red"],
-    DDMRP_COLOR["1_red"],
-    DDMRP_COLOR["2_yellow"],
-    DDMRP_COLOR["3_green"],
-    DDMRP_COLOR["2_yellow"],
-    DDMRP_COLOR["1_red"],
-    DDMRP_COLOR["0_dark_red"],
-]
 
 
 class StockBuffer(models.Model):
@@ -76,6 +58,12 @@ class StockBuffer(models.Model):
                 last = _next
             return areas
 
+        hex_colors = self._get_colors_hex_map(pallete="planning")
+        planning_colors = [
+            hex_colors["1_red"],
+            hex_colors["2_yellow"],
+            hex_colors["3_green"],
+        ]
         for rec in self:
             history = self.env["ddmrp.history"].search(
                 [("buffer_id", "=", rec.id)], order="date"
@@ -120,7 +108,7 @@ class StockBuffer(models.Model):
             p.patches(
                 [x2] * len(areas),
                 [areas[cat] for cat in categories],
-                color=PLANING_COLORS,
+                color=planning_colors,
                 alpha=0.8,
                 line_color=None,
             )
@@ -161,8 +149,17 @@ class StockBuffer(models.Model):
                 last = _next
             return areas
 
+        hex_colors = self._get_colors_hex_map(pallete="execution")
+        execution_colors = [
+            hex_colors["0_dark_red"],
+            hex_colors["1_red"],
+            hex_colors["2_yellow"],
+            hex_colors["3_green"],
+            hex_colors["2_yellow"],
+            hex_colors["1_red"],
+            hex_colors["0_dark_red"],
+        ]
         history_model = self.env["ddmrp.history"]
-
         for rec in self:
             domain = [("buffer_id", "=", rec.id)]
             history_oh = history_model.search(
@@ -249,7 +246,7 @@ class StockBuffer(models.Model):
             p.patches(
                 [x2] * len(areas),
                 [areas[cat] for cat in categories],
-                color=EXECUTION_COLORS,
+                color=execution_colors,
                 alpha=0.8,
                 line_color=None,
             )
