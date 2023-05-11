@@ -1629,24 +1629,21 @@ class StockBuffer(models.Model):
             result = action.read()[0]
             # Remove the context since the action display RFQ and not PO.
             result["context"] = {}
-            result["domain"] = [("id", "in", pos.ids), ("active", "in", (False, True))]
+            result["domain"] = [("id", "in", pos.ids)]
         elif self.item_type == "manufactured":
             moves = self._search_stock_moves_incoming(outside_dlt)
             mos = moves.mapped("production_id")
             action = self.env.ref("mrp.mrp_production_action")
             result = action.read()[0]
             result["context"] = {}
-            result["domain"] = [("id", "in", mos.ids), ("active", "in", (False, True))]
+            result["domain"] = [("id", "in", mos.ids)]
         else:
             moves = self._search_stock_moves_incoming(outside_dlt)
             picks = moves.mapped("picking_id")
             action = self.env.ref("stock.action_picking_tree_all")
             result = action.read()[0]
             result["context"] = {}
-            result["domain"] = [
-                ("id", "in", picks.ids),
-                ("active", "in", (False, True)),
-            ]
+            result["domain"] = [("id", "in", picks.ids)]
         return result
 
     def action_view_supply_inside_dlt_window(self):
