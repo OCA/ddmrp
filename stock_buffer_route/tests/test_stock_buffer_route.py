@@ -11,6 +11,7 @@ class TestStockBufferRoute(common.TransactionCase):
         self.buffer_model = self.env["stock.buffer"]
         self.make_procurement_wiz = self.env["make.procurement.buffer"]
 
+        self.group_buffer_manager = self.env.ref("ddmrp.group_stock_buffer_maintainer")
         self.stock_manager_group = self.env.ref("stock.group_stock_manager")
         self.stock_multi_locations_group_group = self.env.ref(
             "stock.group_stock_multi_locations"
@@ -27,7 +28,11 @@ class TestStockBufferRoute(common.TransactionCase):
         # common data
         self.stock_manager = self._create_user(
             "stock_manager",
-            [self.stock_manager_group.id, self.stock_multi_locations_group_group.id],
+            [
+                self.stock_manager_group.id,
+                self.stock_multi_locations_group_group.id,
+                self.group_buffer_manager.id,
+            ],
             [self.main_company.id],
         )
         self.product = self._create_product("SH", "Shoes", False)

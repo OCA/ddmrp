@@ -79,13 +79,19 @@ class TestDdmrpCommon(common.SavepointCase):
         cls.group_change_procure_qty = cls.env.ref(
             "ddmrp.group_change_buffer_procure_qty"
         )
+        cls.group_buffer_manager = cls.env.ref("ddmrp.group_stock_buffer_maintainer")
         cls.calendar = cls.env.ref("resource.resource_calendar_std")
         cls.warehouse.calendar_id = cls.calendar
 
         # Create users
         cls.user = cls._create_user(
             "user_1",
-            [cls.group_stock_manager, cls.group_mrp_user, cls.group_change_procure_qty],
+            [
+                cls.group_stock_manager,
+                cls.group_mrp_user,
+                cls.group_change_procure_qty,
+                cls.group_buffer_manager,
+            ],
         )
         # Create Partners:
         vendor = cls.partner_model.create({"name": "Test Vendor 1"})
