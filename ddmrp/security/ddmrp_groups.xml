@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<odoo noupdate="1">
+
+    <record id="module_category_ddmrp" model="ir.module.category">
+        <field name="name">DDMRP</field>
+        <field name="sequence">40</field>
+    </record>
+
+    <record id="group_change_buffer_procure_qty" model="res.groups">
+        <field
+            name="name"
+        >Change quantity in manual procurements from Stock Buffers</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+        <field name="category_id" ref="ddmrp.module_category_ddmrp" />
+    </record>
+
+    <record id="group_stock_buffer_maintainer" model="res.groups">
+        <field name="name">Stock Buffer Maintainer</field>
+        <field name="category_id" ref="ddmrp.module_category_ddmrp" />
+        <field name="implied_ids" eval="[(4, ref('stock.group_stock_user'))]" />
+    </record>
+
+    <record id="group_ddmrp_manager" model="res.groups">
+        <field name="name">DDMRP Manager</field>
+        <field name="category_id" ref="ddmrp.module_category_ddmrp" />
+        <field
+            name="implied_ids"
+            eval="[(4, ref('ddmrp.group_stock_buffer_maintainer'))]"
+        />
+        <field
+            name="users"
+            eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"
+        />
+    </record>
+
+</odoo>
