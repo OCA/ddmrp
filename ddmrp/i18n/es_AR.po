@@ -374,6 +374,7 @@ msgid "Created on"
 msgstr "Creado en"
 
 #. module: ddmrp
+#: model:ir.module.category,name:ddmrp.module_category_ddmrp
 #: model:ir.ui.menu,name:ddmrp.menu_ddmrp_config
 msgid "DDMRP"
 msgstr "DDMRP"
@@ -411,6 +412,11 @@ msgstr "Gráfico de Demanda DDMRP"
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid "DDMRP History"
 msgstr "Historial DDMRP"
+
+#. module: ddmrp
+#: model:res.groups,name:ddmrp.group_ddmrp_manager
+msgid "DDMRP Manager"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_ddmrp_run
@@ -1590,6 +1596,11 @@ msgstr "Estado"
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_production__buffer_id
 msgid "Stock Buffer"
 msgstr "Búfer de Inventario"
+
+#. module: ddmrp
+#: model:res.groups,name:ddmrp.group_stock_buffer_maintainer
+msgid "Stock Buffer Maintainer"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_buffer_profile
