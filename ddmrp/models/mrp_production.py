@@ -21,13 +21,14 @@ class MrpProduction(models.Model):
     # TODO: remove after PR https://github.com/odoo/odoo/pull/25424 has
     # been merged
     def _generate_finished_moves(self):
-        move = super(MrpProduction, self)._generate_finished_moves()
-        move.write(
+        moves = super(MrpProduction, self)._generate_finished_moves()
+        moves.write(
             {
                 "date": self.date_planned_finished,
                 "date_expected": self.date_planned_finished,
             }
         )
+        return moves
 
     @api.model
     def create(self, vals):
