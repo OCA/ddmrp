@@ -63,12 +63,12 @@ class TestDdmrpMaxProcTime(TestDdmrpCommon):
         )
 
         # our product uses the replenishment route
-        cls.product_c_orange.route_ids = replenish_route
+        cls.product_c_green.route_ids = replenish_route
 
         cls.buffer_dist = cls.bufferModel.create(
             {
                 "buffer_profile_id": cls.buffer_profile_distr.id,
-                "product_id": cls.product_c_orange.id,
+                "product_id": cls.product_c_green.id,
                 "location_id": cls.stock_location.id,
                 "warehouse_id": cls.warehouse.id,
                 "qty_multiple": 1.0,
@@ -84,14 +84,14 @@ class TestDdmrpMaxProcTime(TestDdmrpCommon):
         self.warehouse.calendar_id = False
 
         self.env["stock.quant"]._update_available_quantity(
-            self.product_c_orange, self.replenish_location, 4000
+            self.product_c_green, self.replenish_location, 4000
         )
         # lie about the recommended qty to force creation of replenishment
         self.buffer_dist.procure_recommended_qty = 10000
 
         self.create_orderpoint_procurement(self.buffer_dist)
         moves = self.env["stock.move"].search(
-            [("product_id", "=", self.product_c_orange.id)]
+            [("product_id", "=", self.product_c_green.id)]
         )
 
         self.assertRecordValues(
@@ -108,14 +108,14 @@ class TestDdmrpMaxProcTime(TestDdmrpCommon):
         self.buffer_profile_distr.distributed_reschedule_max_proc_time = 90
 
         self.env["stock.quant"]._update_available_quantity(
-            self.product_c_orange, self.replenish_location, 4000
+            self.product_c_green, self.replenish_location, 4000
         )
         # lie about the recommended qty to force creation of replenishment
         self.buffer_dist.procure_recommended_qty = 10000
 
         self.create_orderpoint_procurement(self.buffer_dist)
         moves = self.env["stock.move"].search(
-            [("product_id", "=", self.product_c_orange.id)]
+            [("product_id", "=", self.product_c_green.id)]
         )
 
         self.assertRecordValues(
