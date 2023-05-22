@@ -1374,6 +1374,9 @@ class StockBuffer(models.Model):
         records = self.env["stock.move"].search(domain)
         return self._stock_move_tree_view(records)
 
+    def _get_horizon_adu_past_demand(self):
+        return self.adu_calculation_method.horizon_past or 0
+
     def _past_demand_estimate_domain(self, date_from, date_to, locations):
         self.ensure_one()
         return [
@@ -1400,7 +1403,7 @@ class StockBuffer(models.Model):
 
     def _calc_adu_past_demand(self):
         self.ensure_one()
-        horizon = self.adu_calculation_method.horizon_past or 0
+        horizon = self._get_horizon_adu_past_demand()
         # today is excluded to be sure that is a past day and all moves
         # for that day are done (or at least the expected date is in the past).
         date_from = fields.Date.to_string(
@@ -1431,6 +1434,9 @@ class StockBuffer(models.Model):
         else:
             return 0.0
 
+    def _get_horizon_adu_future_demand(self):
+        return self.adu_calculation_method.horizon_future or 1
+
     def _future_demand_estimate_domain(self, date_from, date_to, locations):
         self.ensure_one()
         return [
@@ -1457,7 +1463,7 @@ class StockBuffer(models.Model):
 
     def _calc_adu_future_demand(self):
         self.ensure_one()
-        horizon = self.adu_calculation_method.horizon_future or 1
+        horizon = self._get_horizon_adu_future_demand()
         date_from = fields.Datetime.now()
         date_to = self.warehouse_id.wh_plan_days(date_from, horizon)
         date_to = date_to.replace(
