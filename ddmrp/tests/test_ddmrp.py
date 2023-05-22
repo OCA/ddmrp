@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from odoo import fields
 from odoo.exceptions import ValidationError
 
-from odoo.addons.ddmrp.tests.common import TestDdmrpCommon
+from .common import TestDdmrpCommon
 
 
 class TestDdmrp(TestDdmrpCommon):
@@ -779,7 +779,8 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_purchase.procure_recommended_qty, 0)
 
     def test_27_qty_multiple_tolerance(self):
-        buffer = self.bufferModel.create(
+        original_vals = self.buffer_purchase.read()[0]
+        self.buffer_purchase.update(
             {
                 "buffer_profile_id": self.buffer_profile_override.id,
                 "product_id": self.product_purchased.id,
@@ -795,21 +796,23 @@ class TestDdmrp(TestDdmrpCommon):
         )
         date_move = datetime.today()
         self.create_picking_out(self.product_purchased, date_move, 2)
-        buffer.cron_actions()
-        self.assertEqual(buffer.net_flow_position, -2.0)
-        self.assertEqual(buffer.procure_recommended_qty, 500)
+        self.buffer_purchase.cron_actions()
+        self.assertEqual(self.buffer_purchase.net_flow_position, -2.0)
+        self.assertEqual(self.buffer_purchase.procure_recommended_qty, 500)
         # Set the tolerance
-        buffer.company_id.ddmrp_qty_multiple_tolerance = 10.0
+        self.buffer_purchase.company_id.ddmrp_qty_multiple_tolerance = 10.0
         # Tolerance: 10% 250 = 25, strictly needed 272 (under tolerance)
-        buffer.cron_actions()
-        self.assertEqual(buffer.procure_recommended_qty, 250)
+        self.buffer_purchase.cron_actions()
+        self.assertEqual(self.buffer_purchase.procure_recommended_qty, 250)
         # Add more demand
         self.create_picking_out(self.product_purchased, date_move, 20)
-        buffer.cron_actions()
-        self.assertEqual(buffer.net_flow_position, -22.0)
+        self.buffer_purchase.cron_actions()
+        self.assertEqual(self.buffer_purchase.net_flow_position, -22.0)
         # Tolerance: 10% 250 = 25, strictly needed 294 (above tolerance)
-        buffer.cron_actions()
-        self.assertEqual(buffer.procure_recommended_qty, 500)
+        self.buffer_purchase.cron_actions()
+        self.assertEqual(self.buffer_purchase.procure_recommended_qty, 500)
+        original_vals.pop("id")
+        self.buffer_purchase.update(original_vals)
 
     # TEST SECTION 3: DLT, BoM's and misc
 

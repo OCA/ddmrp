@@ -145,6 +145,12 @@ class StockBuffer(models.Model):
             "CHECK( qty_multiple >= 0 )",
             "Qty Multiple must be greater than or equal to zero.",
         ),
+        (
+            "stock_buffer_uniq",
+            "unique(product_id, location_id)",
+            "The product/location combination must be unique."
+            "Remember that the buffer could be archived.",
+        ),
     ]
 
     def _quantity_in_progress(self):
