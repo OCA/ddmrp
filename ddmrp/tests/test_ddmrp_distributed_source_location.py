@@ -58,12 +58,12 @@ class TestDdmrpDistributedSourceLocation(TestDdmrpCommon):
         )
 
         # our product uses the replenishment route
-        cls.product_c_orange.route_ids = replenish_route
+        cls.product_c_green.route_ids = replenish_route
 
         cls.buffer_dist = cls.bufferModel.create(
             {
                 "buffer_profile_id": cls.buffer_profile_distr.id,
-                "product_id": cls.product_c_orange.id,
+                "product_id": cls.product_c_green.id,
                 "location_id": cls.stock_location.id,
                 "warehouse_id": cls.warehouse.id,
                 "qty_multiple": 1.0,
@@ -84,7 +84,7 @@ class TestDdmrpDistributedSourceLocation(TestDdmrpCommon):
 
     def test_distributed_source_location_qty(self):
         self.env["stock.quant"]._update_available_quantity(
-            self.product_c_orange, self.replenish_location, 4000
+            self.product_c_green, self.replenish_location, 4000
         )
 
         # Invalidate the computed quantities
@@ -92,7 +92,7 @@ class TestDdmrpDistributedSourceLocation(TestDdmrpCommon):
         self.assertEqual(self.buffer_dist.distributed_source_location_qty, 4000)
 
         self.env["stock.quant"]._update_reserved_quantity(
-            self.product_c_orange, self.replenish_location, 500
+            self.product_c_green, self.replenish_location, 500
         )
 
         # Invalidate the computed quantities to recompute free_qty
@@ -110,7 +110,7 @@ class TestDdmrpDistributedSourceLocation(TestDdmrpCommon):
         self, qty_in_replenish=4000, recommended_qty=10000
     ):
         self.env["stock.quant"]._update_available_quantity(
-            self.product_c_orange, self.replenish_location, 4000
+            self.product_c_green, self.replenish_location, 4000
         )
         # lie about the recommended qty (we only want to test if the limit is
         # applied)
