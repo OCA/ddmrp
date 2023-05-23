@@ -1375,6 +1375,15 @@ class StockBuffer(models.Model):
     def _get_horizon_adu_past_demand(self):
         return self.adu_calculation_method.horizon_past or 0
 
+    def _get_dates_adu_past_demand(self, horizon):
+        date_from = fields.Date.to_string(
+            self.warehouse_id.wh_plan_days(datetime.now(), -1 * horizon)
+        )
+        date_to = fields.Date.to_string(
+            self.warehouse_id.wh_plan_days(datetime.now(), -1)
+        )
+        return date_from, date_to
+
     def _past_demand_estimate_domain(self, date_from, date_to, locations):
         self.ensure_one()
         return [
@@ -1404,12 +1413,7 @@ class StockBuffer(models.Model):
         horizon = self._get_horizon_adu_past_demand()
         # today is excluded to be sure that is a past day and all moves
         # for that day are done (or at least the expected date is in the past).
-        date_from = fields.Date.to_string(
-            self.warehouse_id.wh_plan_days(datetime.now(), -1 * horizon)
-        )
-        date_to = fields.Date.to_string(
-            self.warehouse_id.wh_plan_days(datetime.now(), -1)
-        )
+        date_from, date_to = self._get_dates_adu_past_demand(horizon)
         locations = self.env["stock.location"].search(
             [("id", "child_of", [self.location_id.id])]
         )
@@ -1434,6 +1438,16 @@ class StockBuffer(models.Model):
 
     def _get_horizon_adu_future_demand(self):
         return self.adu_calculation_method.horizon_future or 1
+
+    def _get_dates_adu_future_demand(self, horizon):
+        date_from = fields.Datetime.now()
+        date_to = self.warehouse_id.wh_plan_days(date_from, horizon)
+        date_to = date_to.replace(
+            hour=date_from.hour,
+            minute=date_from.minute,
+            second=date_from.second,
+        )
+        return date_from, date_to
 
     def _future_demand_estimate_domain(self, date_from, date_to, locations):
         self.ensure_one()
@@ -1462,13 +1476,7 @@ class StockBuffer(models.Model):
     def _calc_adu_future_demand(self):
         self.ensure_one()
         horizon = self._get_horizon_adu_future_demand()
-        date_from = fields.Datetime.now()
-        date_to = self.warehouse_id.wh_plan_days(date_from, horizon)
-        date_to = date_to.replace(
-            hour=date_from.hour,
-            minute=date_from.minute,
-            second=date_from.second,
-        )
+        date_from, date_to = self._get_dates_adu_future_demand(horizon)
         locations = self.env["stock.location"].search(
             [("id", "child_of", [self.location_id.id])]
         )
@@ -1856,13 +1864,8 @@ class StockBuffer(models.Model):
         return result
 
     def action_view_past_adu(self):
-        horizon = self.adu_calculation_method.horizon_past or 0
-        date_from = fields.Date.to_string(
-            self.warehouse_id.wh_plan_days(datetime.now(), -1 * horizon)
-        )
-        date_to = fields.Date.to_string(
-            self.warehouse_id.wh_plan_days(datetime.now(), -1)
-        )
+        horizon = self._get_horizon_adu_past_demand()
+        date_from, date_to = self._get_dates_adu_past_demand(horizon)
         locations = self.env["stock.location"].search(
             [("id", "child_of", [self.location_id.id])]
         )
@@ -1885,14 +1888,8 @@ class StockBuffer(models.Model):
         return result
 
     def action_view_future_adu(self):
-        horizon = self.adu_calculation_method.horizon_future or 1
-        date_from = fields.Datetime.now()
-        date_to = self.warehouse_id.wh_plan_days(date_from, horizon)
-        date_to = date_to.replace(
-            hour=date_from.hour,
-            minute=date_from.minute,
-            second=date_from.second,
-        )
+        horizon = self._get_horizon_adu_future_demand()
+        date_from, date_to = self._get_dates_adu_future_demand(horizon)
         locations = self.env["stock.location"].search(
             [("id", "child_of", [self.location_id.id])]
         )
