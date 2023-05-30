@@ -24,16 +24,6 @@ class MrpProduction(models.Model):
         string="On Hand/TOR (%)",
     )
 
-    # TODO: remove after PR https://github.com/odoo/odoo/pull/25424 has
-    # been merged
-    def _generate_finished_moves(self):
-        move = super(MrpProduction, self)._generate_finished_moves()
-        move.write(
-            {
-                "date": self.date_planned_finished,
-            }
-        )
-
     @api.model
     def create(self, vals):
         record = super(MrpProduction, self).create(vals)
