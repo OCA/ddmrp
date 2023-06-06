@@ -368,7 +368,7 @@ class StockBuffer(models.Model):
             lambda line: line.location_id.is_sublocation_of(self.location_id)
             and not line.location_dest_id.is_sublocation_of(self.location_id)
         )
-        return sum(lines.mapped("product_qty"))
+        return sum(lines.mapped("reserved_qty"))
 
     def _compute_product_available_qty(self):
         operation_by_location = defaultdict(lambda: self.env["stock.buffer"])
@@ -626,7 +626,7 @@ class StockBuffer(models.Model):
         return DDMRP_COLOR
 
     def get_ddmrp_chart(self):
-        p = figure(plot_width=300, plot_height=400, y_axis_label="Quantity")
+        p = figure(frame_width=300, frame_height=400, y_axis_label="Quantity")
         p.xaxis.visible = False
         p.toolbar.logo = None
         hex_colors = self._get_colors_hex_map(pallete="planning")
@@ -695,7 +695,6 @@ class StockBuffer(models.Model):
             y="height",
             text="names",
             y_offset=1,
-            render_mode="canvas",
             text_font_size="8pt",
             source=source,
             text_align="center",
@@ -707,7 +706,7 @@ class StockBuffer(models.Model):
         return div, script
 
     def get_ddmrp_chart_execution(self):
-        p = figure(plot_width=300, plot_height=400, y_axis_label="Quantity")
+        p = figure(frame_width=300, frame_height=400, y_axis_label="Quantity")
         p.xaxis.visible = False
         p.toolbar.logo = None
         tor_exec = float_round(
@@ -797,7 +796,6 @@ class StockBuffer(models.Model):
             y="height",
             text="names",
             y_offset=1,
-            render_mode="canvas",
             text_font_size="8pt",
             source=source,
             text_align="center",
@@ -833,8 +831,8 @@ class StockBuffer(models.Model):
                 y_mrp = list(mrp_data.values())
 
                 p = figure(
-                    plot_width=500,
-                    plot_height=400,
+                    frame_width=500,
+                    frame_height=400,
                     y_axis_label="Quantity",
                     x_axis_type="datetime",
                 )
@@ -886,7 +884,12 @@ class StockBuffer(models.Model):
                 )
                 rec.ddmrp_demand_chart = json_data
             else:
-                rec.ddmrp_demand_chart = _("No demand detected.")
+                rec.ddmrp_demand_chart = json.dumps(
+                    {
+                        "div": _("No demand detected."),
+                        "script": "",
+                    }
+                )
 
             # Plot supply data:
             if supply_data:
@@ -894,8 +897,8 @@ class StockBuffer(models.Model):
                 y_supply = list(supply_data.values())
 
                 p = figure(
-                    plot_width=500,
-                    plot_height=400,
+                    frame_width=500,
+                    frame_height=400,
                     y_axis_label="Quantity",
                     x_axis_type="datetime",
                 )
@@ -938,7 +941,12 @@ class StockBuffer(models.Model):
                 )
                 rec.ddmrp_supply_chart = json_data
             else:
-                rec.ddmrp_supply_chart = _("No supply detected.")
+                rec.ddmrp_supply_chart = json.dumps(
+                    {
+                        "div": _("No supply detected."),
+                        "script": "",
+                    }
+                )
 
     @api.depends("red_zone_qty")
     def _compute_order_spike_threshold(self):
@@ -1000,7 +1008,7 @@ class StockBuffer(models.Model):
         "item_type",
         "product_id.seller_ids",
         "product_id.seller_ids.company_id",
-        "product_id.seller_ids.name",
+        "product_id.seller_ids.partner_id",
         "product_id.seller_ids.product_id",
         "product_id.seller_ids.sequence",
         "product_id.seller_ids.min_qty",
@@ -1010,7 +1018,7 @@ class StockBuffer(models.Model):
         for rec in self:
             if rec.item_type == "purchased":
                 suppliers = rec._get_product_sellers()
-                rec.main_supplier_id = suppliers[0].name if suppliers else False
+                rec.main_supplier_id = suppliers[0].partner_id if suppliers else False
             else:
                 rec.main_supplier_id = False
 
@@ -1021,7 +1029,7 @@ class StockBuffer(models.Model):
                 rec.product_vendor_code = False
                 continue
             supplier_info = rec._get_product_sellers().filtered(
-                lambda r: r.name == rec.main_supplier_id
+                lambda r: r.partner_id == rec.main_supplier_id
                 and r.product_id == rec.product_id
             )
             rec.product_vendor_code = fields.first(supplier_info).product_code
@@ -1950,7 +1958,7 @@ class StockBuffer(models.Model):
         """This method is meant to be inherited by other modules in order to
         enhance extensibility."""
         self.ensure_one()
-        self.invalidate_cache(
+        self.invalidate_recordset(
             fnames=[
                 "product_location_qty",
                 "incoming_location_qty",
@@ -1961,7 +1969,6 @@ class StockBuffer(models.Model):
                 "distributed_source_location_qty",
                 "qualified_demand",
             ],
-            ids=self.ids,
         )
         if not only_nfp or only_nfp == "out":
             self._calc_qualified_demand()
@@ -2032,7 +2039,7 @@ class StockBuffer(models.Model):
                     [
                         ("action", "in", ("pull", "pull_push")),
                         ("route_id", "=", rule.route_id.id),
-                        ("location_id", "=", rule.location_src_id.id),
+                        ("location_dest_id", "=", rule.location_src_id.id),
                     ]
                 )
                 if pull_rule:

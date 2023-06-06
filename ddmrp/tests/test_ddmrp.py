@@ -382,7 +382,7 @@ class TestDdmrp(TestDdmrpCommon):
         # Once reserved, the outgoing qty is not considered for qualified
         # demand and it is excluded from on hand position:
         picking.action_assign()
-        self.buffer_a.invalidate_cache()
+        self.buffer_a.invalidate_recordset()
         self.buffer_a.cron_actions()
         self.assertEqual(self.buffer_a.qualified_demand, 0)
         expected_on_hand = 200
@@ -405,9 +405,9 @@ class TestDdmrp(TestDdmrpCommon):
         )
         # Once reserved, the internal qty is still considered in the on hand position:
         picking.action_assign()
-        self.buffer_a.invalidate_cache()
+        self.buffer_a.invalidate_recordset()
         self.buffer_a.cron_actions()
-        self.assertEqual(picking.move_lines.reserved_availability, internal_qty)
+        self.assertEqual(picking.move_ids.reserved_availability, internal_qty)
         self.assertEqual(self.buffer_a.qualified_demand, 0)
         expected_on_hand = 200
         self.assertEqual(
@@ -513,7 +513,7 @@ class TestDdmrp(TestDdmrpCommon):
         # Now we prepare the shipment of 150
         date_move = datetime.today()
         pickingOut = self.create_pickingoutA(date_move, 150)
-        pickingOut.move_lines.quantity_done = 150
+        pickingOut.move_ids.quantity_done = 150
         pickingOut._action_done()
         self.bufferModel.cron_ddmrp()
 
@@ -677,7 +677,7 @@ class TestDdmrp(TestDdmrpCommon):
 
         # Now we confirm the shipment of the 150
         pickingOut.action_assign()
-        pickingOut.move_lines.quantity_done = 150
+        pickingOut.move_ids.quantity_done = 150
         pickingOut._action_done()
         self.bufferModel.cron_ddmrp()
 
@@ -735,6 +735,7 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_a.mrp_production_ids.product_qty, 40.0)
 
         # We expect that the procurement recommendation is now 0
+        self.buffer_a.invalidate_recordset()
         expected_value = 0.0
         self.assertEqual(self.buffer_a.procure_recommended_qty, expected_value)
 
@@ -971,7 +972,7 @@ class TestDdmrp(TestDdmrpCommon):
 
     def test_43_get_product_sellers(self):
         seller = self.product_purchased.seller_ids
-        vendor = seller.name
+        vendor = seller.partner_id
         today = fields.Date.context_today(seller)
         tomorrow = fields.Date.add(today, days=1)
         yesterday = fields.Date.subtract(today, days=1)
@@ -981,14 +982,14 @@ class TestDdmrp(TestDdmrpCommon):
         seller2 = self.supinfo_model.create(
             {
                 "product_tmpl_id": self.product_purchased.product_tmpl_id.id,
-                "name": vendor.id,
+                "partner_id": vendor.id,
                 "date_start": tomorrow,
             }
         )
         seller3 = self.supinfo_model.create(
             {
                 "product_tmpl_id": self.product_purchased.product_tmpl_id.id,
-                "name": vendor.id,
+                "partner_id": vendor.id,
                 "date_start": yesterday,
             }
         )
@@ -1000,7 +1001,7 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_purchase._get_product_sellers(), seller2)
 
     def test_44_resupply_from_another_warehouse(self):
-        route = self.env["stock.location.route"].create(
+        route = self.env["stock.route"].create(
             {
                 "name": "Warehouse 2: Supply from Warehouse",
                 "product_categ_selectable": True,
@@ -1015,7 +1016,7 @@ class TestDdmrp(TestDdmrpCommon):
                             "action": "pull",
                             "picking_type_id": self.ref("stock.picking_type_internal"),
                             "location_src_id": self.warehouse.lot_stock_id.id,
-                            "location_id": self.inter_wh.id,
+                            "location_dest_id": self.inter_wh.id,
                             "procure_method": "make_to_stock",
                         },
                     ),
@@ -1027,7 +1028,7 @@ class TestDdmrp(TestDdmrpCommon):
                             "action": "pull",
                             "picking_type_id": self.ref("stock.picking_type_internal"),
                             "location_src_id": self.inter_wh.id,
-                            "location_id": self.warehouse2.lot_stock_id.id,
+                            "location_dest_id": self.warehouse2.lot_stock_id.id,
                             "procure_method": "make_to_order",
                         },
                     ),
