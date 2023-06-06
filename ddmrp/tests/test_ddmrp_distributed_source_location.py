@@ -27,7 +27,7 @@ class TestDdmrpDistributedSourceLocation(TestDdmrpCommon):
             }
         )
 
-        replenish_route = cls.env["stock.location.route"].create(
+        replenish_route = cls.env["stock.route"].create(
             {"name": "Replenish", "sequence": 1}
         )
         cls.env["stock.rule"].create(
@@ -35,7 +35,7 @@ class TestDdmrpDistributedSourceLocation(TestDdmrpCommon):
                 "name": "Replenish",
                 "route_id": replenish_route.id,
                 "location_src_id": cls.replenish_location.id,
-                "location_id": replenish_step_location.id,
+                "location_dest_id": replenish_step_location.id,
                 "action": "pull",
                 "picking_type_id": cls.warehouse.int_type_id.id,
                 "procure_method": "make_to_stock",
@@ -48,7 +48,7 @@ class TestDdmrpDistributedSourceLocation(TestDdmrpCommon):
                 "name": "Replenish Step",
                 "route_id": replenish_route.id,
                 "location_src_id": replenish_step_location.id,
-                "location_id": cls.warehouse.lot_stock_id.id,
+                "location_dest_id": cls.warehouse.lot_stock_id.id,
                 "action": "pull",
                 "picking_type_id": cls.warehouse.int_type_id.id,
                 "procure_method": "make_to_order",
@@ -87,14 +87,16 @@ class TestDdmrpDistributedSourceLocation(TestDdmrpCommon):
             self.product_c_orange, self.replenish_location, 4000
         )
 
-        self.buffer_dist.invalidate_cache()
+        # Invalidate the computed quantities
+        self.env["product.product"].invalidate_model()
         self.assertEqual(self.buffer_dist.distributed_source_location_qty, 4000)
 
         self.env["stock.quant"]._update_reserved_quantity(
             self.product_c_orange, self.replenish_location, 500
         )
 
-        self.buffer_dist.invalidate_cache()
+        # Invalidate the computed quantities to recompute free_qty
+        self.env["product.product"].invalidate_model()
         self.assertEqual(self.buffer_dist.distributed_source_location_qty, 3500)
 
         self.assertEqual(

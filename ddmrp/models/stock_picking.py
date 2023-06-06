@@ -4,14 +4,14 @@
 from odoo import models
 
 
-class StockPickgin(models.Model):
+class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     def action_stock_buffer_open(self):
-        """Open a sock.buffer list related to products of the stock.picking."""
+        """Open a stock.buffer list related to products of the stock.picking."""
         self.ensure_one()
         domain = [
-            ("product_id", "in", self.mapped("move_lines.product_id.id")),
+            ("product_id", "in", self.mapped("move_ids.product_id.id")),
             ("company_id", "=", self.company_id.id),
         ]
         action = self.env["ir.actions.actions"]._for_xml_id("ddmrp.action_stock_buffer")

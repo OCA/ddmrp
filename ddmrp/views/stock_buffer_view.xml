@@ -19,7 +19,8 @@
                 <field name="planning_priority_level" invisible="1" />
                 <field
                     name="net_flow_position_percent"
-                    options='{"color_from": "planning_priority_level"}'
+                    options='{"color_from": "planning_priority_level", "field": "ddmrp_chart"}'
+                    widget="stock_buffer_info"
                 />
                 <field
                     name="product_location_qty_available_not_res"
@@ -29,8 +30,11 @@
                 <field name="execution_priority_level" invisible="1" />
                 <field
                     name="on_hand_percent"
-                    options='{"color_from": "execution_priority_level"}'
+                    options='{"color_from": "execution_priority_level", "field": "ddmrp_chart_execution"}'
+                    widget="stock_buffer_info"
                 />
+                <field name="ddmrp_chart" invisible="1" />
+                <field name="ddmrp_chart_execution" invisible="1" />
                 <button
                     title="Refresh Buffer"
                     name="refresh_buffer"
@@ -228,7 +232,11 @@
                                 />
                                 <label for="adu" />
                                 <div name="adu" class="o_row">
-                                    <field name="adu" force_save="1" />
+                                    <field
+                                        name="adu"
+                                        force_save="1"
+                                        class="oe_inline"
+                                    />
                                     <button
                                         title="View ADU (Past)"
                                         name="action_view_past_adu"
@@ -381,7 +389,7 @@
                                 <field name="product_location_qty_available_not_res" />
                                 <label for="incoming_dlt_qty" />
                                 <div name="incoming_dlt_qty" class="o_row">
-                                    <field name="incoming_dlt_qty" />
+                                    <field name="incoming_dlt_qty" class="oe_inline" />
                                     <button
                                         title="View Incoming (Within DLT)"
                                         name="action_view_supply_inside_dlt_window"
@@ -392,7 +400,7 @@
                                 </div>
                                 <label for="qualified_demand" />
                                 <div name="qualified_demand" class="o_row">
-                                    <field name="qualified_demand" />
+                                    <field name="qualified_demand" class="oe_inline" />
                                     <field
                                         name="qualified_demand_stock_move_ids"
                                         invisible="1"
@@ -436,9 +444,15 @@
                                     <field name="on_hand_target_position" />
                                 </div>
                                 <label for="on_hand_target_min" />
-                                <div name="on_hand_target_range" class="o_row">
-                                    <field name="on_hand_target_min" /> -
-                                    <field name="on_hand_target_max" />
+                                <div name="on_hand_target_range">
+                                    <field
+                                        name="on_hand_target_min"
+                                        class="oe_inline"
+                                    /> -
+                                    <field
+                                        name="on_hand_target_max"
+                                        class="oe_inline"
+                                    />
                                 </div>
                             </group>
                         </group>

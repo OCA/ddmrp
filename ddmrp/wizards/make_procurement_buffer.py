@@ -153,9 +153,9 @@ class MakeProcurementBuffer(models.TransientModel):
             raise UserError("\n".join(errors))
         # Update buffer computed fields:
         buffers = self.mapped("item_ids.buffer_id")
-        buffers.invalidate_cache()
+        buffers.invalidate_recordset()
         self.env.add_to_compute(buffers._fields["procure_recommended_qty"], buffers)
-        buffers.recompute()
+        buffers.flush_recordset()
         return {"type": "ir.actions.act_window_close"}
 
 

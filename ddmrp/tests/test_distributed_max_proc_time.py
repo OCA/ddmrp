@@ -32,7 +32,7 @@ class TestDdmrpMaxProcTime(TestDdmrpCommon):
             }
         )
 
-        replenish_route = cls.env["stock.location.route"].create(
+        replenish_route = cls.env["stock.route"].create(
             {"name": "Replenish", "sequence": 1}
         )
         cls.env["stock.rule"].create(
@@ -40,7 +40,7 @@ class TestDdmrpMaxProcTime(TestDdmrpCommon):
                 "name": "Replenish",
                 "route_id": replenish_route.id,
                 "location_src_id": cls.replenish_location.id,
-                "location_id": replenish_step_location.id,
+                "location_dest_id": replenish_step_location.id,
                 "action": "pull",
                 "picking_type_id": cls.warehouse.int_type_id.id,
                 "procure_method": "make_to_stock",
@@ -53,7 +53,7 @@ class TestDdmrpMaxProcTime(TestDdmrpCommon):
                 "name": "Replenish Step",
                 "route_id": replenish_route.id,
                 "location_src_id": replenish_step_location.id,
-                "location_id": cls.warehouse.lot_stock_id.id,
+                "location_dest_id": cls.warehouse.lot_stock_id.id,
                 "action": "pull",
                 "picking_type_id": cls.warehouse.int_type_id.id,
                 "procure_method": "make_to_order",
