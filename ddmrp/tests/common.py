@@ -189,7 +189,7 @@ class TestDdmrpCommon(common.TransactionCase):
         cls.supinfo_model.create(
             {
                 "product_tmpl_id": cls.product_purchased.product_tmpl_id.id,
-                "name": vendor.id,
+                "partner_id": vendor.id,
                 "delay": 20.0,
             }
         )
@@ -228,7 +228,7 @@ class TestDdmrpCommon(common.TransactionCase):
             {
                 "product_tmpl_id": cls.template_c.id,
                 "product_id": cls.product_c_blue.id,
-                "name": vendor.id,
+                "partner_id": vendor.id,
                 "delay": 5.0,
             }
         )
@@ -236,12 +236,16 @@ class TestDdmrpCommon(common.TransactionCase):
             {
                 "product_tmpl_id": cls.template_c.id,
                 "product_id": cls.product_c_orange.id,
-                "name": vendor.id,
+                "partner_id": vendor.id,
                 "delay": 10.0,
             }
         )
         cls.p_c_supinfo_no_variant = cls.supinfo_model.create(
-            {"product_tmpl_id": cls.template_c.id, "name": vendor.id, "delay": 8.0}
+            {
+                "product_tmpl_id": cls.template_c.id,
+                "partner_id": vendor.id,
+                "delay": 8.0,
+            }
         )
 
         # Create buffers:
@@ -325,7 +329,7 @@ class TestDdmrpCommon(common.TransactionCase):
                 "location_id": self.binA.id,
                 "location_dest_id": self.customer_location.id,
                 "scheduled_date": date_move,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -352,7 +356,7 @@ class TestDdmrpCommon(common.TransactionCase):
                 "location_id": self.supplier_location.id,
                 "location_dest_id": self.binA.id,
                 "scheduled_date": date_move,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -380,7 +384,7 @@ class TestDdmrpCommon(common.TransactionCase):
                 "location_id": self.binA.id,
                 "location_dest_id": self.binB.id,
                 "scheduled_date": date_move,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -407,7 +411,7 @@ class TestDdmrpCommon(common.TransactionCase):
                 "location_id": self.binA.id,
                 "location_dest_id": self.customer_location.id,
                 "scheduled_date": date_move,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -434,7 +438,7 @@ class TestDdmrpCommon(common.TransactionCase):
                 "location_id": self.supplier_location.id,
                 "location_dest_id": self.binA.id,
                 "scheduled_date": date_move,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -457,9 +461,9 @@ class TestDdmrpCommon(common.TransactionCase):
     def _do_picking(self, picking, date):
         """Do picking with only one move on the given date."""
         picking.action_confirm()
-        picking.move_lines.quantity_done = picking.move_lines.product_uom_qty
+        picking.move_ids.quantity_done = picking.move_ids.product_uom_qty
         picking._action_done()
-        for move in picking.move_lines:
+        for move in picking.move_ids:
             move.date = date
 
     def create_orderpoint_procurement(self, buffer, make_procurement=True):
@@ -491,6 +495,6 @@ class TestDdmrpCommon(common.TransactionCase):
 
     def _do_move(self, move, date):
         move._action_confirm()
-        move.move_line_ids.qty_done = move.move_line_ids.product_uom_qty
+        move.move_line_ids.qty_done = move.move_line_ids.reserved_uom_qty
         move._action_done()
         move.date = date

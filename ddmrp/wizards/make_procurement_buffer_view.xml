@@ -24,27 +24,25 @@
                         attrs="{'invisible': [('partner_id','=',False)]}"
                     />
                 </group>
-                <group name="items" string="Items">
-                    <field name="item_ids" nolabel="1">
-                        <tree nocreate="1" editable="top">
-                            <field name="buffer_id" invisible="True" />
-                            <field
-                                name="warehouse_id"
-                                groups="stock.group_stock_multi_locations"
-                            />
-                            <field
-                                name="location_id"
-                                groups="stock.group_stock_multi_locations"
-                            />
-                            <field name="product_id" />
-                            <field name="recommended_qty" />
-                            <field name="qty" />
-                            <field name="qty_without_security" invisible="1" />
-                            <field name="uom_id" groups="uom.group_uom" />
-                            <field name="date_planned" />
-                        </tree>
-                    </field>
-                </group>
+                <field name="item_ids" nolabel="1">
+                    <tree nocreate="1" editable="top">
+                        <field name="buffer_id" invisible="True" />
+                        <field
+                            name="warehouse_id"
+                            groups="stock.group_stock_multi_locations"
+                        />
+                        <field
+                            name="location_id"
+                            groups="stock.group_stock_multi_locations"
+                        />
+                        <field name="product_id" />
+                        <field name="recommended_qty" />
+                        <field name="qty" />
+                        <field name="qty_without_security" invisible="1" />
+                        <field name="uom_id" groups="uom.group_uom" />
+                        <field name="date_planned" />
+                    </tree>
+                </field>
                 <footer>
                     <button
                         string="Execute"
