@@ -13,6 +13,7 @@
     "depends": ["ddmrp"],
     "data": [
         "security/ir.model.access.csv",
+        "security/ddmrp_warning_rules.xml",
         "views/ddmrp_buffer_view.xml",
         "views/ddmrp_warning_definition_views.xml",
         "views/ddmrp_warning_item_views.xml",
