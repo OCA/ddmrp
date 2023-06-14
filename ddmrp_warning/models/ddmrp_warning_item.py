@@ -15,6 +15,7 @@ class DdmrpWarningItem(models.Model):
     severity = fields.Selection(
         related="warning_definition_id.severity", store=True, readonly=True,
     )
+    company_id = fields.Many2one(related="buffer_id.company_id", store=True,)
 
     def _compute_name(self):
         for rec in self:
