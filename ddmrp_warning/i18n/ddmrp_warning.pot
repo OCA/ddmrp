@@ -36,6 +36,11 @@ msgid "Buffer Applicable Domain"
 msgstr ""
 
 #. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__company_id
+msgid "Company"
+msgstr ""
+
+#. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__create_uid
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__create_uid
 msgid "Created by"
