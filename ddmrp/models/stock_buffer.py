@@ -202,10 +202,13 @@ class StockBuffer(models.Model):
         result = self.env["ir.actions.actions"]._for_xml_id(
             "stock_demand_estimate.stock_demand_estimate_action"
         )
+        locations = self.env["stock.location"].search(
+            [("id", "child_of", [self.location_id.id])]
+        )
         recs = self.env["stock.demand.estimate"].search(
             [
                 ("product_id", "=", self.product_id.id),
-                ("location_id", "=", self.location_id.id),
+                ("location_id", "in", locations.ids),
             ]
         )
         result["domain"] = [("id", "in", recs.ids)]
@@ -926,13 +929,16 @@ class StockBuffer(models.Model):
             rec.order_spike_threshold = 0.5 * rec.red_zone_qty
 
     def _get_manufactured_bom(self):
+        locations = self.env["stock.location"].search(
+            [("id", "child_of", [self.location_id.id])]
+        )
         return self.env["mrp.bom"].search(
             [
                 "|",
                 ("product_id", "=", self.product_id.id),
                 ("product_tmpl_id", "=", self.product_id.product_tmpl_id.id),
                 "|",
-                ("location_id", "=", self.location_id.id),
+                ("location_id", "in", locations.ids),
                 ("location_id", "=", False),
             ],
             limit=1,
@@ -2006,14 +2012,9 @@ class StockBuffer(models.Model):
     def _values_source_location_from_route(self):
         return {"warehouse_id": self.warehouse_id}
 
-    def _source_location_from_route(self, route=None):
-        """Return the replenishment source location for distributed buffers
-        If no route is passed, it follows the source location of the rules of
-        all the routes it finds until it can no longer find a path.
-        If a route is passed, it stops at the final source location of the
-        rules of this route only.
-        """
-        current_location = self.location_id
+    def _source_location_from_route(self, procure_location=None):
+        """Return the replenishment source location for distributed buffers"""
+        current_location = procure_location or self.location_id
         rule_values = self._values_source_location_from_route()
         while current_location:
             rule = self.env["procurement.group"]._get_rule(
