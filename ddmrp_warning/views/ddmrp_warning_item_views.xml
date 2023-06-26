@@ -55,6 +55,12 @@
                         domain="[]"
                         context="{'group_by':'severity'}"
                     />
+                    <filter
+                        string="Definition"
+                        name="groupby_warning_definition_id"
+                        domain="[]"
+                        context="{'group_by':'warning_definition_id'}"
+                    />
                 </group>
             </search>
         </field>
