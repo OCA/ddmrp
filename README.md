@@ -30,7 +30,7 @@ addon | version | maintainers | summary
 [ddmrp_packaging](ddmrp_packaging/) | 14.0.1.1.0 |  | DDMRP integration with packaging
 [ddmrp_product_replace](ddmrp_product_replace/) | 14.0.1.0.2 | [![JordiBForgeFlow](https://github.com/JordiBForgeFlow.png?size=30px)](https://github.com/JordiBForgeFlow) [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) | Provides a assisting tool for product replacement.
 [ddmrp_purchase_hide_onhand_status](ddmrp_purchase_hide_onhand_status/) | 14.0.1.0.0 | [![TDu](https://github.com/TDu.png?size=30px)](https://github.com/TDu) | Replace purchase onhand status with smart button.
-[ddmrp_warning](ddmrp_warning/) | 14.0.1.1.0 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) | Adds configuration warnings on stock buffers.
+[ddmrp_warning](ddmrp_warning/) | 14.0.1.2.0 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) | Adds configuration warnings on stock buffers.
 [stock_buffer_capacity_limit](stock_buffer_capacity_limit/) | 14.0.1.0.0 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) | Ensures that the limits of storage are never surpassed
 [stock_buffer_route](stock_buffer_route/) | 14.0.1.2.1 |  | Allows to force a route to be used when procuring from Stock Buffers
 [stock_buffer_sales_analysis](stock_buffer_sales_analysis/) | 14.0.1.0.0 |  | Allows to access the Sales Analysis from Stock Buffers
