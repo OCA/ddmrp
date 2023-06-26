@@ -90,6 +90,11 @@ msgid "Ddmrp Warning Item"
 msgstr ""
 
 #. module: ddmrp_warning
+#: model_terms:ir.ui.view,arch_db:ddmrp_warning.view_ddmrp_warning_item_search
+msgid "Definition"
+msgstr ""
+
+#. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__name
 msgid "Description"
 msgstr ""
