@@ -10,7 +10,7 @@ class DdmrpWarningItem(models.Model):
     _order = "severity desc, id"
 
     warning_definition_id = fields.Many2one(comodel_name="ddmrp.warning.definition",)
-    buffer_id = fields.Many2one(comodel_name="stock.buffer",)
+    buffer_id = fields.Many2one(comodel_name="stock.buffer", ondelete="cascade")
     name = fields.Char(compute="_compute_name",)
     severity = fields.Selection(
         related="warning_definition_id.severity", store=True, readonly=True,
