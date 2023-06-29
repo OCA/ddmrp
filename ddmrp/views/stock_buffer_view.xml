@@ -389,6 +389,25 @@
                                         type="object"
                                         attrs="{'invisible': [('incoming_dlt_qty', '=', 0)]}"
                                     />
+                                    <field name="rfq_outside_dlt_qty" invisible="1" />
+                                    <div
+                                        class="o_row"
+                                        attrs="{'invisible':[('incoming_outside_dlt_qty', '=', 0), ('rfq_outside_dlt_qty', '=', 0)]}"
+                                    >
+                                        <button
+                                            title="Some incoming quantities are outside of the DLT Horizon and may require rescheduling.
+                                            Press this button to display the involved supply orders"
+                                            name="action_view_supply_outside_dlt_window"
+                                            icon="fa-warning"
+                                            type="object"
+                                        />
+                                        (Outside DLT:
+                                        <field
+                                            name="incoming_outside_dlt_qty"
+                                            invisible="0"
+                                        />
+                                        )
+                                    </div>
                                 </div>
                                 <label for="qualified_demand" />
                                 <div name="qualified_demand" class="o_row">
