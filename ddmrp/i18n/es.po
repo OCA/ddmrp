@@ -23,6 +23,11 @@ msgid "# BoM Where Used"
 msgstr ""
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "(Outside DLT:"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_move_line__state
 msgid ""
 "* New: When the stock move is created and not yet confirmed.\n"
@@ -1441,6 +1446,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_coverage_days
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid "Shows the current on-hand for stock buffers expressed as coverage days."
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid ""
+"Some incoming quantities are outside of the DLT Horizon and may require "
+"rescheduling.                                             Press this button "
+"to display the involved supply orders"
 msgstr ""
 
 #. module: ddmrp
