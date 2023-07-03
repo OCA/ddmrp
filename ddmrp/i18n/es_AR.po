@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-05-26 21:09+0000\n"
+"PO-Revision-Date: 2023-07-03 17:09+0000\n"
 "Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es_AR\n"
@@ -24,7 +24,7 @@ msgstr "# LdM Dónde se Utiliza"
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "(Outside DLT:"
-msgstr ""
+msgstr "(Fuera de DLT:"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_move_line__state
@@ -1489,6 +1489,9 @@ msgid ""
 "rescheduling.                                             Press this button "
 "to display the involved supply orders"
 msgstr ""
+"Algunas cantidades entrantes están fuera del horizonte DLT y pueden requerir "
+"una reprogramación.                                             Presione "
+"este botón para mostrar las órdenes de suministro involucradas"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
