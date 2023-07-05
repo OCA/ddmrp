@@ -1335,11 +1335,6 @@ class StockBuffer(models.Model):
         )
         return [("id", "in", buffers.ids)]
 
-    @api.onchange("adu_fixed", "adu_calculation_method")
-    def onchange_adu(self):
-        if self.adu_calculation_method.method == "fixed":
-            self._calc_adu()
-
     def _search_open_stock_moves_domain(self):
         self.ensure_one()
         return [
@@ -1745,6 +1740,8 @@ class StockBuffer(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         records = super().create(vals_list)
+        if not self.env.context.get("skip_adu_calculation", False):
+            records._calc_adu()
         records._calc_distributed_source_location()
         return records
 
@@ -1924,7 +1921,7 @@ class StockBuffer(models.Model):
     @api.model
     def cron_ddmrp_adu(self, automatic=False):
         """calculate ADU for each DDMRP buffer. Called by cronjob."""
-        auto_commit = not getattr(threading.currentThread(), "testing", False)
+        auto_commit = not getattr(threading.current_thread(), "testing", False)
         _logger.info("Start cron_ddmrp_adu.")
         buffer_ids = self.search([]).ids
         i = 0
@@ -1989,7 +1986,7 @@ class StockBuffer(models.Model):
     def cron_ddmrp(self, automatic=False):
         """Calculate key DDMRP parameters for each buffer.
         Called by cronjob."""
-        auto_commit = not getattr(threading.currentThread(), "testing", False)
+        auto_commit = not getattr(threading.current_thread(), "testing", False)
         _logger.info("Start cron_ddmrp.")
         buffer_ids = self.search([]).ids
         i = 0
