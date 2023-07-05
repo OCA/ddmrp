@@ -1,0 +1,12 @@
+{
+  "pull_requests": {
+    "121": "(auto) Nothing to port from PR #121",
+    "168": "(auto) Nothing to port from PR #168",
+    "189": "(auto) Nothing to port from PR #189",
+    "228": "Feature removed in #212, nothing to port",
+    "229": "Already ported in #256",
+    "231": "Already ported in #232",
+    "226": "Already included in #262",
+    "266": "Already ported in #213"
+  }
+}
