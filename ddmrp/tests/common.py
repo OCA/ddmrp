@@ -52,6 +52,7 @@ class TestDdmrpCommon(common.SavepointCase):
             limit=1,
         )
         cls.uom_unit = cls.env.ref("uom.product_uom_unit")
+        cls.dozen_unit = cls.env.ref("uom.product_uom_dozen")
         cls.buffer_profile_pur = cls.env.ref(
             "ddmrp.stock_buffer_profile_replenish_purchased_medium_medium"
         )
@@ -295,7 +296,9 @@ class TestDdmrpCommon(common.SavepointCase):
         )
         return user
 
-    def create_pickingoutA(self, date_move, qty):
+    def create_pickingoutA(self, date_move, qty, uom=False):
+        if not uom:
+            uom = self.productA.uom_id
         picking = self.pickingModel.with_user(self.user).create(
             {
                 "picking_type_id": self.ref("stock.picking_type_out"),
@@ -311,7 +314,7 @@ class TestDdmrpCommon(common.SavepointCase):
                             "product_id": self.productA.id,
                             "date_expected": date_move,
                             "date": date_move,
-                            "product_uom": self.productA.uom_id.id,
+                            "product_uom": uom.id,
                             "product_uom_qty": qty,
                             "location_id": self.binA.id,
                             "location_dest_id": self.customer_location.id,

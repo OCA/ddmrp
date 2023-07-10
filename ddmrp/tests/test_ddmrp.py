@@ -387,6 +387,23 @@ class TestDdmrp(TestDdmrpCommon):
             expected_on_hand - outgoing_qty,
         )
 
+    def test_18_qualified_demand_6_uom(self):
+        """Delivery spike in a secondary UoM and partially reserved, only
+        unreserved part should be considered."""
+        date_move = datetime.today() + timedelta(days=10)
+        picking = self.create_pickingoutA(date_move, 20, uom=self.dozen_unit)
+        available_qty = self.buffer_a.product_location_qty_available_not_res
+        picking.action_assign()
+        self.assertEqual(picking.move_lines.state, "partially_available")
+        self.bufferModel.cron_ddmrp()
+        # 20 dozens minus de available qty that has been reserved in this
+        # picking.
+        expected_result = (20 * 12) - available_qty
+        self.assertTrue(expected_result > self.buffer_a.order_spike_threshold)
+        self.assertAlmostEqual(
+            self.buffer_a.qualified_demand, expected_result, places=0
+        )
+
     def test_18_on_hand_qty_2(self):
         """Internal moves should not affect in any way the on hand position of
         a buffer."""
