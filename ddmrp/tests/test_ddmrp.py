@@ -414,6 +414,23 @@ class TestDdmrp(TestDdmrpCommon):
             self.buffer_a.product_location_qty_available_not_res, expected_on_hand
         )
 
+    def test_19_qualified_demand_6_uom(self):
+        """Delivery spike in a secondary UoM and partially reserved, only
+        unreserved part should be considered."""
+        date_move = datetime.today() + timedelta(days=10)
+        picking = self.create_pickingoutA(date_move, 20, uom=self.dozen_unit)
+        available_qty = self.buffer_a.product_location_qty_available_not_res
+        picking.action_assign()
+        self.assertEqual(picking.move_ids.state, "partially_available")
+        self.bufferModel.cron_ddmrp()
+        # 20 dozens minus de available qty that has been reserved in this
+        # picking.
+        expected_result = (20 * 12) - available_qty
+        self.assertTrue(expected_result > self.buffer_a.order_spike_threshold)
+        self.assertAlmostEqual(
+            self.buffer_a.qualified_demand, expected_result, places=0
+        )
+
     # TEST GROUP 2: Buffer zones and procurement
 
     def _check_red_zone(
