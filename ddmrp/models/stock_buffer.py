@@ -206,14 +206,8 @@ class StockBuffer(models.Model):
 
     def action_view_bom(self):
         action = self.product_id.action_view_bom()
-        locations = self.env["stock.location"].search(
-            [("id", "child_of", [self.location_id.id])]
-        )
-        action["domain"] += [
-            "|",
-            ("location_id", "in", locations.ids),
-            ("location_id", "=", False),
-        ]
+        boms = self._get_manufactured_bom(limit=100)
+        action["domain"] = [("id", "in", boms.ids)]
         return action
 
     @api.constrains("product_id")
@@ -923,7 +917,7 @@ class StockBuffer(models.Model):
         for rec in self:
             rec.order_spike_threshold = 0.5 * rec.red_zone_qty
 
-    def _get_manufactured_bom(self):
+    def _get_manufactured_bom(self, limit=1):
         locations = self.env["stock.location"].search(
             [("id", "child_of", [self.location_id.id])]
         )
@@ -935,8 +929,11 @@ class StockBuffer(models.Model):
                 "|",
                 ("location_id", "in", locations.ids),
                 ("location_id", "=", False),
+                "|",
+                ("company_id", "=", self.company_id.id),
+                ("company_id", "=", False),
             ],
-            limit=1,
+            limit=limit,
         )
 
     @api.depends("lead_days", "product_id.seller_ids.delay")

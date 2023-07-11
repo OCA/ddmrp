@@ -42,8 +42,11 @@ class TestDdmrpCommon(common.SavepointCase):
 
         # Refs
         cls.main_company = cls.env.ref("base.main_company")
+        cls.second_company = cls.env.ref("stock.res_company_1")
         cls.warehouse = cls.env.ref("stock.warehouse0")
+        cls.warehouse_sc = cls.env.ref("stock.stock_warehouse_shop0")
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
+        cls.stock_location_sc = cls.warehouse_sc.lot_stock_id
         cls.location_shelf1 = cls.env.ref("stock.stock_location_components")
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
