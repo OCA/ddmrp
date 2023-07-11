@@ -34,6 +34,8 @@ class MrpBom(models.Model):
         domain = [("product_id", "=", product.id)]
         if self.location_id:
             domain.append(("location_id", "=", self.location_id.id))
+        if self.company_id:
+            domain.append(("company_id", "=", self.company_id.id))
         return domain
 
     @api.depends("product_id", "product_tmpl_id", "location_id")
@@ -128,6 +130,8 @@ class MrpBomLine(models.Model):
         domain = [("product_id", "=", product.id)]
         if self.location_id:
             domain.append(("location_id", "=", self.location_id.id))
+        if self.company_id:
+            domain.append(("company_id", "=", self.company_id.id))
         return domain
 
     def _compute_is_buffered(self):
