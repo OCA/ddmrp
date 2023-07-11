@@ -947,6 +947,41 @@ class TestDdmrp(TestDdmrpCommon):
         new_green = (dlt + extra) * adu * 0.5
         self.assertEqual(self.buffer_c_blue.green_zone_qty, new_green)
 
+    def test_37_bom_buffer_fields_multi_company(self):
+        self.assertEqual(self.bom_a.company_id, self.main_company)
+        self.assertTrue(self.bom_a.is_buffered)
+        self.assertEqual(self.bom_a.buffer_id, self.buffer_a)
+        bom_buffer_a = self.buffer_a._get_manufactured_bom()
+        self.assertEqual(bom_buffer_a, self.bom_a)
+        bom_line = self.bom_a.bom_line_ids.filtered(
+            lambda l: l.product_id == self.component_a1
+        )
+        self.assertTrue(bom_line)
+        self.assertFalse(bom_line.is_buffered)
+        # Add a buffer for a component but in a different company
+        component_buffer = self.bufferModel.create(
+            {
+                "buffer_profile_id": self.buffer_profile_pur.id,
+                "product_id": self.component_a1.id,
+                "company_id": self.second_company.id,
+                "warehouse_id": self.warehouse_sc.id,
+                "location_id": self.stock_location_sc.id,
+                "adu_calculation_method": self.adu_fixed.id,
+            }
+        )
+        bom_line.invalidate_cache()
+        self.assertFalse(bom_line.is_buffered)
+        # Change company of the BoM
+        self.bom_a.company_id = self.second_company
+        self.bom_a.invalidate_cache()
+        self.assertFalse(self.bom_a.is_buffered)
+        self.assertFalse(self.bom_a.buffer_id)
+        bom_buffer_a = self.buffer_a._get_manufactured_bom()
+        self.assertFalse(bom_buffer_a)
+        bom_line.invalidate_cache()
+        self.assertTrue(bom_line.is_buffered)
+        self.assertEqual(bom_line.buffer_id, component_buffer)
+
     def test_40_bokeh_charts(self):
         """Check bokeh chart computation."""
         date_move = datetime.today()
