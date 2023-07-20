@@ -430,7 +430,7 @@ msgstr "Última atualização em"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5698
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time_id_5699
 msgid "Lead Time Factor"
 msgstr "Fator de lead time (LTF)"
 
@@ -903,7 +903,7 @@ msgstr "UoM"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_factor
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5699
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability_id_5700
 msgid "Variability Factor"
 msgstr "Fator de Variabilidade"
 
