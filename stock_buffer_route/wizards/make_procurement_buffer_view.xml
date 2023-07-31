@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="view_make_procurement_buffer_wizard" model="ir.ui.view">
+        <field name="name">Request Procurement</field>
+        <field name="model">make.procurement.buffer</field>
+        <field name="inherit_id" ref="ddmrp.view_make_procurement_buffer_wizard" />
+        <field name="arch" type="xml">
+            <field name="date_planned" position="before">
+                <field name="route_ids" invisible="1" />
+                <field
+                    name="route_id"
+                    options="{'no_create': True}"
+                    groups="stock.group_adv_location"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>

@@ -15,11 +15,33 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 
 #. module: stock_buffer_route
+#: model:ir.model.fields,field_description:stock_buffer_route.field_make_procurement_buffer_item__route_ids
 #: model:ir.model.fields,field_description:stock_buffer_route.field_stock_buffer__route_ids
 msgid "Allowed routes"
 msgstr ""
 
 #. module: stock_buffer_route
+#: model:ir.model.fields,help:stock_buffer_route.field_make_procurement_buffer__partner_id
+msgid "If set, will be used as preferred vendor for purchase routes."
+msgstr ""
+
+#. module: stock_buffer_route
+#: model:ir.model.fields,field_description:stock_buffer_route.field_make_procurement_buffer__item_ids
+msgid "Items"
+msgstr ""
+
+#. module: stock_buffer_route
+#: model:ir.model,name:stock_buffer_route.model_make_procurement_buffer_item
+msgid "Make Procurements from Stock Buffer Item"
+msgstr ""
+
+#. module: stock_buffer_route
+#: model:ir.model,name:stock_buffer_route.model_make_procurement_buffer
+msgid "Make Procurements from Stock Buffers"
+msgstr ""
+
+#. module: stock_buffer_route
+#: model:ir.model.fields,field_description:stock_buffer_route.field_make_procurement_buffer_item__route_id
 #: model:ir.model.fields,field_description:stock_buffer_route.field_stock_buffer__route_id
 #: model_terms:ir.ui.view,arch_db:stock_buffer_route.stock_buffer_search
 msgid "Route"
@@ -28,4 +50,9 @@ msgstr ""
 #. module: stock_buffer_route
 #: model:ir.model,name:stock_buffer_route.model_stock_buffer
 msgid "Stock Buffer"
+msgstr ""
+
+#. module: stock_buffer_route
+#: model:ir.model.fields,field_description:stock_buffer_route.field_make_procurement_buffer__partner_id
+msgid "Vendor"
 msgstr ""
