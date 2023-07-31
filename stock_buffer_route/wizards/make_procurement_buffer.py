@@ -30,11 +30,11 @@ class MakeProcurementBufferItem(models.TransientModel):
     _inherit = "make.procurement.buffer.item"
 
     route_ids = fields.Many2many(
-        comodel_name="stock.route",
+        "stock.location.route",
         string="Allowed routes",
     )
     route_id = fields.Many2one(
-        comodel_name="stock.route",
+        "stock.location.route",
         domain="[('id', 'in', route_ids)]",
     )
 
