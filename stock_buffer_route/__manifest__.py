@@ -9,6 +9,9 @@
     "author": "ForgeFlow, Camptocamp, Odoo Community Association (OCA)",
     "category": "Warehouse",
     "depends": ["ddmrp"],
-    "data": ["views/stock_buffer_views.xml"],
+    "data": [
+        "views/stock_buffer_views.xml",
+        "wizards/make_procurement_buffer_view.xml",
+    ],
     "installable": True,
 }
