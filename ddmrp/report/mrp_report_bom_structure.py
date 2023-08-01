@@ -7,6 +7,15 @@ from odoo import api, models
 class BomStructureReport(models.AbstractModel):
     _inherit = "report.mrp.report_bom_structure"
 
+    def _get_bom(
+        self, bom_id=False, product_id=False, line_qty=False, line_id=False, level=False
+    ):
+        res = super()._get_bom(bom_id, product_id, line_qty, line_id, level)
+        bom = self.env["mrp.bom"].browse(bom_id)
+        product = bom.product_id or bom.product_tmpl_id
+        res["lead_time"] = product.produce_delay
+        return res
+
     @api.model
     def _get_bom_lines(self, bom, bom_quantity, product, line_id, level):
         res = super(BomStructureReport, self)._get_bom_lines(
