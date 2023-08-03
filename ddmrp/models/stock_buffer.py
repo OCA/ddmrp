@@ -1667,12 +1667,9 @@ class StockBuffer(models.Model):
             rec.incoming_outside_dlt_qty = sum(outside_dlt_moves.mapped("product_qty"))
             if rec.item_type == "purchased":
                 cut_date = rec._get_incoming_supply_date_limit()
-                # FIXME: filter using order_id.state while
-                #  https://github.com/odoo/odoo/pull/58966 is not merged.
-                #  Can be changed in v14.
                 pols = rec.purchase_line_ids.filtered(
                     lambda l: l.date_planned > fields.Datetime.to_datetime(cut_date)
-                    and l.order_id.state in ("draft", "sent")
+                    and l.state in ("draft", "sent")
                 )
                 rec.rfq_outside_dlt_qty = sum(pols.mapped("product_qty"))
             else:
