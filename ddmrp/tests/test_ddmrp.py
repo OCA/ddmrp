@@ -1202,3 +1202,128 @@ class TestDdmrp(TestDdmrpCommon):
         self.bufferModel.cron_ddmrp_adu()
         to_assert_value = 2 * 0.5 + 2 * 0.5
         self.assertEqual(self.buffer_a.adu, to_assert_value)
+
+    def test_46_action_view_supply_buffer_purchase(self):
+        """
+        Verify that the view incoming quantities action for a purchased buffer
+        displays the correct results.
+        """
+        buffer = self.buffer_purchase
+        buffer.auto_procure = True
+        buffer.auto_procure_option = "standard"
+        buffer.do_auto_procure()
+        buffer._calc_incoming_dlt_qty()
+        pol = self.pol_model.search([("product_id", "=", self.product_purchased.id)])
+        # Check that RFQs are correctly computed
+        self.assertEqual(buffer.rfq_inside_dlt_ids.ids, pol.ids)
+        self.assertEqual(len(buffer.rfq_outside_dlt_ids.ids), 0)
+        pol.date_planned += timedelta(days=1)
+        buffer._calc_incoming_dlt_qty()
+        self.assertEqual(len(buffer.rfq_inside_dlt_ids.ids), 0)
+        self.assertEqual(buffer.rfq_outside_dlt_ids.ids, pol.ids)
+        # Check that incoming quantities are correctly computed
+        pol.order_id.button_confirm()
+        buffer._calc_incoming_dlt_qty()
+        self.assertEqual(len(buffer.rfq_inside_dlt_ids.ids), 0)
+        self.assertEqual(len(buffer.rfq_outside_dlt_ids.ids), 0)
+        self.assertEqual(len(buffer.stock_moves_inside_dlt_ids.ids), 0)
+        self.assertEqual(buffer.stock_moves_outside_dlt_ids.ids, pol.move_ids.ids)
+        pol.mapped("move_ids.picking_id").scheduled_date -= timedelta(days=1)
+        buffer._calc_incoming_dlt_qty()
+        self.assertEqual(len(buffer.rfq_inside_dlt_ids.ids), 0)
+        self.assertEqual(len(buffer.rfq_outside_dlt_ids.ids), 0)
+        self.assertEqual(buffer.stock_moves_inside_dlt_ids.ids, pol.move_ids.ids)
+        self.assertEqual(len(buffer.stock_moves_outside_dlt_ids.ids), 0)
+
+    def test_47_action_view_supply_buffer_manufacture(self):
+        """
+        Verify that the view incoming quantities action for a manufactured buffer
+        displays the correct results.
+        """
+        buffer = self.buffer_a
+        self.quant.quantity = 0
+        buffer.buffer_profile_id = self.buffer_profile_mmm.id
+        buffer.auto_procure = True
+        buffer.auto_procure_option = "standard"
+        buffer.cron_actions()
+        buffer.do_auto_procure()
+        buffer._calc_incoming_dlt_qty()
+        mo = self.env["mrp.production"].search([("product_id", "=", self.productA.id)])
+        # Check that MOs are correctly computed
+        self.assertEqual(
+            buffer.stock_moves_inside_dlt_ids.mapped("production_id.id"), mo.ids
+        )
+        self.assertEqual(
+            len(buffer.stock_moves_outside_dlt_ids.mapped("production_id.id")), 0
+        )
+        mo.date_planned_finished += timedelta(days=1)
+        buffer._calc_incoming_dlt_qty()
+        self.assertEqual(
+            len(buffer.stock_moves_inside_dlt_ids.mapped("production_id.id")), 0
+        )
+        self.assertEqual(
+            buffer.stock_moves_outside_dlt_ids.mapped("production_id.id"), mo.ids
+        )
+
+    def test_48_action_view_supply_buffer_purchase_3_steps(self):
+        """
+        Verify that the view incoming quantities action for a purchased buffer displays
+        the correct results with a 3-step configuration.
+        """
+        buffer = self.buffer_purchase
+        self.warehouse.reception_steps = "three_steps"
+        buffer.auto_procure = True
+        buffer.auto_procure_option = "standard"
+        buffer.do_auto_procure()
+        buffer._calc_incoming_dlt_qty()
+        pol = self.pol_model.search([("product_id", "=", self.product_purchased.id)])
+        # Check that RFQs are correctly computed
+        self.assertEqual(buffer.rfq_inside_dlt_ids.ids, pol.ids)
+        self.assertEqual(len(buffer.rfq_outside_dlt_ids.ids), 0)
+        # Check that incoming quantities are correctly computed
+        pol.order_id.button_confirm()
+        buffer._calc_incoming_dlt_qty()
+        moves = pol.mapped("move_ids")
+        while moves.mapped("move_dest_ids"):
+            moves = moves.mapped("move_dest_ids")
+        self.assertEqual(len(buffer.rfq_inside_dlt_ids.ids), 0)
+        self.assertEqual(len(buffer.rfq_outside_dlt_ids.ids), 0)
+        self.assertEqual(buffer.stock_moves_inside_dlt_ids.ids, moves.ids)
+        self.assertEqual(len(buffer.stock_moves_outside_dlt_ids.ids), 0)
+        moves.mapped("picking_id").scheduled_date += timedelta(days=1)
+        buffer._calc_incoming_dlt_qty()
+        self.assertEqual(len(buffer.rfq_inside_dlt_ids.ids), 0)
+        self.assertEqual(len(buffer.rfq_outside_dlt_ids.ids), 0)
+        self.assertEqual(len(buffer.stock_moves_inside_dlt_ids.ids), 0)
+        self.assertEqual(buffer.stock_moves_outside_dlt_ids.ids, moves.ids)
+
+    def test_49_action_view_supply_buffer_manufacture_3_steps(self):
+        """
+        Verify that the view incoming quantities action for a manufactured buffer displays
+        the correct results with a 3-step configuration.
+        """
+        buffer = self.buffer_a
+        self.warehouse.manufacture_steps = "pbm_sam"
+        self.quant.quantity = 0
+        buffer.buffer_profile_id = self.buffer_profile_mmm.id
+        buffer.auto_procure = True
+        buffer.auto_procure_option = "standard"
+        buffer.cron_actions()
+        buffer.do_auto_procure()
+        buffer._calc_incoming_dlt_qty()
+        mo = self.env["mrp.production"].search([("product_id", "=", self.productA.id)])
+        # Check that MOs are correctly computed
+        moves = buffer.stock_moves_inside_dlt_ids
+        while moves.mapped("move_orig_ids"):
+            moves = moves.mapped("move_orig_ids")
+        self.assertEqual(moves.mapped("production_id.id"), mo.ids)
+        self.assertEqual(
+            len(buffer.stock_moves_outside_dlt_ids.mapped("production_id.id")), 0
+        )
+        for picking in moves.mapped("picking_id"):
+            picking.scheduled_date += timedelta(days=1)
+        buffer._calc_incoming_dlt_qty()
+        self.assertEqual(
+            len(buffer.stock_moves_inside_dlt_ids.mapped("production_id.id")), 0
+        )
+        self.assertEqual(moves.mapped("production_id.id"), mo.ids)
