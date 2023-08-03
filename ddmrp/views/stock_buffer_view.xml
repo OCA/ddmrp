@@ -64,12 +64,22 @@
                     icon="fa-cogs"
                     type="action"
                 />
+                <field name="stock_moves_outside_dlt_qty" invisible="1" />
                 <button
                     title="Some incoming quantities are outside of the DLT Horizon and may require rescheduling. Press this button to display the involved supply orders"
                     name="action_view_supply_moves_outside_dlt_window"
                     icon="fa-warning"
                     type="object"
-                    attrs="{'invisible':[('incoming_outside_dlt_qty', '=', 0)]}"
+                    attrs="{'invisible':[('stock_moves_outside_dlt_qty', '=', 0)]}"
+                />
+                <field name="rfq_inside_dlt_qty" invisible="1" />
+                <button
+                    title="Some RFQ quantities are inside the DLT Horizon and may require confirming.
+                    Press this button to display the involved RFQs"
+                    name="action_view_supply_rfq_inside_dlt_window"
+                    icon="fa-warning"
+                    type="object"
+                    attrs="{'invisible':[('rfq_inside_dlt_qty', '=', 0)]}"
                 />
                 <field name="rfq_outside_dlt_qty" invisible="1" />
                 <button
@@ -400,25 +410,40 @@
                                 <label for="incoming_dlt_qty" />
                                 <div name="incoming_dlt_qty" class="o_row">
                                     <field name="incoming_dlt_qty" />
+                                    <field
+                                        name="stock_moves_inside_dlt_qty"
+                                        invisible="1"
+                                    />
                                     <button
                                         title="View Incoming Moves (Within DLT)"
                                         name="action_view_supply_moves_inside_dlt_window"
                                         icon="fa-search"
                                         type="object"
-                                        attrs="{'invisible': [('incoming_dlt_qty', '=', 0)]}"
+                                        attrs="{'invisible': [('stock_moves_inside_dlt_qty', '=', 0)]}"
                                     />
-                                    <field name="rfq_outside_dlt_qty" invisible="1" />
+                                    <field name="rfq_inside_dlt_qty" invisible="1" />
+                                    <button
+                                        title="View Incoming RFQs (Within DLT)"
+                                        name="action_view_supply_rfq_inside_dlt_window"
+                                        icon="fa-search"
+                                        type="object"
+                                        attrs="{'invisible': [('rfq_inside_dlt_qty', '=', 0)]}"
+                                    />
                                     <div
                                         class="o_row"
-                                        attrs="{'invisible':[('incoming_outside_dlt_qty', '=', 0), ('rfq_outside_dlt_qty', '=', 0)]}"
+                                        attrs="{'invisible':[('incoming_outside_dlt_qty', '=', 0)]}"
                                     >
+                                        <field
+                                            name="stock_moves_outside_dlt_qty"
+                                            invisible="1"
+                                        />
                                         <button
                                             title="Some incoming qty is outside of the DLT Horizon and may require rescheduling.
                                              Press this button to display the involved supply orders"
                                             name="action_view_supply_moves_outside_dlt_window"
                                             icon="fa-warning"
                                             type="object"
-                                            attrs="{'invisible':[('incoming_outside_dlt_qty', '=', 0)]}"
+                                            attrs="{'invisible':[('stock_moves_outside_dlt_qty', '=', 0)]}"
                                         />
                                         <field
                                             name="rfq_outside_dlt_qty"
