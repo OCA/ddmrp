@@ -22,4 +22,5 @@ class StockBuffer(models.Model):
         action = self.product_id.action_view_sales()
         action["domain"] = [("product_id", "=", self.product_id.id)]
         action["context"]["active_id"] = self.product_id.id
+        action["context"]["pivot_column_groupby"] = ["warehouse_id"]
         return action
