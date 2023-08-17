@@ -72,7 +72,12 @@ class StockBuffer(models.Model):
                 [("buffer_id", "=", rec.id)], order="date"
             )
             if len(history) < 2:
-                rec.planning_history_chart = _("Not enough data available.")
+                rec.planning_history_chart = json.dumps(
+                    {
+                        "div": _("Not enough data available."),
+                        "script": "",
+                    }
+                )
                 continue
 
             N = len(history)
@@ -192,7 +197,12 @@ class StockBuffer(models.Model):
                 start_stack = 0.0
             history = history_model.search(domain, order="date")
             if len(history) < 2:
-                rec.execution_history_chart = _("Not enough data available.")
+                rec.execution_history_chart = json.dumps(
+                    {
+                        "div": _("Not enough data available."),
+                        "script": "",
+                    }
+                )
                 continue
 
             N = len(history)
