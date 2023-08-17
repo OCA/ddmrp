@@ -29,7 +29,6 @@ class TestDDMRPWarning(TestDdmrpCommon):
 
     @classmethod
     def _refresh_involved_buffers(cls):
-        cls.buffer_warnings.invalidate_cache()
         cls.buffer_warnings.cron_actions()
         cls.buffer_warnings._generate_ddmrp_warnings()
 
