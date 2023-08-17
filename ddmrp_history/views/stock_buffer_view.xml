@@ -9,28 +9,24 @@
         <field name="arch" type="xml">
             <notebook position="inside">
                 <page name="planning_history" string="Planning Chart">
-                    <group>
-                        <div style="margin-top: 1em;">
-                            <field
-                                name="planning_history_chart"
-                                style="height:400px"
-                                widget="bokeh_chart"
-                                nolabel="1"
-                            />
-                        </div>
-                    </group>
+                    <div style="margin-top: 1em;">
+                        <field
+                            name="planning_history_chart"
+                            style="height:400px;width:100%"
+                            widget="bokeh_chart"
+                            nolabel="1"
+                        />
+                    </div>
                 </page>
                 <page name="execution_history" string="Execution Chart">
-                    <group>
                         <div style="margin-top: 1em;">
                             <field
-                                name="execution_history_chart"
-                                style="height:400px"
-                                widget="bokeh_chart"
-                                nolabel="1"
-                            />
+                            name="execution_history_chart"
+                            style="height:400px;width:100%"
+                            widget="bokeh_chart"
+                            nolabel="1"
+                        />
                         </div>
-                    </group>
                 </page>
             </notebook>
         </field>
