@@ -13,7 +13,9 @@
                 decoration-danger="severity == '3_high'"
             >
                 <field name="name" />
+                <field name="product_id" />
                 <field name="severity" />
+                <field name="location_id" groups="stock.group_stock_multi_locations" />
                 <field name="company_id" groups="base.group_multi_company" />
             </tree>
         </field>
@@ -25,10 +27,22 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="warning_definition_id" />
-                        <field name="buffer_id" />
-                        <field name="severity" />
-                        <field name="company_id" groups="base.group_multi_company" />
+                        <group>
+                            <field name="warning_definition_id" />
+                            <field name="buffer_id" />
+                            <field name="severity" />
+                        </group>
+                        <group>
+                            <field name="product_id" />
+                            <field
+                                name="location_id"
+                                groups="stock.group_stock_multi_locations"
+                            />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                        </group>
                     </group>
                 </sheet>
             </form>
@@ -40,6 +54,8 @@
         <field name="arch" type="xml">
             <search>
                 <field name="buffer_id" />
+                <field name="product_id" />
+                <field name="location_id" groups="stock.group_stock_multi_locations" />
                 <field name="severity" />
                 <separator />
                 <group expand="0" string="Group By">
