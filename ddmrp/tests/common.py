@@ -237,8 +237,7 @@ class TestDdmrpCommon(common.SavepointCase):
         # Create buffers:
         cls.buffer_a = cls.bufferModel.create(
             {
-                # TODO: this should a manufacture buffer profile. task for v14 mig.
-                "buffer_profile_id": cls.buffer_profile_pur.id,
+                "buffer_profile_id": cls.buffer_profile_mmm.id,
                 "product_id": cls.productA.id,
                 "location_id": cls.stock_location.id,
                 "warehouse_id": cls.warehouse.id,

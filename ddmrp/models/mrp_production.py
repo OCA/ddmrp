@@ -40,20 +40,17 @@ class MrpProduction(models.Model):
             self._find_buffer_link()
         return res
 
-    def _get_domain_buffer_link(self, warehouse_level=False):
+    def _get_domain_buffer_link(self):
         self.ensure_one()
+        locations = self.env["stock.location"].search(
+            [("id", "child_of", [self.location_dest_id.id])]
+        )
         domain = [
             ("product_id", "=", self.product_id.id),
             ("company_id", "=", self.company_id.id),
             ("buffer_profile_id.item_type", "=", "manufactured"),
+            ("location_id", "in", locations.ids),
         ]
-        if not warehouse_level:
-            locations = self.env["stock.location"].search(
-                [("id", "child_of", [self.location_dest_id.id])]
-            )
-            domain += [("location_id", "in", locations.ids)]
-        else:
-            domain += [("warehouse_id", "=", self.picking_type_id.warehouse_id.id)]
         return domain
 
     def _find_buffer_link(self):
@@ -61,11 +58,8 @@ class MrpProduction(models.Model):
         for rec in self:
             domain = rec._get_domain_buffer_link()
             buffer = buffer_model.search(domain, limit=1)
-            if not buffer:
-                domain = rec._get_domain_buffer_link(warehouse_level=True)
-                buffer = buffer_model.search(domain, limit=1)
-            rec.buffer_id = buffer
             if buffer:
+                rec.buffer_id = buffer
                 rec._calc_execution_priority()
 
     def _calc_execution_priority(self):
