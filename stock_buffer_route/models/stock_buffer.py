@@ -1,8 +1,17 @@
-# Copyright 2019-20 ForgeFlow S.L. (https://www.forgeflow.com)
+# Copyright 2019-23 ForgeFlow S.L. (https://www.forgeflow.com)
 # Copyright 2019-20 Camptocamp SA
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
+from datetime import datetime, timedelta
+
 from odoo import api, fields, models
+from odoo.tools import float_compare
+
+_ITEM_TYPES = [
+    ("manufactured", "Manufactured"),
+    ("purchased", "Purchased"),
+    ("distributed", "Distributed"),
+]
 
 
 class StockBuffer(models.Model):
@@ -19,8 +28,19 @@ class StockBuffer(models.Model):
         domain="[('id', 'in', route_ids)]",
         ondelete="restrict",
     )
+    item_type_alternative = fields.Selection(
+        string="Alternative Item Type",
+        selection=_ITEM_TYPES,
+        compute="_compute_item_type_alternative",
+        store=True,
+    )
+    dlt_alternative = fields.Float(
+        string="Alternative DLT (days)",
+        compute="_compute_dlt_alternative",
+        help="Alternative Decoupled Lead Time (days)",
+    )
 
-    @api.depends("product_id", "warehouse_id", "warehouse_id.route_ids", "location_id")
+    @api.depends("product_id", "location_id", "product_id.route_ids")
     def _compute_route_ids(self):
         route_obj = self.env["stock.location.route"]
         for record in self:
@@ -34,6 +54,86 @@ class StockBuffer(models.Model):
                 routes |= wh_routes
             parents = record.get_parents()
             record.route_ids = self._get_location_routes_of_parents(routes, parents)
+
+    @api.depends(
+        "product_id", "route_id", "route_id.rule_ids", "route_id.rule_ids.action"
+    )
+    def _compute_item_type_alternative(self):
+        for rec in self:
+            rec.item_type_alternative = ""
+            if rec.route_id:
+                if "buy" in rec.route_id.mapped("rule_ids.action"):
+                    rec.item_type_alternative = "purchased"
+                elif "manufacture" in rec.route_id.mapped("rule_ids.action"):
+                    rec.item_type_alternative = "manufactured"
+                elif "pull" in rec.route_id.mapped(
+                    "rule_ids.action"
+                ) or "pull_push" in rec.route_id.mapped("rule_ids.action"):
+                    rec.item_type_alternative = "distributed"
+
+    def _compute_dlt_alternative(self):
+        for rec in self:
+            route_id = self.env.context.get("route_id", rec.route_id)
+            dlt = 0
+            if route_id:
+                item_type_alternative = self.env.context.get(
+                    "item_type_alternative", rec.item_type_alternative
+                )
+                if item_type_alternative == "manufactured":
+                    bom = rec._get_manufactured_bom()
+                    dlt = bom.dlt
+                elif item_type_alternative == "distributed":
+                    dlt = rec.lead_days
+                else:
+                    sellers = rec._get_product_sellers()
+                    dlt = sellers and fields.first(sellers).delay or rec.lead_days
+            rec.dlt_alternative = dlt
+
+    @api.depends(
+        "buffer_profile_id",
+        "item_type",
+        "product_id.seller_ids",
+        "product_id.seller_ids.company_id",
+        "product_id.seller_ids.name",
+        "product_id.seller_ids.product_id",
+        "product_id.seller_ids.sequence",
+        "product_id.seller_ids.min_qty",
+        "product_id.seller_ids.price",
+        "item_type_alternative",
+    )
+    def _compute_main_supplier(self):
+        res = super()._compute_main_supplier()
+        for rec in self:
+            if rec.item_type_alternative == "purchased":
+                suppliers = rec._get_product_sellers()
+                rec.main_supplier_id = suppliers[0].name if suppliers else False
+        return res
+
+    def _calc_incoming_dlt_qty(self):
+        res = super()._calc_incoming_dlt_qty()
+        for rec in self:
+            if rec.item_type_alternative == "purchased":
+                cut_date = rec._get_incoming_supply_date_limit()
+                pols = rec.purchase_line_ids.filtered(
+                    lambda l: l.date_planned > fields.Datetime.to_datetime(cut_date)
+                    and l.state in ("draft", "sent")
+                )
+                rec.rfq_outside_dlt_qty = sum(pols.mapped("product_qty"))
+        return res
+
+    def _get_date_planned(self, force_lt=None):
+        res = super()._get_date_planned(force_lt)
+        route_id = self.env.context.get("route_id", False)
+        if route_id:
+            dlt = int(self.dlt_alternative)
+            item_type_alternative = self.env.context.get(
+                "item_type_alternative", self.item_type_alternative
+            )
+            if self.warehouse_id.calendar_id and item_type_alternative != "purchased":
+                res = self.warehouse_id.wh_plan_days(datetime.now(), dlt)
+            else:
+                res = fields.datetime.today() + timedelta(days=dlt)
+        return res
 
     def _get_location_routes_of_parents(self, routes, parents):
         return routes.filtered(
@@ -62,8 +162,54 @@ class StockBuffer(models.Model):
             values["route_ids"] = self.route_id
         return values
 
+    def _calc_distributed_source_location(self):
+        res = super()._calc_distributed_source_location()
+        for record in self:
+            if (
+                not record.distributed_source_location_id
+                and record.item_type_alternative != "distributed"
+            ):
+                source_location = record._source_location_from_route()
+                record.distributed_source_location_id = source_location
+        return res
+
+    def _procure_qty_to_order(self):
+        res = super()._procure_qty_to_order()
+        qty_to_order = self.procure_recommended_qty
+        rounding = self.procure_uom_id.rounding or self.product_uom.rounding
+        if (
+            self.item_type_alternative == "distributed"
+            and self.buffer_profile_id.replenish_distributed_limit_to_free_qty
+        ):
+            if (
+                float_compare(
+                    self.distributed_source_location_qty,
+                    self.procure_min_qty,
+                    precision_rounding=rounding,
+                )
+                < 0
+            ):
+                res = 0
+            else:
+                res = min(qty_to_order, self.distributed_source_location_qty)
+        return res
+
     def write(self, vals):
         res = super().write(vals)
         if "route_id" in vals:
             self._calc_distributed_source_location()
+        return res
+
+    def action_view_supply(self, outside_dlt=False, view_rfq=False):
+        res = super().action_view_supply(outside_dlt, view_rfq)
+        # If route is set it means that there is at least two alternatively ways to
+        # procure the buffer. Therefore, we will show Stock Pickings.
+        if self.route_id and not view_rfq:
+            moves = self._search_stock_moves_incoming(outside_dlt)
+            picks = moves.mapped("picking_id")
+            res = self.env["ir.actions.actions"]._for_xml_id(
+                "stock.action_picking_tree_all"
+            )
+            res["context"] = {}
+            res["domain"] = [("id", "in", picks.ids)]
         return res

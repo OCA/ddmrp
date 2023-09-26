@@ -1,12 +1,60 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- Copyright 2019-20 ForgeFlow S.L. (https://www.forgeflow.com)
+<!-- Copyright 2019-23 ForgeFlow S.L. (https://www.forgeflow.com)
      License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
+    <record id="stock_buffer_view_tree" model="ir.ui.view">
+        <field name="name">stock.buffer.tree</field>
+        <field name="model">stock.buffer</field>
+        <field name="inherit_id" ref="ddmrp.stock_buffer_view_tree" />
+        <field name="arch" type="xml">
+            <field name="item_type" position="after">
+                <field name="item_type_alternative" optional="hide" />
+            </field>
+        </field>
+    </record>
     <record id="stock_buffer_view_form" model="ir.ui.view">
         <field name="name">stock.buffer.form</field>
         <field name="model">stock.buffer</field>
         <field name="inherit_id" ref="ddmrp.stock_buffer_view_form" />
         <field name="arch" type="xml">
+            <button name="action_view_bom" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('item_type', '!=', 'manufactured'), ('item_type_alternative', '!=', 'manufactured')]}</attribute>
+            </button>
+            <button name="action_view_mrp_productions" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('item_type', '!=', 'manufactured'), ('item_type_alternative', '!=', 'manufactured')]}</attribute>
+            </button>
+            <button name="action_view_purchase" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('item_type', '!=', 'purchased'), ('item_type_alternative', '!=', 'purchased')]}</attribute>
+            </button>
+            <field name="item_type" position="after">
+                <field name="item_type_alternative" invisible="1" />
+            </field>
+            <field name="lead_days" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('item_type', '!=', 'distributed'), ('item_type_alternative', '!=', 'distributed')]}</attribute>
+            </field>
+            <field name="distributed_source_location_id" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': ['|', ('distributed_source_location_id', '=', False), ('item_type', '!=', 'distributed'), ('item_type_alternative', '!=', 'distributed')]}</attribute>
+            </field>
+            <field name="distributed_source_location_qty" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': ['|', ('distributed_source_location_id', '=', False), ('item_type', '!=', 'distributed'), ('item_type_alternative', '!=', 'distributed')]}</attribute>
+            </field>
+            <field name="main_supplier_id" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('item_type', '!=', 'purchased'), ('item_type_alternative', '!=', 'purchased')]}</attribute>
+            </field>
             <field name="group_id" position="after">
                 <field
                     name="route_id"
@@ -22,6 +70,24 @@
         <field name="model">stock.buffer</field>
         <field name="inherit_id" ref="ddmrp.stock_buffer_search" />
         <field name="arch" type="xml">
+            <xpath
+                expr="//filter[@name='item_type_manufactured']"
+                position="attributes"
+            >
+                <attribute
+                    name="domain"
+                >['|', ('item_type', '=', 'manufactured'), ('item_type_alternative', '=', 'manufactured')]</attribute>
+            </xpath>
+            <xpath expr="//filter[@name='item_type_purchased']" position="attributes">
+                <attribute
+                    name="domain"
+                >['|', ('item_type', '=', 'purchased'), ('item_type_alternative', '=', 'purchased')]</attribute>
+            </xpath>
+            <xpath expr="//filter[@name='item_type_distributed']" position="attributes">
+                <attribute
+                    name="domain"
+                >['|', ('item_type', '=', 'distributed'), ('item_type_alternative', '=', 'distributed')]</attribute>
+            </xpath>
             <xpath
                 expr="//filter[@name='main_supplier_group_filter']"
                 position="before"
