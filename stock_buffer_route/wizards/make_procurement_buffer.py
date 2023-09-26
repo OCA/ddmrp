@@ -22,7 +22,7 @@ class MakeProcurementBuffer(models.TransientModel):
             "route_id": buffer.route_id,
             "item_type_alternative": buffer.item_type_alternative,
         }
-        res["date_planned"] = buffer.with_context(context)._get_date_planned()
+        res["date_planned"] = buffer.with_context(**context)._get_date_planned()
         return res
 
 
@@ -30,11 +30,11 @@ class MakeProcurementBufferItem(models.TransientModel):
     _inherit = "make.procurement.buffer.item"
 
     route_ids = fields.Many2many(
-        "stock.location.route",
+        "stock.route",
         string="Allowed routes",
     )
     route_id = fields.Many2one(
-        "stock.location.route",
+        "stock.route",
         domain="[('id', 'in', route_ids)]",
     )
     item_type_alternative = fields.Selection(
@@ -51,7 +51,7 @@ class MakeProcurementBufferItem(models.TransientModel):
                 "route_id": rec.route_id,
                 "item_type_alternative": rec.item_type_alternative,
             }
-            rec.date_planned = rec.buffer_id.with_context(context)._get_date_planned()
+            rec.date_planned = rec.buffer_id.with_context(**context)._get_date_planned()
 
     @api.depends("route_id", "route_id.rule_ids", "route_id.rule_ids.action")
     def _compute_item_type_alternative(self):
