@@ -21,6 +21,7 @@ class StockBuffer(models.Model):
         "stock.location.route",
         string="Allowed routes",
         compute="_compute_route_ids",
+        store=True,
     )
     route_id = fields.Many2one(
         "stock.location.route",
@@ -109,16 +110,21 @@ class StockBuffer(models.Model):
                 rec.main_supplier_id = suppliers[0].name if suppliers else False
         return res
 
-    def _calc_incoming_dlt_qty(self):
-        res = super()._calc_incoming_dlt_qty()
-        for rec in self:
-            if rec.item_type_alternative == "purchased":
-                cut_date = rec._get_incoming_supply_date_limit()
-                pols = rec.purchase_line_ids.filtered(
-                    lambda l: l.date_planned > fields.Datetime.to_datetime(cut_date)
+    def _get_rfq_dlt_qty(self, outside_dlt=False):
+        res = super()._get_rfq_dlt_qty(outside_dlt)
+        if self.item_type_alternative == "purchased":
+            cut_date = self._get_incoming_supply_date_limit()
+            if not outside_dlt:
+                pols = self.purchase_line_ids.filtered(
+                    lambda l: l.date_planned <= fields.Datetime.to_datetime(cut_date)
                     and l.state in ("draft", "sent")
                 )
-                rec.rfq_outside_dlt_qty = sum(pols.mapped("product_qty"))
+            else:
+                pols = self.purchase_line_ids.filtered(
+                    lambda l: l.date_planned > fields.Datetime.to_datetime(cut_date)
+                    and l.order_id.state in ("draft", "sent")
+                )
+            res += sum(pols.mapped("product_qty"))
         return res
 
     def _get_date_planned(self, force_lt=None):
@@ -145,7 +151,6 @@ class StockBuffer(models.Model):
                 )
                 & parents
             )
-            or any(rule.action == "buy" for rule in route.rule_ids)
         )
 
     def get_parents(self):
@@ -200,11 +205,11 @@ class StockBuffer(models.Model):
             self._calc_distributed_source_location()
         return res
 
-    def action_view_supply(self, outside_dlt=False, view_rfq=False):
-        res = super().action_view_supply(outside_dlt, view_rfq)
+    def action_view_supply(self, outside_dlt=False):
+        res = super().action_view_supply(outside_dlt)
         # If route is set it means that there is at least two alternatively ways to
         # procure the buffer. Therefore, we will show Stock Pickings.
-        if self.route_id and not view_rfq:
+        if self.route_id:
             moves = self._search_stock_moves_incoming(outside_dlt)
             picks = moves.mapped("picking_id")
             res = self.env["ir.actions.actions"]._for_xml_id(
