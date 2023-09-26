@@ -30,11 +30,11 @@ class MakeProcurementBufferItem(models.TransientModel):
     _inherit = "make.procurement.buffer.item"
 
     route_ids = fields.Many2many(
-        "stock.location.route",
+        "stock.route",
         string="Allowed routes",
     )
     route_id = fields.Many2one(
-        "stock.location.route",
+        "stock.route",
         domain="[('id', 'in', route_ids)]",
     )
     item_type_alternative = fields.Selection(
