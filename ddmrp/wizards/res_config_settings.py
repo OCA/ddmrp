@@ -29,6 +29,9 @@ class ResConfigSettings(models.TransientModel):
     module_ddmrp_chatter = fields.Boolean(
         string="Chatter in Stock Buffers",
     )
+    module_ddmrp_purchase_hide_onhand_status = fields.Boolean(
+        string="Hide Purchase On-Hand Status",
+    )
     ddmrp_auto_update_nfp = fields.Boolean(
         related="company_id.ddmrp_auto_update_nfp", readonly=False
     )
