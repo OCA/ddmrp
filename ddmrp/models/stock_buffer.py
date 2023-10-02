@@ -2049,7 +2049,7 @@ class StockBuffer(models.Model):
                         current_location = pull_rule.location_src_id
                         rule_values.update(
                             {
-                                "warehouse_id": pull_rule.location_src_id.get_warehouse(),
+                                "warehouse_id": pull_rule.location_src_id.warehouse_id,
                             }
                         )
                         continue
