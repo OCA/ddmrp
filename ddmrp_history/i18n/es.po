@@ -60,6 +60,7 @@ msgstr "Fecha"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__display_name
+#: model:ir.model.fields,field_description:ddmrp_history.field_stock_buffer__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
 
@@ -80,11 +81,13 @@ msgstr "Grafico Histórico"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__id
+#: model:ir.model.fields,field_description:ddmrp_history.field_stock_buffer__id
 msgid "ID"
 msgstr "ID"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history____last_update
+#: model:ir.model.fields,field_description:ddmrp_history.field_stock_buffer____last_update
 msgid "Last Modified on"
 msgstr "Última Modificación en"
 
