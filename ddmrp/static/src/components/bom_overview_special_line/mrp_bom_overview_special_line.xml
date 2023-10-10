@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="ddmrp.BomOverviewSpecialLine"
+        t-inherit="mrp.BomOverviewSpecialLine"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//td[@name='td_mrp_bom']" position="before">
+            <td t-if="showBuffered" />
+        </xpath>
+        <xpath expr="//td[@t-if='showLeadTimes']" position="after">
+            <td t-if="showLeadTimes" />
+        </xpath>
+    </t>
+
+</templates>
