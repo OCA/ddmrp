@@ -1,5 +1,5 @@
-# Copyright 2017-20 ForgeFlow S.L. (http://www.forgeflow.com)
-# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
+# Copyright 2017-23 ForgeFlow S.L. (http://www.forgeflow.com)
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, models
 
@@ -7,45 +7,91 @@ from odoo import api, models
 class BomStructureReport(models.AbstractModel):
     _inherit = "report.mrp.report_bom_structure"
 
-    @api.model
-    def _get_bom_lines(self, bom, bom_quantity, product, line_id, level):
-        res = super(BomStructureReport, self)._get_bom_lines(
-            bom, bom_quantity, product, line_id, level
+    def _get_pdf_doc(self, bom_id, data, quantity, product_variant_id=None):
+        doc = super()._get_pdf_doc(bom_id, data, quantity, product_variant_id)
+        doc["show_buffered"] = (
+            True if data and data.get("show_buffered") == "true" else False
         )
-        line_ids = self.env["mrp.bom.line"].search([("bom_id", "=", bom.id)])
-        for line in res[0]:
-            line_id = line_ids.browse(line["line_id"])
-            if line_id.product_id.bom_ids:
-                lead_time = line_id.product_id.produce_delay
-            else:
-                lead_time = (
-                    line_id.product_id.seller_ids
-                    and line_id.product_id.seller_ids[0].delay
-                    or 0.0
-                )
-            line["is_buffered"] = line_id.is_buffered
-            line["lead_time"] = lead_time or 0
-            line["dlt"] = line_id.dlt
+        return doc
+
+    @api.model
+    def _get_bom_data(
+        self,
+        bom,
+        warehouse,
+        product=False,
+        line_qty=False,
+        bom_line=False,
+        level=0,
+        parent_bom=False,
+        index=0,
+        product_info=False,
+        ignore_stock=False,
+    ):
+        res = super(BomStructureReport, self)._get_bom_data(
+            bom,
+            warehouse,
+            product=product,
+            line_qty=line_qty,
+            bom_line=bom_line,
+            level=level,
+            parent_bom=parent_bom,
+            index=index,
+            product_info=product_info,
+            ignore_stock=ignore_stock,
+        )
+        res["is_buffered"] = bom.is_buffered
+        res["dlt"] = bom.dlt
         return res
 
-    def _get_line_vals(self, bom_line):
-        line = self.env["mrp.bom.line"].browse(bom_line["line_id"])
-        if line.product_id.bom_ids:
-            lead_time = line.product_id.produce_delay or 0
+    @api.model
+    def _get_component_data(
+        self,
+        parent_bom,
+        warehouse,
+        bom_line,
+        line_quantity,
+        level,
+        index,
+        product_info,
+        ignore_stock=False,
+    ):
+        res = super(BomStructureReport, self)._get_component_data(
+            parent_bom,
+            warehouse,
+            bom_line,
+            line_quantity,
+            level,
+            index,
+            product_info,
+            ignore_stock=ignore_stock,
+        )
+        if bom_line.product_id.bom_ids:
+            lead_time = bom_line.product_id.produce_delay
         else:
             lead_time = (
-                line.product_id.seller_ids and line.product_id.seller_ids[0].delay
-            ) or 0
-        return {
-            "name": bom_line["prod_name"],
-            "type": "bom",
-            "quantity": bom_line["prod_qty"],
-            "uom": bom_line["prod_uom"],
-            "prod_cost": bom_line["prod_cost"],
-            "bom_cost": bom_line["total"],
-            "level": bom_line["level"],
-            "code": bom_line["code"],
-            "is_buffered": bom_line["is_buffered"],
-            "lead_time": lead_time,
-            "dlt": bom_line["dlt"],
-        }
+                bom_line.product_id.seller_ids
+                and bom_line.product_id.seller_ids[0].delay
+                or 0.0
+            )
+        res["is_buffered"] = bom_line.is_buffered
+        res["lead_time"] = lead_time or ""
+        res["dlt"] = bom_line.dlt
+        return res
+
+    def _get_bom_array_lines(
+        self, data, level, unfolded_ids, unfolded, parent_unfolded
+    ):
+        lines = super()._get_bom_array_lines(
+            data, level, unfolded_ids, unfolded, parent_unfolded
+        )
+        for component in data.get("components", []):
+            if not component["bom_id"]:
+                continue
+            bom_line = next(
+                filter(lambda l: l.get("bom_id", None) == component["bom_id"], lines)
+            )
+            if bom_line:
+                bom_line["is_buffered"] = component["is_buffered"]
+                bom_line["dlt"] = component["dlt"]
+        return lines

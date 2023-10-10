@@ -29,6 +29,7 @@
         "data/stock_buffer_profile_data.xml",
         "data/ir_sequence.xml",
         "data/decimal_precision_data.xml",
+        "report/mrp_report_bom_structure.xml",
         "security/ddmrp_groups.xml",
         "security/ddmrp_rules.xml",
         "security/ir.model.access.csv",
@@ -46,7 +47,6 @@
         "views/stock_move_views.xml",
         "views/stock_buffer_view.xml",
         "views/stock_picking.xml",
-        "report/mrp_report_bom_structure.xml",
         "data/ir_cron.xml",
         "wizards/ddmrp_run_view.xml",
         "wizards/res_config_settings_views.xml",
@@ -60,13 +60,12 @@
         "demo/mrp_bom_demo.xml",
         "demo/stock_buffer_demo.xml",
     ],
-    "post_load": "post_load_hook",
     "assets": {
         "web.assets_backend": [
-            "ddmrp/static/src/widgets/stock_buffer_info.esm.js",
-            "ddmrp/static/src/widgets/stock_buffer_info.xml",
-            "ddmrp/static/src/scss/stock_buffer_info.scss",
-        ]
+            "ddmrp/static/src/**/*.js",
+            "ddmrp/static/src/**/*.scss",
+            "ddmrp/static/src/**/*.xml",
+        ],
     },
     "installable": True,
     "application": True,
