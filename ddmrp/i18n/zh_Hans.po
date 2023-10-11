@@ -64,7 +64,6 @@ msgid "ADU calculation methods"
 msgstr "ADU 计算方法"
 
 #. module: ddmrp
-#: model:product.product,name:ddmrp.product_product_as01
 #: model:product.template,name:ddmrp.product_product_as01_product_template
 msgid "AS-01"
 msgstr ""
@@ -93,6 +92,7 @@ msgid "Archived"
 msgstr ""
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/models/product_template.py:0
 #, python-format
 msgid ""
@@ -129,7 +129,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_report_mrp_report_bom_structure
-msgid "BOM Structure Report"
+msgid "BOM Overview Report"
 msgstr ""
 
 #. module: ddmrp
@@ -149,6 +149,7 @@ msgid "Bill of Materials"
 msgstr ""
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
 #, python-format
 msgid "Blended"
@@ -206,7 +207,12 @@ msgid "Buffer summary"
 msgstr "缓冲摘要"
 
 #. module: ddmrp
+#. odoo-javascript
+#: code:addons/ddmrp/static/src/components/bom_overview_display_filter/mrp_bom_overview_display_filter.esm.js:0
+#: code:addons/ddmrp/static/src/components/bom_overview_table/mrp_bom_overview_table.xml:0
 #: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_line_search
+#: model_terms:ir.ui.view,arch_db:ddmrp.report_mrp_bom_inherit_ddmrp
+#, python-format
 msgid "Buffered"
 msgstr ""
 
@@ -351,14 +357,12 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.actions.server,name:ddmrp.ir_cron_ddmrp_adu_calculation_scheduler_action_ir_actions_server
 #: model:ir.cron,cron_name:ddmrp.ir_cron_ddmrp_adu_calculation_scheduler_action
-#: model:ir.cron,name:ddmrp.ir_cron_ddmrp_adu_calculation_scheduler_action
 msgid "DDMRP Buffer ADU calculation"
 msgstr "DDMRP 缓冲ADU 计算"
 
 #. module: ddmrp
 #: model:ir.actions.server,name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action_ir_actions_server
 #: model:ir.cron,cron_name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action
-#: model:ir.cron,name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action
 #, fuzzy
 msgid "DDMRP Buffer calculation"
 msgstr "运行DDMRP缓冲计算"
@@ -401,13 +405,22 @@ msgid "DDMRP Supply Chart"
 msgstr "DDMRP 图表"
 
 #. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.report_mrpbomstructure_ddmrp
+#. odoo-javascript
+#: code:addons/ddmrp/static/src/components/bom_overview_table/mrp_bom_overview_table.xml:0
+#, python-format
 msgid "DLT"
 msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__dlt
 msgid "DLT (days)"
+msgstr ""
+
+#. module: ddmrp
+#. odoo-javascript
+#: code:addons/ddmrp/static/src/components/bom_overview_line/mrp_bom_overview_line.xml:0
+#, python-format
+msgid "Days"
 msgstr ""
 
 #. module: ddmrp
@@ -418,10 +431,11 @@ msgid "Decoupled Lead Time (days)"
 msgstr "解耦的前置时间(天)"
 
 #. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.report_mrpbomstructure_ddmrp
-#, fuzzy
-msgid "Decoupled lead time of the BoM"
-msgstr "解耦的前置时间(天)"
+#. odoo-javascript
+#: code:addons/ddmrp/static/src/components/bom_overview_table/mrp_bom_overview_table.xml:0
+#, python-format
+msgid "Decoupled Lead Time of the BoM."
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__product_uom
@@ -452,6 +466,7 @@ msgid "Distributed"
 msgstr "分布"
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/models/stock_buffer.py:0
 #, python-format
 msgid ""
@@ -485,7 +500,6 @@ msgid "Extra lead time (for Sizing)"
 msgstr ""
 
 #. module: ddmrp
-#: model:product.product,name:ddmrp.product_product_fp01
 #: model:product.template,name:ddmrp.product_product_fp01_product_template
 msgid "FP-01"
 msgstr ""
@@ -498,6 +512,7 @@ msgid ""
 msgstr ""
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_fixed
 #, python-format
@@ -532,6 +547,7 @@ msgid "Future Source"
 msgstr ""
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
 #, python-format
 msgid "Future-looking"
@@ -615,6 +631,16 @@ msgid "Has Stock In Source Location"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_purchase_hide_onhand_status
+msgid "Hide Purchase On-Hand Status"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Hides on-hand status from purchase order line."
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__id
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__id
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__id
@@ -632,6 +658,7 @@ msgid "If set, will be used as preferred vendor for purchase routes."
 msgstr ""
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
 #, python-format
 msgid ""
@@ -706,13 +733,7 @@ msgstr "项目类型"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__item_ids
-#: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
 msgid "Items"
-msgstr ""
-
-#. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.report_mrpbomstructure_ddmrp
-msgid "LT"
 msgstr ""
 
 #. module: ddmrp
@@ -766,11 +787,6 @@ msgstr "前置时间因子"
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__lead_days
 msgid "Lead time for distributed products."
-msgstr ""
-
-#. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.report_mrpbomstructure_ddmrp
-msgid "Lead time of the product"
 msgstr ""
 
 #. module: ddmrp
@@ -916,6 +932,7 @@ msgid "Net flow position (% of TOG)"
 msgstr "净流位置 (% of TOG)"
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/models/stock_buffer.py:0
 #, python-format
 msgid "No demand detected."
@@ -927,18 +944,21 @@ msgid "No stock available on source location for distributed buffer"
 msgstr ""
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/wizards/make_procurement_buffer.py:0
 #, python-format
 msgid "No stock buffer found."
 msgstr ""
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/models/stock_buffer.py:0
 #, python-format
 msgid "No supply detected."
 msgstr ""
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/models/stock_buffer.py:0
 #, python-format
 msgid "Non-completed Moves"
@@ -994,12 +1014,6 @@ msgid "Open Non-completed Moves"
 msgstr "开放未完成的移动"
 
 #. module: ddmrp
-#: code:addons/ddmrp/hooks.py:0
-#, python-format
-msgid "Operations"
-msgstr ""
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__order_spike_horizon
 msgid "Order Spike Horizon"
 msgstr "订单尖峰视界"
@@ -1038,6 +1052,7 @@ msgid "Past Source"
 msgstr ""
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
 #, python-format
 msgid "Past-looking"
@@ -1064,24 +1079,28 @@ msgid "Planning Priority Zones"
 msgstr "计划优先级区"
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
 #, python-format
 msgid "Please indicate a Future Horizon."
 msgstr ""
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
 #, python-format
 msgid "Please indicate a Future Source."
 msgstr ""
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
 #, python-format
 msgid "Please indicate a Past Horizon."
 msgstr ""
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
 #, python-format
 msgid "Please indicate a Past Source."
@@ -1128,7 +1147,7 @@ msgid "Procurement recommended"
 msgstr "补货建议"
 
 #. module: ddmrp
-#: model:ir.model,name:ddmrp.model_product_product
+#: model:ir.model,name:ddmrp.model_product_template
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__product_id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_id
 msgid "Product"
@@ -1150,8 +1169,8 @@ msgid "Product Moves (Stock Move Line)"
 msgstr ""
 
 #. module: ddmrp
-#: model:ir.model,name:ddmrp.model_product_template
-msgid "Product Template"
+#: model:ir.model,name:ddmrp.model_product_product
+msgid "Product Variant"
 msgstr ""
 
 #. module: ddmrp
@@ -1256,6 +1275,7 @@ msgid ""
 msgstr ""
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/wizards/make_procurement_buffer.py:0
 #, python-format
 msgid "Quantity must be positive."
@@ -1272,13 +1292,11 @@ msgid "RFQ Qty Outside DLT"
 msgstr ""
 
 #. module: ddmrp
-#: model:product.product,name:ddmrp.product_product_rm01
 #: model:product.template,name:ddmrp.product_product_rm01_product_template
 msgid "RM-01"
 msgstr ""
 
 #. module: ddmrp
-#: model:product.product,name:ddmrp.product_product_rm02
 #: model:product.template,name:ddmrp.product_product_rm02_product_template
 msgid "RM-02"
 msgstr ""
@@ -1660,20 +1678,7 @@ msgid "Unit of Measure"
 msgstr ""
 
 #. module: ddmrp
-#: model:product.product,uom_name:ddmrp.product_product_as01
-#: model:product.product,uom_name:ddmrp.product_product_fp01
-#: model:product.product,uom_name:ddmrp.product_product_rm01
-#: model:product.product,uom_name:ddmrp.product_product_rm02
-#: model:product.template,uom_name:ddmrp.product_product_as01_product_template
-#: model:product.template,uom_name:ddmrp.product_product_fp01_product_template
-#: model:product.template,uom_name:ddmrp.product_product_rm01_product_template
-#: model:product.template,uom_name:ddmrp.product_product_rm02_product_template
-#: model:stock.buffer,product_uom_name:ddmrp.stock_buffer_fp01
-#: model:stock.buffer,product_uom_name:ddmrp.stock_buffer_rm01
-msgid "Units"
-msgstr ""
-
-#. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/models/stock_buffer.py:0
 #, python-format
 msgid "Unsupported operator %s"
@@ -1856,6 +1861,7 @@ msgid "Yellow zone"
 msgstr "黄区"
 
 #. module: ddmrp
+#. odoo-python
 #: code:addons/ddmrp/models/stock_buffer.py:0
 #, python-format
 msgid ""
@@ -1880,15 +1886,13 @@ msgid "days"
 msgstr "天"
 
 #. module: ddmrp
-#: code:addons/ddmrp/hooks.py:0
-#, python-format
-msgid "minutes"
-msgstr ""
-
-#. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Decoupled lead time of the BoM"
+#~ msgstr "解耦的前置时间(天)"
 
 #~ msgid "Buffer size factors"
 #~ msgstr "缓冲大小因子"
