@@ -1,0 +1,43 @@
+<odoo>
+    <template id="report_mrp_bom_inherit_ddmrp" inherit_id="mrp.report_mrp_bom">
+        <xpath expr="//th[@name='th_mrp_bom_h']" position="before">
+            <th t-if="data['show_buffered']">Buffered</th>
+        </xpath>
+
+        <xpath expr="//td[@name='td_mrp_bom']" position="before">
+            <td t-if="data['show_buffered']">
+                <span>
+                    <img
+                        src='/ddmrp/static/img/is_buffered.png'
+                        style="width:30px;height:30px;padding:5px"
+                    />
+                </span>
+            </td>
+        </xpath>
+
+        <xpath expr="//td[@name='td_mrp_bom_f']" position="before">
+            <td t-if="data['show_buffered']" />
+        </xpath>
+
+        <xpath expr="//td[@name='td_mrp_bom_byproducts_f']" position="before">
+            <td t-if="data['show_buffered']" />
+        </xpath>
+
+    </template>
+
+    <template
+        id="report_mrp_bom_pdf_line_inherit_ddmrp"
+        inherit_id="mrp.report_mrp_bom_pdf_line"
+    >
+        <xpath expr="//td[@name='td_mrp_code']" position="before">
+            <td t-if="data['show_buffered']">
+                <span t-if="l.get('is_buffered')">
+                    <img
+                        src='/ddmrp/static/img/is_buffered.png'
+                        style="width:30px;height:30px;padding:5px"
+                    />
+                </span>
+            </td>
+        </xpath>
+    </template>
+</odoo>

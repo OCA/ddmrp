@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2017-18 ForgeFlow S.L. (http://www.forgeflow.com)
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="purchase_order_line_execution_tree" model="ir.ui.view">
+        <field name="name">purchase.order.line.tree - ddmrp</field>
+        <field name="model">purchase.order.line</field>
+        <field name="arch" type="xml">
+            <tree
+                default_order='execution_priority_level,on_hand_percent'
+                create="false"
+                editable="top"
+                delete="false"
+                multi_edit="1"
+            >
+                <field name="order_id" widget="many2one" readonly="True" />
+                <field name="partner_id" string="Vendor" />
+                <field name="execution_priority_level" invisible="1" />
+                <field
+                    name="on_hand_percent"
+                    options='{"buffer_ids": "buffer_ids", "color_from": "execution_priority_level"}'
+                />
+                <field name="product_qty" readonly="True" />
+                <field name="product_id" readonly="True" />
+                <field
+                    name="buffer_ids"
+                    string="Buffers"
+                    widget="many2many_tags"
+                    readonly="1"
+                />
+                <field name="date_planned" />
+                <field name="state" />
+                <field name="ddmrp_comment" />
+            </tree>
+        </field>
+    </record>
+    <record id="purchase_order_line_search" model="ir.ui.view">
+        <field name="name">purchase.order.line.search - ddmrp</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase.purchase_order_line_search" />
+        <field name="arch" type="xml">
+            <filter name="hide_cancelled" position="after">
+                <filter
+                    name="hide_no_buffer"
+                    string="Buffered"
+                    domain="[('buffer_ids','!=',False), ('execution_priority_level','!=',False)]"
+                />
+                <separator />
+                <group name="execution_priority" string="On Hand Alert Zones">
+                    <filter
+                        name="execution_priority_level_red"
+                        string="Red"
+                        domain="[('execution_priority_level', '=', '1_red')]"
+                    />
+                    <filter
+                        name="execution_priority_level_yellow"
+                        string="Yellow"
+                        domain="[('execution_priority_level', '=', '2_yellow')]"
+                    />
+                    <filter
+                        name="execution_priority_level_green"
+                        string="Green"
+                        domain="[('execution_priority_level', '=', '3_green')]"
+                    />
+                </group>
+            </filter>
+        </field>
+    </record>
+    <record id="po_line_execution_action" model="ir.actions.act_window">
+        <field name="name">PO lines On-Hand Status</field>
+        <field name="res_model">purchase.order.line</field>
+        <field name="view_id" ref="purchase_order_line_execution_tree" />
+        <field name="domain" />
+        <field name="context">{"search_default_hide_no_buffer":1}</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem
+        id="menu_pol_execution"
+        action="po_line_execution_action"
+        parent="purchase.menu_procurement_management"
+        sequence="8"
+    />
+</odoo>

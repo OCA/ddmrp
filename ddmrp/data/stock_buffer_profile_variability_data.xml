@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record
+        id="stock_buffer_profile_variability_low"
+        model="stock.buffer.profile.variability"
+    >
+        <field name="name">Low</field>
+        <field name="factor">0.25</field>
+    </record>
+    <record
+        id="stock_buffer_profile_variability_medium"
+        model="stock.buffer.profile.variability"
+    >
+        <field name="name">Medium</field>
+        <field name="factor">0.5</field>
+    </record>
+    <record
+        id="stock_buffer_profile_variability_high"
+        model="stock.buffer.profile.variability"
+    >
+        <field name="name">High</field>
+        <field name="factor">0.75</field>
+    </record>
+</odoo>
