@@ -247,12 +247,22 @@ class TestDdmrpCommon(common.TransactionCase):
                 "delay": 8.0,
             }
         )
+        # Product D (distributed):
+        cls.product_distributed = cls.productModel.create(
+            {
+                "name": "product Distributed",
+                "standard_price": 1,
+                "type": "product",
+                "uom_id": cls.uom_unit.id,
+                "default_code": "D",
+                # TODO: "route_ids": [(6, 0, distribution_route.id)],
+            }
+        )
 
         # Create buffers:
         cls.buffer_a = cls.bufferModel.create(
             {
-                # TODO: this should a manufacture buffer profile. task for v14 mig.
-                "buffer_profile_id": cls.buffer_profile_pur.id,
+                "buffer_profile_id": cls.buffer_profile_mmm.id,
                 "product_id": cls.productA.id,
                 "location_id": cls.stock_location.id,
                 "warehouse_id": cls.warehouse.id,
@@ -294,6 +304,18 @@ class TestDdmrpCommon(common.TransactionCase):
                 "qty_multiple": 1.0,
                 "adu_calculation_method": cls.adu_fixed.id,
                 "adu_fixed": 5.0,
+            }
+        )
+        cls.buffer_distributed = cls.bufferModel.create(
+            {
+                "buffer_profile_id": cls.buffer_profile_distr.id,
+                "product_id": cls.product_distributed.id,
+                "location_id": cls.stock_location.id,
+                "warehouse_id": cls.warehouse.id,
+                "qty_multiple": 1.0,
+                "adu_calculation_method": cls.adu_fixed.id,
+                "adu_fixed": 5.0,
+                "lead_days": 20,
             }
         )
 
