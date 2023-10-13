@@ -126,21 +126,23 @@ export class StockBufferInfoWidget extends FloatField {
         ev.stopPropagation();
         ev.preventDefault();
         this.updateCalcData();
-        this.closePopover = this.popover.add(
-            ev.currentTarget,
-            this.constructor.components.Popover,
-            {
-                bus: this.bus,
-                record: this.props.record,
-                calcData: this.calcData,
-                field: this.props.field,
-                color_from: this.props.color_from,
-            },
-            {
-                position: "right",
-            }
-        );
-        this.bus.addEventListener("close-popover", this.closePopover);
+        if (!this.closePopover) {
+            this.closePopover = this.popover.add(
+                ev.currentTarget,
+                this.constructor.components.Popover,
+                {
+                    bus: this.bus,
+                    record: this.props.record,
+                    calcData: this.calcData,
+                    field: this.props.field,
+                    color_from: this.props.color_from,
+                },
+                {
+                    position: "right",
+                }
+            );
+            this.bus.addEventListener("close-popover", this.closePopover);
+        }
     }
 }
 
