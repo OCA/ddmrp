@@ -24,6 +24,7 @@ class ProductAduCalculationMethod(models.Model):
         return [
             ("actual", "Use actual Stock Moves"),
             ("estimates", "Use Demand Estimates"),
+            ("estimates_mrp", "Use Demand Estimates + Indirect Demand from MRP Moves"),
         ]
 
     name = fields.Char(required=True)
