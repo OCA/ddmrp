@@ -19,4 +19,13 @@
         <field name="source_future">estimates</field>
         <field name="horizon_future">120</field>
     </record>
+    <record
+        id="adu_calculation_method_future_120_estimates_mrp"
+        model="product.adu.calculation.method"
+    >
+        <field name="name">Future (Direct + Indirect)(120 days)</field>
+        <field name="method">future</field>
+        <field name="source_future">estimates_mrp</field>
+        <field name="horizon_future">120</field>
+    </record>
 </odoo>
