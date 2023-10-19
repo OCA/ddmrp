@@ -75,7 +75,7 @@ class BomStructureReport(models.AbstractModel):
                 or 0.0
             )
         res["is_buffered"] = bom_line.is_buffered
-        res["lead_time"] = lead_time or ""
+        res["lead_time"] = lead_time or False
         res["dlt"] = bom_line.dlt
         return res
 
