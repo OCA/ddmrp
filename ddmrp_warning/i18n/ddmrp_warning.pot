@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -55,7 +55,6 @@ msgstr ""
 #. module: ddmrp_warning
 #: model:ir.actions.server,name:ddmrp_warning.ir_cron_ddmrp_warning_calculation_scheduler_action_ir_actions_server
 #: model:ir.cron,cron_name:ddmrp_warning.ir_cron_ddmrp_warning_calculation_scheduler_action
-#: model:ir.cron,name:ddmrp_warning.ir_cron_ddmrp_warning_calculation_scheduler_action
 msgid "DDMRP Buffer Warning calculation"
 msgstr ""
 
@@ -112,6 +111,7 @@ msgid ""
 msgstr ""
 
 #. module: ddmrp_warning
+#. odoo-python
 #: code:addons/ddmrp_warning/models/ddmrp_warning_definition.py:0
 #, python-format
 msgid ""
