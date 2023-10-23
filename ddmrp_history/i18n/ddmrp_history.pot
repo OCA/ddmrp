@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -105,6 +105,7 @@ msgid "Net flow position"
 msgstr ""
 
 #. module: ddmrp_history
+#. odoo-python
 #: code:addons/ddmrp_history/models/stock_buffer.py:0
 #: code:addons/ddmrp_history/models/stock_buffer.py:0
 #, python-format
