@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 ForgeFlow S.L. (https://www.forgeflow.com)
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
+ -->
+<odoo>
+    <record id="stock_buffer_view_form" model="ir.ui.view">
+        <field name="name">stock.buffer.form</field>
+        <field name="model">stock.buffer</field>
+        <field name="inherit_id" ref="ddmrp.stock_buffer_view_form" />
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="warnings" string="Warnings">
+                    <button
+                        string="Refresh Warnings"
+                        name="action_generate_warnings"
+                        icon="fa-refresh"
+                        type="object"
+                        colspan="2"
+                    />
+                    <field name="ddmrp_warning_item_ids" nolabel="1" colspan="2">
+                        <tree
+                            decoration-info="severity == '1_low'"
+                            decoration-warning="severity == '2_mid'"
+                            decoration-danger="severity == '3_high'"
+                        >
+                            <field name="name" />
+                            <field name="severity" />
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+    <record id="stock_buffer_search" model="ir.ui.view">
+        <field name="name">stock.buffer.search - ddmrp_warning</field>
+        <field name="model">stock.buffer</field>
+        <field name="inherit_id" ref="ddmrp.stock_buffer_search" />
+        <field name="arch" type="xml">
+            <group name="procure_recommendation" position="after">
+                <separator />
+                <group name="warnings">
+                    <filter
+                        name="has_ddmrp_warnings"
+                        string="With Warnings"
+                        domain="[('ddmrp_warning_item_ids', '!=', False)]"
+                    />
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>
