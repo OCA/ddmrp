@@ -1,0 +1,162 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ddmrp_history
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__adu
+msgid "ADU"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__adu
+msgid "Average Daily Usage"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__buffer_id
+msgid "Buffer"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.actions.act_window,name:ddmrp_history.action_ddmrp_history
+#: model:ir.ui.menu,name:ddmrp_history.menu_ddmrp_history
+msgid "DDMRP Buffer History"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model,name:ddmrp_history.model_ddmrp_history
+msgid "DDMRP History"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__date
+msgid "Date"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: ddmrp_history
+#: model_terms:ir.ui.view,arch_db:ddmrp_history.stock_buffer_view_form
+msgid "Execution Chart"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_stock_buffer__execution_history_chart
+msgid "Execution Historical Chart"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_stock_buffer__planning_history_chart
+msgid "Historical Chart"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__id
+msgid "ID"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__net_flow_position
+msgid "NFP"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__net_flow_position
+msgid "Net flow position"
+msgstr ""
+
+#. module: ddmrp_history
+#: code:addons/ddmrp_history/models/stock_buffer.py:0
+#: code:addons/ddmrp_history/models/stock_buffer.py:0
+#, python-format
+msgid "Not enough data available."
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__on_hand_position
+msgid "OHP"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__on_hand_position
+msgid "On-Hand Position"
+msgstr ""
+
+#. module: ddmrp_history
+#: model_terms:ir.ui.view,arch_db:ddmrp_history.stock_buffer_view_form
+msgid "Planning Chart"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model,name:ddmrp_history.model_stock_buffer
+msgid "Stock Buffer"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__top_of_green
+msgid "TOG"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__top_of_red
+msgid "TOR"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__top_of_yellow
+msgid "TOY"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__top_of_green
+msgid "Top of Green"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__top_of_red
+msgid "Top of Red"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__top_of_yellow
+msgid "Top of Yellow"
+msgstr ""
