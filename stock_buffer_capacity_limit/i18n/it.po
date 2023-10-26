@@ -6,38 +6,40 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-10-28 20:07+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_buffer_capacity_limit
 #: model:ir.model.fields,field_description:stock_buffer_capacity_limit.field_stock_buffer__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: stock_buffer_capacity_limit
 #: model:ir.model.fields,field_description:stock_buffer_capacity_limit.field_stock_buffer__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_buffer_capacity_limit
 #: model:ir.model.fields,field_description:stock_buffer_capacity_limit.field_stock_buffer____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: stock_buffer_capacity_limit
 #: model:ir.model,name:stock_buffer_capacity_limit.model_stock_buffer
 msgid "Stock Buffer"
-msgstr ""
+msgstr "Buffer di materiale"
 
 #. module: stock_buffer_capacity_limit
 #: model:ir.model.fields,field_description:stock_buffer_capacity_limit.field_stock_buffer__storage_capacity_limit
 msgid "Storage Capacity Limit"
-msgstr ""
+msgstr "Limite capactà stoccaggio"
 
 #. module: stock_buffer_capacity_limit
 #: model:ir.model.fields,help:stock_buffer_capacity_limit.field_stock_buffer__storage_capacity_limit
@@ -46,3 +48,6 @@ msgid ""
 "(considering short-term incoming qty as well) over this limit, even if this "
 "means that you have planning or execution alerts."
 msgstr ""
+"Il sistema non proporrà mai un approvvigionamento che muoerà qta- "
+"disponibile (considerando qta in ingresso a breve) oltre questo limite, "
+"anche se qusto significa avere allerte pianificazion o esecuzione."
