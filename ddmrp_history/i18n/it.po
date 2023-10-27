@@ -6,158 +6,160 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-10-28 20:10+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__adu
 msgid "ADU"
-msgstr ""
+msgstr "ADU"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__adu
 msgid "Average Daily Usage"
-msgstr ""
+msgstr "Utilizzo medio giornaliero"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__buffer_id
 msgid "Buffer"
-msgstr ""
+msgstr "Buffer"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: ddmrp_history
 #: model:ir.actions.act_window,name:ddmrp_history.action_ddmrp_history
 #: model:ir.ui.menu,name:ddmrp_history.menu_ddmrp_history
 msgid "DDMRP Buffer History"
-msgstr ""
+msgstr "Storico buffer DDMRP"
 
 #. module: ddmrp_history
 #: model:ir.model,name:ddmrp_history.model_ddmrp_history
 msgid "DDMRP History"
-msgstr ""
+msgstr "Storico DDMRP"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__date
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: ddmrp_history
 #: model_terms:ir.ui.view,arch_db:ddmrp_history.stock_buffer_view_form
 msgid "Execution Chart"
-msgstr ""
+msgstr "Grafico esecuzione"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_stock_buffer__execution_history_chart
 msgid "Execution Historical Chart"
-msgstr ""
+msgstr "Grafico storico esecuzione"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_stock_buffer__planning_history_chart
 msgid "Historical Chart"
-msgstr ""
+msgstr "Grafico storico"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__net_flow_position
 msgid "NFP"
-msgstr ""
+msgstr "NFP"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__net_flow_position
 msgid "Net flow position"
-msgstr ""
+msgstr "Posizione flusso netta"
 
 #. module: ddmrp_history
 #: code:addons/ddmrp_history/models/stock_buffer.py:0
 #: code:addons/ddmrp_history/models/stock_buffer.py:0
 #, python-format
 msgid "Not enough data available."
-msgstr ""
+msgstr "Dati disponibili non sufficienti."
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__on_hand_position
 msgid "OHP"
-msgstr ""
+msgstr "OHP"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__on_hand_position
 msgid "On-Hand Position"
-msgstr ""
+msgstr "Posizione a disposizione"
 
 #. module: ddmrp_history
 #: model_terms:ir.ui.view,arch_db:ddmrp_history.stock_buffer_view_form
 msgid "Planning Chart"
-msgstr ""
+msgstr "Grafico pianificazione"
 
 #. module: ddmrp_history
 #: model:ir.model,name:ddmrp_history.model_stock_buffer
 msgid "Stock Buffer"
-msgstr ""
+msgstr "Buffer di materiale"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__top_of_green
 msgid "TOG"
-msgstr ""
+msgstr "TOG"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__top_of_red
 msgid "TOR"
-msgstr ""
+msgstr "TOR"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__top_of_yellow
 msgid "TOY"
-msgstr ""
+msgstr "TOY"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__top_of_green
 msgid "Top of Green"
-msgstr ""
+msgstr "Superiore della verde"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__top_of_red
 msgid "Top of Red"
-msgstr ""
+msgstr "Superiore della rossa"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__top_of_yellow
 msgid "Top of Yellow"
-msgstr ""
+msgstr "Superiore della gialla"
