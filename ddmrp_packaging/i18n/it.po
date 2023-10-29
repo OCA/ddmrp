@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-10-28 20:10+0000\n"
+"PO-Revision-Date: 2023-10-29 17:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -34,7 +34,7 @@ msgstr "Multiplo collo"
 #. module: ddmrp_packaging
 #: model:ir.model.fields,field_description:ddmrp_packaging.field_make_procurement_buffer_item__packaging_qty
 msgid "Package Qty"
-msgstr "Qta collo"
+msgstr "Q.tà collo"
 
 #. module: ddmrp_packaging
 #: model:ir.model.fields,field_description:ddmrp_packaging.field_stock_buffer__packaging_id
@@ -50,7 +50,7 @@ msgstr "Selezionare un imballaggio del prodotto del buffer."
 #. module: ddmrp_packaging
 #: model:ir.model.fields,field_description:ddmrp_packaging.field_stock_buffer__qty_multiple
 msgid "Qty Multiple"
-msgstr "Multiplo qta."
+msgstr "Multiplo q.tà"
 
 #. module: ddmrp_packaging
 #: model:ir.model,name:ddmrp_packaging.model_stock_buffer
