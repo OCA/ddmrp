@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-10-29 08:47+0000\n"
+"PO-Revision-Date: 2023-10-29 17:39+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -605,7 +605,7 @@ msgstr "Ciclo ordine zona verde"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__green_zone_qty
 msgid "Green Zone Qty"
-msgstr "Qta. zona verde"
+msgstr "Q.tà zona verde"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
@@ -620,12 +620,12 @@ msgstr "Fattore tempo attraversamento zona verde"
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__green_zone_oc
 msgid "Green zone qty option considering desired Order Cycle"
-msgstr "Opzione qta. zona verde considerando il ciclo ordine desiderato"
+msgstr "Opzione q.tà zona verde considerando il ciclo ordine desiderato"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__green_zone_moq
 msgid "Green zone qty option considering minimum order quantity"
-msgstr "Opzione qta. zona verde considerando la quantità ordine minima"
+msgstr "Opzione q.tà zona verde considerando la quantità ordine minima"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
@@ -1215,23 +1215,23 @@ msgstr "Acquistato"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__qty
 msgid "Qty"
-msgstr "Qta."
+msgstr "Q.tà"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__qty_multiple
 msgid "Qty Multiple"
-msgstr "Multiplo qta."
+msgstr "Multiplo q.tà"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_res_company__ddmrp_qty_multiple_tolerance
 #: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__ddmrp_qty_multiple_tolerance
 msgid "Qty Multiple Tolerance"
-msgstr "Tolleranza multiplo qta."
+msgstr "Tolleranza multiplo q.tà"
 
 #. module: ddmrp
 #: model:ir.model.constraint,message:ddmrp.constraint_stock_buffer_qty_multiple_check
 msgid "Qty Multiple must be greater than or equal to zero."
-msgstr "Il multiplo qta. deve essere maggiore o uguale a zero."
+msgstr "Il multiplo q.tà deve essere maggiore o uguale a zero."
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__qualified_demand
@@ -1294,12 +1294,12 @@ msgstr "La quantità deve essere positiva."
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_outside_dlt_qty
 msgid "RFQ Qty (Outside DLT)"
-msgstr "Qta. RFQ (fuori da DLT)"
+msgstr "Q.tà RdP (fuori da DLT)"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "RFQ Qty Outside DLT"
-msgstr "Qta. RFQ fuori da DLT"
+msgstr "Q.tà RdP fuori da DLT"
 
 #. module: ddmrp
 #: model:product.template,name:ddmrp.product_product_rm01_product_template
@@ -1319,7 +1319,7 @@ msgstr "Tempo elaborazione massimo rischedulazione approvvigionamento (minuti)"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__recommended_qty
 msgid "Recommended Qty"
-msgstr "Qta. suggerita"
+msgstr "Q.tà suggerita"
 
 #. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__mrp_production__execution_priority_level__1_red
@@ -1335,12 +1335,12 @@ msgstr "Rossa"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__red_base_qty
 msgid "Red Base Qty"
-msgstr "Qta. base rossa"
+msgstr "Q.tà base rossa"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__red_safety_qty
 msgid "Red Safety Qty"
-msgstr "Qta. sicurezza rossa"
+msgstr "Q.tà sicurezza rossa"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__red_override
@@ -1351,7 +1351,7 @@ msgstr "Zona rossa (forza)"
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__red_zone_qty
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_red
 msgid "Red Zone Qty"
-msgstr "Qta. zona rossa"
+msgstr "Q.tà zona rossa"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
@@ -1907,7 +1907,7 @@ msgstr "Zona gialla (forza)"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__yellow_zone_qty
 msgid "Yellow Zone Qty"
-msgstr "Qta. zona gialla"
+msgstr "Q.tà zona gialla"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
