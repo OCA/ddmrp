@@ -56,7 +56,6 @@ msgstr ""
 #. module: ddmrp_warning
 #: model:ir.actions.server,name:ddmrp_warning.ir_cron_ddmrp_warning_calculation_scheduler_action_ir_actions_server
 #: model:ir.cron,cron_name:ddmrp_warning.ir_cron_ddmrp_warning_calculation_scheduler_action
-#: model:ir.cron,name:ddmrp_warning.ir_cron_ddmrp_warning_calculation_scheduler_action
 msgid "DDMRP Buffer Warning calculation"
 msgstr ""
 
@@ -113,6 +112,7 @@ msgid ""
 msgstr ""
 
 #. module: ddmrp_warning
+#. odoo-python
 #: code:addons/ddmrp_warning/models/ddmrp_warning_definition.py:0
 #, python-format
 msgid ""
@@ -155,6 +155,11 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__location_id
+msgid "Location"
+msgstr ""
+
+#. module: ddmrp_warning
 #: model:ir.model.fields.selection,name:ddmrp_warning.selection__ddmrp_warning_definition__severity__1_low
 msgid "Low"
 msgstr ""
@@ -167,6 +172,11 @@ msgstr ""
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__name
 msgid "Name"
+msgstr ""
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__product_id
+msgid "Product"
 msgstr ""
 
 #. module: ddmrp_warning
