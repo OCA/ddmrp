@@ -109,6 +109,7 @@ msgid "Net flow position"
 msgstr "Posición de flujo neto"
 
 #. module: ddmrp_history
+#. odoo-python
 #: code:addons/ddmrp_history/models/stock_buffer.py:0
 #, python-format
 msgid "Not enough data available."
