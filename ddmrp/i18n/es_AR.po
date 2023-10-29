@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-05-26 21:09+0000\n"
+"PO-Revision-Date: 2023-10-29 23:56+0000\n"
 "Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es_AR\n"
@@ -145,7 +145,7 @@ msgstr "Posición de Destino Promedio Disponible"
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_report_mrp_report_bom_structure
 msgid "BOM Overview Report"
-msgstr ""
+msgstr "Informe General de Lista de Materiales"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_mrp_bom
@@ -437,7 +437,7 @@ msgstr "LTD (días)"
 #: code:addons/ddmrp/static/src/components/bom_overview_line/mrp_bom_overview_line.xml:0
 #, python-format
 msgid "Days"
-msgstr ""
+msgstr "Días"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__dlt
@@ -451,7 +451,7 @@ msgstr "Tiempo de Iniciativa Desacoplado (días)"
 #: code:addons/ddmrp/static/src/components/bom_overview_table/mrp_bom_overview_table.xml:0
 #, python-format
 msgid "Decoupled Lead Time of the BoM."
-msgstr ""
+msgstr "Plazo de Entrega desacoplado de la Lista de Materiales."
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__product_uom
@@ -652,12 +652,12 @@ msgstr "Tiene Stock en la Ubicación de Origen"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_purchase_hide_onhand_status
 msgid "Hide Purchase On-Hand Status"
-msgstr ""
+msgstr "Ocultar el Estado A Mano de Compra"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid "Hides on-hand status from purchase order line."
-msgstr ""
+msgstr "Oculta el estado a mano de la línea del pedido de compra."
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__id
@@ -1185,7 +1185,7 @@ msgstr "Movimientos de Producto (Líneas de Movimiento de Inventario)"
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variante del Producto"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_mrp_production
