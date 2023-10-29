@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-10-28 20:10+0000\n"
+"PO-Revision-Date: 2023-10-29 17:38+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -34,7 +34,7 @@ msgstr "Multiplo collo"
 #. module: ddmrp_packaging
 #: model:ir.model.fields,field_description:ddmrp_packaging.field_make_procurement_buffer_item__packaging_qty
 msgid "Package Qty"
-msgstr "Qta collo"
+msgstr "Q.tà collo"
 
 #. module: ddmrp_packaging
 #: model:ir.model.fields,field_description:ddmrp_packaging.field_stock_buffer__packaging_id
@@ -50,7 +50,7 @@ msgstr "Selezionare un imballaggio del prodotto del buffer."
 #. module: ddmrp_packaging
 #: model:ir.model.fields,field_description:ddmrp_packaging.field_stock_buffer__qty_multiple
 msgid "Qty Multiple"
-msgstr "Multiplo qta."
+msgstr "Q.tà multiple"
 
 #. module: ddmrp_packaging
 #: model:ir.model,name:ddmrp_packaging.model_stock_buffer
@@ -73,8 +73,8 @@ msgid ""
 "This product is packaged by %.2f %s. You should set 'Qty Multiple' to %.2f "
 "%s."
 msgstr ""
-"Questo prodotto è imballato per %.2f %s. Bisogna impostare 'Multiplo qta.' a "
-"%.2f %s."
+"Questo prodotto è imballato per %.2f %s. Bisogna impostare 'Multiplo q.tà.' "
+"a %.2f %s."
 
 #. module: ddmrp_packaging
 #: code:addons/ddmrp_packaging/models/stock_buffer.py:0
