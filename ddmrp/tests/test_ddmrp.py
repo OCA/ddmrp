@@ -1100,7 +1100,7 @@ class TestDdmrp(TestDdmrpCommon):
         # create mrp move: 120 units / 120 days = 1 unit/day
         dt = self.calendar.plan_days(-1 * 120, datetime.today())
         estimate_date_from = dt.date()
-        estimate_date_to = self.estimate_date_from - timedelta(days=1)
+        estimate_date_to = (datetime.today() - timedelta(days=1)).date()
         self.estimateModel.create(
             {
                 "manual_date_from": estimate_date_from,
