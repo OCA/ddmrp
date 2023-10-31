@@ -194,6 +194,18 @@ class StockBuffer(models.Model):
         action["domain"] = self._past_moves_domain(date_from, date_to, locations)
         return action
 
+    def _demand_estimate_domain(self, locations, date_from=False, date_to=False):
+        self.ensure_one()
+        domain = [
+            ("location_id", "in", locations.ids),
+            ("product_id", "=", self.product_id.id),
+        ]
+        if date_to:
+            domain += [("date_from", "<=", date_to)]
+        if date_from:
+            domain += [("date_to", ">=", date_from)]
+        return domain
+
     def action_view_stock_demand_estimates(self):
         result = self.env["ir.actions.actions"]._for_xml_id(
             "stock_demand_estimate.stock_demand_estimate_action"
@@ -201,12 +213,8 @@ class StockBuffer(models.Model):
         locations = self.env["stock.location"].search(
             [("id", "child_of", [self.location_id.id])]
         )
-        recs = self.env["stock.demand.estimate"].search(
-            [
-                ("product_id", "=", self.product_id.id),
-                ("location_id", "in", locations.ids),
-            ]
-        )
+        domain = self._demand_estimate_domain(locations)
+        recs = self.env["stock.demand.estimate"].search(domain)
         result["domain"] = [("id", "in", recs.ids)]
         return result
 
@@ -1348,7 +1356,7 @@ class StockBuffer(models.Model):
                 "in",
                 ["draft", "waiting", "confirmed", "partially_available", "assigned"],
             ),
-            ("location_dest_id", "=", self.location_id.id),
+            ("location_dest_id", "child_of", [self.location_id.id]),
         ]
 
     @api.model
@@ -1402,15 +1410,6 @@ class StockBuffer(models.Model):
             ("mrp_origin", "in", ["mrp", "mo"]),
         ]
 
-    def _past_demand_estimate_domain(self, date_from, date_to, locations):
-        self.ensure_one()
-        return [
-            ("location_id", "in", locations.ids),
-            ("product_id", "=", self.product_id.id),
-            ("date_from", "<=", date_to),
-            ("date_to", ">=", date_from),
-        ]
-
     def _past_moves_domain(self, date_from, date_to, locations):
         self.ensure_one()
         domain = [
@@ -1443,7 +1442,7 @@ class StockBuffer(models.Model):
             for mrp_move in self.env["mrp.move"].search(domain):
                 qty += -mrp_move.mrp_qty
         if self.adu_calculation_method.source_past in ["estimates", "estimates_mrp"]:
-            domain = self._past_demand_estimate_domain(date_from, date_to, locations)
+            domain = self._demand_estimate_domain(locations, date_from, date_to)
             for estimate in self.env["stock.demand.estimate"].search(domain):
                 qty += estimate.get_quantity_by_date_range(
                     fields.Date.from_string(date_from), fields.Date.from_string(date_to)
@@ -1480,15 +1479,6 @@ class StockBuffer(models.Model):
             ("mrp_origin", "in", ["mrp", "mo"]),
         ]
 
-    def _future_demand_estimate_domain(self, date_from, date_to, locations):
-        self.ensure_one()
-        return [
-            ("location_id", "in", locations.ids),
-            ("product_id", "=", self.product_id.id),
-            ("date_from", "<=", date_to),
-            ("date_to", ">=", date_from),
-        ]
-
     def _future_moves_domain(self, date_from, date_to, locations):
         self.ensure_one()
         domain = [
@@ -1517,7 +1507,7 @@ class StockBuffer(models.Model):
             for mrp_move in self.env["mrp.move"].search(domain):
                 qty += -mrp_move.mrp_qty
         if self.adu_calculation_method.source_future in ["estimates", "estimates_mrp"]:
-            domain = self._future_demand_estimate_domain(date_from, date_to, locations)
+            domain = self._demand_estimate_domain(locations, date_from, date_to)
             for estimate in self.env["stock.demand.estimate"].search(domain):
                 qty += estimate.get_quantity_by_date_range(
                     fields.Date.from_string(date_from), fields.Date.from_string(date_to)
@@ -1914,7 +1904,7 @@ class StockBuffer(models.Model):
             result["context"] = {}
             result["domain"] = [("id", "in", moves.ids)]
         else:
-            domain = self._past_demand_estimate_domain(date_from, date_to, locations)
+            domain = self._demand_estimate_domain(locations, date_from, date_to)
             estimates = self.env["stock.demand.estimate"].search(domain)
             result = self.env["ir.actions.actions"]._for_xml_id(
                 "stock_demand_estimate.stock_demand_estimate_action"
@@ -1953,7 +1943,7 @@ class StockBuffer(models.Model):
             result["context"] = {}
             result["domain"] = [("id", "in", moves.ids)]
         else:
-            domain = self._future_demand_estimate_domain(date_from, date_to, locations)
+            domain = self._demand_estimate_domain(locations, date_from, date_to)
             estimates = self.env["stock.demand.estimate"].search(domain)
             result = self.env["ir.actions.actions"]._for_xml_id(
                 "stock_demand_estimate.stock_demand_estimate_action"
