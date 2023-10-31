@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_buffer_view_form" model="ir.ui.view">
+        <field name="name">stock.buffer.form</field>
+        <field name="model">stock.buffer</field>
+        <field name="inherit_id" ref="ddmrp.stock_buffer_view_form" />
+        <field name="arch" type="xml">
+            <field name="location_id" position="after">
+                <field name="exclude_location_ids" widget="many2many_tags" />
+            </field>
+        </field>
+    </record>
+</odoo>
