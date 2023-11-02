@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-10-29 17:38+0000\n"
+"PO-Revision-Date: 2023-11-02 10:41+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -1546,7 +1546,7 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_move_line__state
 msgid "Status"
-msgstr "Stati"
+msgstr "Stato"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_buffer
