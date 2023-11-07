@@ -100,7 +100,6 @@ msgstr ""
 
 #. module: ddmrp_chatter
 #: model:ir.model.fields,help:ddmrp_chatter.field_stock_buffer__message_has_error
-#: model:ir.model.fields,help:ddmrp_chatter.field_stock_buffer__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -222,11 +221,6 @@ msgstr ""
 #. module: ddmrp_chatter
 #: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__activity_user_id
 msgid "Responsible User"
-msgstr ""
-
-#. module: ddmrp_chatter
-#: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__message_has_sms_error
-msgid "SMS Delivery error"
 msgstr ""
 
 #. module: ddmrp_chatter
