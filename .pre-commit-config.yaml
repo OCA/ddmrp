@@ -55,6 +55,9 @@ repos:
     rev: v0.0.25
     hooks:
       - id: oca-checks-odoo-module
+        # While https://github.com/OCA/oca-addons-repo-template/issues/233
+        # is not fixed.
+        args: ["--disable=xml-view-dangerous-replace-low-priority"]
       - id: oca-checks-po
   - repo: https://github.com/myint/autoflake
     rev: v1.4
