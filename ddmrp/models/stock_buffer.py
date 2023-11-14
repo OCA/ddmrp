@@ -370,7 +370,7 @@ class StockBuffer(models.Model):
         return sum(lines.mapped("product_qty"))
 
     def _compute_product_available_qty(self):
-        operation_by_location = defaultdict(lambda: self.env["stock.buffer"])
+        operation_by_location = defaultdict(lambda: self.browse())
         for rec in self:
             operation_by_location[rec.location_id] |= rec
         for location_id, buffer_in_location in operation_by_location.items():
