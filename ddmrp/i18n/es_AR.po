@@ -80,7 +80,6 @@ msgstr "CPD"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_form
-#: model_terms:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_tree
 msgid "ADU Calculation Method"
 msgstr "Método de cálculo CPD"
 
@@ -210,7 +209,6 @@ msgstr "Estado del Nivel de Alerta de inventario en mano del Búfer"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__buffer_profile_id
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_form
-#: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_tree
 msgid "Buffer Profile"
 msgstr "Perfil del Búfer"
 
@@ -218,7 +216,6 @@ msgstr "Perfil del Búfer"
 #: model:ir.actions.act_window,name:ddmrp.stock_buffer_profile_lead_time_form_action
 #: model:ir.ui.menu,name:ddmrp.menu_stock_buffer_profile_lead_time
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_lead_time_form
-#: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_lead_time_tree
 msgid "Buffer Profile Lead Time Factor"
 msgstr "Factor de Plazo de Entrega del Perfil de Búfer"
 
@@ -226,7 +223,6 @@ msgstr "Factor de Plazo de Entrega del Perfil de Búfer"
 #: model:ir.actions.act_window,name:ddmrp.stock_buffer_profile_variability_form_action
 #: model:ir.ui.menu,name:ddmrp.menu_stock_buffer_profile_variability
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_variability_form
-#: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_variability_tree
 msgid "Buffer Profile Variability Factor"
 msgstr "Factor de Variabilidad del Perfil de Búfer"
 
