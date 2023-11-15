@@ -110,11 +110,12 @@ class StockBuffer(models.Model):
             if top_y <= min_y:
                 top_y = min_y + 100
             p = figure(
+                frame_height=400,
                 x_range=(dates[0], dates[-1]),
                 y_range=(min_y, top_y),
                 x_axis_type="datetime",
             )
-            p.sizing_mode = "stretch_both"
+            p.sizing_mode = "scale_width"
             p.toolbar.logo = None
 
             p.grid.minor_grid_line_color = "#eeeeee"
@@ -259,11 +260,12 @@ class StockBuffer(models.Model):
             ]
             top_y = max(tops)
             p = figure(
+                frame_height=400,
                 x_range=(dates[0], dates[-1]),
                 y_range=(start_stack, top_y or 100),
                 x_axis_type="datetime",
             )
-            p.sizing_mode = "stretch_both"
+            p.sizing_mode = "scale_width"
             p.toolbar.logo = None
 
             p.grid.minor_grid_line_color = "#eeeeee"
