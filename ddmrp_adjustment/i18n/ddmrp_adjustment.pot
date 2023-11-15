@@ -47,7 +47,6 @@ msgstr ""
 #. module: ddmrp_adjustment
 #: model:ir.actions.act_window,name:ddmrp_adjustment.ddmrp_adjustment_action
 #: model:ir.ui.menu,name:ddmrp_adjustment.menu_ddmrp_adjustment
-#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_tree
 msgid "Buffer Adjustments"
 msgstr ""
 
