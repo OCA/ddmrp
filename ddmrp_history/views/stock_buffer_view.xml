@@ -12,21 +12,21 @@
                     <div style="margin-top: 1em;">
                         <field
                             name="planning_history_chart"
-                            style="height:400px;width:100%"
+                            style="width:100%"
                             widget="bokeh_chart"
                             nolabel="1"
                         />
                     </div>
                 </page>
                 <page name="execution_history" string="Execution Chart">
-                        <div style="margin-top: 1em;">
-                            <field
+                    <div style="margin-top: 1em;">
+                        <field
                             name="execution_history_chart"
-                            style="height:400px;width:100%"
+                            style="width:100%"
                             widget="bokeh_chart"
                             nolabel="1"
                         />
-                        </div>
+                    </div>
                 </page>
             </notebook>
         </field>

@@ -115,7 +115,7 @@ class StockBuffer(models.Model):
                 y_range=(min_y, top_y),
                 x_axis_type="datetime",
             )
-            p.sizing_mode = "scale_width"
+            p.sizing_mode = "stretch_width"
             p.toolbar.logo = None
 
             p.grid.minor_grid_line_color = "#eeeeee"
@@ -265,7 +265,7 @@ class StockBuffer(models.Model):
                 y_range=(start_stack, top_y or 100),
                 x_axis_type="datetime",
             )
-            p.sizing_mode = "scale_width"
+            p.sizing_mode = "stretch_width"
             p.toolbar.logo = None
 
             p.grid.minor_grid_line_color = "#eeeeee"
