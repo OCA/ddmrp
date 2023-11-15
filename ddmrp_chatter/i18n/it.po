@@ -114,7 +114,6 @@ msgstr "Se selezionata, nuovi messaggi richiedono attenzione."
 
 #. module: ddmrp_chatter
 #: model:ir.model.fields,help:ddmrp_chatter.field_stock_buffer__message_has_error
-#: model:ir.model.fields,help:ddmrp_chatter.field_stock_buffer__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Se selezionata, alcuni messaggi hanno un errore di consegna."
 
@@ -249,11 +248,6 @@ msgid "Responsible User"
 msgstr "Utente responsabile"
 
 #. module: ddmrp_chatter
-#: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Errore consegna SMS"
-
-#. module: ddmrp_chatter
 #: model:ir.model.fields,help:ddmrp_chatter.field_stock_buffer__activity_state
 msgid ""
 "Status based on activities\n"
@@ -318,3 +312,6 @@ msgid ""
 msgstr ""
 "Ogni volta che il buffer è ricalcolato, se questa opzione è impostata, se "
 "necessario approvvigionerà automaticamente."
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Errore consegna SMS"
