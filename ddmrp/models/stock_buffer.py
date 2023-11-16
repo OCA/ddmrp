@@ -1362,7 +1362,6 @@ class StockBuffer(models.Model):
                 "in",
                 ["draft", "waiting", "confirmed", "partially_available", "assigned"],
             ),
-            ("location_dest_id", "child_of", [self.location_id.id]),
         ]
 
     @api.model
@@ -1390,8 +1389,11 @@ class StockBuffer(models.Model):
         # Utility method used to add an "Open Moves" button in the buffer
         # planning view
         domain = self._search_open_stock_moves_domain()
-        records = self.env["stock.move"].search(domain)
-        return self._stock_move_tree_view(records)
+        moves = self.env["stock.move"].search(domain)
+        moves = moves.filtered(
+            lambda move: move.location_dest_id.is_sublocation_of(self.location_id)
+        )
+        return self._stock_move_tree_view(moves)
 
     def _get_horizon_adu_past_demand(self):
         return self.adu_calculation_method.horizon_past or 0
