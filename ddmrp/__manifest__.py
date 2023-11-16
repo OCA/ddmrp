@@ -48,6 +48,7 @@
         "views/stock_buffer_view.xml",
         "views/stock_picking.xml",
         "data/ir_cron.xml",
+        "wizards/ddmrp_duplicate_buffer.xml",
         "wizards/ddmrp_run_view.xml",
         "wizards/res_config_settings_views.xml",
     ],
