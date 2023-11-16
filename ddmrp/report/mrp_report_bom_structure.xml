@@ -31,7 +31,7 @@
             >
                 <span>
                     <t
-                        t-esc="data['bom'].product_tmpl_id.produce_delay"
+                        t-esc="data['lead_time']"
                         t-options='{"widget": "float", "decimal_precision": "Lead Time"}'
                     />
                 </span>
