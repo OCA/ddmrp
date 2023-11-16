@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="ddmrp_duplicate_buffer_wizard" model="ir.ui.view">
+        <field name="name">Ddmrp Duplicate Buffer Wizard</field>
+        <field name="model">ddmrp.duplicate.buffer</field>
+        <field name="arch" type="xml">
+            <form string="Copy Ddmrp Stock Buffer">
+                <group>
+                    <group>
+                        <field name="type" />
+                        <field
+                            name="product_id"
+                            attrs="{'invisible':[('type','=', 'location')]}"
+                        />
+                        <field
+                            name="location_id"
+                            attrs="{'invisible':[('type','=', 'product')]}"
+                        />
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="action_duplicate_buffer"
+                        string="Duplicate"
+                        type="object"
+                        class="btn-primary"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_server_ddmrp_duplicate_buffer" model="ir.actions.act_window">
+        <field name="name">Duplicate Buffer</field>
+        <field name="res_model">ddmrp.duplicate.buffer</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="ddmrp.model_stock_buffer" />
+        <field name="view_id" ref="ddmrp.ddmrp_duplicate_buffer_wizard" />
+    </record>
+
+</odoo>
