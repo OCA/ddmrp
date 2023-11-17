@@ -348,21 +348,8 @@ class StockBuffer(models.Model):
 
     # STOCK INFORMATION:
 
-    product_location_qty = fields.Float(
-        string="Quantity On Location", compute="_compute_product_available_qty"
-    )
-    incoming_location_qty = fields.Float(
-        string="Incoming On Location", compute="_compute_product_available_qty"
-    )
-    outgoing_location_qty = fields.Float(
-        string="Outgoing On Location", compute="_compute_product_available_qty"
-    )
-    virtual_location_qty = fields.Float(
-        string="Forecast On Location", compute="_compute_product_available_qty"
-    )
     product_location_qty_available_not_res = fields.Float(
         string="Quantity On Hand (Unreserved)",
-        compute="_compute_product_available_qty",
         help="Quantity available in this stock buffer, this is the total "
         "quantity on hand minus the outgoing reservations.",
     )
@@ -381,7 +368,17 @@ class StockBuffer(models.Model):
         )
         return sum(lines.mapped("reserved_qty"))
 
-    def _compute_product_available_qty(self):
+    def _update_quantities_dict(self, product):
+        self.ensure_one()
+        reserved_qty = self._get_outgoing_reservation_qty()
+        self.update(
+            {
+                "product_location_qty_available_not_res": product["qty_available"]
+                - reserved_qty,
+            }
+        )
+
+    def _calc_product_available_qty(self):
         operation_by_location = defaultdict(lambda: self.browse())
         for rec in self:
             operation_by_location[rec.location_id] |= rec
@@ -397,19 +394,7 @@ class StockBuffer(models.Model):
             )
             for buffer in buffer_in_location:
                 product = products[buffer.product_id.id]
-                reserved_qty = buffer._get_outgoing_reservation_qty()
-                buffer.update(
-                    {
-                        "product_location_qty": product["qty_available"],
-                        "incoming_location_qty": product["incoming_qty"],
-                        "outgoing_location_qty": product["outgoing_qty"],
-                        "virtual_location_qty": product["virtual_available"],
-                        "product_location_qty_available_not_res": product[
-                            "qty_available"
-                        ]
-                        - reserved_qty,
-                    }
-                )
+                buffer._update_quantities_dict(product)
 
     # PURCHASES LINK:
 
@@ -1183,6 +1168,10 @@ class StockBuffer(models.Model):
     qualified_demand_mrp_move_ids = fields.Many2many(
         comodel_name="mrp.move",
     )
+    incoming_total_qty = fields.Float(
+        string="Total Incoming",
+        readonly=True,
+    )
     incoming_dlt_qty = fields.Float(
         string="Incoming (Within DLT)",
         readonly=True,
@@ -1698,6 +1687,7 @@ class StockBuffer(models.Model):
                 rec.rfq_outside_dlt_qty = sum(pols.mapped("product_qty"))
             else:
                 rec.rfq_outside_dlt_qty = 0.0
+            rec.incoming_total_qty = rec.incoming_dlt_qty + rec.incoming_outside_dlt_qty
         return True
 
     def _calc_net_flow_position(self):
@@ -1764,6 +1754,7 @@ class StockBuffer(models.Model):
         records = super().create(vals_list)
         if not self.env.context.get("skip_adu_calculation", False):
             records._calc_adu()
+        records._calc_product_available_qty()
         records._calc_distributed_source_location()
         return records
 
@@ -2007,16 +1998,13 @@ class StockBuffer(models.Model):
         self.ensure_one()
         self.invalidate_recordset(
             fnames=[
-                "product_location_qty",
-                "incoming_location_qty",
-                "outgoing_location_qty",
-                "virtual_location_qty",
                 "product_location_qty_available_not_res",
                 "dlt",
                 "distributed_source_location_qty",
                 "qualified_demand",
             ],
         )
+        self._calc_product_available_qty()
         if not only_nfp or only_nfp == "out":
             self._calc_qualified_demand()
         if not only_nfp or only_nfp == "in":
