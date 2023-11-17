@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-11-17 17:34+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: ddmrp_product_replace
 #: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.view_ddmrp_adjustment_sheet_wizard_form
@@ -21,6 +23,11 @@ msgid ""
 "                            When there are more than one product replaced, only the buffer(s) of the primary product in\n"
 "                            this list will be used to create the buffer(s) and/or product(s) for replacement."
 msgstr ""
+"<i class=\"fa fa-info-circle\" style=\"margin-right:5px\"/>\n"
+"                            Cuando hay más de un producto reemplazado, sólo "
+"el búfer(es) del producto primario en\n"
+"                            esta lista se utilizará para crear el búfer (s) "
+"y / o producto (s) para el reemplazo."
 
 #. module: ddmrp_product_replace
 #: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.stock_buffer_view_form
@@ -28,6 +35,8 @@ msgid ""
 "<i class=\"fa fa-info-circle\" title=\"fa fa-info-circle\" style=\"margin-"
 "right:5px\"/>"
 msgstr ""
+"<i class=\"fa fa-info-circle\" title=\"fa fa-info-circle\" style=\"margin-"
+"right:5px\"/>"
 
 #. module: ddmrp_product_replace
 #: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.view_make_procurement_buffer_wizard
@@ -35,6 +44,8 @@ msgid ""
 "<span class=\"fa fa-info-circle\" title=\"fa fa-info-circle\" "
 "style=\"margin-right:5px\"/>"
 msgstr ""
+"<span class=\"fa fa-info-circle\" title=\"fa fa-info-circle\" style=\"margin-"
+"right:5px\"/>"
 
 #. module: ddmrp_product_replace
 #: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__buffer_ids
