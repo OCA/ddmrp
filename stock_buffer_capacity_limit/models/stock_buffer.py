@@ -8,6 +8,7 @@ from odoo.tools import float_compare
 class StockBuffer(models.Model):
     _inherit = "stock.buffer"
 
+    product_location_qty = fields.Float(string="Quantity On Location",)
     storage_capacity_limit = fields.Float(
         digits="Product Unit of Measure",
         help="The system will never propose a procurement that would move "
@@ -15,6 +16,15 @@ class StockBuffer(models.Model):
         "this limit, even if this means that you have planning or "
         "execution alerts.",
     )
+
+    def _update_quantities_dict(self, product):
+        res = super()._update_quantities_dict(product)
+        self.update({"product_location_qty": product["qty_available"]})
+        return res
+
+    def cron_actions(self, only_nfp=False):
+        self.invalidate_cache(fnames=["product_location_qty"], ids=self.ids)
+        return super().cron_actions(only_nfp)
 
     @api.depends("storage_capacity_limit")
     def _compute_procure_recommended_qty(self):
