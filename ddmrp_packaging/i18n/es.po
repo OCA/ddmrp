@@ -6,54 +6,56 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-11-17 21:35+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: ddmrp_packaging
 #: model:ir.model,name:ddmrp_packaging.model_make_procurement_buffer_item
 msgid "Make Procurements from Stock Buffer Item"
-msgstr ""
+msgstr "Crear Abastecimientos desde Posición de Búfer de Inventario"
 
 #. module: ddmrp_packaging
 #: model:ir.model.fields,field_description:ddmrp_packaging.field_make_procurement_buffer_item__packaging_id
 msgid "Package"
-msgstr ""
+msgstr "Empaquetado"
 
 #. module: ddmrp_packaging
 #: model:ir.model.fields,field_description:ddmrp_packaging.field_stock_buffer__package_multiple
 msgid "Package Multiple"
-msgstr ""
+msgstr "Paquete múltiple"
 
 #. module: ddmrp_packaging
 #: model:ir.model.fields,field_description:ddmrp_packaging.field_make_procurement_buffer_item__packaging_qty
 msgid "Package Qty"
-msgstr ""
+msgstr "Cdad. de empaquetado"
 
 #. module: ddmrp_packaging
 #: model:ir.model.fields,field_description:ddmrp_packaging.field_stock_buffer__packaging_id
 msgid "Packaging"
-msgstr ""
+msgstr "Empaquetado"
 
 #. module: ddmrp_packaging
 #: code:addons/ddmrp_packaging/models/stock_buffer.py:0
 #, python-format
 msgid "Please, select a packaging of the buffered product."
-msgstr ""
+msgstr "Por favor, seleccione un envase del producto regulado."
 
 #. module: ddmrp_packaging
 #: model:ir.model.fields,field_description:ddmrp_packaging.field_stock_buffer__qty_multiple
 msgid "Qty Multiple"
-msgstr ""
+msgstr "Cantidad Múltiple"
 
 #. module: ddmrp_packaging
 #: model:ir.model,name:ddmrp_packaging.model_stock_buffer
 msgid "Stock Buffer"
-msgstr ""
+msgstr "Búfer de Inventario"
 
 #. module: ddmrp_packaging
 #: model:ir.model.fields,help:ddmrp_packaging.field_stock_buffer__qty_multiple
@@ -61,9 +63,11 @@ msgid ""
 "The procurement quantity will be rounded up to this multiple. If it is 0, "
 "the exact quantity will be used."
 msgstr ""
+"La cantidad de abastecimiento se redondeará hasta este múltiple. Si es 0, se "
+"usará la cantidad exacta."
 
 #. module: ddmrp_packaging
 #: code:addons/ddmrp_packaging/models/stock_buffer.py:0
 #, python-format
 msgid "Warning"
-msgstr ""
+msgstr "Aviso"
