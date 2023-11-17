@@ -40,8 +40,8 @@ msgstr ""
 "* Esperando Disponibilidad: Este estado se alcanza cuando la resolución del "
 "aprovisionamiento no es directa. Puede necesitar que se ejecute el "
 "planificador, que se fabrique un componente...\n"
-"* Disponible: Cuando los productos están reservados, se pone a 'Disponible'."
-"\n"
+"* Disponible: Cuando los productos están reservados, se pone a "
+"'Disponible'.\n"
 "* Realizado: Cuando se procesa el envío, el estado es 'Hecho'."
 
 #. module: ddmrp
@@ -52,8 +52,8 @@ msgid ""
 "\" groups=\"base.group_multi_company\"/>"
 msgstr ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" role=\"img\" aria-label=\"Values set here are company-specific.\""
-" groups=\"base.group_multi_company\"/>"
+"specific.\" role=\"img\" aria-label=\"Values set here are company-specific."
+"\" groups=\"base.group_multi_company\"/>"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu
@@ -1781,13 +1781,23 @@ msgstr "Código del Vendedor"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
-msgid "View ADU (Future)"
-msgstr "Vista ADU (Futuro)"
+msgid "View ADU (Future - Direct Demand)"
+msgstr ""
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
-msgid "View ADU (Past)"
-msgstr "Vista ADU (Pasado)"
+msgid "View ADU (Future - Indirect Demand)"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "View ADU (Past - Direct Demand)"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "View ADU (Past - Indirect Demand)"
+msgstr ""
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
@@ -1961,6 +1971,12 @@ msgstr "días"
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr "o"
+
+#~ msgid "View ADU (Future)"
+#~ msgstr "Vista ADU (Futuro)"
+
+#~ msgid "View ADU (Past)"
+#~ msgstr "Vista ADU (Pasado)"
 
 #~ msgid "BOM Structure Report"
 #~ msgstr "Reporte de estructura de LdM"
