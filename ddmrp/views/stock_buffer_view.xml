@@ -230,18 +230,32 @@
                                 <div name="adu" class="o_row">
                                     <field name="adu" force_save="1" />
                                     <button
-                                        title="View ADU (Past)"
-                                        name="action_view_past_adu"
+                                        title="View ADU (Past - Direct Demand)"
+                                        name="action_view_past_adu_direct_demand"
                                         icon="fa-search"
                                         type="object"
                                         attrs="{'invisible': ['|', ('adu_calculation_method_type', 'in', ['fixed', 'future']), ('adu', '=', 0)]}"
                                     />
                                     <button
-                                        title="View ADU (Future)"
-                                        name="action_view_future_adu"
+                                        title="View ADU (Past - Indirect Demand)"
+                                        name="action_view_past_adu_indirect_demand"
+                                        icon="fa-search"
+                                        type="object"
+                                        attrs="{'invisible': ['|', '|', ('adu_calculation_method_type', 'in', ['fixed', 'future']), ('used_in_bom_count', '=', 0), ('adu', '=', 0)]}"
+                                    />
+                                    <button
+                                        title="View ADU (Future - Direct Demand)"
+                                        name="action_view_future_adu_direct_demand"
                                         icon="fa-search"
                                         type="object"
                                         attrs="{'invisible': ['|', ('adu_calculation_method_type', 'in', ['fixed', 'past']), ('adu', '=', 0)]}"
+                                    />
+                                    <button
+                                        title="View ADU (Future - Indirect Demand)"
+                                        name="action_view_future_adu_indirect_demand"
+                                        icon="fa-search"
+                                        type="object"
+                                        attrs="{'invisible': ['|', '|', ('adu_calculation_method_type', 'in', ['fixed', 'past']), ('used_in_bom_count', '=', 0), ('adu', '=', 0)]}"
                                     />
                                 </div>
                                 <field
