@@ -1779,13 +1779,23 @@ msgstr "Código de Vendedor"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
-msgid "View ADU (Future)"
-msgstr "Ver ADU (Futuro)"
+msgid "View ADU (Future - Direct Demand)"
+msgstr ""
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
-msgid "View ADU (Past)"
-msgstr "Ver ADU (Pasado)"
+msgid "View ADU (Future - Indirect Demand)"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "View ADU (Past - Direct Demand)"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "View ADU (Past - Indirect Demand)"
+msgstr ""
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
@@ -1958,6 +1968,12 @@ msgstr "días"
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr "o"
+
+#~ msgid "View ADU (Future)"
+#~ msgstr "Ver ADU (Futuro)"
+
+#~ msgid "View ADU (Past)"
+#~ msgstr "Ver ADU (Pasado)"
 
 #~ msgid "BOM Structure Report"
 #~ msgstr "Reporte de estructura de LdM"
