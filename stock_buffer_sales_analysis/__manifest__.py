@@ -3,7 +3,7 @@
 {
     "name": "Stock Buffer Sales Analysis",
     "summary": "Allows to access the Sales Analysis from Stock Buffers",
-    "version": "15.0.1.0.0",
+    "version": "16.0.1.0.0",
     "license": "LGPL-3",
     "website": "https://github.com/OCA/ddmrp",
     "author": "Camptocamp, Odoo Community Association (OCA)",
