@@ -14,6 +14,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_buffer_capacity_limit
+#: model:ir.model.fields,field_description:stock_buffer_capacity_limit.field_stock_buffer__product_location_qty
+msgid "Quantity On Location"
+msgstr ""
+
+#. module: stock_buffer_capacity_limit
 #: model:ir.model,name:stock_buffer_capacity_limit.model_stock_buffer
 msgid "Stock Buffer"
 msgstr ""
