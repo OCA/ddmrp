@@ -536,11 +536,6 @@ msgid "Follow-up Notes"
 msgstr "Notas de Seguimiento"
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__virtual_location_qty
-msgid "Forecast On Location"
-msgstr "Previsto en Ubicación"
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__factor_future
 msgid "Future Factor"
 msgstr "Factor Futuro"
@@ -680,11 +675,6 @@ msgstr "Entrante (Fuera de LTD)"
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__incoming_dlt_qty
 msgid "Incoming (Within DLT)"
 msgstr "Entrante (Dentro de LTD)"
-
-#. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__incoming_location_qty
-msgid "Incoming On Location"
-msgstr "Entrante en Ubicación"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
@@ -1034,11 +1024,6 @@ msgid "Order Spike Threshold"
 msgstr "Umbral de Pico de Pedido"
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__outgoing_location_qty
-msgid "Outgoing On Location"
-msgstr "Saliente en Ubicación"
-
-#. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.po_line_execution_action
 #: model:ir.ui.menu,name:ddmrp.menu_pol_execution
 msgid "PO lines On-Hand Status"
@@ -1249,11 +1234,6 @@ msgstr "Cantidad"
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_location_qty_available_not_res
 msgid "Quantity On Hand (Unreserved)"
 msgstr "Cantidad a Mano (Sin reservar)"
-
-#. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_location_qty
-msgid "Quantity On Location"
-msgstr "Cantidad en Ubicación"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__product_location_qty_available_not_res
@@ -1677,6 +1657,7 @@ msgid "Top Of Yellow"
 msgstr "Tope De Amarillo"
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__incoming_total_qty
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "Total Incoming"
 msgstr "Total Entrante"
@@ -1983,6 +1964,18 @@ msgstr "minutos"
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr "o"
+
+#~ msgid "Forecast On Location"
+#~ msgstr "Previsto en Ubicación"
+
+#~ msgid "Incoming On Location"
+#~ msgstr "Entrante en Ubicación"
+
+#~ msgid "Outgoing On Location"
+#~ msgstr "Saliente en Ubicación"
+
+#~ msgid "Quantity On Location"
+#~ msgstr "Cantidad en Ubicación"
 
 #~ msgid "View ADU (Future)"
 #~ msgstr "Ver ADU (Futuro)"
