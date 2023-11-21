@@ -542,11 +542,6 @@ msgid "Follow-up Notes"
 msgstr "关注备注"
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__virtual_location_qty
-msgid "Forecast On Location"
-msgstr ""
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__factor_future
 msgid "Future Factor"
 msgstr ""
@@ -712,12 +707,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__incoming_dlt_qty
 msgid "Incoming (Within DLT)"
 msgstr "进入(在 DLT 内)"
-
-#. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__incoming_location_qty
-#, fuzzy
-msgid "Incoming On Location"
-msgstr "进入在 DLT 内"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
@@ -1085,11 +1074,6 @@ msgid "Order Spike Threshold"
 msgstr "订单尖峰阈值"
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__outgoing_location_qty
-msgid "Outgoing On Location"
-msgstr ""
-
-#. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.po_line_execution_action
 #: model:ir.ui.menu,name:ddmrp.menu_pol_execution
 msgid "PO lines On-Hand Status"
@@ -1322,11 +1306,6 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_location_qty_available_not_res
 msgid "Quantity On Hand (Unreserved)"
-msgstr ""
-
-#. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_location_qty
-msgid "Quantity On Location"
 msgstr ""
 
 #. module: ddmrp
@@ -1725,6 +1704,7 @@ msgid "Top of Yellow"
 msgstr "黄顶"
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__incoming_total_qty
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "Total Incoming"
 msgstr "进入总和"
@@ -1998,6 +1978,10 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Incoming On Location"
+#~ msgstr "进入在 DLT 内"
 
 #~ msgid "Buffer size factors"
 #~ msgstr "缓冲大小因子"
