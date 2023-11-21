@@ -1383,17 +1383,6 @@ class StockBuffer(models.Model):
             "domain": str([("id", "in", lines.ids)]),
         }
 
-    def open_moves(self):
-        self.ensure_one()
-        # Utility method used to add an "Open Moves" button in the buffer
-        # planning view
-        domain = self._search_open_stock_moves_domain()
-        moves = self.env["stock.move"].search(domain)
-        moves = moves.filtered(
-            lambda move: move.location_dest_id.is_sublocation_of(self.location_id)
-        )
-        return self._stock_move_tree_view(moves)
-
     def _get_horizon_adu_past_demand(self):
         return self.adu_calculation_method.horizon_past or 0
 
@@ -1839,72 +1828,72 @@ class StockBuffer(models.Model):
             wizard.make_procurement()
         return True
 
-    def _search_purchase_order_lines_incoming(self, outside_dlt=False):
+    def action_view_supply_moves(self):
+        result = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")
+        result["context"] = {}
+        moves = self._search_stock_moves_incoming() + self._search_stock_moves_incoming(
+            outside_dlt=True
+        )
+        result["domain"] = [("id", "in", moves.ids)]
+        return result
+
+    def _get_rfq_dlt(self, outside_dlt=False):
+        self.ensure_one()
         cut_date = self._get_incoming_supply_date_limit()
         if not outside_dlt:
             pols = self.purchase_line_ids.filtered(
                 lambda l: l.date_planned <= fields.Datetime.to_datetime(cut_date)
-                and l.order_id.state in ("draft", "sent")
+                and l.state in ("draft", "sent")
             )
         else:
             pols = self.purchase_line_ids.filtered(
                 lambda l: l.date_planned > fields.Datetime.to_datetime(cut_date)
-                and l.order_id.state in ("draft", "sent")
+                and l.state in ("draft", "sent")
             )
         return pols
 
-    def action_view_supply(self, outside_dlt=False):
-        if self.item_type == "purchased":
-            pols = self._search_purchase_order_lines_incoming(outside_dlt)
-            moves = self._search_stock_moves_incoming(outside_dlt)
-            while moves.mapped("move_orig_ids"):
-                moves = moves.mapped("move_orig_ids")
-            pos = pols.mapped("order_id") + moves.mapped("purchase_line_id.order_id")
-            result = self.env["ir.actions.actions"]._for_xml_id("purchase.purchase_rfq")
-            # Remove the context since the action display RFQ and not PO.
-            result["context"] = {}
-            result["domain"] = [("id", "in", pos.ids)]
-        elif self.item_type == "manufactured":
-            moves = self._search_stock_moves_incoming(outside_dlt)
-            mos = moves.mapped("production_id")
-            result = self.env["ir.actions.actions"]._for_xml_id(
-                "mrp.mrp_production_action"
-            )
-            result["context"] = {}
-            result["domain"] = [("id", "in", mos.ids)]
-        else:
-            moves = self._search_stock_moves_incoming(outside_dlt)
-            picks = moves.mapped("picking_id")
-            result = self.env["ir.actions.actions"]._for_xml_id(
-                "stock.action_picking_tree_all"
-            )
-            result["context"] = {}
-            result["domain"] = [("id", "in", picks.ids)]
+    def action_view_supply_moves_inside_dlt_window(self):
+        result = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")
+        moves = self._search_stock_moves_incoming()
+        result["context"] = {}
+        result["domain"] = [("id", "in", moves.ids)]
         return result
 
-    def action_view_supply_inside_dlt_window(self):
-        return self.action_view_supply()
-
-    def action_view_supply_outside_dlt_window(self):
-        return self.action_view_supply(outside_dlt=True)
-
-    def action_view_qualified_demand_pickings(self):
-        moves = self.qualified_demand_stock_move_ids
-        picks = moves.mapped("picking_id")
-        result = self.env["ir.actions.actions"]._for_xml_id(
-            "stock.action_picking_tree_all"
-        )
+    def action_view_supply_moves_outside_dlt_window(self):
+        result = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")
+        moves = self._search_stock_moves_incoming(outside_dlt=True)
         result["context"] = {}
-        result["domain"] = [("id", "in", picks.ids)]
+        result["domain"] = [("id", "in", moves.ids)]
+        return result
+
+    def action_view_supply_rfq_inside_dlt_window(self):
+        result = self.env["ir.actions.actions"]._for_xml_id("purchase.purchase_rfq")
+        pols = self._get_rfq_dlt()
+        pos = pols.mapped("order_id")
+        result["context"] = {}
+        result["domain"] = [("id", "in", pos.ids)]
+        return result
+
+    def action_view_supply_rfq_outside_dlt_window(self):
+        result = self.env["ir.actions.actions"]._for_xml_id("purchase.purchase_rfq")
+        pols = self._get_rfq_dlt(outside_dlt=True)
+        pos = pols.mapped("order_id")
+        result["context"] = {}
+        result["domain"] = [("id", "in", pos.ids)]
+        return result
+
+    def action_view_qualified_demand_moves(self):
+        result = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")
+        result["context"] = {}
+        result["domain"] = [("id", "in", self.qualified_demand_stock_move_ids.ids)]
         return result
 
     def action_view_qualified_demand_mrp(self):
-        mrp_moves = self.qualified_demand_mrp_move_ids
         result = self.env["ir.actions.actions"]._for_xml_id(
             "mrp_multi_level.mrp_move_action"
         )
         result["context"] = {}
-        result["domain"] = [("id", "in", mrp_moves.ids)]
+        result["domain"] = [("id", "in", self.qualified_demand_mrp_move_ids.ids)]
         return result
 
     def action_view_past_adu_direct_demand(self):

@@ -48,23 +48,18 @@
                 />
                 <field name="incoming_dlt_qty" string="Incoming Within DLT" />
                 <field
-                    name="incoming_total_qty"
-                    string="Total Incoming"
-                    optional="show"
-                />
-                <field
                     name="incoming_outside_dlt_qty"
                     string="Incoming Outside DLT"
                     optional="hide"
                 />
                 <field
-                    name="rfq_outside_dlt_qty"
-                    string="RFQ Qty Outside DLT"
-                    optional="hide"
+                    name="incoming_total_qty"
+                    string="Total Incoming"
+                    optional="show"
                 />
                 <button
-                    title="Open Non-completed Moves"
-                    name="open_moves"
+                    title="Total Incoming"
+                    name="action_view_supply_moves"
                     icon="fa-exchange"
                     type="object"
                 />
@@ -80,13 +75,22 @@
                 />
                 <button
                     title="Some incoming quantities are outside of the DLT Horizon and may require rescheduling. Press this button to display the involved supply orders"
-                    name="action_view_supply_outside_dlt_window"
+                    name="action_view_supply_moves_outside_dlt_window"
                     icon="fa-warning"
                     type="object"
-                    attrs="{'invisible':[('incoming_outside_dlt_qty', '=', 0), ('rfq_outside_dlt_qty', '=', 0)]}"
+                    attrs="{'invisible':[('incoming_outside_dlt_qty', '=', 0)]}"
+                />
+                <field name="rfq_outside_dlt_qty" invisible="1" />
+                <button
+                    title="Some RFQ quantities are outside of the DLT Horizon and may require rescheduling.
+                    Press this button to display the involved RFQs"
+                    name="action_view_supply_rfq_outside_dlt_window"
+                    icon="fa-warning"
+                    type="object"
+                    attrs="{'invisible':[('rfq_outside_dlt_qty', '=', 0)]}"
                 />
                 <button
-                    title="No stock available on source location for distributed buffer"
+                    title="No stock available in source location for distributed buffer"
                     name="action_dummy"
                     icon="fa-warning"
                     type="object"
@@ -412,11 +416,35 @@
                                 <div name="incoming_dlt_qty" class="o_row">
                                     <field name="incoming_dlt_qty" class="oe_inline" />
                                     <button
-                                        title="View Incoming (Within DLT)"
-                                        name="action_view_supply_inside_dlt_window"
+                                        title="View Incoming Moves (Within DLT)"
+                                        name="action_view_supply_moves_inside_dlt_window"
                                         icon="fa-search"
                                         type="object"
                                         attrs="{'invisible': [('incoming_dlt_qty', '=', 0)]}"
+                                    />
+                                </div>
+                                <label for="incoming_outside_dlt_qty" />
+                                <div name="incoming_outside_dlt_qty" class="o_row">
+                                    <field
+                                        name="incoming_outside_dlt_qty"
+                                        class="oe_inline"
+                                    />
+                                    <button
+                                        title="Some incoming qty is outside of the DLT Horizon and may require rescheduling.
+                                         Press this button to display the involved supply orders"
+                                        name="action_view_supply_moves_outside_dlt_window"
+                                        icon="fa-warning"
+                                        type="object"
+                                        attrs="{'invisible':[('incoming_outside_dlt_qty', '=', 0)]}"
+                                    />
+                                    <field name="rfq_outside_dlt_qty" invisible="1" />
+                                    <button
+                                        title="Some incoming RFQs are outside of the DLT Horizon and may require rescheduling.
+                                         Press this button to display the involved supply orders"
+                                        name="action_view_supply_rfq_outside_dlt_window"
+                                        icon="fa-warning"
+                                        type="object"
+                                        attrs="{'invisible':[('rfq_outside_dlt_qty', '=', 0)]}"
                                     />
                                 </div>
                                 <label for="qualified_demand" />
@@ -432,7 +460,7 @@
                                     />
                                     <button
                                         title="View Qualified Demand from Pickings"
-                                        name="action_view_qualified_demand_pickings"
+                                        name="action_view_qualified_demand_moves"
                                         icon="fa-search"
                                         type="object"
                                         attrs="{'invisible': ['|', ('qualified_demand', '=', 0), ('qualified_demand_stock_move_ids', '=', [])]}"
