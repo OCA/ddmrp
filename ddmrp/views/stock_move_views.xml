@@ -4,6 +4,45 @@
 <odoo>
     <!--Fixes to show date on stock move report-->
     <!--If someday Odoo corrects this, we could remove this views-->
+    <record id="view_move_tree_ddmrp" model="ir.ui.view">
+        <field name="name">stock.move.tree.ddmrp</field>
+        <field name="model">stock.move</field>
+        <field name="arch" type="xml">
+            <tree create="0">
+                <field
+                    name="date"
+                    decoration-danger="(state not in ('cancel','done')) and date > current_date"
+                />
+                <field name="product_id" />
+                <field name="location_id" options="{'no_create': True}" string="From" />
+                <field
+                    name="location_dest_id"
+                    options="{'no_create': True}"
+                    string="To"
+                />
+                <field name="product_uom_qty" />
+                <field
+                    name="product_uom"
+                    options="{'no_open': True, 'no_create': True}"
+                    string="Unit of Measure"
+                    groups="uom.group_uom"
+                />
+                <field name="company_id" groups="base.group_multi_company" />
+                <field
+                    name="state"
+                    widget='badge'
+                    decoration-success="state == 'done'"
+                    decoration-info="state not in ('done', 'cancel')"
+                />
+                <button
+                    title="Go to Source"
+                    name="action_open_ddmrp_source"
+                    icon="fa-arrow-right"
+                    type="object"
+                />
+            </tree>
+        </field>
+    </record>
     <record id="view_move_tree" model="ir.ui.view">
         <field name="name">stock.move.tree</field>
         <field name="model">stock.move</field>
@@ -47,5 +86,24 @@
         >{"time_ranges": {"field": "date", "range": "last_365_days"}}</field>
         <field name="domain" />
         <field name="view_mode">pivot</field>
+    </record>
+    <record id="stock_move_action_ddmrp" model="ir.actions.act_window">
+        <field name="name">Stock Moves</field>
+        <field name="res_model">stock.move</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_id" ref="view_move_tree_ddmrp" />
+        <field name="search_view_id" ref="stock.view_move_search" />
+        <field
+            name="context"
+        >{'search_default_done': 1, 'search_default_groupby_location_id': 1}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            No stock move found
+          </p><p>
+            This menu gives you the full traceability of inventory
+            operations on a specific product. You can filter on the product
+            to see all the past or future movements for the product.
+          </p>
+        </field>
     </record>
 </odoo>
