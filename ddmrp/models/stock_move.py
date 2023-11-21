@@ -84,3 +84,49 @@ class StockMove(models.Model):
             buffer.cron_actions(only_nfp="out")
         for buffer in in_buffers.with_context(no_ddmrp_history=True):
             buffer.cron_actions(only_nfp="in")
+
+    def action_open_ddmrp_source(self):
+        moves = self
+        if self.move_orig_ids:
+            moves = self.move_orig_ids
+            while moves.mapped("move_orig_ids"):
+                moves = moves.mapped("move_orig_ids")
+        if self.move_dest_ids:
+            moves = self.move_dest_ids
+            while moves.mapped("move_dest_ids"):
+                moves = moves.mapped("move_dest_ids")
+        if moves.mapped("purchase_line_id").filtered(lambda x: x.state != "cancel"):
+            result = self.env["ir.actions.actions"]._for_xml_id("purchase.purchase_rfq")
+            result["domain"] = [
+                (
+                    "id",
+                    "in",
+                    moves.filtered(lambda x: x.state != "cancel").mapped(
+                        "purchase_line_id.order_id.id"
+                    ),
+                )
+            ]
+        elif moves.mapped("sale_line_id"):
+            result = self.env["ir.actions.actions"]._for_xml_id(
+                "sale.action_quotations"
+            )
+            result["domain"] = [("id", "in", moves.mapped("sale_line_id.order_id.id"))]
+        elif moves.mapped("production_id"):
+            result = self.env["ir.actions.actions"]._for_xml_id(
+                "mrp.mrp_production_action"
+            )
+            result["domain"] = [("id", "in", moves.mapped("production_id.id"))]
+        elif moves.mapped("raw_material_production_id"):
+            result = self.env["ir.actions.actions"]._for_xml_id(
+                "mrp.mrp_production_action"
+            )
+            result["domain"] = [
+                ("id", "in", moves.mapped("raw_material_production_id.id"))
+            ]
+        else:
+            result = self.env["ir.actions.actions"]._for_xml_id(
+                "stock.action_picking_tree_all"
+            )
+            result["domain"] = [("id", "in", moves.mapped("picking_id.id"))]
+        result["context"] = {}
+        return result
