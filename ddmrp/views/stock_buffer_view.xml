@@ -39,7 +39,7 @@
                 />
                 <field name="incoming_dlt_qty" string="Incoming Within DLT" />
                 <field
-                    name="incoming_location_qty"
+                    name="incoming_total_qty"
                     string="Total Incoming"
                     optional="show"
                 />
