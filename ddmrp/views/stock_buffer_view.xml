@@ -103,7 +103,7 @@
         <field name="name">stock.buffer.form</field>
         <field name="model">stock.buffer</field>
         <field name="arch" type="xml">
-            <form>
+            <form duplicate="0">
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button

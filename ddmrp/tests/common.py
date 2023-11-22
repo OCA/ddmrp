@@ -186,6 +186,16 @@ class TestDdmrpCommon(common.TransactionCase):
                 "route_ids": [(6, 0, buy_route.ids)],
             }
         )
+        cls.product_purchased_2 = cls.productModel.create(
+            {
+                "name": "product Purchased 2",
+                "standard_price": 1,
+                "type": "product",
+                "uom_id": cls.uom_unit.id,
+                "default_code": "B",
+                "route_ids": [(6, 0, buy_route.ids)],
+            }
+        )
         cls.supinfo_model.create(
             {
                 "product_tmpl_id": cls.product_purchased.product_tmpl_id.id,
@@ -213,17 +223,23 @@ class TestDdmrpCommon(common.TransactionCase):
         cls.color_orange = cls.env["product.attribute.value"].create(
             {"name": "Orange", "attribute_id": cls.color_attribute.id, "sequence": 2}
         )
+        cls.color_green = cls.env["product.attribute.value"].create(
+            {"name": "Green", "attribute_id": cls.color_attribute.id, "sequence": 3}
+        )
         cls.p_c_color_attribute_line = cls.env[
             "product.template.attribute.line"
         ].create(
             {
                 "product_tmpl_id": cls.template_c.id,
                 "attribute_id": cls.color_attribute.id,
-                "value_ids": [(6, 0, [cls.color_blue.id, cls.color_orange.id])],
+                "value_ids": [
+                    (6, 0, [cls.color_blue.id, cls.color_orange.id, cls.color_green.id])
+                ],
             }
         )
         cls.product_c_blue = cls.template_c.product_variant_ids[0]
         cls.product_c_orange = cls.template_c.product_variant_ids[1]
+        cls.product_c_green = cls.template_c.product_variant_ids[2]
         cls.p_c_supinfo_blue = cls.supinfo_model.create(
             {
                 "product_tmpl_id": cls.template_c.id,
