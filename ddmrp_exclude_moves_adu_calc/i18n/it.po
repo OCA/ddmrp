@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-10-28 20:07+0000\n"
+"PO-Revision-Date: 2023-11-22 09:33+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -31,7 +31,7 @@ msgstr "Esclude da ADU"
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model.fields,field_description:ddmrp_exclude_moves_adu_calc.field_stock_location__exclude_from_adu
 msgid "Exclude this location from ADU calculation"
-msgstr "Esclude questa ubicazine dal calcolo ADU"
+msgstr "Esclude questa ubicazione dal calcolo ADU"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model.fields,field_description:ddmrp_exclude_moves_adu_calc.field_stock_move__exclude_from_adu
@@ -51,7 +51,7 @@ msgid ""
 "If this flag is set stock moves into this location will be excluded from ADU"
 " calculation in the origin location buffer."
 msgstr ""
-"Se questa opzione è attiva, i mocimenti di magazino in questa ubicazine "
+"Se questa opzione è attiva, i mocimenti di magazino in questa ubicazione "
 "verranno esclusi dal calcolo ADU nel buffer dell'ubicazione origine."
 
 #. module: ddmrp_exclude_moves_adu_calc
