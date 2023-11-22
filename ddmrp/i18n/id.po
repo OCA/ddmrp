@@ -250,6 +250,21 @@ msgid "Cancel"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__ddmrp_duplicate_buffer__type__location
+msgid "Change Location"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__ddmrp_duplicate_buffer__type__product
+msgid "Change Product"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__ddmrp_duplicate_buffer__type__both
+msgid "Change both values"
+msgstr ""
+
+#. module: ddmrp
 #: model:res.groups,name:ddmrp.group_change_buffer_procure_qty
 msgid "Change quantity in manual procurements from Stock Buffers"
 msgstr ""
@@ -309,6 +324,11 @@ msgid "Consumption"
 msgstr ""
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.ddmrp_duplicate_buffer_wizard
+msgid "Copy Ddmrp Stock Buffer"
+msgstr ""
+
+#. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "Create Procurement"
 msgstr ""
@@ -319,6 +339,7 @@ msgid "Created Purchase Order Line"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__create_uid
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__create_uid
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__create_uid
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__create_uid
@@ -331,6 +352,7 @@ msgid "Created by"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__create_date
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__create_date
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__create_date
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__create_date
@@ -373,6 +395,11 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__ddmrp_demand_chart
 msgid "DDMRP Demand Chart"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_ddmrp_duplicate_buffer
+msgid "DDMRP Duplicate Buffer"
 msgstr ""
 
 #. module: ddmrp
@@ -444,6 +471,7 @@ msgid "Demand"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__display_name
@@ -459,6 +487,28 @@ msgstr ""
 #: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer_profile__item_type__distributed
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
 msgid "Distributed"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.ddmrp_duplicate_buffer_wizard
+msgid "Duplicate"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.action_server_ddmrp_duplicate_buffer
+msgid "Duplicate Buffer"
+msgstr ""
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
+#, python-format
+msgid "Duplicated Buffers"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__type
+msgid "Duplication Type"
 msgstr ""
 
 #. module: ddmrp
@@ -630,6 +680,7 @@ msgid "Hides on-hand status from purchase order line."
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__id
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__id
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__id
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__id
@@ -720,6 +771,7 @@ msgid "Items"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item____last_update
@@ -732,6 +784,7 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__write_uid
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__write_uid
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__write_uid
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__write_uid
@@ -744,6 +797,7 @@ msgid "Last Updated by"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__write_date
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__write_date
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__write_date
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__write_date
@@ -905,6 +959,16 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__net_flow_position_percent
 msgid "Net flow position (% of TOG)"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__location_id
+msgid "New Location"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__product_id
+msgid "New Product"
 msgstr ""
 
 #. module: ddmrp
@@ -1073,6 +1137,20 @@ msgstr ""
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
 #, python-format
 msgid "Please indicate a Past Source."
+msgstr ""
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
+#, python-format
+msgid "Please select a New Location."
+msgstr ""
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
+#, python-format
+msgid "Please select a New Product."
 msgstr ""
 
 #. module: ddmrp
@@ -1564,6 +1642,13 @@ msgstr ""
 msgid ""
 "The procurement quantity will be rounded up to this multiple. If it is 0, "
 "the exact quantity will be used."
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.constraint,message:ddmrp.constraint_stock_buffer_stock_buffer_uniq
+msgid ""
+"The product/location combination must be unique.Remember that the buffer "
+"could be archived."
 msgstr ""
 
 #. module: ddmrp
