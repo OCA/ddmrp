@@ -9,12 +9,12 @@ class StockBuffer(models.Model):
     _inherit = "stock.buffer"
 
     route_ids = fields.Many2many(
-        "stock.location.route",
+        "stock.route",
         string="Allowed routes",
         compute="_compute_route_ids",
     )
     route_id = fields.Many2one(
-        "stock.location.route",
+        "stock.route",
         string="Route",
         domain="[('id', 'in', route_ids)]",
         ondelete="restrict",
@@ -22,7 +22,7 @@ class StockBuffer(models.Model):
 
     @api.depends("product_id", "warehouse_id", "warehouse_id.route_ids", "location_id")
     def _compute_route_ids(self):
-        route_obj = self.env["stock.location.route"]
+        route_obj = self.env["stock.route"]
         for record in self:
             wh_routes = record.warehouse_id.route_ids
             routes = route_obj.browse()
@@ -41,7 +41,7 @@ class StockBuffer(models.Model):
                 # at least one rule of the route must have a destination location
                 # reaching the buffer
                 route.rule_ids.filtered(lambda rule: rule.action != "push").mapped(
-                    "location_id"
+                    "location_dest_id"
                 )
                 & parents
             )

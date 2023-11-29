@@ -45,7 +45,7 @@ class TestStockBufferRoute(common.TransactionCase):
             {"name": "Ressuply2", "location_id": self.warehouse.view_location_id.id}
         )
 
-        self.route = self.env["stock.location.route"].create(
+        self.route = self.env["stock.route"].create(
             {
                 "name": "Transfer",
                 "product_categ_selectable": False,
@@ -54,7 +54,7 @@ class TestStockBufferRoute(common.TransactionCase):
                 "sequence": 10,
             }
         )
-        self.route2 = self.env["stock.location.route"].create(
+        self.route2 = self.env["stock.route"].create(
             {
                 "name": "Transfer",
                 "product_categ_selectable": False,
@@ -79,7 +79,7 @@ class TestStockBufferRoute(common.TransactionCase):
                 "name": "Transfer",
                 "route_id": self.route.id,
                 "location_src_id": self.ressuply_loc.id,
-                "location_id": self.warehouse.lot_stock_id.id,
+                "location_dest_id": self.warehouse.lot_stock_id.id,
                 "action": "pull",
                 "picking_type_id": self.warehouse.int_type_id.id,
                 "procure_method": "make_to_stock",
@@ -93,7 +93,7 @@ class TestStockBufferRoute(common.TransactionCase):
                 "name": "Transfer 2",
                 "route_id": self.route2.id,
                 "location_src_id": self.ressuply_loc2.id,
-                "location_id": self.warehouse.lot_stock_id.id,
+                "location_dest_id": self.warehouse.lot_stock_id.id,
                 "action": "pull",
                 "picking_type_id": self.warehouse.int_type_id.id,
                 "procure_method": "make_to_stock",
