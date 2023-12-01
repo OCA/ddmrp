@@ -358,6 +358,7 @@ class StockBuffer(models.Model):
         string="Quantity On Hand (Unreserved)",
         help="Quantity available in this stock buffer, this is the total "
         "quantity on hand minus the outgoing reservations.",
+        readonly=True,
     )
 
     def _get_outgoing_reservation_qty(self):
@@ -604,10 +605,10 @@ class StockBuffer(models.Model):
             adjusted_qty = self.procure_min_qty
         return adjusted_qty
 
-    def _compute_ddmrp_chart(self):
+    def _compute_ddmrp_chart_planning(self):
         """This method use the Bokeh library to create a buffer depiction."""
         for rec in self:
-            div, script = rec.get_ddmrp_chart()
+            div, script = rec.get_ddmrp_chart_planning()
             json_data = json.dumps(
                 {
                     "div": div,
@@ -615,6 +616,9 @@ class StockBuffer(models.Model):
                 }
             )
             rec.ddmrp_chart = json_data
+
+    def _compute_ddmrp_chart_execution(self):
+        for rec in self:
             div, script = rec.get_ddmrp_chart_execution()
             json_data = json.dumps(
                 {
@@ -627,7 +631,7 @@ class StockBuffer(models.Model):
     def _get_colors_hex_map(self, pallete="planning"):
         return DDMRP_COLOR
 
-    def get_ddmrp_chart(self):
+    def get_ddmrp_chart_planning(self):
         p = figure(frame_width=300, frame_height=400, y_axis_label="Quantity")
         p.xaxis.visible = False
         p.toolbar.logo = None
@@ -1238,10 +1242,10 @@ class StockBuffer(models.Model):
     )
     ddmrp_chart = fields.Text(
         string="DDMRP Chart",
-        compute=_compute_ddmrp_chart,
+        compute=_compute_ddmrp_chart_planning,
     )
     ddmrp_chart_execution = fields.Text(
-        string="DDMRP Execution Chart", compute=_compute_ddmrp_chart
+        string="DDMRP Execution Chart", compute=_compute_ddmrp_chart_execution
     )
     show_execution_chart = fields.Boolean()
     ddmrp_demand_chart = fields.Text(
