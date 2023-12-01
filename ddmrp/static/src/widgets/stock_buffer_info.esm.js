@@ -54,7 +54,7 @@ export class StockBufferPopover extends Component {
     }
     get json_value() {
         try {
-            var value = JSON.parse(this.bokeh_chart[0][this.props.field]);
+            var value = this.bokeh_chart[0][this.props.field];
             value.div = markup(value.div.trim());
             return value;
         } catch (error) {
