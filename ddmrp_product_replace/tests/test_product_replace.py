@@ -128,7 +128,7 @@ class TestDDMRPProductReplace(TestDdmrpCommon):
         self.assertEqual(old_onhand, new_buffer.product_location_qty_available_not_res)
         self.assertEqual(old_incoming_dlt_qty, new_buffer.incoming_dlt_qty)
         self.assertEqual(old_incoming_qty, new_buffer.incoming_total_qty)
-        new_buffer.invalidate_cache()
+        new_buffer.invalidate_recordset()
         new_buffer.use_replacement_for_buffer_status = False
         new_buffer.cron_actions()
         self.assertNotEqual(
