@@ -113,7 +113,7 @@ class TestDdmrp(common.TransactionCase):
                 "location_id": self.bin_a.id,
                 "location_dest_id": self.customer_location.id,
                 "scheduled_date": date_move,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -138,7 +138,7 @@ class TestDdmrp(common.TransactionCase):
                 "location_id": self.bin_b.id,
                 "location_dest_id": self.secondary_loc.id,
                 "scheduled_date": date_move,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -158,9 +158,9 @@ class TestDdmrp(common.TransactionCase):
 
     def _do_picking(self, picking, date):
         picking.action_confirm()
-        picking.move_lines.quantity_done = picking.move_lines.product_uom_qty
+        picking.move_ids.quantity_done = picking.move_ids.product_uom_qty
         picking._action_done()
-        for move in picking.move_lines:
+        for move in picking.move_ids:
             move.date = date
 
     def test_01_exclude_move_from_adu(self):
@@ -204,7 +204,7 @@ class TestDdmrp(common.TransactionCase):
         self.assertEqual(buffer_a.adu, to_assert_value)
 
         # Exclude specific moves:
-        for move in pick_excluded.move_lines:
+        for move in pick_excluded.move_ids:
             move.exclude_from_adu = True
         self.bufferModel.cron_ddmrp_adu()
         to_assert_value = 60 / 120
