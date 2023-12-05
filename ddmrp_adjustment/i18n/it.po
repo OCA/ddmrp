@@ -112,6 +112,7 @@ msgid "DDMRP Adjustment Demand"
 msgstr "Fabbisogno correzione DDMRP"
 
 #. module: ddmrp_adjustment
+#. odoo-python
 #: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:0
 #, python-format
 msgid "DDMRP Buffer Adjustment"
@@ -154,6 +155,7 @@ msgid "Demand Adjustment Factor"
 msgstr "Fattore correzione fabbisogno"
 
 #. module: ddmrp_adjustment
+#. odoo-python
 #: code:addons/ddmrp_adjustment/models/stock_buffer.py:0
 #, python-format
 msgid "Demand Allocated to Components"
@@ -297,6 +299,7 @@ msgid "Stock Buffer"
 msgstr "Buffer di materiale"
 
 #. module: ddmrp_adjustment
+#. odoo-python
 #: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:0
 #, python-format
 msgid "The start date cannot be later than the end date."
@@ -319,12 +322,14 @@ msgid "Value"
 msgstr "Valore"
 
 #. module: ddmrp_adjustment
+#. odoo-python
 #: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:0
 #, python-format
 msgid "You must apply at least one factor"
 msgstr "Bisogna applicare almeno un fattore"
 
 #. module: ddmrp_adjustment
+#. odoo-python
 #: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:0
 #, python-format
 msgid "You must select at least one buffer."
