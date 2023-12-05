@@ -23,9 +23,31 @@ export class StockBufferPopover extends Component {
                     "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-3.1.1.min.js",
                 ],
             });
+            var bufferId = this.props.record.resId;
+            var bufferField = this.props.buffer_id;
+            if (bufferField && this.props.record.data[bufferField]) {
+                if (
+                    "field" in this.props.record.data[bufferField] &&
+                    this.props.record.data[bufferField].field.type == "many2many"
+                ) {
+                    if (this.props.record.data[bufferField].records.length > 0) {
+                        bufferId = this.props.record.data[bufferField].records[0].resId;
+                    } else {
+                        bufferId = 0; // Relation is blank, no buffer.
+                    }
+                } else {
+                    // Assume m2o
+                    bufferId = this.props.record.data[bufferField][0];
+                }
+            } else if (bufferField) {
+                bufferId = 0; // Relation is blank, no buffer.
+            }
+            if (bufferId == 0) {
+                return;
+            }
             this.bokeh_chart = await this.orm.read(
-                this.props.record.resModel,
-                [this.props.record.resId],
+                "stock.buffer",
+                [bufferId],
                 [this.props.field]
             );
         });
@@ -68,6 +90,7 @@ export class StockBufferInfoWidget extends FloatField {
                 record: this.props.record,
                 field: this.props.field,
                 color_from: this.props.color_from,
+                buffer_id: this.props.buffer_id,
             },
             {
                 position: "right",
@@ -86,6 +109,7 @@ StockBufferInfoWidget.props = {
     ...StockBufferInfoWidget.props,
     color_from: {type: String, optional: true},
     field: {type: String, optional: true},
+    buffer_id: {type: String, optional: true},
 };
 
 const StockBufferInfoWidgetExtractProps = StockBufferInfoWidget.extractProps;
@@ -93,6 +117,7 @@ StockBufferInfoWidget.extractProps = ({attrs, field}) => {
     return Object.assign(StockBufferInfoWidgetExtractProps({attrs, field}), {
         color_from: attrs.options.color_from,
         field: attrs.options.field,
+        buffer_id: attrs.options.buffer_id,
     });
 };
 
