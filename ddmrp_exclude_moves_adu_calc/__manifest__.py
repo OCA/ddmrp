@@ -1,11 +1,11 @@
-# Copyright 2017-21 ForgeFlow (http://www.forgeflow.com)
+# Copyright 2017-23 ForgeFlow (http://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 {
     "name": "DDMRP Exclude Moves ADU Calc",
     "summary": "Define additional rules to exclude certain moves from ADU "
     "calculation",
-    "version": "15.0.1.0.0",
+    "version": "16.0.1.0.0",
     "author": "ForgeFlow, " "Odoo Community Association (OCA)",
     "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],
     "website": "https://github.com/OCA/ddmrp",
