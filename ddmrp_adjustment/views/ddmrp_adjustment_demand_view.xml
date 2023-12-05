@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2017-20 ForgeFlow S.L. (https://www.forgeflow.com)
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="view_ddmrp_adjustment_demand_tree" model="ir.ui.view">
+        <field name="name">ddmrp.adjustment.demand.tree</field>
+        <field name="model">ddmrp.adjustment.demand</field>
+        <field name="arch" type="xml">
+            <tree create="0" delete="0">
+                <field name="buffer_id" />
+                <field name="product_id" />
+                <field name="buffer_origin_id" />
+                <field name="product_origin_id" />
+                <field name="extra_demand" />
+                <field name="product_uom_id" />
+                <field name="date_start" />
+                <field name="date_end" />
+            </tree>
+        </field>
+    </record>
+</odoo>
