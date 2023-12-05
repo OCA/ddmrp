@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo-addon-ddmrp>=16.0dev,<16.1dev',
         'odoo-addon-ddmrp_chatter>=16.0dev,<16.1dev',
+        'odoo-addon-ddmrp_exclude_moves_adu_calc>=16.0dev,<16.1dev',
         'odoo-addon-ddmrp_history>=16.0dev,<16.1dev',
         'odoo-addon-ddmrp_product_replace>=16.0dev,<16.1dev',
         'odoo-addon-ddmrp_warning>=16.0dev,<16.1dev',
