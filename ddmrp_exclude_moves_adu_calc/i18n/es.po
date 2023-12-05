@@ -34,8 +34,8 @@ msgstr "Excluir este movimiento del cálculo ADU"
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model.fields,help:ddmrp_exclude_moves_adu_calc.field_stock_location__exclude_from_adu
 msgid ""
-"If this flag is set stock moves into this location will be excluded from ADU"
-" calculation in the origin location buffer."
+"If this flag is set stock moves into this location will be excluded from ADU "
+"calculation in the origin location buffer."
 msgstr ""
 "Si este indicador está activado, los movimientos de existencias en esta "
 "ubicación se excluirán del cálculo de ADU en el búfer de ubicación de origen."
@@ -54,6 +54,7 @@ msgid "Inventory Locations"
 msgstr "Localización de inventarios"
 
 #. module: ddmrp_exclude_moves_adu_calc
+#. odoo-python
 #: code:addons/ddmrp_exclude_moves_adu_calc/models/stock_move.py:0
 #, python-format
 msgid "Only inventory managers are allowed perform this action."
