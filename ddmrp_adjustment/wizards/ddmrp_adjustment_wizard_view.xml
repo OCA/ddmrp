@@ -14,7 +14,7 @@
                     <field name="date_range_type_id" />
                 </group>
                 <group name="buffers" string="Buffers">
-                    <field name="buffer_ids" nolabel="1">
+                    <field name="buffer_ids" nolabel="1" colspan="2">
                         <tree name="buffer_tree">
                             <field name="name" />
                             <field name="product_id" />
@@ -28,12 +28,13 @@
                     <field name="apply_ltaf" />
                 </group>
                 <group name="factor_sheet" string="Sheet">
-                    <p>Fill the factors to apply in each period for all the
+                    <p colspan="2">Fill the factors to apply in each period for all the
                        selected Buffers.</p>
                     <br />
                     <field
                         name="line_ids"
                         nolabel="1"
+                        colspan="2"
                         widget="x2many_2d_matrix"
                         field_x_axis="date_range_id"
                         field_y_axis="factor"

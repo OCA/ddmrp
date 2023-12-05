@@ -1,10 +1,10 @@
-# Copyright 2017-22 ForgeFlow S.L. (https://www.forgeflow.com)
+# Copyright 2017-23 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 {
     "name": "DDMRP Adjustment",
     "summary": "Allow to apply factor adjustments to buffers.",
-    "version": "15.0.1.1.0",
+    "version": "16.0.1.0.0",
     "development_status": "Beta",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],
