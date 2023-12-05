@@ -48,6 +48,7 @@ msgid "Inventory Locations"
 msgstr ""
 
 #. module: ddmrp_exclude_moves_adu_calc
+#. odoo-python
 #: code:addons/ddmrp_exclude_moves_adu_calc/models/stock_move.py:0
 #, python-format
 msgid "Only inventory managers are allowed perform this action."
