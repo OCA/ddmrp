@@ -44,12 +44,14 @@ msgid "Affected Buffers"
 msgstr ""
 
 #. module: ddmrp_product_replace
+#. odoo-python
 #: code:addons/ddmrp_product_replace/models/stock_buffer.py:0
 #, python-format
 msgid "Buffered product must be considered as demand."
 msgstr ""
 
 #. module: ddmrp_product_replace
+#. odoo-python
 #: code:addons/ddmrp_product_replace/models/stock_buffer.py:0
 #, python-format
 msgid "Buffers Replaced"
@@ -188,12 +190,14 @@ msgid "New Product Name"
 msgstr ""
 
 #. module: ddmrp_product_replace
+#. odoo-python
 #: code:addons/ddmrp_product_replace/wizards/ddmrp_product_replace.py:0
 #, python-format
 msgid "New Stock Buffers"
 msgstr ""
 
 #. module: ddmrp_product_replace
+#. odoo-python
 #: code:addons/ddmrp_product_replace/wizards/ddmrp_product_replace.py:0
 #, python-format
 msgid "No affected buffers found."
@@ -269,6 +273,7 @@ msgid "Replaces"
 msgstr ""
 
 #. module: ddmrp_product_replace
+#. odoo-python
 #: code:addons/ddmrp_product_replace/wizards/ddmrp_product_replace.py:0
 #, python-format
 msgid "Replacing Product"
@@ -285,6 +290,7 @@ msgid "Select Replacing Product"
 msgstr ""
 
 #. module: ddmrp_product_replace
+#. odoo-python
 #: code:addons/ddmrp_product_replace/wizards/ddmrp_product_replace.py:0
 #, python-format
 msgid ""
@@ -292,12 +298,14 @@ msgid ""
 msgstr ""
 
 #. module: ddmrp_product_replace
+#. odoo-python
 #: code:addons/ddmrp_product_replace/wizards/ddmrp_product_replace.py:0
 #, python-format
 msgid "Some of the buffers have already been replaced."
 msgstr ""
 
 #. module: ddmrp_product_replace
+#. odoo-python
 #: code:addons/ddmrp_product_replace/wizards/make_procurement_buffer.py:0
 #, python-format
 msgid "Some products are being replaced:"
@@ -342,6 +350,7 @@ msgid ""
 msgstr ""
 
 #. module: ddmrp_product_replace
+#. odoo-python
 #: code:addons/ddmrp_product_replace/models/stock_buffer.py:0
 #, python-format
 msgid "This product is replaced by %s."
@@ -363,6 +372,7 @@ msgid "Validate"
 msgstr ""
 
 #. module: ddmrp_product_replace
+#. odoo-python
 #: code:addons/ddmrp_product_replace/models/stock_buffer.py:0
 #, python-format
 msgid "You cannot create recursive \"Replaced by\" chains."
