@@ -13,6 +13,7 @@
                 <div
                     class="app_settings_block"
                     data-string="DDMRP"
+                    string="DDMRP"
                     data-key="ddmrp"
                     groups="ddmrp.group_ddmrp_manager"
                 >
