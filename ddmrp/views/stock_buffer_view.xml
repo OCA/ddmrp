@@ -554,7 +554,7 @@
                 <field name="execution_priority_level" />
                 <group name="planning_priority" string="Planning Priority Zones">
                     <filter
-                        name="planning_priority_level"
+                        name="planning_priority_level_red"
                         string="Red"
                         domain="[('planning_priority_level', '=', '1_red')]"
                     />
