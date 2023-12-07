@@ -1607,10 +1607,11 @@ class StockBuffer(models.Model):
         horizon = int(self.dlt) * factor
         datetime_planned = self._get_date_planned(force_lt=horizon)
         target_time = time(12, 0, 0)
-        if datetime_planned.time() < target_time:
-            datetime_planned = datetime_planned.replace(
-                hour=12, minute=0, second=0, microsecond=0
-            )
+        if isinstance(datetime_planned, datetime):
+            if datetime_planned.time() < target_time:
+                datetime_planned = datetime_planned.replace(
+                    hour=12, minute=0, second=0, microsecond=0
+                )
         return datetime_planned
 
     def _search_stock_moves_incoming_domain(self, outside_dlt=False):
