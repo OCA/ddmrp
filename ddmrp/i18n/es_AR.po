@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-10-29 23:56+0000\n"
+"PO-Revision-Date: 2023-12-09 23:49+0000\n"
 "Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es_AR\n"
@@ -269,17 +269,17 @@ msgstr "Cancelar"
 #. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__ddmrp_duplicate_buffer__type__location
 msgid "Change Location"
-msgstr ""
+msgstr "Cambiar Ubicación"
 
 #. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__ddmrp_duplicate_buffer__type__product
 msgid "Change Product"
-msgstr ""
+msgstr "Cambiar Producto"
 
 #. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__ddmrp_duplicate_buffer__type__both
 msgid "Change both values"
-msgstr ""
+msgstr "Cambiar ambos valores"
 
 #. module: ddmrp
 #: model:res.groups,name:ddmrp.group_change_buffer_procure_qty
@@ -346,7 +346,7 @@ msgstr "Consumo"
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.ddmrp_duplicate_buffer_wizard
 msgid "Copy Ddmrp Stock Buffer"
-msgstr ""
+msgstr "Copiar el Búfer de Inventario DDMRP"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
@@ -421,7 +421,7 @@ msgstr "Gráfico de Demanda DDMRP"
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_ddmrp_duplicate_buffer
 msgid "DDMRP Duplicate Buffer"
-msgstr ""
+msgstr "Duplicar Búfer DDMRP"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__ddmrp_chart_execution
@@ -514,24 +514,24 @@ msgstr "Distribuido"
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.ddmrp_duplicate_buffer_wizard
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplicar"
 
 #. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.action_server_ddmrp_duplicate_buffer
 msgid "Duplicate Buffer"
-msgstr ""
+msgstr "Duplicar Búfer"
 
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
 #, python-format
 msgid "Duplicated Buffers"
-msgstr ""
+msgstr "Búferes Duplicados"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__type
 msgid "Duplication Type"
-msgstr ""
+msgstr "Tipo de Duplicación"
 
 #. module: ddmrp
 #. odoo-python
@@ -998,12 +998,12 @@ msgstr "Posición de flujo neto (% de TDV)"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__location_id
 msgid "New Location"
-msgstr ""
+msgstr "Nueva Ubicación"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__product_id
 msgid "New Product"
-msgstr ""
+msgstr "Nuevo Producto"
 
 #. module: ddmrp
 #. odoo-python
@@ -1179,14 +1179,14 @@ msgstr "Por favor, indica un Origen pasado."
 #: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
 #, python-format
 msgid "Please select a New Location."
-msgstr ""
+msgstr "Seleccione una Nueva Ubicación."
 
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
 #, python-format
 msgid "Please select a New Product."
-msgstr ""
+msgstr "Seleccione un Nuevo Producto."
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__procure_recommended_qty
@@ -1716,6 +1716,8 @@ msgid ""
 "The product/location combination must be unique.Remember that the buffer "
 "could be archived."
 msgstr ""
+"La combinación de ubicación/producto debe ser única. Recuerde que el búfer "
+"puede ser archivado."
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
@@ -1847,22 +1849,22 @@ msgstr "Código de Vendedor"
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "View ADU (Future - Direct Demand)"
-msgstr ""
+msgstr "Ver ADU (Futuro - Demanda Directa)"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "View ADU (Future - Indirect Demand)"
-msgstr ""
+msgstr "Ver ADU (Futuro - Demanda Indirecta)"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "View ADU (Past - Direct Demand)"
-msgstr ""
+msgstr "Ver ADU (Pasado - Demanda Directa)"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "View ADU (Past - Indirect Demand)"
-msgstr ""
+msgstr "Ver ADU (Pasado - Demanda Indirecta)"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
