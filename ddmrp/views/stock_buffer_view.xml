@@ -326,6 +326,7 @@
                                     name="show_execution_chart"
                                     widget="boolean_toggle"
                                     nolabel="1"
+                                    options="{'autosave': False}"
                                 />
                                 <label
                                     for="show_execution_chart"
