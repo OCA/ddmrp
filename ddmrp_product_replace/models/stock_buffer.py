@@ -41,6 +41,7 @@ class StockBuffer(models.Model):
         string="Considered As Demand",
         help="This field is used for a correct product replacement within a "
         "DDMRP buffer.",
+        copy=False,
     )
     use_replacement_for_buffer_status = fields.Boolean(
         string="Include Incoming & On-Hands of replaced products",
