@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-23 18:35+0000\n"
+"PO-Revision-Date: 2024-01-05 10:38+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -124,7 +124,7 @@ msgstr "Auto approvvigionamento"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__auto_procure_option
 msgid "Auto Procure Option"
-msgstr "Opzine auto approvvigionamento"
+msgstr "Opzione auto approvvigionamento"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
@@ -1344,7 +1344,7 @@ msgid ""
 "limited to this quantity."
 msgstr ""
 "Quantità disponibile per buffer distribuito nell'ubicazione origine. Quando "
-"viene richiesto un aprovvigionamento, se l'opzine è attiva nel profilo, "
+"viene richiesto un aprovvigionamento, se l'opzione è attiva nel profilo, "
 "verrà limitata a questa quantità."
 
 #. module: ddmrp
@@ -1713,7 +1713,7 @@ msgid ""
 "The product/location combination must be unique.Remember that the buffer "
 "could be archived."
 msgstr ""
-"La combinazione prdotto/bicazine deve essere univoco. Ricordarsi che il "
+"La combinazione prdotto/bicazione deve essere univoco. Ricordarsi che il "
 "buffer deve essere archiviato."
 
 #. module: ddmrp
