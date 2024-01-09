@@ -724,8 +724,8 @@ class StockBuffer(models.Model):
             self.top_of_red + self.green_zone_qty,
             precision_rounding=self.product_uom.rounding,
         )
-        toy2_exec = self.top_of_yellow
         tor2_exec = self.top_of_green
+        toy2_exec = (tor2_exec + tog_exec) / 2
         hex_colors = self._get_colors_hex_map(pallete="execution")
         red = p.vbar(
             x=1,
