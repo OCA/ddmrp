@@ -226,16 +226,18 @@ class StockBuffer(models.Model):
             data[categories[2]] = [(r.top_of_red / 2) for r in history]
             data[categories[3]] = [r.top_of_green - r.top_of_yellow for r in history]
             data[categories[4]] = [
-                r.top_of_yellow - r.top_of_red - (r.top_of_green - r.top_of_yellow)
+                (r.top_of_green - r.top_of_red - (r.top_of_green - r.top_of_yellow)) / 2
                 for r in history
             ]
-            data[categories[5]] = [r.top_of_green - r.top_of_yellow for r in history]
+            data[categories[5]] = [
+                (r.top_of_green - r.top_of_red - (r.top_of_green - r.top_of_yellow)) / 2
+                for r in history
+            ]
             data[categories[6]] = [
                 finish_stack
                 - r.top_of_red
                 - (r.top_of_green - r.top_of_yellow)
-                - (r.top_of_yellow - r.top_of_red - (r.top_of_green - r.top_of_yellow))
-                - (r.top_of_green - r.top_of_yellow)
+                - (r.top_of_green - r.top_of_red - (r.top_of_green - r.top_of_yellow))
                 for r in history
             ]
 
