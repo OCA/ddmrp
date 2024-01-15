@@ -56,11 +56,6 @@ class StockBuffer(models.Model):
             result |= location
         return result
 
-    def _prepare_procurement_values(self, product_qty, date=False, group=False):
-        res = super()._prepare_procurement_values(product_qty, date=date, group=group)
-        res["route_ids"] = self.route_id
-        return res
-
     def _values_source_location_from_route(self):
         values = super()._values_source_location_from_route()
         if self.route_id:
