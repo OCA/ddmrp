@@ -27,8 +27,10 @@ export class StockBufferPopover extends Component {
             var bufferField = this.props.buffer_id;
             if (bufferField && this.props.record.data[bufferField]) {
                 if (
-                    "field" in this.props.record.data[bufferField] &&
-                    this.props.record.data[bufferField].field.type == "many2many"
+                    ("field" in this.props.record.data[bufferField] &&
+                        this.props.record.data[bufferField].field.type ==
+                            "many2many") ||
+                    bufferField.endsWith("_ids")
                 ) {
                     if (this.props.record.data[bufferField].records.length > 0) {
                         bufferId = this.props.record.data[bufferField].records[0].resId;
