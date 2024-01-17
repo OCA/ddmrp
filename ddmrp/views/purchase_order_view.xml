@@ -15,7 +15,8 @@
                 <field name="execution_priority_level" invisible="1" />
                 <field
                     name="on_hand_percent"
-                    options='{"buffer_ids": "buffer_ids", "color_from": "execution_priority_level"}'
+                    options='{"buffer_id": "buffer_ids", "color_from": "execution_priority_level", "field": "ddmrp_chart_execution"}'
+                    widget="stock_buffer_info"
                 />
             </xpath>
             <xpath
