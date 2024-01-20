@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-10-28 20:07+0000\n"
+"PO-Revision-Date: 2024-01-20 15:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -40,11 +40,13 @@ msgstr "ID"
 #: model:ir.model.fields,help:stock_buffer_route.field_make_procurement_buffer__partner_id
 msgid "If set, will be used as preferred vendor for purchase routes."
 msgstr ""
+"Se impostato, verrà utilizzato come fornitore preferito per le rotte di "
+"acquisto."
 
 #. module: stock_buffer_route
 #: model:ir.model.fields,field_description:stock_buffer_route.field_make_procurement_buffer__item_ids
 msgid "Items"
-msgstr ""
+msgstr "Articoli"
 
 #. module: stock_buffer_route
 #: model:ir.model.fields,field_description:stock_buffer_route.field_make_procurement_buffer____last_update
@@ -56,12 +58,12 @@ msgstr "Ultima modifica il"
 #. module: stock_buffer_route
 #: model:ir.model,name:stock_buffer_route.model_make_procurement_buffer_item
 msgid "Make Procurements from Stock Buffer Item"
-msgstr ""
+msgstr "Esegue approvvigionamenti dagli elementi del buffer di materiale"
 
 #. module: stock_buffer_route
 #: model:ir.model,name:stock_buffer_route.model_make_procurement_buffer
 msgid "Make Procurements from Stock Buffers"
-msgstr ""
+msgstr "Esegue approvvigionamenti dai buffer di materiale"
 
 #. module: stock_buffer_route
 #: model:ir.model.fields,field_description:stock_buffer_route.field_make_procurement_buffer_item__route_id
@@ -78,4 +80,4 @@ msgstr "Buffer di materiale"
 #. module: stock_buffer_route
 #: model:ir.model.fields,field_description:stock_buffer_route.field_make_procurement_buffer__partner_id
 msgid "Vendor"
-msgstr ""
+msgstr "Fornitore"
