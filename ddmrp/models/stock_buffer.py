@@ -1970,6 +1970,12 @@ class StockBuffer(models.Model):
         result["domain"] = [("id", "in", mrp_moves.ids)]
         return result
 
+    def action_request_procurement(self):
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "ddmrp.act_make_procurement_from_buffer"
+        )
+        return action
+
     @api.model
     def cron_ddmrp_adu(self, automatic=False):
         """calculate ADU for each DDMRP buffer. Called by cronjob."""
