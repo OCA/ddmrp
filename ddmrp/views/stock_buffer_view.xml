@@ -6,6 +6,13 @@
         <field name="priority">50</field>
         <field name="arch" type="xml">
             <tree decoration-danger="procure_recommended_qty &gt; 0">
+                <header>
+                    <button
+                        name="action_request_procurement"
+                        type="object"
+                        string="Procure"
+                    />
+                </header>
                 <field name="product_id" />
                 <field name="product_vendor_code" optional="hide" />
                 <field name="warehouse_id" optional="show" />
@@ -102,6 +109,14 @@
         <field name="model">stock.buffer</field>
         <field name="arch" type="xml">
             <form duplicate="0">
+                <header>
+                    <button
+                        string="Refresh Buffer"
+                        name="refresh_buffer"
+                        icon="fa-refresh"
+                        type="object"
+                    />
+                </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button
@@ -156,13 +171,6 @@
                                 widget="statinfo"
                             />
                         </button>
-                        <button
-                            string="Refresh Buffer"
-                            name="refresh_buffer"
-                            class="oe_stat_button"
-                            icon="fa-refresh"
-                            type="object"
-                        />
                     </div>
                     <widget
                         name="web_ribbon"
