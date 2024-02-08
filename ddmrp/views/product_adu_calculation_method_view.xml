@@ -6,6 +6,8 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name" />
+                <field name="method" />
+                <field name="company_id" groups="base.group_multi_company" />
             </tree>
         </field>
     </record>
@@ -13,15 +15,16 @@
         <field name="name">product.adu.calculation.method.form</field>
         <field name="model">product.adu.calculation.method</field>
         <field name="arch" type="xml">
-            <form string="ADU Calculation Method">
+            <form>
+                <sheet>
                 <group name="name">
                     <field name="name" />
                     <field name="method" />
                     <field
-                        name="company_id"
-                        groups="base.group_multi_company"
-                        widget="selection"
-                    />
+                            name="company_id"
+                            groups="base.group_multi_company"
+                            widget="selection"
+                        />
                 </group>
                 <group name="configuration">
                     <group name="past">
@@ -31,9 +34,9 @@
                             <field name="horizon_past" class="oe_inline" /> days
                         </div>
                         <field
-                            name="factor_past"
-                            attrs="{'invisible': [('method', '!=', 'blended')]}"
-                        />
+                                name="factor_past"
+                                attrs="{'invisible': [('method', '!=', 'blended')]}"
+                            />
                     </group>
                     <group name="future">
                         <field name="source_future" />
@@ -42,11 +45,12 @@
                             <field name="horizon_future" class="oe_inline" /> days
                         </div>
                         <field
-                            name="factor_future"
-                            attrs="{'invisible': [('method', '!=', 'blended')]}"
-                        />
+                                name="factor_future"
+                                attrs="{'invisible': [('method', '!=', 'blended')]}"
+                            />
                     </group>
                 </group>
+                </sheet>
             </form>
         </field>
     </record>
