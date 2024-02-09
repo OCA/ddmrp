@@ -60,11 +60,6 @@ msgid "ADU"
 msgstr "ADU"
 
 #. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_form
-msgid "ADU Calculation Method"
-msgstr "Metodo di calcolo ADU"
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method
 msgid "ADU calculation method"
 msgstr "Metodo di calcolo ADU"
@@ -1187,6 +1182,11 @@ msgid "Please select a New Product."
 msgstr "Selezionare un nuovo prodotto."
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid "Procure"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__procure_recommended_qty
 msgid "Procure Recommendation"
 msgstr "Consiglio approvvigionamento"
@@ -2037,6 +2037,9 @@ msgstr "giorni"
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr "o"
+
+#~ msgid "ADU Calculation Method"
+#~ msgstr "Metodo di calcolo ADU"
 
 #~ msgid "Forecast On Location"
 #~ msgstr "Previsto nell'ubicazione"

@@ -61,11 +61,6 @@ msgid "ADU"
 msgstr "CPD"
 
 #. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_form
-msgid "ADU Calculation Method"
-msgstr "Método de cálculo CPD"
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method
 msgid "ADU calculation method"
 msgstr "Método de cálculo CPD"
@@ -1189,6 +1184,11 @@ msgid "Please select a New Product."
 msgstr "Seleccione un Nuevo Producto."
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid "Procure"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__procure_recommended_qty
 msgid "Procure Recommendation"
 msgstr "Recomendación Abastecimiento"
@@ -2037,6 +2037,9 @@ msgstr "días"
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr "o"
+
+#~ msgid "ADU Calculation Method"
+#~ msgstr "Método de cálculo CPD"
 
 #~ msgid "Forecast On Location"
 #~ msgstr "Previsto en Ubicación"
