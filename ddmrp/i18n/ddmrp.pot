@@ -42,11 +42,6 @@ msgid "ADU"
 msgstr ""
 
 #. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_form
-msgid "ADU Calculation Method"
-msgstr ""
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method
 msgid "ADU calculation method"
 msgstr ""
@@ -1141,6 +1136,11 @@ msgstr ""
 #: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
 #, python-format
 msgid "Please select a New Product."
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid "Procure"
 msgstr ""
 
 #. module: ddmrp
