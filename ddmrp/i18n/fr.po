@@ -51,11 +51,6 @@ msgid "ADU"
 msgstr "CMJ"
 
 #. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_form
-msgid "ADU Calculation Method"
-msgstr "Méthode de calcul de la CMJ"
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method
 msgid "ADU calculation method"
 msgstr "Méthode de calcul de la CMJ"
@@ -1159,6 +1154,11 @@ msgid "Please select a New Product."
 msgstr ""
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid "Procure"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__procure_recommended_qty
 msgid "Procure Recommendation"
 msgstr ""
@@ -1939,6 +1939,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr ""
+
+#~ msgid "ADU Calculation Method"
+#~ msgstr "Méthode de calcul de la CMJ"
 
 #~ msgid "BOM Structure Report"
 #~ msgstr "Rapport structure de nomenclature"
