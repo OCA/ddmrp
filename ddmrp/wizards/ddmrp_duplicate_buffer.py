@@ -71,12 +71,28 @@ class DdmrpDuplicateBuffer(models.TransientModel):
                 default["product_id"] = self.product_id.id
             if self.type in ["location", "both"]:
                 default["location_id"] = self.location_id.id
+                default["warehouse_id"] = self.location_id.warehouse_id.id
+                default["company_id"] = self.location_id.company_id.id
             copy_buffers |= buffer.copy(default)
-
-        return {
-            "type": "ir.actions.act_window",
-            "name": _("Duplicated Buffers"),
-            "res_model": "stock.buffer",
-            "view_mode": "tree,form",
-            "domain": [("id", "in", copy_buffers.ids)],
-        }
+        if len(copy_buffers) == 1:
+            view_id = self.env.ref("ddmrp.stock_buffer_view_form").id
+            return {
+                "name": _("Duplicated Buffers"),
+                "type": "ir.actions.act_window",
+                "res_model": "stock.buffer",
+                "res_id": copy_buffers.id,
+                "view_mode": "form",
+                "view_id": view_id,
+            }
+        else:
+            xmlid = "ddmrp.action_stock_buffer"
+            action = self.env["ir.actions.act_window"]._for_xml_id(xmlid)
+            action.update(
+                {
+                    "name": _("Duplicated Buffers"),
+                    "res_model": "stock.buffer",
+                    "view_mode": "tree,form",
+                    "domain": [("id", "in", copy_buffers.ids)],
+                }
+            )
+            return action
