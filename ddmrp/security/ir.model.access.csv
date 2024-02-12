@@ -9,3 +9,4 @@ access_stock_buffer_profile_variability,stock.buffer.profile.variability stock u
 access_stock_buffer_profile_variability_manager,stock.buffer.profile.variability stock manager,model_stock_buffer_profile_variability,ddmrp.group_ddmrp_manager,1,1,1,1
 access_stock_buffer,stock.buffer.user,model_stock_buffer,stock.group_stock_user,1,0,0,0
 access_stock_buffer_manager,stock.buffer.manager,model_stock_buffer,ddmrp.group_stock_buffer_maintainer,1,1,1,1
+access_ddmrp_mrp_move,mrp.move ddmrp,mrp_multi_level.model_mrp_move,stock.group_stock_user,1,0,0,0
