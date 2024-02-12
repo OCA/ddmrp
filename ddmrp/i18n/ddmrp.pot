@@ -487,6 +487,7 @@ msgstr ""
 
 #. module: ddmrp
 #: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
+#: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
 #, python-format
 msgid "Duplicated Buffers"
 msgstr ""
