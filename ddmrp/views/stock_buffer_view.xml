@@ -430,23 +430,12 @@
                                         name="qualified_demand_stock_move_ids"
                                         invisible="1"
                                     />
-                                    <field
-                                        name="qualified_demand_mrp_move_ids"
-                                        invisible="1"
-                                    />
                                     <button
                                         title="View Qualified Demand from Pickings"
                                         name="action_view_qualified_demand_pickings"
                                         icon="fa-search"
                                         type="object"
                                         attrs="{'invisible': ['|', ('qualified_demand', '=', 0), ('qualified_demand_stock_move_ids', '=', [])]}"
-                                    />
-                                    <button
-                                        title="View Qualified Demand from MRP"
-                                        name="action_view_qualified_demand_mrp"
-                                        icon="fa-search"
-                                        type="object"
-                                        attrs="{'invisible': ['|', ('qualified_demand', '=', 0), ('qualified_demand_mrp_move_ids', '=', [])]}"
                                     />
                                 </div>
                                 <field name="net_flow_position" />

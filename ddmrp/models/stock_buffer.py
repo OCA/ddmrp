@@ -808,7 +808,6 @@ class StockBuffer(models.Model):
 
             # Prepare data:
             demand_data = rec._get_demand_by_days(rec.qualified_demand_stock_move_ids)
-            mrp_data = rec._get_qualified_mrp_moves(rec.qualified_demand_mrp_move_ids)
             supply_data = rec._get_incoming_by_days()
             width = timedelta(days=0.4)
             date_format = (
@@ -816,11 +815,9 @@ class StockBuffer(models.Model):
             )
 
             # Plot demand data:
-            if demand_data or mrp_data:
+            if demand_data:
                 x_demand = list(convert_datetime_type(x) for x in demand_data.keys())
                 y_demand = list(demand_data.values())
-                x_mrp = list(convert_datetime_type(x) for x in mrp_data.keys())
-                y_mrp = list(mrp_data.values())
 
                 p = figure(
                     plot_width=500,
@@ -846,10 +843,6 @@ class StockBuffer(models.Model):
                         bottom=0,
                         top=y_demand,
                         color="firebrick",
-                    )
-                if mrp_data:
-                    p.vbar(
-                        x=x_mrp, width=width, bottom=0, top=y_mrp, color="lightsalmon"
                     )
                 p.line(
                     [
@@ -1155,9 +1148,6 @@ class StockBuffer(models.Model):
     )
     qualified_demand_stock_move_ids = fields.Many2many(
         comodel_name="stock.move",
-    )
-    qualified_demand_mrp_move_ids = fields.Many2many(
-        comodel_name="mrp.move",
     )
     incoming_total_qty = fields.Float(
         string="Total Incoming",
@@ -1608,46 +1598,13 @@ class StockBuffer(models.Model):
             )
         return demand_by_days
 
-    def _search_mrp_moves_qualified_demand_domain(self):
-        self.ensure_one()
-        horizon = self.order_spike_horizon
-        date_to = self.warehouse_id.wh_plan_days(datetime.now(), horizon)
-        return [
-            ("product_id", "=", self.product_id.id),
-            ("mrp_type", "=", "d"),
-            ("mrp_date", "<=", date_to),
-        ]
-
-    def _search_mrp_moves_qualified_demand(self):
-        domain = self._search_mrp_moves_qualified_demand_domain()
-        moves = self.env["mrp.move"].search(domain)
-        moves = moves.filtered(
-            lambda move: move.mrp_area_id.location_id.is_sublocation_of(
-                self.location_id
-            )
-        )
-        return moves
-
-    def _get_qualified_mrp_moves(self, moves):
-        self.ensure_one()
-        mrp_moves_by_days = {}
-        move_dates = [dt for dt in moves.mapped("mrp_date")]
-        for move_date in move_dates:
-            mrp_moves_by_days[move_date] = 0.0
-        for move in moves:
-            date = move.mrp_date
-            mrp_moves_by_days[date] += abs(move.mrp_qty)
-        return mrp_moves_by_days
-
     def _calc_qualified_demand(self, current_date=False):
         today = current_date or fields.date.today()
         for rec in self:
             qualified_demand = 0.0
             moves = rec._search_stock_moves_qualified_demand()
-            mrp_moves = rec._search_mrp_moves_qualified_demand()
             demand_by_days = rec._get_demand_by_days(moves)
-            mrp_moves_by_days = rec._get_qualified_mrp_moves(mrp_moves)
-            dates = list(set(demand_by_days.keys()) | set(mrp_moves_by_days.keys()))
+            dates = list(set(demand_by_days.keys()))
             for date in dates:
                 if (
                     demand_by_days.get(date, 0.0) >= rec.order_spike_threshold
@@ -1656,16 +1613,8 @@ class StockBuffer(models.Model):
                     qualified_demand += demand_by_days.get(date, 0.0)
                 else:
                     moves = moves.filtered(lambda x: x.date != date)
-                if (
-                    mrp_moves_by_days.get(date, 0.0) >= rec.order_spike_threshold
-                    or date <= today
-                ):
-                    qualified_demand += mrp_moves_by_days.get(date, 0.0)
-                else:
-                    mrp_moves = mrp_moves.filtered(lambda x: x.mrp_date != date)
             rec.qualified_demand = qualified_demand
             rec.qualified_demand_stock_move_ids = moves
-            rec.qualified_demand_mrp_move_ids = mrp_moves
         return True
 
     def _calc_incoming_dlt_qty(self):
@@ -1871,15 +1820,6 @@ class StockBuffer(models.Model):
         )
         result["context"] = {}
         result["domain"] = [("id", "in", picks.ids)]
-        return result
-
-    def action_view_qualified_demand_mrp(self):
-        mrp_moves = self.qualified_demand_mrp_move_ids
-        result = self.env["ir.actions.actions"]._for_xml_id(
-            "mrp_multi_level.mrp_move_action"
-        )
-        result["context"] = {}
-        result["domain"] = [("id", "in", mrp_moves.ids)]
         return result
 
     def action_view_past_adu_direct_demand(self):
