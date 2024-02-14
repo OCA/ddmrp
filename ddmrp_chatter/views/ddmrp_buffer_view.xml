@@ -17,4 +17,15 @@
             </sheet>
         </field>
     </record>
+
+    <record id="stock_buffer_view_tree_chatter" model="ir.ui.view">
+        <field name="name">stock.buffer.form - Chatter</field>
+        <field name="model">stock.buffer</field>
+        <field name="inherit_id" ref="ddmrp.stock_buffer_view_tree" />
+        <field name="arch" type="xml">
+            <field name="item_type" position="after">
+                <field name="activity_ids" optional="show" widget="list_activity" />
+            </field>
+        </field>
+    </record>
 </odoo>
