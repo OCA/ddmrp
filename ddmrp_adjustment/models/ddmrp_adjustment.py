@@ -36,3 +36,5 @@ class DdmrpAdjustment(models.Model):
         required=True,
         default=lambda self: self.env.company,
     )
+    date_start = fields.Date(related="date_range_id.date_start")
+    date_end = fields.Date(related="date_range_id.date_end")

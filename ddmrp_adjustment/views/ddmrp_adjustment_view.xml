@@ -27,6 +27,13 @@
                 <field name="location_id" />
                 <field name="adjustment_type" />
                 <field name="company_id" groups="base.group_multi_company" />
+                <filter
+                    name="current"
+                    string="Affecting Currently"
+                    domain="[
+                        ('date_end', '>=', context_today().strftime('%Y-%m-%d')),
+                        ('date_start', '&lt;=', context_today().strftime('%Y-%m-%d'))]"
+                />
                 <group expand="1" string="Group By">
                     <filter
                         string="Buffer"
@@ -41,7 +48,7 @@
         <field name="name">Buffer Adjustments</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">ddmrp.adjustment</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,graph,form</field>
     </record>
     <menuitem
         id="menu_ddmrp_adjustment"
