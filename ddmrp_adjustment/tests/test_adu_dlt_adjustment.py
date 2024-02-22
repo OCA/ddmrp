@@ -44,3 +44,8 @@ class TestAduAdjustment(TestDDMRPAdjustmentCommon):
         self.buffer._compute_dlt()
 
         self.assertEqual(self.buffer.dlt, self.dlt_before * 2)
+
+    def test_dummy(self):
+        # Run actions
+        self.assertTrue(self.buffer.action_view_demand_to_components())
+        self.assertTrue(self.buffer.action_view_affecting_adu())

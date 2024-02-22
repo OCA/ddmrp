@@ -16,6 +16,19 @@
                     type="object"
                 />
             </xpath>
+            <button name="action_view_future_adu_indirect_demand" position="after">
+                <button
+                    title="View DAF Affecting Actual ADU"
+                    name="action_view_affecting_adu"
+                    type="object"
+                    attrs="{'invisible': [('daf_applied', '=', -1)]}"
+                >
+                    <div name="daf_applied" class="o_row">
+                        DAF: *
+                        <field name="daf_applied" readonly="1" />
+                    </div>
+                </button>
+            </button>
         </field>
     </record>
 </odoo>
