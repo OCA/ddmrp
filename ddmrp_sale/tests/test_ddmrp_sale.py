@@ -31,8 +31,8 @@ class TestDDMRPSale(TestDdmrpCommon):
 
     @classmethod
     def _refresh_involved_buffers(cls):
-        cls.buffer_a.invalidate_cache()
-        cls.buffer_internal.invalidate_cache()
+        cls.buffer_a.invalidate_recordset()
+        cls.buffer_internal.invalidate_recordset()
         cls.buffer_a.cron_actions()
         cls.buffer_internal.cron_actions()
 
