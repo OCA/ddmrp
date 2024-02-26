@@ -11,9 +11,13 @@
                 <field name="is_buffered" />
                 <field name="buffer_id" />
                 <label for="dlt" />
-                <div class="o_row">
+                <div class="o_row" style="width: 60% !important">
                     <field name="dlt" />
-                    <field name="context_location_id" options="{'no_open': True}" />
+                    <field
+                        name="context_location_id"
+                        options="{'no_open': True}"
+                        style="text-align: right;"
+                    />
                     <button
                         title="Change Location"
                         name="action_change_context_location"
