@@ -7,7 +7,10 @@ from odoo import api, fields, models
 class StockBuffer(models.Model):
     _inherit = "stock.buffer"
 
-    can_serve_sales = fields.Boolean(compute="_compute_can_serve_sales", store=True,)
+    can_serve_sales = fields.Boolean(
+        compute="_compute_can_serve_sales",
+        store=True,
+    )
     qualified_demand_sale_order_line_ids = fields.Many2many(
         comodel_name="sale.order.line",
     )
@@ -36,7 +39,11 @@ class StockBuffer(models.Model):
         date_to = self.warehouse_id.wh_plan_days(fields.Datetime.now(), horizon)
         return [
             ("product_id", "=", self.product_id.id),
-            ("state", "in", ["draft", "sent"],),
+            (
+                "state",
+                "in",
+                ["draft", "sent"],
+            ),
             ("commitment_date", "<=", date_to),
             ("order_id.warehouse_id", "=", self.warehouse_id.id),
             ("move_ids", "=", False),
