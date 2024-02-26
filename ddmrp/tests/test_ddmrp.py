@@ -959,13 +959,16 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertTrue(bom_line)
         self.assertFalse(bom_line.is_buffered)
         # Add a buffer for a component but in a different company
+        warehouse2 = self.env["stock.warehouse"].search(
+            [("company_id", "=", self.second_company.id)], limit=1
+        )
         component_buffer = self.bufferModel.create(
             {
                 "buffer_profile_id": self.buffer_profile_pur.id,
                 "product_id": self.component_a1.id,
                 "company_id": self.second_company.id,
-                "warehouse_id": self.warehouse_sc.id,
-                "location_id": self.stock_location_sc.id,
+                "warehouse_id": warehouse2.id,
+                "location_id": warehouse2.lot_stock_id.id,
                 "adu_calculation_method": self.adu_fixed.id,
             }
         )
@@ -1023,6 +1026,12 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(len(bom_fp01.bom_line_ids), 1)
         self.assertEqual(bom_fp01.bom_line_ids.is_buffered, True)
         self.assertEqual(bom_fp01.bom_line_ids.buffer_id, buffer_as01)
+        # Check at the same time the DLT of 2 buffers using the same bom:
+        buffers = buffer1_fp01 + buffer2_fp01
+        buffers.invalidate_cache()
+        buffers._compute_dlt()
+        self.assertEqual(buffer1_fp01.dlt, 22)
+        self.assertEqual(buffer2_fp01.dlt, 2)
 
     def test_40_bokeh_charts(self):
         """Check bokeh chart computation."""
