@@ -15,6 +15,7 @@ access_stock_buffer_procurements_item,stock.buffer.procurements.item.user,model_
 access_stock_buffer_procurements_item_manager,stock.buffer.procurements.item.manager,model_make_procurement_buffer_item,stock.group_stock_manager,1,1,1,1
 access_ddmrp_duplicate_buffer,ddmrp.duplicate.buffer,model_ddmrp_duplicate_buffer,stock.group_stock_user,1,0,0,0
 access_ddmrp_duplicate_buffer_manager,ddmrp.duplicate.buffer,model_ddmrp_duplicate_buffer,ddmrp.group_stock_buffer_maintainer,1,1,1,1
+access_mrp_bom_change_location_manager,mrp.bom.change.location,model_mrp_bom_change_location,stock.group_stock_user,1,1,1,1
 ddmrp_access_run,ddmrp.run,model_ddmrp_run,stock.group_stock_user,1,0,0,0
 ddmrp_access_run_manager,ddmrp.run.manager,model_ddmrp_run,stock.group_stock_manager,1,1,1,1
 access_ddmrp_mrp_move,mrp.move ddmrp,mrp_multi_level.model_mrp_move,stock.group_stock_user,1,0,0,0
