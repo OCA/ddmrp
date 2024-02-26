@@ -1027,6 +1027,12 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(len(bom_fp01.bom_line_ids), 1)
         self.assertEqual(bom_fp01.bom_line_ids.is_buffered, True)
         self.assertEqual(bom_fp01.bom_line_ids.buffer_id, buffer_as01)
+        # Check at the same time the DLT of 2 buffers using the same bom:
+        buffers = buffer1_fp01 + buffer2_fp01
+        buffers.invalidate_cache()
+        buffers._compute_dlt()
+        self.assertEqual(buffer1_fp01.dlt, 22)
+        self.assertEqual(buffer2_fp01.dlt, 2)
 
     def test_40_bokeh_charts(self):
         """Check bokeh chart computation."""

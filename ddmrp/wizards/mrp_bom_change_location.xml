@@ -5,7 +5,12 @@
         <field name="name">Mrp Bom Change Location Wizard</field>
         <field name="model">mrp.bom.change.location</field>
         <field name="arch" type="xml">
-            <form string="Change Mrp Bom Location">
+            <form string="Change Bom Location">
+                <p class="oe_grey">
+                    Change the inventory location that it is considered to compute when a product is buffered or not.
+                    This can potentially change the Decoupled Lead Time (DLT) value.
+                    This change is only informative and won't affect any process or buffer size or recommendations.
+                </p>
                 <group>
                     <group>
                         <field name="location_id" />
