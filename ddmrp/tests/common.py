@@ -45,6 +45,13 @@ class TestDdmrpCommon(common.TransactionCase):
         cls.main_company = cls.env.ref("base.main_company")
         cls.second_company = cls.env.ref("stock.res_company_1")
         cls.warehouse = cls.env.ref("stock.warehouse0")
+        cls.warehouse2 = cls.wh_model.create(
+            {
+                "partner_id": cls.env.ref("base.main_partner").id,
+                "name": "Warehouse 2",
+                "code": "WH2",
+            }
+        )
         cls.warehouse_sc = cls.env.ref("stock.stock_warehouse_shop0")
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.stock_location_sc = cls.warehouse_sc.lot_stock_id

@@ -1,4 +1,4 @@
-# Copyright 2017-20 ForgeFlow S.L. (http://www.forgeflow.com)
+# Copyright 2017-24 ForgeFlow S.L. (http://www.forgeflow.com)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import logging
@@ -61,6 +61,7 @@ class MrpBom(models.Model):
         for bom in self:
             bom.is_buffered = True if bom.buffer_id else False
 
+    @api.depends_context("location_id")
     def _compute_context_location(self):
         warehouse_model = self.env["stock.warehouse"]
         for rec in self:
@@ -126,6 +127,8 @@ class MrpBom(models.Model):
         dlt += self._get_longest_path()
         return dlt
 
+    @api.depends("context_location_id")
+    @api.depends_context("location_id")
     def _compute_dlt(self):
         for rec in self:
             rec.dlt = rec._get_manufactured_dlt()
@@ -173,6 +176,8 @@ class MrpBomLine(models.Model):
             domain.append(("company_id", "=", self.company_id.id))
         return domain
 
+    @api.depends("context_location_id")
+    @api.depends_context("location_id")
     def _compute_is_buffered(self):
         for line in self:
             domain = line._get_search_buffer_domain()
