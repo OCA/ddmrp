@@ -669,6 +669,7 @@
         <field name="name">Stock Buffers</field>
         <field name="res_model">stock.buffer</field>
         <field name="view_mode">tree,form</field>
+        <field name="context">{'location_id': False}</field>
     </record>
     <menuitem
         id="menu_stock_buffer"

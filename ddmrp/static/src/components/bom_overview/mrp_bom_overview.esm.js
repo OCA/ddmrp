@@ -10,6 +10,15 @@ patch(BomOverviewComponent.prototype, "ddmrp", {
         this.state.showOptions.dlt = true;
     },
 
+    async getWarehouses() {
+        await this._super.apply();
+        if (this.props.action.context.warehouse_id) {
+            this.state.currentWarehouse = this.warehouses.filter(
+                (warehouse) => warehouse.id === this.props.action.context.warehouse_id
+            )[0];
+        }
+    },
+
     getReportName() {
         return (
             this._super.apply(this, arguments) +

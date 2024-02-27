@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="mrp_bom_change_location_wizard" model="ir.ui.view">
+        <field name="name">Mrp Bom Change Location Wizard</field>
+        <field name="model">mrp.bom.change.location</field>
+        <field name="arch" type="xml">
+            <form string="Change Mrp Bom Location">
+                <group>
+                    <group>
+                        <field name="location_id" />
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="action_change_location"
+                        string="Change"
+                        type="object"
+                        class="btn-primary"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
