@@ -262,9 +262,27 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.mrp_bom_change_location_wizard
+msgid "Change"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.mrp_bom_change_location_wizard
+msgid "Change Bom Location"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__ddmrp_duplicate_buffer__type__location
+#: model_terms:ir.ui.view,arch_db:ddmrp.mrp_bom_form_view
 msgid "Change Location"
 msgstr "Cambiar Ubicación"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/mrp_bom.py:0
+#, python-format
+msgid "Change MRP BoM Location"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__ddmrp_duplicate_buffer__type__product
@@ -281,6 +299,17 @@ msgstr "Cambiar ambos valores"
 msgid "Change quantity in manual procurements from Stock Buffers"
 msgstr ""
 "Cambiar cantidad en reabastecimientos manuales desde Búferes de Inventario"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.mrp_bom_change_location_wizard
+msgid ""
+"Change the inventory location that it is considered to compute when a "
+"product is buffered or not.\n"
+"                    This can potentially change the Decoupled Lead Time "
+"(DLT) value.\n"
+"                    This change is only informative and won't affect any "
+"process or buffer size or recommendations."
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_chatter
@@ -358,6 +387,7 @@ msgstr "Línea de Pedido de Compra Creada"
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__create_uid
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__create_uid
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__create_uid
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location__create_uid
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__create_uid
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__create_uid
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__create_uid
@@ -371,6 +401,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__create_date
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__create_date
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__create_date
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location__create_date
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__create_date
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__create_date
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__create_date
@@ -492,6 +523,7 @@ msgstr "Demanda"
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__display_name
@@ -705,6 +737,7 @@ msgstr "Oculta el estado a mano de la línea del pedido de compra."
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__id
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__id
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location__id
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__id
@@ -801,6 +834,7 @@ msgstr "Posiciones"
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile____last_update
@@ -814,6 +848,7 @@ msgstr "Última Modificación el"
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__write_uid
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__write_uid
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__write_uid
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location__write_uid
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__write_uid
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__write_uid
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__write_uid
@@ -827,6 +862,7 @@ msgstr "Última Modificación por"
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__write_date
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__write_date
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__write_date
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location__write_date
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__write_date
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__write_date
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__write_date
@@ -873,10 +909,16 @@ msgstr "Búferes de Inventario Enlazados"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__location_id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location__location_id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__location_id
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
 msgid "Location"
 msgstr "Ubicación"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_mrp_bom_change_location
+msgid "MRP Bom Change Location"
+msgstr ""
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
@@ -1628,6 +1670,14 @@ msgstr "Búferes de Inventario"
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid "Stock Buffers & Packagings"
 msgstr "Búferes de Stock y Empaquetados"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__context_location_id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__location_id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__context_location_id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__location_id
+msgid "Stock Location"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_move
