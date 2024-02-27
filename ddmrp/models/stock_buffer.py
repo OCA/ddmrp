@@ -226,6 +226,10 @@ class StockBuffer(models.Model):
         action = self.product_id.action_view_bom()
         boms = self._get_manufactured_bom(limit=100)
         action["domain"] = [("id", "in", boms.ids)]
+        action["context"] = {
+            "location_id": self.location_id.id,
+            "warehouse_id": self.location_id.warehouse_id.id,
+        }
         return action
 
     @api.constrains("product_id")
@@ -974,7 +978,7 @@ class StockBuffer(models.Model):
         for rec in self:
             if rec.buffer_profile_id.item_type == "manufactured":
                 bom = rec._get_manufactured_bom()
-                dlt = bom.dlt
+                dlt = bom.with_context(location_id=rec.location_id.id).dlt
             elif rec.buffer_profile_id.item_type == "distributed":
                 dlt = rec.lead_days
             else:
