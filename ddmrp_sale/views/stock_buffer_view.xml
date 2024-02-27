@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 ForgeFlow S.L. (https://www.forgeflow.com)
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="stock_buffer_view_form" model="ir.ui.view">
+        <field name="name">stock.buffer.form - ddmrp_sale</field>
+        <field name="model">stock.buffer</field>
+        <field name="inherit_id" ref="ddmrp.stock_buffer_view_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//div[@name='qualified_demand']"
+                position="inside"
+                class="o_row"
+            >
+                <field name="qualified_demand_sale_order_line_ids" invisible="1" />
+                <button
+                    title="View Qualified Demand from SO Lines"
+                    name="action_view_qualified_demand_so_lines"
+                    icon="fa-search"
+                    type="object"
+                    attrs="{'invisible': [('qualified_demand_sale_order_line_ids', '=', [])]}"
+                />
+            </xpath>
+            <field name="company_id" position="after">
+                <field name="can_serve_sales" />
+            </field>
+        </field>
+    </record>
+</odoo>
