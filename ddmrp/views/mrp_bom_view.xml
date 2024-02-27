@@ -7,10 +7,24 @@
         <field name="model">mrp.bom</field>
         <field name="inherit_id" ref="mrp.mrp_bom_form_view" />
         <field name="arch" type="xml">
-            <field name="location_id" position="after">
+            <field name="product_id" position="after">
                 <field name="is_buffered" />
                 <field name="buffer_id" />
-                <field name="dlt" />
+                <label for="dlt" />
+                <div class="o_row" style="width: 60% !important">
+                    <field name="dlt" />
+                    <field
+                        name="context_location_id"
+                        options="{'no_open': True}"
+                        style="text-align: right;"
+                    />
+                    <button
+                        title="Change Location"
+                        name="action_change_context_location"
+                        icon="fa-exchange"
+                        type="object"
+                    />
+                </div>
             </field>
             <xpath
                 expr="//field[@name='bom_line_ids']/tree/field[@name='product_uom_id']"
@@ -19,6 +33,7 @@
                 <field name="is_buffered" />
                 <field name="buffer_id" />
                 <field name="dlt" />
+                <field name="context_location_id" />
             </xpath>
         </field>
     </record>

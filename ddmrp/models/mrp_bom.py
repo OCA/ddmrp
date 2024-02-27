@@ -1,9 +1,9 @@
-# Copyright 2017-20 ForgeFlow S.L. (http://www.forgeflow.com)
+# Copyright 2017-24 ForgeFlow S.L. (http://www.forgeflow.com)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import logging
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -25,18 +25,27 @@ class MrpBom(models.Model):
         string="Decoupled Lead Time (days)",
         compute="_compute_dlt",
     )
+    context_location_id = fields.Many2one(
+        comodel_name="stock.location",
+        string="Stock Location",
+        compute="_compute_context_location",
+    )
+    # This is a legacy field that can be removed in v17
+    location_id = fields.Many2one(related="context_location_id")
 
     def _get_search_buffer_domain(self):
         product = self.product_id
-        if not product:
-            if self.product_tmpl_id.product_variant_ids:
-                product = self.product_tmpl_id.product_variant_ids[0]
-        domain = [("product_id", "=", product.id)]
-        if self.location_id:
-            domain.append(("location_id", "=", self.location_id.id))
+        if not product and self.product_tmpl_id.product_variant_ids:
+            product = self.product_tmpl_id.product_variant_ids[0]
+        domain = [
+            ("product_id", "=", product.id),
+            ("location_id", "=", self.context_location_id.id),
+        ]
+        if self.company_id:
+            domain.append(("company_id", "=", self.company_id.id))
         return domain
 
-    @api.depends("product_id", "product_tmpl_id", "location_id")
+    @api.depends("product_id", "product_tmpl_id", "context_location_id")
     def _compute_buffer(self):
         for record in self:
             domain = record._get_search_buffer_domain()
@@ -52,6 +61,24 @@ class MrpBom(models.Model):
         for bom in self:
             bom.is_buffered = True if bom.buffer_id else False
 
+    @api.depends_context("location_id")
+    def _compute_context_location(self):
+        warehouse_model = self.env["stock.warehouse"]
+        for rec in self:
+            if self.env.context.get("location_id", None):
+                rec.context_location_id = self.env.context.get("location_id")
+            elif self.env.context.get("warehouse", None):
+                warehouse_id = self.env.context.get("warehouse")
+                rec.context_location_id = warehouse_model.browse(
+                    warehouse_id
+                ).lot_stock_id.id
+            else:
+                company_id = rec.company_id or self.env.company
+                warehouse_id = warehouse_model.search(
+                    [("company_id", "=", company_id.id)], limit=1
+                )
+                rec.context_location_id = warehouse_id.lot_stock_id.id
+
     def _get_produce_delay(self):
         self.ensure_one()
         return self.product_id.produce_delay or self.product_tmpl_id.produce_delay
@@ -66,11 +93,11 @@ class MrpBom(models.Model):
                 i += 1
             elif line.product_id.bom_ids:
                 # If the a component is manufactured we continue exploding.
-                location = line.location_id
+                location = line.context_location_id
                 line_boms = line.product_id.bom_ids
                 bom = line_boms.filtered(
-                    lambda bom: bom.location_id == location
-                ) or line_boms.filtered(lambda bom: not bom.location_id)
+                    lambda bom: bom.context_location_id == location
+                ) or line_boms.filtered(lambda bom: not bom.context_location_id)
                 if bom:
                     paths[i] += bom[0]._get_produce_delay()
                     paths[i] += bom[0]._get_longest_path()
@@ -100,9 +127,20 @@ class MrpBom(models.Model):
         dlt += self._get_longest_path()
         return dlt
 
+    @api.depends("context_location_id")
+    @api.depends_context("location_id")
     def _compute_dlt(self):
         for rec in self:
             rec.dlt = rec._get_manufactured_dlt()
+
+    def action_change_context_location(self):
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Change MRP BoM Location"),
+            "res_model": "mrp.bom.change.location",
+            "view_mode": "form",
+            "target": "new",
+        }
 
 
 class MrpBomLine(models.Model):
@@ -122,14 +160,24 @@ class MrpBomLine(models.Model):
         string="Decoupled Lead Time (days)",
         compute="_compute_dlt",
     )
+    context_location_id = fields.Many2one(related="bom_id.context_location_id")
+    # This is a legacy field that can be removed in v17
+    location_id = fields.Many2one(related="context_location_id")
 
     def _get_search_buffer_domain(self):
-        product = self.product_id or self.product_tmpl_id.product_variant_ids[0]
-        domain = [("product_id", "=", product.id)]
-        if self.location_id:
-            domain.append(("location_id", "=", self.location_id.id))
+        product = self.product_id
+        if not product and self.product_tmpl_id.product_variant_ids:
+            product = self.product_tmpl_id.product_variant_ids[0]
+        domain = [
+            ("product_id", "=", product.id),
+            ("location_id", "=", self.context_location_id.id),
+        ]
+        if self.company_id:
+            domain.append(("company_id", "=", self.company_id.id))
         return domain
 
+    @api.depends("context_location_id")
+    @api.depends_context("location_id")
     def _compute_is_buffered(self):
         for line in self:
             domain = line._get_search_buffer_domain()

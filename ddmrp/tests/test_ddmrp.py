@@ -419,7 +419,6 @@ class TestDdmrp(TestDdmrpCommon):
     def _check_red_zone(
         self, orderpoint, red_base_qty=0.0, red_safety_qty=0.0, red_zone_qty=0.0
     ):
-
         # red base_qty = dlt * adu * lead time factor
         self.assertEqual(orderpoint.red_base_qty, red_base_qty)
 
@@ -430,7 +429,6 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(orderpoint.red_zone_qty, red_zone_qty)
 
     def _check_yellow_zone(self, orderpoint, yellow_zone_qty=0.0, top_of_yellow=0.0):
-
         # yellow_zone_qty = dlt * adu
         self.assertEqual(orderpoint.yellow_zone_qty, yellow_zone_qty)
 
@@ -446,7 +444,6 @@ class TestDdmrp(TestDdmrpCommon):
         green_zone_qty=0.0,
         top_of_green=0.0,
     ):
-
         # green_zone_oc = order_cycle * adu
         self.assertEqual(orderpoint.green_zone_oc, green_zone_oc)
 
@@ -844,7 +841,7 @@ class TestDdmrp(TestDdmrpCommon):
                 "adu_calculation_method": self.adu_fixed.id,
             }
         )
-        self.bom_a.location_id = self.supplier_location.id
+        self.bom_a.context_location_id = self.supplier_location.id
         self.assertTrue(self.bom_a.is_buffered)
         self.assertEqual(self.bom_a.buffer_id, new_buffer)
         new_bom = self.env["mrp.bom"].create(
@@ -944,6 +941,89 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_c_blue.yellow_zone_qty, new_yellow)
         new_green = (dlt + extra) * adu * 0.5
         self.assertEqual(self.buffer_c_blue.green_zone_qty, new_green)
+
+    def test_37_bom_buffer_fields_multi_company(self):
+        self.assertEqual(self.bom_a.company_id, self.main_company)
+        self.assertTrue(self.bom_a.is_buffered)
+        self.assertEqual(self.bom_a.buffer_id, self.buffer_a)
+        bom_buffer_a = self.buffer_a._get_manufactured_bom()
+        self.assertEqual(bom_buffer_a, self.bom_a)
+        bom_line = self.bom_a.bom_line_ids.filtered(
+            lambda l: l.product_id == self.component_a1
+        )
+        self.assertTrue(bom_line)
+        self.assertFalse(bom_line.is_buffered)
+        # Add a buffer for a component but in a different company
+        component_buffer = self.bufferModel.create(
+            {
+                "buffer_profile_id": self.buffer_profile_pur.id,
+                "product_id": self.component_a1.id,
+                "company_id": self.second_company.id,
+                "warehouse_id": self.warehouse_sc.id,
+                "location_id": self.stock_location_sc.id,
+                "adu_calculation_method": self.adu_fixed.id,
+            }
+        )
+        bom_line.invalidate_recordset()
+        self.assertFalse(bom_line.is_buffered)
+        # Change company of the BoM
+        self.bom_a.company_id = self.second_company
+        self.bom_a.invalidate_recordset()
+        self.assertFalse(self.bom_a.is_buffered)
+        self.assertFalse(self.bom_a.buffer_id)
+        bom_buffer_a = self.buffer_a._get_manufactured_bom()
+        self.assertFalse(bom_buffer_a)
+        bom_line.invalidate_recordset()
+        self.assertTrue(bom_line.is_buffered)
+        self.assertEqual(bom_line.buffer_id, component_buffer)
+
+    def test_38_bom_dlt_computation_multi_location(self):
+        """
+        If AS01 bom has no location it means that it can be manufactured
+        in more than one location.
+        """
+        bom_fp01 = self.env.ref("ddmrp.mrp_bom_fp01")
+        buffer1_fp01 = self.env.ref("ddmrp.stock_buffer_fp01")
+        self.assertEqual(bom_fp01.dlt, 22.0)
+        self.assertEqual(bom_fp01.buffer_id, buffer1_fp01)
+        self.assertEqual(len(bom_fp01.bom_line_ids), 1)
+        self.assertEqual(bom_fp01.bom_line_ids.is_buffered, False)
+        # Now create buffers in another location and check in that context
+        product_fp01 = self.env.ref("ddmrp.product_product_fp01")
+        product_as01 = self.env.ref("ddmrp.product_product_as01")
+        buffer2_fp01 = self.bufferModel.create(
+            {
+                "buffer_profile_id": self.buffer_profile_mmm.id,
+                "product_id": product_fp01.id,
+                "warehouse_id": self.warehouse.id,
+                "location_id": self.supplier_location.id,
+                "adu_calculation_method": self.adu_fixed.id,
+            }
+        )
+        buffer_as01 = self.bufferModel.create(
+            {
+                "buffer_profile_id": self.buffer_profile_mmm.id,
+                "product_id": product_as01.id,
+                "warehouse_id": self.warehouse.id,
+                "location_id": self.supplier_location.id,
+                "adu_calculation_method": self.adu_fixed.id,
+            }
+        )
+        bom_fp01.context_location_id = self.supplier_location.id
+        bom_fp01.bom_line_ids._compute_is_buffered()
+        bom_fp01._compute_dlt()
+        bom_fp01.bom_line_ids._compute_dlt()
+        self.assertEqual(bom_fp01.dlt, 2.0)
+        self.assertEqual(bom_fp01.buffer_id, buffer2_fp01)
+        self.assertEqual(len(bom_fp01.bom_line_ids), 1)
+        self.assertEqual(bom_fp01.bom_line_ids.is_buffered, True)
+        self.assertEqual(bom_fp01.bom_line_ids.buffer_id, buffer_as01)
+        # Check at the same time the DLT of 2 buffers using the same bom:
+        buffers = buffer1_fp01 + buffer2_fp01
+        buffers.invalidate_recordset()
+        buffers._compute_dlt()
+        self.assertEqual(buffer1_fp01.dlt, 22)
+        self.assertEqual(buffer2_fp01.dlt, 2)
 
     def test_40_bokeh_charts(self):
         """Check bokeh chart computation."""

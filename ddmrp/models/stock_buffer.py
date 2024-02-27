@@ -224,14 +224,12 @@ class StockBuffer(models.Model):
 
     def action_view_bom(self):
         action = self.product_id.action_view_bom()
-        locations = self.env["stock.location"].search(
-            [("id", "child_of", [self.location_id.id])]
-        )
-        action["domain"] += [
-            "|",
-            ("location_id", "in", locations.ids),
-            ("location_id", "=", False),
-        ]
+        boms = self._get_manufactured_bom(limit=100)
+        action["domain"] = [("id", "in", boms.ids)]
+        action["context"] = {
+            "location_id": self.location_id.id,
+            "warehouse_id": self.location_id.warehouse_id.id,
+        }
         return action
 
     @api.constrains("product_id")
@@ -959,17 +957,17 @@ class StockBuffer(models.Model):
         for rec in self:
             rec.order_spike_threshold = 0.5 * rec.red_zone_qty
 
-    def _get_manufactured_bom(self):
+    def _get_manufactured_bom(self, limit=1):
         return self.env["mrp.bom"].search(
             [
                 "|",
                 ("product_id", "=", self.product_id.id),
                 ("product_tmpl_id", "=", self.product_id.product_tmpl_id.id),
                 "|",
-                ("location_id", "=", self.location_id.id),
-                ("location_id", "=", False),
+                ("company_id", "=", self.company_id.id),
+                ("company_id", "=", False),
             ],
-            limit=1,
+            limit=limit,
         )
 
     @api.depends("lead_days", "product_id.seller_ids.delay")
@@ -977,7 +975,7 @@ class StockBuffer(models.Model):
         for rec in self:
             if rec.buffer_profile_id.item_type == "manufactured":
                 bom = rec._get_manufactured_bom()
-                dlt = bom.dlt
+                dlt = bom.with_context(location_id=rec.location_id.id).dlt
             elif rec.buffer_profile_id.item_type == "distributed":
                 dlt = rec.lead_days
             else:
