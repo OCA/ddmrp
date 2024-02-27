@@ -10,6 +10,10 @@
                 type="text/javascript"
                 src="/ddmrp/static/src/js/list_renderer_buffer_info.js"
             />
+            <script
+                type="text/javascript"
+                src="/ddmrp/static/src/js/mrp_bom_report.js"
+            />
             <link
                 rel="stylesheet"
                 type="text/scss"

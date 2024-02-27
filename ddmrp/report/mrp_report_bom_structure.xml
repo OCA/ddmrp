@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template
-        id="report_mrpbomstructure_ddmrp"
-        inherit_id="mrp_bom_location.report_mrpbomstructure_location"
-    >
+    <template id="report_mrpbomstructure_ddmrp" inherit_id="mrp.report_mrp_bom">
         <xpath expr="//thead/tr/th[last()]" position="before">
             <th
                 t-if="data['report_structure'] != 'bom_cost'"
@@ -49,10 +46,7 @@
             </td>
         </xpath>
     </template>
-    <template
-        id="report_mrp_bom_line"
-        inherit_id="mrp_bom_location.report_mrp_bom_line"
-    >
+    <template id="report_mrp_bom_line" inherit_id="mrp.report_mrp_bom_line">
         <xpath expr="//tr/td[last()]" position="before">
             <td class="o_mrp_prod_cost text-right">
                 <span>
@@ -87,10 +81,7 @@
             </span>
         </xpath>
     </template>
-    <template
-        id="report_mrp_bom_pdf_line"
-        inherit_id="mrp_bom_location.report_mrp_bom_pdf_line"
-    >
+    <template id="report_mrp_bom_pdf_line" inherit_id="mrp.report_mrp_bom_pdf_line">
         <xpath expr="//tr" position="inside">
             <t t-if="l['type'] == 'bom'">
                 <td
