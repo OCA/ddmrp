@@ -152,7 +152,10 @@ class MrpBomLine(models.Model):
     location_id = fields.Many2one(related="context_location_id")
 
     def _get_search_buffer_domain(self):
-        product = self.product_id or self.product_tmpl_id.product_variant_ids[0]
+        product = self.product_id
+        if not product:
+            if self.product_tmpl_id.product_variant_ids:
+                product = self.product_tmpl_id.product_variant_ids[0]
         domain = [
             ("product_id", "=", product.id),
             ("location_id", "=", self.context_location_id.id),
