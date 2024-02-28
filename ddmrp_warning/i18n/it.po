@@ -1,0 +1,240 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ddmrp_warning
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-11-12 14:40+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__active
+msgid "Active"
+msgstr "Attivo"
+
+#. module: ddmrp_warning
+#: model_terms:ir.ui.view,arch_db:ddmrp_warning.view_ddmrp_warning_definition_form
+#: model_terms:ir.ui.view,arch_db:ddmrp_warning.view_ddmrp_warning_definition_search
+msgid "Archived"
+msgstr "In archivio"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__buffer_id
+#: model_terms:ir.ui.view,arch_db:ddmrp_warning.view_ddmrp_warning_item_search
+msgid "Buffer"
+msgstr "Buffer"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__warning_domain
+msgid "Buffer Applicable Domain"
+msgstr "Dominio buffer applicabile"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__company_id
+msgid "Company"
+msgstr "Azienda"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__create_uid
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__create_date
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: ddmrp_warning
+#: model:ir.actions.server,name:ddmrp_warning.ir_cron_ddmrp_warning_calculation_scheduler_action_ir_actions_server
+#: model:ir.cron,cron_name:ddmrp_warning.ir_cron_ddmrp_warning_calculation_scheduler_action
+#: model:ir.cron,name:ddmrp_warning.ir_cron_ddmrp_warning_calculation_scheduler_action
+msgid "DDMRP Buffer Warning calculation"
+msgstr "Calcolo avviso buffer DDMRP"
+
+#. module: ddmrp_warning
+#: model:ir.model,name:ddmrp_warning.model_ddmrp_warning_definition
+msgid "DDMRP Warning Definition"
+msgstr "Definizione avviso DDMRP"
+
+#. module: ddmrp_warning
+#: model:ir.actions.act_window,name:ddmrp_warning.action_ddmrp_warning_definition
+msgid "DDMRP Warning Definitions"
+msgstr "Definizioni avviso DDMRP"
+
+#. module: ddmrp_warning
+#: model:ir.model,name:ddmrp_warning.model_ddmrp_warning_item
+msgid "DDMRP Warning Item"
+msgstr "Elemento avviso DDRMP"
+
+#. module: ddmrp_warning
+#: model:ir.actions.act_window,name:ddmrp_warning.action_ddmrp_warning_item
+msgid "DDMRP Warning Items"
+msgstr "Elementi avviso DDRMP"
+
+#. module: ddmrp_warning
+#: model:ir.ui.menu,name:ddmrp_warning.menu_ddmrp_warning_item
+msgid "DDMRP Warnings"
+msgstr "Avvisi DDMRP"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_stock_buffer__ddmrp_warning_item_ids
+msgid "Ddmrp Warning Item"
+msgstr "Elemento avviso DDRMP"
+
+#. module: ddmrp_warning
+#: model_terms:ir.ui.view,arch_db:ddmrp_warning.view_ddmrp_warning_item_search
+msgid "Definition"
+msgstr "Definizione"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__name
+msgid "Description"
+msgstr "Descrizione"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__display_name
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__display_name
+#: model:ir.model.fields,field_description:ddmrp_warning.field_stock_buffer__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,help:ddmrp_warning.field_ddmrp_warning_definition__warning_domain
+msgid ""
+"Domain based on Stock Buffer, to define if the warning is applicable or not."
+msgstr ""
+"Dominio basato sui buffer di materiale, per definire se la regola è "
+"applicabile o meno."
+
+#. module: ddmrp_warning
+#: code:addons/ddmrp_warning/models/ddmrp_warning_definition.py:0
+#, python-format
+msgid ""
+"Error evaluating %s.\n"
+" %s"
+msgstr ""
+"Errore valutando %s.\n"
+" %s"
+
+#. module: ddmrp_warning
+#: model_terms:ir.ui.view,arch_db:ddmrp_warning.view_ddmrp_warning_item_search
+msgid "Group By"
+msgstr "Raggruppa per"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields.selection,name:ddmrp_warning.selection__ddmrp_warning_definition__severity__3_high
+msgid "High"
+msgstr "Alta"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__id
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__id
+#: model:ir.model.fields,field_description:ddmrp_warning.field_stock_buffer__id
+msgid "ID"
+msgstr "ID"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition____last_update
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item____last_update
+#: model:ir.model.fields,field_description:ddmrp_warning.field_stock_buffer____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__write_uid
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__write_date
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__location_id
+msgid "Location"
+msgstr "Ubicazione"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields.selection,name:ddmrp_warning.selection__ddmrp_warning_definition__severity__1_low
+msgid "Low"
+msgstr "Bassa"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields.selection,name:ddmrp_warning.selection__ddmrp_warning_definition__severity__2_mid
+msgid "Medium"
+msgstr "Media"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__product_id
+msgid "Product"
+msgstr "Prodotto"
+
+#. module: ddmrp_warning
+#: model_terms:ir.ui.view,arch_db:ddmrp_warning.stock_buffer_view_form
+msgid "Refresh Warnings"
+msgstr "Aggiorna avvisi"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__severity
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__severity
+#: model_terms:ir.ui.view,arch_db:ddmrp_warning.view_ddmrp_warning_item_search
+msgid "Severity"
+msgstr "Gravità"
+
+#. module: ddmrp_warning
+#: model:ir.model,name:ddmrp_warning.model_stock_buffer
+msgid "Stock Buffer"
+msgstr "Buffer di materiale"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__warning_definition_id
+msgid "Warning Definition"
+msgstr "Definizione avviso"
+
+#. module: ddmrp_warning
+#: model:ir.ui.menu,name:ddmrp_warning.menu_ddmrp_warning_definition
+msgid "Warning Definitions"
+msgstr "Definizioni avviso"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__python_code
+msgid "Warning Expression"
+msgstr "Espressione avviso"
+
+#. module: ddmrp_warning
+#: model_terms:ir.ui.view,arch_db:ddmrp_warning.stock_buffer_view_form
+msgid "Warnings"
+msgstr "Avvisi"
+
+#. module: ddmrp_warning
+#: model_terms:ir.ui.view,arch_db:ddmrp_warning.stock_buffer_search
+msgid "With Warnings"
+msgstr "Con avvisi"
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,help:ddmrp_warning.field_ddmrp_warning_definition__python_code
+msgid ""
+"Write Python code that defines when this warning should raise. The result of "
+"executing the expression must be a boolean."
+msgstr ""
+"Scrivere codice Python che definisce quando questo avviso dovrebbe "
+"comparire. Il risultato dell'espressione deve essere un booleano."

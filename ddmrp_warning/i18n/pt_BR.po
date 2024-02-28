@@ -158,6 +158,11 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__location_id
+msgid "Location"
+msgstr ""
+
+#. module: ddmrp_warning
 #: model:ir.model.fields.selection,name:ddmrp_warning.selection__ddmrp_warning_definition__severity__1_low
 msgid "Low"
 msgstr ""
@@ -170,6 +175,11 @@ msgstr ""
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__name
 msgid "Name"
+msgstr ""
+
+#. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__product_id
+msgid "Product"
 msgstr ""
 
 #. module: ddmrp_warning

@@ -39,7 +39,7 @@
                 />
                 <field name="incoming_dlt_qty" string="Incoming Within DLT" />
                 <field
-                    name="incoming_location_qty"
+                    name="incoming_total_qty"
                     string="Total Incoming"
                     optional="show"
                 />
@@ -99,7 +99,7 @@
         <field name="name">stock.buffer.form</field>
         <field name="model">stock.buffer</field>
         <field name="arch" type="xml">
-            <form>
+            <form duplicate="0">
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button
@@ -230,18 +230,32 @@
                                 <div name="adu" class="o_row">
                                     <field name="adu" force_save="1" />
                                     <button
-                                        title="View ADU (Past)"
-                                        name="action_view_past_adu"
+                                        title="View ADU (Past - Direct Demand)"
+                                        name="action_view_past_adu_direct_demand"
                                         icon="fa-search"
                                         type="object"
                                         attrs="{'invisible': ['|', ('adu_calculation_method_type', 'in', ['fixed', 'future']), ('adu', '=', 0)]}"
                                     />
                                     <button
-                                        title="View ADU (Future)"
-                                        name="action_view_future_adu"
+                                        title="View ADU (Past - Indirect Demand)"
+                                        name="action_view_past_adu_indirect_demand"
+                                        icon="fa-search"
+                                        type="object"
+                                        attrs="{'invisible': ['|', '|', ('adu_calculation_method_type', 'in', ['fixed', 'future']), ('used_in_bom_count', '=', 0), ('adu', '=', 0)]}"
+                                    />
+                                    <button
+                                        title="View ADU (Future - Direct Demand)"
+                                        name="action_view_future_adu_direct_demand"
                                         icon="fa-search"
                                         type="object"
                                         attrs="{'invisible': ['|', ('adu_calculation_method_type', 'in', ['fixed', 'past']), ('adu', '=', 0)]}"
+                                    />
+                                    <button
+                                        title="View ADU (Future - Indirect Demand)"
+                                        name="action_view_future_adu_indirect_demand"
+                                        icon="fa-search"
+                                        type="object"
+                                        attrs="{'invisible': ['|', '|', ('adu_calculation_method_type', 'in', ['fixed', 'past']), ('used_in_bom_count', '=', 0), ('adu', '=', 0)]}"
                                     />
                                 </div>
                                 <field
@@ -656,6 +670,7 @@
         <field name="name">Stock Buffers</field>
         <field name="res_model">stock.buffer</field>
         <field name="view_mode">tree,form</field>
+        <field name="context">{'location_id': False}</field>
     </record>
     <menuitem
         id="menu_stock_buffer"

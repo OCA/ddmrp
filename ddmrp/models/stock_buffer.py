@@ -152,6 +152,12 @@ class StockBuffer(models.Model):
             "CHECK( qty_multiple >= 0 )",
             "Qty Multiple must be greater than or equal to zero.",
         ),
+        (
+            "stock_buffer_uniq",
+            "unique(product_id, location_id)",
+            "The product/location combination must be unique."
+            "Remember that the buffer could be archived.",
+        ),
     ]
 
     def _quantity_in_progress(self):
@@ -200,6 +206,18 @@ class StockBuffer(models.Model):
         action["domain"] = self._past_moves_domain(date_from, date_to, locations)
         return action
 
+    def _demand_estimate_domain(self, locations, date_from=False, date_to=False):
+        self.ensure_one()
+        domain = [
+            ("location_id", "in", locations.ids),
+            ("product_id", "=", self.product_id.id),
+        ]
+        if date_to:
+            domain += [("date_from", "<=", date_to)]
+        if date_from:
+            domain += [("date_to", ">=", date_from)]
+        return domain
+
     def action_view_stock_demand_estimates(self):
         result = self.env["ir.actions.actions"]._for_xml_id(
             "stock_demand_estimate.stock_demand_estimate_action"
@@ -207,12 +225,8 @@ class StockBuffer(models.Model):
         locations = self.env["stock.location"].search(
             [("id", "child_of", [self.location_id.id])]
         )
-        recs = self.env["stock.demand.estimate"].search(
-            [
-                ("product_id", "=", self.product_id.id),
-                ("location_id", "in", locations.ids),
-            ]
-        )
+        domain = self._demand_estimate_domain(locations)
+        recs = self.env["stock.demand.estimate"].search(domain)
         result["domain"] = [("id", "in", recs.ids)]
         return result
 
@@ -220,6 +234,7 @@ class StockBuffer(models.Model):
         action = self.product_id.action_view_bom()
         boms = self._get_manufactured_bom(limit=100)
         action["domain"] = [("id", "in", boms.ids)]
+        action["context"] = {"location_id": self.location_id.id}
         return action
 
     @api.constrains("product_id")
@@ -342,21 +357,8 @@ class StockBuffer(models.Model):
 
     # STOCK INFORMATION:
 
-    product_location_qty = fields.Float(
-        string="Quantity On Location", compute="_compute_product_available_qty"
-    )
-    incoming_location_qty = fields.Float(
-        string="Incoming On Location", compute="_compute_product_available_qty"
-    )
-    outgoing_location_qty = fields.Float(
-        string="Outgoing On Location", compute="_compute_product_available_qty"
-    )
-    virtual_location_qty = fields.Float(
-        string="Forecast On Location", compute="_compute_product_available_qty"
-    )
     product_location_qty_available_not_res = fields.Float(
         string="Quantity On Hand (Unreserved)",
-        compute="_compute_product_available_qty",
         help="Quantity available in this stock buffer, this is the total "
         "quantity on hand minus the outgoing reservations.",
     )
@@ -375,8 +377,18 @@ class StockBuffer(models.Model):
         )
         return sum(lines.mapped("product_qty"))
 
-    def _compute_product_available_qty(self):
-        operation_by_location = defaultdict(lambda: self.env["stock.buffer"])
+    def _update_quantities_dict(self, product):
+        self.ensure_one()
+        reserved_qty = self._get_outgoing_reservation_qty()
+        self.update(
+            {
+                "product_location_qty_available_not_res": product["qty_available"]
+                - reserved_qty,
+            }
+        )
+
+    def _calc_product_available_qty(self):
+        operation_by_location = defaultdict(lambda: self.browse())
         for rec in self:
             operation_by_location[rec.location_id] |= rec
         for location_id, buffer_in_location in operation_by_location.items():
@@ -391,19 +403,7 @@ class StockBuffer(models.Model):
             )
             for buffer in buffer_in_location:
                 product = products[buffer.product_id.id]
-                reserved_qty = buffer._get_outgoing_reservation_qty()
-                buffer.update(
-                    {
-                        "product_location_qty": product["qty_available"],
-                        "incoming_location_qty": product["incoming_qty"],
-                        "outgoing_location_qty": product["outgoing_qty"],
-                        "virtual_location_qty": product["virtual_available"],
-                        "product_location_qty_available_not_res": product[
-                            "qty_available"
-                        ]
-                        - reserved_qty,
-                    }
-                )
+                buffer._update_quantities_dict(product)
 
     # PURCHASES LINK:
 
@@ -710,8 +710,8 @@ class StockBuffer(models.Model):
             self.top_of_red + self.green_zone_qty,
             precision_rounding=self.product_uom.rounding,
         )
-        toy2_exec = self.top_of_yellow
         tor2_exec = self.top_of_green
+        toy2_exec = (tor2_exec + tog_exec) / 2
         hex_colors = self._get_colors_hex_map(pallete="execution")
         red = p.vbar(
             x=1,
@@ -925,17 +925,11 @@ class StockBuffer(models.Model):
             rec.order_spike_threshold = 0.5 * rec.red_zone_qty
 
     def _get_manufactured_bom(self, limit=1):
-        locations = self.env["stock.location"].search(
-            [("id", "child_of", [self.location_id.id])]
-        )
         return self.env["mrp.bom"].search(
             [
                 "|",
                 ("product_id", "=", self.product_id.id),
                 ("product_tmpl_id", "=", self.product_id.product_tmpl_id.id),
-                "|",
-                ("location_id", "in", locations.ids),
-                ("location_id", "=", False),
                 "|",
                 ("company_id", "=", self.company_id.id),
                 ("company_id", "=", False),
@@ -948,7 +942,7 @@ class StockBuffer(models.Model):
         for rec in self:
             if rec.buffer_profile_id.item_type == "manufactured":
                 bom = rec._get_manufactured_bom()
-                dlt = bom.dlt
+                dlt = bom.with_context(location_id=rec.location_id.id).dlt
             elif rec.buffer_profile_id.item_type == "distributed":
                 dlt = rec.lead_days
             else:
@@ -1160,6 +1154,10 @@ class StockBuffer(models.Model):
     qualified_demand_mrp_move_ids = fields.Many2many(
         comodel_name="mrp.move",
     )
+    incoming_total_qty = fields.Float(
+        string="Total Incoming",
+        readonly=True,
+    )
     incoming_dlt_qty = fields.Float(
         string="Incoming (Within DLT)",
         readonly=True,
@@ -1341,7 +1339,6 @@ class StockBuffer(models.Model):
                 "in",
                 ["draft", "waiting", "confirmed", "partially_available", "assigned"],
             ),
-            ("location_dest_id", "=", self.location_id.id),
         ]
 
     @api.model
@@ -1369,8 +1366,11 @@ class StockBuffer(models.Model):
         # Utility method used to add an "Open Moves" button in the buffer
         # planning view
         domain = self._search_open_stock_moves_domain()
-        records = self.env["stock.move"].search(domain)
-        return self._stock_move_tree_view(records)
+        moves = self.env["stock.move"].search(domain)
+        moves = moves.filtered(
+            lambda move: move.location_dest_id.is_sublocation_of(self.location_id)
+        )
+        return self._stock_move_tree_view(moves)
 
     def _get_horizon_adu_past_demand(self):
         return self.adu_calculation_method.horizon_past or 0
@@ -1384,13 +1384,15 @@ class StockBuffer(models.Model):
         )
         return date_from, date_to
 
-    def _past_demand_estimate_domain(self, date_from, date_to, locations):
+    def _past_mrp_move_domain(self, date_from, date_to, locations):
         self.ensure_one()
         return [
-            ("location_id", "in", locations.ids),
             ("product_id", "=", self.product_id.id),
-            ("date_from", "<=", date_to),
-            ("date_to", ">=", date_from),
+            ("mrp_date", "<=", date_to),
+            ("mrp_date", ">=", date_from),
+            ("mrp_area_id.location_id", "in", locations.ids),
+            ("mrp_type", "=", "d"),
+            ("mrp_origin", "in", ["mrp", "mo"]),
         ]
 
     def _past_moves_domain(self, date_from, date_to, locations):
@@ -1419,24 +1421,24 @@ class StockBuffer(models.Model):
             .with_context(active_test=False)
             .search([("id", "child_of", self.location_id.ids)])
         )
-        if self.adu_calculation_method.source_past == "estimates":
-            qty = 0.0
-            domain = self._past_demand_estimate_domain(date_from, date_to, locations)
+        qty = 0.0
+        if self.adu_calculation_method.source_past == "estimates_mrp":
+            domain = self._past_mrp_move_domain(date_from, date_to, locations)
+            for mrp_move in self.env["mrp.move"].search(domain):
+                qty += -mrp_move.mrp_qty
+        if self.adu_calculation_method.source_past in ["estimates", "estimates_mrp"]:
+            domain = self._demand_estimate_domain(locations, date_from, date_to)
             for estimate in self.env["stock.demand.estimate"].search(domain):
                 qty += estimate.get_quantity_by_date_range(
                     fields.Date.from_string(date_from), fields.Date.from_string(date_to)
                 )
-            return qty / horizon
         elif self.adu_calculation_method.source_past == "actual":
-            qty = 0.0
             domain = self._past_moves_domain(date_from, date_to, locations)
             for group in self.env["stock.move"].read_group(
                 domain, ["product_id", "product_qty"], ["product_id"]
             ):
                 qty += group["product_qty"]
-            return qty / horizon
-        else:
-            return 0.0
+        return qty / horizon
 
     def _get_horizon_adu_future_demand(self):
         return self.adu_calculation_method.horizon_future or 1
@@ -1451,13 +1453,15 @@ class StockBuffer(models.Model):
         )
         return date_from, date_to
 
-    def _future_demand_estimate_domain(self, date_from, date_to, locations):
+    def _future_mrp_move_domain(self, date_from, date_to, locations):
         self.ensure_one()
         return [
-            ("location_id", "in", locations.ids),
             ("product_id", "=", self.product_id.id),
-            ("date_from", "<=", date_to),
-            ("date_to", ">=", date_from),
+            ("mrp_date", "<=", date_to),
+            ("mrp_date", ">=", date_from),
+            ("mrp_area_id.location_id", "in", locations.ids),
+            ("mrp_type", "=", "d"),
+            ("mrp_origin", "in", ["mrp", "mo"]),
         ]
 
     def _future_moves_domain(self, date_from, date_to, locations):
@@ -1482,24 +1486,24 @@ class StockBuffer(models.Model):
         locations = self.env["stock.location"].search(
             [("id", "child_of", [self.location_id.id])]
         )
-        if self.adu_calculation_method.source_future == "estimates":
-            qty = 0.0
-            domain = self._future_demand_estimate_domain(date_from, date_to, locations)
+        qty = 0.0
+        if self.adu_calculation_method.source_future == "estimates_mrp":
+            domain = self._future_mrp_move_domain(date_from, date_to, locations)
+            for mrp_move in self.env["mrp.move"].search(domain):
+                qty += -mrp_move.mrp_qty
+        if self.adu_calculation_method.source_future in ["estimates", "estimates_mrp"]:
+            domain = self._demand_estimate_domain(locations, date_from, date_to)
             for estimate in self.env["stock.demand.estimate"].search(domain):
                 qty += estimate.get_quantity_by_date_range(
                     fields.Date.from_string(date_from), fields.Date.from_string(date_to)
                 )
-            return qty / horizon
         elif self.adu_calculation_method.source_future == "actual":
-            qty = 0.0
             domain = self._future_moves_domain(date_from, date_to, locations)
             for group in self.env["stock.move"].read_group(
                 domain, ["product_id", "product_qty"], ["product_id"]
             ):
                 qty += group["product_qty"]
-            return qty / horizon
-        else:
-            return 0.0
+        return qty / horizon
 
     def _calc_adu_blended(self):
         self.ensure_one()
@@ -1677,6 +1681,7 @@ class StockBuffer(models.Model):
                 rec.rfq_outside_dlt_qty = sum(pols.mapped("product_qty"))
             else:
                 rec.rfq_outside_dlt_qty = 0.0
+            rec.incoming_total_qty = rec.incoming_dlt_qty + rec.incoming_outside_dlt_qty
         return True
 
     def _calc_net_flow_position(self):
@@ -1743,6 +1748,7 @@ class StockBuffer(models.Model):
         records = super().create(vals_list)
         if not self.env.context.get("skip_adu_calculation", False):
             records._calc_adu()
+        records._calc_product_available_qty()
         records._calc_distributed_source_location()
         return records
 
@@ -1871,7 +1877,7 @@ class StockBuffer(models.Model):
         result["domain"] = [("id", "in", mrp_moves.ids)]
         return result
 
-    def action_view_past_adu(self):
+    def action_view_past_adu_direct_demand(self):
         horizon = self._get_horizon_adu_past_demand()
         date_from, date_to = self._get_dates_adu_past_demand(horizon)
         locations = self.env["stock.location"].search(
@@ -1886,7 +1892,7 @@ class StockBuffer(models.Model):
             result["context"] = {}
             result["domain"] = [("id", "in", moves.ids)]
         else:
-            domain = self._past_demand_estimate_domain(date_from, date_to, locations)
+            domain = self._demand_estimate_domain(locations, date_from, date_to)
             estimates = self.env["stock.demand.estimate"].search(domain)
             result = self.env["ir.actions.actions"]._for_xml_id(
                 "stock_demand_estimate.stock_demand_estimate_action"
@@ -1895,7 +1901,22 @@ class StockBuffer(models.Model):
             result["domain"] = [("id", "in", estimates.ids)]
         return result
 
-    def action_view_future_adu(self):
+    def action_view_past_adu_indirect_demand(self):
+        horizon = self._get_horizon_adu_past_demand()
+        date_from, date_to = self._get_dates_adu_past_demand(horizon)
+        locations = self.env["stock.location"].search(
+            [("id", "child_of", [self.location_id.id])]
+        )
+        domain = self._past_mrp_move_domain(date_from, date_to, locations)
+        mrp_moves = self.env["mrp.move"].search(domain)
+        result = self.env["ir.actions.actions"]._for_xml_id(
+            "mrp_multi_level.mrp_move_action"
+        )
+        result["context"] = {}
+        result["domain"] = [("id", "in", mrp_moves.ids)]
+        return result
+
+    def action_view_future_adu_direct_demand(self):
         horizon = self._get_horizon_adu_future_demand()
         date_from, date_to = self._get_dates_adu_future_demand(horizon)
         locations = self.env["stock.location"].search(
@@ -1910,13 +1931,28 @@ class StockBuffer(models.Model):
             result["context"] = {}
             result["domain"] = [("id", "in", moves.ids)]
         else:
-            domain = self._future_demand_estimate_domain(date_from, date_to, locations)
+            domain = self._demand_estimate_domain(locations, date_from, date_to)
             estimates = self.env["stock.demand.estimate"].search(domain)
             result = self.env["ir.actions.actions"]._for_xml_id(
                 "stock_demand_estimate.stock_demand_estimate_action"
             )
             result["context"] = {}
             result["domain"] = [("id", "in", estimates.ids)]
+        return result
+
+    def action_view_future_adu_indirect_demand(self):
+        horizon = self._get_horizon_adu_future_demand()
+        date_from, date_to = self._get_dates_adu_future_demand(horizon)
+        locations = self.env["stock.location"].search(
+            [("id", "child_of", [self.location_id.id])]
+        )
+        domain = self._future_mrp_move_domain(date_from, date_to, locations)
+        mrp_moves = self.env["mrp.move"].search(domain)
+        result = self.env["ir.actions.actions"]._for_xml_id(
+            "mrp_multi_level.mrp_move_action"
+        )
+        result["context"] = {}
+        result["domain"] = [("id", "in", mrp_moves.ids)]
         return result
 
     @api.model
@@ -1957,16 +1993,13 @@ class StockBuffer(models.Model):
         self.ensure_one()
         self.invalidate_cache(
             fnames=[
-                "product_location_qty",
-                "incoming_location_qty",
-                "outgoing_location_qty",
-                "virtual_location_qty",
                 "product_location_qty_available_not_res",
                 "dlt",
                 "distributed_source_location_qty",
             ],
             ids=self.ids,
         )
+        self._calc_product_available_qty()
         if not only_nfp or only_nfp == "out":
             self._calc_qualified_demand()
         if not only_nfp or only_nfp == "in":

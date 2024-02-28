@@ -436,7 +436,6 @@ class TestDdmrp(TestDdmrpCommon):
     def _check_red_zone(
         self, orderpoint, red_base_qty=0.0, red_safety_qty=0.0, red_zone_qty=0.0
     ):
-
         # red base_qty = dlt * adu * lead time factor
         self.assertEqual(orderpoint.red_base_qty, red_base_qty)
 
@@ -447,7 +446,6 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(orderpoint.red_zone_qty, red_zone_qty)
 
     def _check_yellow_zone(self, orderpoint, yellow_zone_qty=0.0, top_of_yellow=0.0):
-
         # yellow_zone_qty = dlt * adu
         self.assertEqual(orderpoint.yellow_zone_qty, yellow_zone_qty)
 
@@ -463,7 +461,6 @@ class TestDdmrp(TestDdmrpCommon):
         green_zone_qty=0.0,
         top_of_green=0.0,
     ):
-
         # green_zone_oc = order_cycle * adu
         self.assertEqual(orderpoint.green_zone_oc, green_zone_oc)
 
@@ -800,7 +797,8 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_purchase.procure_recommended_qty, 0)
 
     def test_27_qty_multiple_tolerance(self):
-        buffer = self.bufferModel.create(
+        original_vals = self.buffer_purchase.read()[0]
+        self.buffer_purchase.update(
             {
                 "buffer_profile_id": self.buffer_profile_override.id,
                 "product_id": self.product_purchased.id,
@@ -816,21 +814,23 @@ class TestDdmrp(TestDdmrpCommon):
         )
         date_move = datetime.today()
         self.create_picking_out(self.product_purchased, date_move, 2)
-        buffer.cron_actions()
-        self.assertEqual(buffer.net_flow_position, -2.0)
-        self.assertEqual(buffer.procure_recommended_qty, 500)
+        self.buffer_purchase.cron_actions()
+        self.assertEqual(self.buffer_purchase.net_flow_position, -2.0)
+        self.assertEqual(self.buffer_purchase.procure_recommended_qty, 500)
         # Set the tolerance
-        buffer.company_id.ddmrp_qty_multiple_tolerance = 10.0
+        self.buffer_purchase.company_id.ddmrp_qty_multiple_tolerance = 10.0
         # Tolerance: 10% 250 = 25, strictly needed 272 (under tolerance)
-        buffer.cron_actions()
-        self.assertEqual(buffer.procure_recommended_qty, 250)
+        self.buffer_purchase.cron_actions()
+        self.assertEqual(self.buffer_purchase.procure_recommended_qty, 250)
         # Add more demand
         self.create_picking_out(self.product_purchased, date_move, 20)
-        buffer.cron_actions()
-        self.assertEqual(buffer.net_flow_position, -22.0)
+        self.buffer_purchase.cron_actions()
+        self.assertEqual(self.buffer_purchase.net_flow_position, -22.0)
         # Tolerance: 10% 250 = 25, strictly needed 294 (above tolerance)
-        buffer.cron_actions()
-        self.assertEqual(buffer.procure_recommended_qty, 500)
+        self.buffer_purchase.cron_actions()
+        self.assertEqual(self.buffer_purchase.procure_recommended_qty, 500)
+        original_vals.pop("id")
+        self.buffer_purchase.update(original_vals)
 
     # TEST SECTION 3: DLT, BoM's and misc
 
@@ -850,7 +850,7 @@ class TestDdmrp(TestDdmrpCommon):
                 "adu_calculation_method": self.adu_fixed.id,
             }
         )
-        self.bom_a.location_id = self.supplier_location.id
+        self.bom_a.context_location_id = self.supplier_location.id
         self.assertTrue(self.bom_a.is_buffered)
         self.assertEqual(self.bom_a.buffer_id, new_buffer)
         new_bom = self.env["mrp.bom"].create(
@@ -986,6 +986,54 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertTrue(bom_line.is_buffered)
         self.assertEqual(bom_line.buffer_id, component_buffer)
 
+    def test_38_bom_dlt_computation_multi_location(self):
+        """
+        If AS01 bom has no location it means that it can be manufactured
+        in more than one location.
+        """
+        bom_fp01 = self.env.ref("ddmrp.mrp_bom_fp01")
+        buffer1_fp01 = self.env.ref("ddmrp.stock_buffer_fp01")
+        self.assertEqual(bom_fp01.dlt, 22.0)
+        self.assertEqual(bom_fp01.buffer_id, buffer1_fp01)
+        self.assertEqual(len(bom_fp01.bom_line_ids), 1)
+        self.assertEqual(bom_fp01.bom_line_ids.is_buffered, False)
+        # Now create buffers in another location and check in that context
+        product_fp01 = self.env.ref("ddmrp.product_product_fp01")
+        product_as01 = self.env.ref("ddmrp.product_product_as01")
+        buffer2_fp01 = self.bufferModel.create(
+            {
+                "buffer_profile_id": self.buffer_profile_mmm.id,
+                "product_id": product_fp01.id,
+                "warehouse_id": self.warehouse.id,
+                "location_id": self.supplier_location.id,
+                "adu_calculation_method": self.adu_fixed.id,
+            }
+        )
+        buffer_as01 = self.bufferModel.create(
+            {
+                "buffer_profile_id": self.buffer_profile_mmm.id,
+                "product_id": product_as01.id,
+                "warehouse_id": self.warehouse.id,
+                "location_id": self.supplier_location.id,
+                "adu_calculation_method": self.adu_fixed.id,
+            }
+        )
+        bom_fp01.context_location_id = self.supplier_location.id
+        bom_fp01.bom_line_ids._compute_is_buffered()
+        bom_fp01._compute_dlt()
+        bom_fp01.bom_line_ids._compute_dlt()
+        self.assertEqual(bom_fp01.dlt, 2.0)
+        self.assertEqual(bom_fp01.buffer_id, buffer2_fp01)
+        self.assertEqual(len(bom_fp01.bom_line_ids), 1)
+        self.assertEqual(bom_fp01.bom_line_ids.is_buffered, True)
+        self.assertEqual(bom_fp01.bom_line_ids.buffer_id, buffer_as01)
+        # Check at the same time the DLT of 2 buffers using the same bom:
+        buffers = buffer1_fp01 + buffer2_fp01
+        buffers.invalidate_cache()
+        buffers._compute_dlt()
+        self.assertEqual(buffer1_fp01.dlt, 22)
+        self.assertEqual(buffer2_fp01.dlt, 2)
+
     def test_40_bokeh_charts(self):
         """Check bokeh chart computation."""
         date_move = datetime.today()
@@ -1104,3 +1152,98 @@ class TestDdmrp(TestDdmrpCommon):
             buffer_distributed.distributed_source_location_id,
             self.warehouse.lot_stock_id,
         )
+
+    def test_45_adu_calculation_blended_120_days_estimated_mrp(self):
+        """Test blended ADU calculation method with direct and indirect demand."""
+        mrpMoveModel = self.env["mrp.move"]
+        mrpAreaModel = self.env["mrp.area"]
+        productMrpAreaModel = self.env["product.mrp.area"]
+        method = self.aducalcmethodModel.create(
+            {
+                "name": "Blended (120 d. estimates_mrp past, 120 d. estimates_mrp future)",
+                "method": "blended",
+                "source_past": "estimates_mrp",
+                "horizon_past": 120,
+                "factor_past": 0.5,
+                "source_future": "estimates_mrp",
+                "horizon_future": 120,
+                "factor_future": 0.5,
+                "company_id": self.main_company.id,
+            }
+        )
+        self.buffer_a.adu_calculation_method = method.id
+        mrp_area_id = mrpAreaModel.create(
+            {
+                "name": "WH/Stock",
+                "warehouse_id": self.warehouse.id,
+                "location_id": self.stock_location.id,
+            }
+        )
+        product_mrp_area_id = productMrpAreaModel.create(
+            {
+                "mrp_area_id": mrp_area_id.id,
+                "product_id": self.productA.id,
+            }
+        )
+        today = fields.Date.today()
+
+        # Past.
+        # create estimate: 120 units / 120 days = 1 unit/day
+        # create mrp move: 120 units / 120 days = 1 unit/day
+        dt = self.calendar.plan_days(-1 * 120, datetime.today())
+        estimate_date_from = dt.date()
+        estimate_date_to = self.calendar.plan_days(-1 * 2, datetime.today())
+        self.estimateModel.create(
+            {
+                "manual_date_from": estimate_date_from,
+                "manual_date_to": estimate_date_to,
+                "product_id": self.productA.id,
+                "product_uom_qty": 120,
+                "product_uom": self.productA.uom_id.id,
+                "location_id": self.stock_location.id,
+            }
+        )
+        mrpMoveModel.create(
+            {
+                "mrp_area_id": product_mrp_area_id.mrp_area_id.id,
+                "product_id": product_mrp_area_id.product_id.id,
+                "product_mrp_area_id": product_mrp_area_id.id,
+                "mrp_qty": -120,
+                "current_qty": 0,
+                "mrp_date": today - timedelta(days=5),
+                "current_date": None,
+                "mrp_type": "d",
+                "mrp_origin": "mrp",
+            }
+        )
+
+        # Future.
+        # create estimate: 120 units / 120 days = 1 unit/day
+        # create mrp move: 120 units / 120 days = 1 unit/day
+        self.estimateModel.create(
+            {
+                "manual_date_from": self.estimate_date_from,
+                "manual_date_to": self.estimate_date_to,
+                "product_id": self.productA.id,
+                "product_uom_qty": 120,
+                "product_uom": self.productA.uom_id.id,
+                "location_id": self.stock_location.id,
+            }
+        )
+        mrpMoveModel.create(
+            {
+                "mrp_area_id": product_mrp_area_id.mrp_area_id.id,
+                "product_id": product_mrp_area_id.product_id.id,
+                "product_mrp_area_id": product_mrp_area_id.id,
+                "mrp_qty": -120,
+                "current_qty": 0,
+                "mrp_date": today + timedelta(days=5),
+                "current_date": None,
+                "mrp_type": "d",
+                "mrp_origin": "mrp",
+            }
+        )
+
+        self.bufferModel.cron_ddmrp_adu()
+        to_assert_value = 2 * 0.5 + 2 * 0.5
+        self.assertEqual(self.buffer_a.adu, to_assert_value)

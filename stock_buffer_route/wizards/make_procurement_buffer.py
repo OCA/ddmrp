@@ -13,6 +13,17 @@ _ITEM_TYPES = [
 class MakeProcurementBuffer(models.TransientModel):
     _inherit = "make.procurement.buffer"
 
+    partner_id = fields.Many2one(
+        comodel_name="res.partner",
+        string="Vendor",
+        help="If set, will be used as preferred vendor for purchase routes.",
+    )
+    item_ids = fields.One2many(
+        comodel_name="make.procurement.buffer.item",
+        inverse_name="wiz_id",
+        string="Items",
+    )
+
     @api.model
     def _prepare_item(self, buffer, qty_override=None):
         res = super(MakeProcurementBuffer, self)._prepare_item(buffer, qty_override)
@@ -23,6 +34,7 @@ class MakeProcurementBuffer(models.TransientModel):
             "item_type_alternative": buffer.item_type_alternative,
         }
         res["date_planned"] = buffer.with_context(context)._get_date_planned()
+
         return res
 
 

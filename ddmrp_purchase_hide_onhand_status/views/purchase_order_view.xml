@@ -1,4 +1,5 @@
 <?xml version="1.0" ?>
+<!-- oca-hooks:disable=xml-view-dangerous-replace-low-priority -->
 <!-- pylint:disable=dangerous-view-replace-wo-priority -->
 <!-- Using replace, because hidding the fields would still -->
 <!-- cause them to be loaded by the system. -->

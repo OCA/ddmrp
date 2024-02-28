@@ -5,7 +5,7 @@
 {
     "name": "DDMRP",
     "summary": "Demand Driven Material Requirements Planning",
-    "version": "14.0.1.18.4",
+    "version": "14.0.1.23.1",
     "license": "LGPL-3",
     "development_status": "Beta",
     "author": "ForgeFlow, " "Odoo Community Association (OCA)",
@@ -14,7 +14,6 @@
     "category": "Warehouse",
     "depends": [
         "purchase_stock",
-        "mrp_bom_location",
         "stock_demand_estimate",
         "web_widget_bokeh_chart",
         "mrp_multi_level",
@@ -49,7 +48,9 @@
         "views/ddmrp_assets_backend.xml",
         "report/mrp_report_bom_structure.xml",
         "data/ir_cron.xml",
+        "wizards/ddmrp_duplicate_buffer.xml",
         "wizards/ddmrp_run_view.xml",
+        "wizards/mrp_bom_change_location.xml",
         "wizards/res_config_settings_views.xml",
     ],
     "demo": [

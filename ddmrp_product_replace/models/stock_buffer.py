@@ -41,6 +41,7 @@ class StockBuffer(models.Model):
         string="Considered As Demand",
         help="This field is used for a correct product replacement within a "
         "DDMRP buffer.",
+        copy=False,
     )
     use_replacement_for_buffer_status = fields.Boolean(
         string="Include Incoming & On-Hands of replaced products",
@@ -129,19 +130,19 @@ class StockBuffer(models.Model):
             res += rec
         return res
 
-    def _compute_product_available_qty(self):
-        res = super()._compute_product_available_qty()
+    def _calc_product_available_qty(self):
+        res = super()._calc_product_available_qty()
         for rec in self:
             if not (rec.use_replacement_for_buffer_status and rec.replacement_for_ids):
                 continue
             for buffer in rec.replacement_for_ids:
-                # Update 'incoming_location_qty'
+                # Update 'incoming_total_qty'
                 replacements_incoming_qty = buffer.product_uom._compute_quantity(
-                    buffer.incoming_location_qty,
+                    buffer.incoming_total_qty,
                     rec.product_uom,
                     round=False,
                 )
-                rec.incoming_location_qty += replacements_incoming_qty
+                rec.incoming_total_qty += replacements_incoming_qty
                 # Update 'product_location_qty_available_not_res'
                 replacements_qty_not_res = buffer.product_uom._compute_quantity(
                     buffer.product_location_qty_available_not_res,
