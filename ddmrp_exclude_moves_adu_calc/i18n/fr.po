@@ -51,7 +51,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ddmrp_exclude_moves_adu_calc/models/stock_move.py:0
 #, python-format
-msgid "Only inventory managers are allowed perform this action."
+msgid "Only buffer maintainers are allowed perform this action."
 msgstr ""
 
 #. module: ddmrp_exclude_moves_adu_calc
