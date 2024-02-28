@@ -17,9 +17,9 @@ class StockMove(models.Model):
     )
 
     def _toggle_exclude_from_adu(self):
-        if not self.env.user.has_group("stock.group_stock_manager"):
+        if not self.env.user.has_group("ddmrp.group_stock_buffer_maintainer"):
             raise UserError(
-                _("Only inventory managers are allowed perform this action.")
+                _("Only buffer maintainers are allowed perform this action.")
             )
         for rec in self:
             rec.exclude_from_adu = not rec.exclude_from_adu

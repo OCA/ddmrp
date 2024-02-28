@@ -32,10 +32,12 @@ class TestDdmrp(common.TransactionCase):
         self.buffer_profile_pur = self.env.ref(
             "ddmrp.stock_buffer_profile_replenish_purchased_short_low"
         )
-        self.group_stock_manager = self.env.ref("stock.group_stock_manager")
+        self.group_stock_buffer_maintainer = self.env.ref(
+            "ddmrp.group_stock_buffer_maintainer"
+        )
 
         # Create users
-        self.user = self._create_user("user_1", [self.group_stock_manager])
+        self.user = self._create_user("user_1", [self.group_stock_buffer_maintainer])
 
         self.product_a = self.productModel.create(
             {
