@@ -57,8 +57,8 @@ msgstr "Localización de inventarios"
 #. odoo-python
 #: code:addons/ddmrp_exclude_moves_adu_calc/models/stock_move.py:0
 #, python-format
-msgid "Only inventory managers are allowed perform this action."
-msgstr "Sólo los gestores de inventario pueden realizar esta acción."
+msgid "Only buffer maintainers are allowed perform this action."
+msgstr ""
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model,name:ddmrp_exclude_moves_adu_calc.model_stock_buffer
@@ -69,3 +69,7 @@ msgstr "Búfer de Inventario"
 #: model:ir.model,name:ddmrp_exclude_moves_adu_calc.model_stock_move
 msgid "Stock Move"
 msgstr "movimiento de existencias"
+
+#, python-format
+#~ msgid "Only inventory managers are allowed perform this action."
+#~ msgstr "Sólo los gestores de inventario pueden realizar esta acción."
