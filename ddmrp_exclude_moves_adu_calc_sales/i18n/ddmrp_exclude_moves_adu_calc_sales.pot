@@ -29,3 +29,8 @@ msgstr ""
 #: model:ir.model,name:ddmrp_exclude_moves_adu_calc_sales.model_sale_order_line
 msgid "Sales Order Line"
 msgstr ""
+
+#. module: ddmrp_exclude_moves_adu_calc_sales
+#: model:ir.model,name:ddmrp_exclude_moves_adu_calc_sales.model_stock_move
+msgid "Stock Move"
+msgstr ""
