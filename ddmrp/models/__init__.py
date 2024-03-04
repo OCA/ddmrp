@@ -15,3 +15,4 @@ from . import stock_move_line
 from . import stock_picking
 from . import res_company
 from . import product_product
+from . import stock_warehouse_orderpoint
