@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-22 07:45+0000\n"
+"PO-Revision-Date: 2024-03-04 09:33+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -57,7 +57,7 @@ msgstr "Ubicazioni di inventario"
 #: code:addons/ddmrp_exclude_moves_adu_calc/models/stock_move.py:0
 #, python-format
 msgid "Only buffer maintainers are allowed perform this action."
-msgstr ""
+msgstr "Solo i responsabili della scorta possono eseguire questa azione."
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model,name:ddmrp_exclude_moves_adu_calc.model_stock_buffer
