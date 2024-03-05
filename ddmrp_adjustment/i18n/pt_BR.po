@@ -25,6 +25,11 @@ msgid "Adjustments"
 msgstr ""
 
 #. module: ddmrp_adjustment
+#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_search
+msgid "Affecting Currently"
+msgstr ""
+
+#. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__buffer_id
 msgid "Apply to"
 msgstr ""
@@ -100,6 +105,11 @@ msgid "DAF Demand Allocation"
 msgstr ""
 
 #. module: ddmrp_adjustment
+#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.stock_buffer_view_form
+msgid "DAF: *"
+msgstr ""
+
+#. module: ddmrp_adjustment
 #: model:ir.model,name:ddmrp_adjustment.model_ddmrp_adjustment
 msgid "DDMRP Adjustment"
 msgstr ""
@@ -119,6 +129,11 @@ msgstr ""
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__buffer_ids
 msgid "DDMRP Buffers"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__daf_applied
+msgid "Daf Applied"
 msgstr ""
 
 #. module: ddmrp_adjustment
@@ -174,6 +189,7 @@ msgid "Display Name"
 msgstr ""
 
 #. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__date_end
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__date_end
 msgid "End date"
 msgstr ""
@@ -250,6 +266,11 @@ msgid "Location"
 msgstr ""
 
 #. module: ddmrp_adjustment
+#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_search
+msgid "Not Expired"
+msgstr ""
+
+#. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__product_origin_id
 msgid "Origin Product"
 msgstr ""
@@ -271,6 +292,11 @@ msgid "Periods"
 msgstr ""
 
 #. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__pre_daf_adu
+msgid "Pre Daf Adu"
+msgstr ""
+
+#. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__product_id
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__product_id
 msgid "Product"
@@ -283,6 +309,7 @@ msgid "Sheet"
 msgstr ""
 
 #. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__date_start
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__date_start
 msgid "Start date"
 msgstr ""
@@ -313,6 +340,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__value
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__value
 msgid "Value"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.stock_buffer_view_form
+msgid "View DAF Affecting Actual ADU"
 msgstr ""
 
 #. module: ddmrp_adjustment
