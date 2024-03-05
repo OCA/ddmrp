@@ -484,42 +484,38 @@ class TestDdmrp(TestDdmrpCommon):
 
         self.buffer_a.lead_days = 20
         self._check_red_zone(
-            self.buffer_a, red_base_qty=40, red_safety_qty=20, red_zone_qty=60
+            self.buffer_a, red_base_qty=20, red_safety_qty=10, red_zone_qty=30
         )
 
         self.buffer_a.buffer_profile_id.lead_time_id.factor = 1
         self._check_red_zone(
-            self.buffer_a, red_base_qty=80, red_safety_qty=40, red_zone_qty=120
+            self.buffer_a, red_base_qty=40, red_safety_qty=20, red_zone_qty=60
         )
 
         self.buffer_a.buffer_profile_id.variability_id.factor = 1
         self._check_red_zone(
-            self.buffer_a, red_base_qty=80, red_safety_qty=80, red_zone_qty=160
+            self.buffer_a, red_base_qty=40, red_safety_qty=40, red_zone_qty=80
         )
 
         self.buffer_a.adu_fixed = 2
         self.bufferModel.cron_ddmrp_adu()
         self._check_red_zone(
-            self.buffer_a, red_base_qty=40, red_safety_qty=40, red_zone_qty=80
+            self.buffer_a, red_base_qty=20, red_safety_qty=20, red_zone_qty=40
         )
 
     def test_21_buffer_zones_yellow(self):
         self._check_yellow_zone(self.buffer_a, yellow_zone_qty=40.0, top_of_yellow=70.0)
 
         self.buffer_a.lead_days = 20
-        self._check_yellow_zone(
-            self.buffer_a, yellow_zone_qty=80.0, top_of_yellow=140.0
-        )
+        self._check_yellow_zone(self.buffer_a, yellow_zone_qty=40.0, top_of_yellow=70.0)
 
         self.buffer_a.adu_fixed = 2
         self.bufferModel.cron_ddmrp_adu()
-        self._check_yellow_zone(self.buffer_a, yellow_zone_qty=40.0, top_of_yellow=70.0)
+        self._check_yellow_zone(self.buffer_a, yellow_zone_qty=20.0, top_of_yellow=35.0)
 
         self.buffer_a.buffer_profile_id.lead_time_id.factor = 1
         self.buffer_a.buffer_profile_id.variability_id.factor = 1
-        self._check_yellow_zone(
-            self.buffer_a, yellow_zone_qty=40.0, top_of_yellow=120.0
-        )
+        self._check_yellow_zone(self.buffer_a, yellow_zone_qty=20.0, top_of_yellow=60.0)
 
     def test_22_procure_recommended(self):
         self.buffer_a._calc_adu()
