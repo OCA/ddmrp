@@ -1,4 +1,4 @@
-# Copyright 2017-20 ForgeFlow S.L. (https://www.forgeflow.com)
+# Copyright 2017-24 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import logging
@@ -21,10 +21,8 @@ class StockBuffer(models.Model):
         help="Demand associated to Demand Adjustment Factors applied to "
         "parent buffers.",
     )
-
-    pre_daf_adu = fields.Float()
-
-    daf_applied = fields.Float(default=-1)
+    pre_daf_adu = fields.Float(readonly=True)
+    daf_applied = fields.Float(default=-1, readonly=True)
 
     def _daf_to_apply_domain(self, current=True):
         self.ensure_one()
