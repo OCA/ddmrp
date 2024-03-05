@@ -1,4 +1,4 @@
-# Copyright 2017-20 ForgeFlow S.L. (https://www.forgeflow.com)
+# Copyright 2017-24 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import logging
@@ -21,6 +21,8 @@ class StockBuffer(models.Model):
         help="Demand associated to Demand Adjustment Factors applied to "
         "parent buffers.",
     )
+    pre_daf_adu = fields.Float(readonly=True)
+    daf_applied = fields.Float(default=-1, readonly=True)
 
     def _daf_to_apply_domain(self, current=True):
         self.ensure_one()
@@ -41,16 +43,17 @@ class StockBuffer(models.Model):
             dafs_to_apply = self.env["ddmrp.adjustment"].search(
                 rec._daf_to_apply_domain()
             )
+            rec.daf_applied = -1
             if dafs_to_apply:
-                daf = 1
+                rec.daf_applied = 1
                 values = dafs_to_apply.mapped("value")
                 for val in values:
-                    daf *= val
-                prev = rec.adu
-                rec.adu *= daf
+                    rec.daf_applied *= val
+                rec.pre_daf_adu = rec.adu
+                rec.adu *= rec.daf_applied
                 _logger.debug(
                     "DAF={} applied to {}. ADU: {} -> {}".format(
-                        daf, rec.name, prev, rec.adu
+                        rec.daf_applied, rec.name, rec.pre_daf_adu, rec.adu
                     )
                 )
             # Compute generated demand to be applied to components:
@@ -176,3 +179,16 @@ class StockBuffer(models.Model):
             "view_mode": "tree",
             "domain": [("id", "in", demand_ids)],
         }
+
+    def action_view_affecting_adu(self):
+        demand_ids = (
+            self.env["ddmrp.adjustment"]
+            .search(self._daf_to_apply_domain(current=False))
+            .ids
+        )
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "ddmrp_adjustment.ddmrp_adjustment_action"
+        )
+        action["domain"] = [("id", "in", demand_ids)]
+        action["context"] = {"search_default_current": 1}
+        return action
