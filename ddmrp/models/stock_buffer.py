@@ -1089,7 +1089,7 @@ class StockBuffer(models.Model):
         store=True,
     )
     top_of_red = fields.Float(
-        string="Top of Red",
+        string="Top Of Red",
         related="red_zone_qty",
         store=True,
     )
