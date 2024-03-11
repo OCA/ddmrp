@@ -24,11 +24,11 @@ class MrpProduction(models.Model):
         string="On Hand/TOR (%)",
     )
 
-    @api.model
-    def create(self, vals):
-        record = super(MrpProduction, self).create(vals)
-        record._calc_execution_priority()
-        return record
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        records._calc_execution_priority()
+        return records
 
     def _calc_execution_priority(self):
         """Technical note: this method cannot be decorated with api.depends,
