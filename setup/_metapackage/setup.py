@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo-addon-ddmrp>=16.0dev,<16.1dev',
         'odoo-addon-ddmrp_adjustment>=16.0dev,<16.1dev',
         'odoo-addon-ddmrp_chatter>=16.0dev,<16.1dev',
+        'odoo-addon-ddmrp_cron_actions_as_job>=16.0dev,<16.1dev',
         'odoo-addon-ddmrp_exclude_moves_adu_calc>=16.0dev,<16.1dev',
         'odoo-addon-ddmrp_exclude_moves_adu_calc_sales>=16.0dev,<16.1dev',
         'odoo-addon-ddmrp_history>=16.0dev,<16.1dev',
