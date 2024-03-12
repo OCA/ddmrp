@@ -70,7 +70,7 @@
         id="menu_ddmrp_adjustment_sheet_wizard"
         parent="stock_demand_estimate.stock_demand_planning_menu"
         action="action_ddmrp_adjustment_sheet_wizard"
-        groups="stock.group_stock_manager"
+        groups="ddmrp.group_stock_buffer_maintainer"
         sequence="51"
     />
 </odoo>
