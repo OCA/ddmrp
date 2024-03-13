@@ -485,7 +485,6 @@
                                     <div style="margin-top: 1em;">
                                         <field
                                             name="ddmrp_supply_chart"
-                                            style="height:400px"
                                             widget="bokeh_chart"
                                             nolabel="1"
                                         />
@@ -495,7 +494,6 @@
                                     <div style="margin-top: 1em;">
                                         <field
                                             name="ddmrp_demand_chart"
-                                            style="height:400px"
                                             widget="bokeh_chart"
                                             nolabel="1"
                                         />

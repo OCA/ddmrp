@@ -835,7 +835,7 @@ class StockBuffer(models.Model):
                 y_mrp = list(mrp_data.values())
 
                 p = figure(
-                    frame_width=500,
+                    frame_width=450,
                     frame_height=400,
                     y_axis_label="Quantity",
                     x_axis_type="datetime",
@@ -901,7 +901,7 @@ class StockBuffer(models.Model):
                 y_supply = list(supply_data.values())
 
                 p = figure(
-                    frame_width=500,
+                    frame_width=450,
                     frame_height=400,
                     y_axis_label="Quantity",
                     x_axis_type="datetime",
