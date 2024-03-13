@@ -977,6 +977,11 @@ msgid "Min-max"
 msgstr "Minimo-massimo"
 
 #. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_warehouse_orderpoint
+msgid "Minimum Inventory Rule"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__order_cycle
 msgid "Minimum Order Cycle (days)"
 msgstr "Ciclo ordine minimo (giorni)"
@@ -1460,7 +1465,6 @@ msgstr "Zona rossa (forza)"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__red_zone_qty
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_red
 msgid "Red Zone Qty"
 msgstr "Q.tà zona rossa"
 
@@ -1795,6 +1799,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_green
 msgid "Top Of Green"
 msgstr "Superiore della verde"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_red
+msgid "Top Of Red"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_yellow
