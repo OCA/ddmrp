@@ -1247,3 +1247,44 @@ class TestDdmrp(TestDdmrpCommon):
         self.bufferModel.cron_ddmrp_adu()
         to_assert_value = 2 * 0.5 + 2 * 0.5
         self.assertEqual(self.buffer_a.adu, to_assert_value)
+
+    def test_46_disable_auto_create_orderpoint(self):
+        """If a product has a buffer, do not create a new orderpoint for same location"""
+        op_a = self.orderpoint_model.search(
+            [
+                ("product_id", "=", self.productA.id),
+                ("location_id", "=", self.stock_location.id),
+            ]
+        )
+        self.assertFalse(op_a)
+        nbp = self.productModel.create(
+            {
+                "name": "Non Buffered Product",
+                "standard_price": 1,
+                "type": "product",
+                "uom_id": self.uom_unit.id,
+                "default_code": "NBP",
+            }
+        )
+        op_nbp = self.orderpoint_model.search(
+            [
+                ("product_id", "=", nbp.id),
+                ("location_id", "=", self.stock_location.id),
+            ]
+        )
+        self.assertFalse(op_nbp)
+        # Create a negative projection for both products:
+        date_move = datetime.today()
+        self.create_pickingoutA(date_move, 500, source_location=self.stock_location)
+        self.create_picking_out(
+            nbp, date_move, 500, source_location=self.stock_location
+        )
+        # Access "Replenishment" menu
+        self.orderpoint_model.action_open_orderpoints()
+        op_a = self.orderpoint_model.search(
+            [
+                ("product_id", "=", self.productA.id),
+                ("location_id", "=", self.stock_location.id),
+            ]
+        )
+        self.assertFalse(op_a)
