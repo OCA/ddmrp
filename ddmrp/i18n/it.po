@@ -556,6 +556,7 @@ msgstr "Fabbisogno"
 #: model:ir.model.fields,field_description:ddmrp.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_rule__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
 
@@ -784,6 +785,7 @@ msgstr "Nasconde stati disponibili da righe ordine acquisto."
 #: model:ir.model.fields,field_description:ddmrp.field_stock_picking__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_rule__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint__id
 msgid "ID"
 msgstr "ID"
 
@@ -904,6 +906,7 @@ msgstr "LT"
 #: model:ir.model.fields,field_description:ddmrp.field_stock_picking____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_rule____last_update
 #: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse____last_update
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint____last_update
 msgid "Last Modified on"
 msgstr "Ultima modifica il"
 
@@ -1040,6 +1043,11 @@ msgstr "Quantità massima per un singolo approvvigionamento"
 #: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer_profile__replenish_method__min_max
 msgid "Min-max"
 msgstr "Minimo-massimo"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_warehouse_orderpoint
+msgid "Minimum Inventory Rule"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__order_cycle
@@ -1872,14 +1880,14 @@ msgstr ""
 "attraversamento completo."
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_red
+msgid "Top Of Red"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_green
 msgid "Top of Green"
 msgstr "Superiore della verde"
-
-#. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_red
-msgid "Top of Red"
-msgstr "Superiore della rossa"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_yellow
@@ -2194,6 +2202,9 @@ msgstr "minuti"
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr "o"
+
+#~ msgid "Top of Red"
+#~ msgstr "Superiore della rossa"
 
 #~ msgid "Forecast On Location"
 #~ msgstr "Previsto nell'ubicazione"
