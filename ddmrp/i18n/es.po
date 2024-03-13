@@ -312,8 +312,8 @@ msgid ""
 msgstr ""
 "Cambia la ubicación de inventario que es considerada cuando se calcula si un "
 "producto tiene búfer o no.\n"
-"Potencialmente, esto puede cambiar el valor del Lead Time Desacoplado (LTD)."
-"\n"
+"Potencialmente, esto puede cambiar el valor del Lead Time Desacoplado "
+"(LTD).\n"
 "Este cambio es meramente informativo y no va a afectar a ningún proceso, "
 "tamaño o recomendación de búfer."
 
@@ -979,6 +979,11 @@ msgid "Min-max"
 msgstr "Min-max"
 
 #. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_warehouse_orderpoint
+msgid "Minimum Inventory Rule"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__order_cycle
 msgid "Minimum Order Cycle (days)"
 msgstr "Ciclo Mínimo de Pedido (días)"
@@ -1463,7 +1468,6 @@ msgstr "Zona Roja (Sobreescrita)"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__red_zone_qty
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_red
 msgid "Red Zone Qty"
 msgstr "Ctd. Zona Roja"
 
@@ -1798,6 +1802,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_green
 msgid "Top Of Green"
 msgstr "Parte Superior Verde"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_red
+msgid "Top Of Red"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_yellow
