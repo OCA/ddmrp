@@ -40,6 +40,7 @@ class TestDdmrpCommon(common.TransactionCase):
         cls.supinfo_model = cls.env["product.supplierinfo"]
         cls.pol_model = cls.env["purchase.order.line"]
         cls.wh_model = cls.env["stock.warehouse"]
+        cls.orderpoint_model = cls.env["stock.warehouse.orderpoint"]
 
         # Refs
         cls.main_company = cls.env.ref("base.main_company")
@@ -338,13 +339,15 @@ class TestDdmrpCommon(common.TransactionCase):
         )
         return user
 
-    def create_pickingoutA(self, date_move, qty, uom=False):
+    def create_pickingoutA(self, date_move, qty, uom=False, source_location=None):
         if not uom:
             uom = self.productA.uom_id
+        if not source_location:
+            source_location = self.binA
         picking = self.pickingModel.with_user(self.user).create(
             {
                 "picking_type_id": self.picking_type_out.id,
-                "location_id": self.binA.id,
+                "location_id": source_location.id,
                 "location_dest_id": self.customer_location.id,
                 "scheduled_date": date_move,
                 "move_lines": [
@@ -357,7 +360,7 @@ class TestDdmrpCommon(common.TransactionCase):
                             "date": date_move,
                             "product_uom": uom.id,
                             "product_uom_qty": qty,
-                            "location_id": self.binA.id,
+                            "location_id": source_location.id,
                             "location_dest_id": self.customer_location.id,
                         },
                     )
@@ -422,11 +425,13 @@ class TestDdmrpCommon(common.TransactionCase):
         picking.action_confirm()
         return picking
 
-    def create_picking_out(self, product, date_move, qty):
+    def create_picking_out(self, product, date_move, qty, source_location=None):
+        if not source_location:
+            source_location = self.binA
         picking = self.pickingModel.with_user(self.user).create(
             {
                 "picking_type_id": self.picking_type_out.id,
-                "location_id": self.binA.id,
+                "location_id": source_location.id,
                 "location_dest_id": self.customer_location.id,
                 "scheduled_date": date_move,
                 "move_lines": [
@@ -439,7 +444,7 @@ class TestDdmrpCommon(common.TransactionCase):
                             "date": date_move,
                             "product_uom": product.uom_id.id,
                             "product_uom_qty": qty,
-                            "location_id": self.binA.id,
+                            "location_id": source_location.id,
                             "location_dest_id": self.customer_location.id,
                         },
                     )
