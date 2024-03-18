@@ -6,112 +6,116 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-03-18 19:34+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__active
 msgid "Active"
-msgstr ""
+msgstr "Activo"
 
 #. module: ddmrp_warning
 #: model_terms:ir.ui.view,arch_db:ddmrp_warning.view_ddmrp_warning_definition_form
 #: model_terms:ir.ui.view,arch_db:ddmrp_warning.view_ddmrp_warning_definition_search
 msgid "Archived"
-msgstr ""
+msgstr "Archivado"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__buffer_id
 #: model_terms:ir.ui.view,arch_db:ddmrp_warning.view_ddmrp_warning_item_search
 msgid "Buffer"
-msgstr ""
+msgstr "Amortiguador"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__warning_domain
 msgid "Buffer Applicable Domain"
-msgstr ""
+msgstr "Amortiguador Dominio Aplicable"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__company_id
 msgid "Company"
-msgstr ""
+msgstr "Empresa"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__create_uid
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__create_date
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado el"
 
 #. module: ddmrp_warning
 #: model:ir.actions.server,name:ddmrp_warning.ir_cron_ddmrp_warning_calculation_scheduler_action_ir_actions_server
 #: model:ir.cron,cron_name:ddmrp_warning.ir_cron_ddmrp_warning_calculation_scheduler_action
 #: model:ir.cron,name:ddmrp_warning.ir_cron_ddmrp_warning_calculation_scheduler_action
 msgid "DDMRP Buffer Warning calculation"
-msgstr ""
+msgstr "Cálculo de advertencia del búfer DDMRP"
 
 #. module: ddmrp_warning
 #: model:ir.model,name:ddmrp_warning.model_ddmrp_warning_definition
 msgid "DDMRP Warning Definition"
-msgstr ""
+msgstr "Definición de Advertencia DDMRP"
 
 #. module: ddmrp_warning
 #: model:ir.actions.act_window,name:ddmrp_warning.action_ddmrp_warning_definition
 msgid "DDMRP Warning Definitions"
-msgstr ""
+msgstr "Definiciones de Advertencia DDMRP"
 
 #. module: ddmrp_warning
 #: model:ir.model,name:ddmrp_warning.model_ddmrp_warning_item
 msgid "DDMRP Warning Item"
-msgstr ""
+msgstr "Artículo de Advertencia DDMRP"
 
 #. module: ddmrp_warning
 #: model:ir.actions.act_window,name:ddmrp_warning.action_ddmrp_warning_item
 msgid "DDMRP Warning Items"
-msgstr ""
+msgstr "Artículos de Advertencia DDMRP"
 
 #. module: ddmrp_warning
 #: model:ir.ui.menu,name:ddmrp_warning.menu_ddmrp_warning_item
 msgid "DDMRP Warnings"
-msgstr ""
+msgstr "Advertencias DDMRP"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_stock_buffer__ddmrp_warning_item_ids
 msgid "Ddmrp Warning Item"
-msgstr ""
+msgstr "Ddmrp Elemento de advertencia"
 
 #. module: ddmrp_warning
 #: model_terms:ir.ui.view,arch_db:ddmrp_warning.view_ddmrp_warning_item_search
 msgid "Definition"
-msgstr ""
+msgstr "Definición"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__name
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__display_name
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__display_name
 #: model:ir.model.fields,field_description:ddmrp_warning.field_stock_buffer__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Mostrar Nombre"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,help:ddmrp_warning.field_ddmrp_warning_definition__warning_domain
 msgid ""
 "Domain based on Stock Buffer, to define if the warning is applicable or not."
 msgstr ""
+"Dominio basado en la Memoria intermedia de existencias, para definir si la "
+"advertencia es aplicable o no."
 
 #. module: ddmrp_warning
 #: code:addons/ddmrp_warning/models/ddmrp_warning_definition.py:0
@@ -120,109 +124,111 @@ msgid ""
 "Error evaluating %s.\n"
 " %s"
 msgstr ""
+"Error al evaluar %s.\n"
+" %s"
 
 #. module: ddmrp_warning
 #: model_terms:ir.ui.view,arch_db:ddmrp_warning.view_ddmrp_warning_item_search
 msgid "Group By"
-msgstr ""
+msgstr "Grupo Por"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields.selection,name:ddmrp_warning.selection__ddmrp_warning_definition__severity__3_high
 msgid "High"
-msgstr ""
+msgstr "Alto"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__id
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__id
 #: model:ir.model.fields,field_description:ddmrp_warning.field_stock_buffer__id
 msgid "ID"
-msgstr ""
+msgstr "ID(identificación)"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition____last_update
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item____last_update
 #: model:ir.model.fields,field_description:ddmrp_warning.field_stock_buffer____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última Modificación el"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__write_uid
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última Actualización por"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__write_date
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última Actualización el"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__location_id
 msgid "Location"
-msgstr ""
+msgstr "Localización"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields.selection,name:ddmrp_warning.selection__ddmrp_warning_definition__severity__1_low
 msgid "Low"
-msgstr ""
+msgstr "Bajo/a"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields.selection,name:ddmrp_warning.selection__ddmrp_warning_definition__severity__2_mid
 msgid "Medium"
-msgstr ""
+msgstr "Medio/a"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__name
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__product_id
 msgid "Product"
-msgstr ""
+msgstr "Producto"
 
 #. module: ddmrp_warning
 #: model_terms:ir.ui.view,arch_db:ddmrp_warning.stock_buffer_view_form
 msgid "Refresh Warnings"
-msgstr ""
+msgstr "Actualizar Advertencias"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__severity
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__severity
 #: model_terms:ir.ui.view,arch_db:ddmrp_warning.view_ddmrp_warning_item_search
 msgid "Severity"
-msgstr ""
+msgstr "Gravedad"
 
 #. module: ddmrp_warning
 #: model:ir.model,name:ddmrp_warning.model_stock_buffer
 msgid "Stock Buffer"
-msgstr ""
+msgstr "Amortiguador de Inventario"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__warning_definition_id
 msgid "Warning Definition"
-msgstr ""
+msgstr "Definición de Advertencia"
 
 #. module: ddmrp_warning
 #: model:ir.ui.menu,name:ddmrp_warning.menu_ddmrp_warning_definition
 msgid "Warning Definitions"
-msgstr ""
+msgstr "Definiciones de Advertencia"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__python_code
 msgid "Warning Expression"
-msgstr ""
+msgstr "Expresión de Advertencia"
 
 #. module: ddmrp_warning
 #: model_terms:ir.ui.view,arch_db:ddmrp_warning.stock_buffer_view_form
 msgid "Warnings"
-msgstr ""
+msgstr "Advertencias"
 
 #. module: ddmrp_warning
 #: model_terms:ir.ui.view,arch_db:ddmrp_warning.stock_buffer_search
 msgid "With Warnings"
-msgstr ""
+msgstr "Con Advertencias"
 
 #. module: ddmrp_warning
 #: model:ir.model.fields,help:ddmrp_warning.field_ddmrp_warning_definition__python_code
@@ -230,3 +236,5 @@ msgid ""
 "Write Python code that defines when this warning should raise. The result of"
 " executing the expression must be a boolean."
 msgstr ""
+"Escriba código Python que defina cuándo debe saltar esta advertencia. El "
+"resultado de ejecutar la expresión debe ser un booleano."
