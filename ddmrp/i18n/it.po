@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-03-04 09:35+0000\n"
+"PO-Revision-Date: 2024-03-18 09:33+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -979,7 +979,7 @@ msgstr "Minimo-massimo"
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_warehouse_orderpoint
 msgid "Minimum Inventory Rule"
-msgstr ""
+msgstr "Regola giacenza minima"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__order_cycle
@@ -1803,7 +1803,7 @@ msgstr "Superiore della verde"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_red
 msgid "Top Of Red"
-msgstr ""
+msgstr "Superiore della rossa"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_yellow
