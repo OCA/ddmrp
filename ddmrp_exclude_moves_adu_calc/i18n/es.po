@@ -6,42 +6,44 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-03-18 19:34+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model.fields,field_description:ddmrp_exclude_moves_adu_calc.field_stock_buffer__display_name
 #: model:ir.model.fields,field_description:ddmrp_exclude_moves_adu_calc.field_stock_location__display_name
 #: model:ir.model.fields,field_description:ddmrp_exclude_moves_adu_calc.field_stock_move__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Mostrar Nombre"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.actions.server,name:ddmrp_exclude_moves_adu_calc.action_server_mrp_production_request_refresh
 msgid "Exclude from ADU"
-msgstr ""
+msgstr "Excluir desde ADU"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model.fields,field_description:ddmrp_exclude_moves_adu_calc.field_stock_location__exclude_from_adu
 msgid "Exclude this location from ADU calculation"
-msgstr ""
+msgstr "Excluir esta ubicación desde el cálculo de ADU"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model.fields,field_description:ddmrp_exclude_moves_adu_calc.field_stock_move__exclude_from_adu
 msgid "Exclude this move from ADU calculation"
-msgstr ""
+msgstr "Excluir este movimiento del cálculo ADU"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model.fields,field_description:ddmrp_exclude_moves_adu_calc.field_stock_buffer__id
 #: model:ir.model.fields,field_description:ddmrp_exclude_moves_adu_calc.field_stock_location__id
 #: model:ir.model.fields,field_description:ddmrp_exclude_moves_adu_calc.field_stock_move__id
 msgid "ID"
-msgstr ""
+msgstr "ID (identificación)"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model.fields,help:ddmrp_exclude_moves_adu_calc.field_stock_location__exclude_from_adu
@@ -49,37 +51,41 @@ msgid ""
 "If this flag is set stock moves into this location will be excluded from ADU"
 " calculation in the origin location buffer."
 msgstr ""
+"Si este indicador está activado, los movimientos de existencias en esta "
+"ubicación se excluirán del cálculo de ADU en el búfer de ubicación de origen."
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model.fields,help:ddmrp_exclude_moves_adu_calc.field_stock_move__exclude_from_adu
 msgid ""
 "If this flag is set this stock move will be excluded from ADU calculation"
 msgstr ""
+"Si se activa este indicador, este movimiento de existencias se excluirá del "
+"cálculo de ADU"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model,name:ddmrp_exclude_moves_adu_calc.model_stock_location
 msgid "Inventory Locations"
-msgstr ""
+msgstr "Localizaciones de Inventario"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model.fields,field_description:ddmrp_exclude_moves_adu_calc.field_stock_buffer____last_update
 #: model:ir.model.fields,field_description:ddmrp_exclude_moves_adu_calc.field_stock_location____last_update
 #: model:ir.model.fields,field_description:ddmrp_exclude_moves_adu_calc.field_stock_move____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última Modificación el"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: code:addons/ddmrp_exclude_moves_adu_calc/models/stock_move.py:0
 #, python-format
 msgid "Only buffer maintainers are allowed perform this action."
-msgstr ""
+msgstr "Sólo los mantenedores de búferes pueden realizar esta acción."
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model,name:ddmrp_exclude_moves_adu_calc.model_stock_buffer
 msgid "Stock Buffer"
-msgstr ""
+msgstr "Amortiguador de Inventario"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model,name:ddmrp_exclude_moves_adu_calc.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimiento de Existencias"
