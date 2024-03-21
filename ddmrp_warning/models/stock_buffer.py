@@ -19,6 +19,95 @@ class Buffer(models.Model):
         readonly=True,
     )
 
+    ddmrp_warning_definition_name = fields.Char(
+        compute="_compute_ddmrp_warning_definition_name",
+        search="_search_ddmrp_warning_definition_name",
+    )
+
+    has_high_ddmrp_warnings = fields.Boolean(
+        compute="_compute_has_ddmrp_warnings",
+        search="_search_has_high_ddmrp_warnings",
+    )
+
+    has_medium_ddmrp_warnings = fields.Boolean(
+        compute="_compute_has_ddmrp_warnings",
+        search="_search_has_medium_ddmrp_warnings",
+    )
+
+    has_low_ddmrp_warnings = fields.Boolean(
+        compute="_compute_has_ddmrp_warnings",
+        search="_search_has_low_ddmrp_warnings",
+    )
+
+    @api.depends("ddmrp_warning_item_ids")
+    def _compute_ddmrp_warning_definition_name(self):
+        for rec in self:
+            rec.ddmrp_warning_definition_name = ""
+            for item in rec.ddmrp_warning_item_ids:
+                rec.ddmrp_warning_definition_name += (
+                    item.warning_definition_id.name + ","
+                )
+
+    @api.depends("ddmrp_warning_item_ids")
+    def _compute_has_high_ddmrp_warnings(self):
+        for rec in self:
+            rec.has_high_ddmrp_warnings = False
+            rec.has_medium_ddmrp_warnings = False
+            rec.has_low_ddmrp_warnings = False
+
+            severities = rec.ddmrp_warning_item_ids.mapped("severity")
+            if "3_high" in severities:
+                rec.has_high_ddmrp_warnings = True
+            if "2_mid" in severities:
+                rec.has_medium_ddmrp_warnings = True
+            if "1_low" in severities:
+                rec.has_low_ddmrp_warnings = True
+
+    @api.model
+    def _search_ddmrp_warning_definition_name(self, operator, value):
+        buffers = self.search([("ddmrp_warning_item_ids", "!=", [])])
+        buffers_filtered = buffers.filtered(
+            lambda b: value
+            in " ".join(b.ddmrp_warning_item_ids.warning_definition_id.mapped("name"))
+        )
+        if value:
+            return [("id", "in", buffers_filtered.ids)]
+        else:
+            return [("id", "not in", buffers_filtered.ids)]
+
+    @api.model
+    def _search_has_high_ddmrp_warnings(self, operator, value):
+        buffers = self.search([("ddmrp_warning_item_ids", "!=", [])])
+        buffers_high = buffers.filtered(
+            lambda b: "3_high" in b.ddmrp_warning_item_ids.mapped("severity")
+        )
+        if value:
+            return [("id", "in", buffers_high.ids)]
+        else:
+            return [("id", "not in", buffers_high.ids)]
+
+    @api.model
+    def _search_has_medium_ddmrp_warnings(self, operator, value):
+        buffers = self.search([("ddmrp_warning_item_ids", "!=", [])])
+        buffers_medium = buffers.filtered(
+            lambda b: "2_mid" in b.ddmrp_warning_item_ids.mapped("severity")
+        )
+        if value:
+            return [("id", "in", buffers_medium.ids)]
+        else:
+            return [("id", "not in", buffers_medium.ids)]
+
+    @api.model
+    def _search_has_low_ddmrp_warnings(self, operator, value):
+        buffers = self.search([("ddmrp_warning_item_ids", "!=", [])])
+        buffers_low = buffers.filtered(
+            lambda b: "1_low" in b.ddmrp_warning_item_ids.mapped("severity")
+        )
+        if value:
+            return [("id", "in", buffers_low.ids)]
+        else:
+            return [("id", "not in", buffers_low.ids)]
+
     def _generate_ddmrp_warnings(self):
         definitions = self.env["ddmrp.warning.definition"].search([])
         item_model = self.env["ddmrp.warning.item"]

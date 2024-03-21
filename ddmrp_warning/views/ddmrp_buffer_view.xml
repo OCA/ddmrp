@@ -36,6 +36,12 @@
         <field name="model">stock.buffer</field>
         <field name="inherit_id" ref="ddmrp.stock_buffer_search" />
         <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field
+                    name="ddmrp_warning_definition_name"
+                    string="Warning Definition"
+                />
+            </field>
             <group name="procure_recommendation" position="after">
                 <separator />
                 <group name="warnings">
@@ -43,6 +49,21 @@
                         name="has_ddmrp_warnings"
                         string="With Warnings"
                         domain="[('ddmrp_warning_item_ids', '!=', False)]"
+                    />
+                    <filter
+                        name="has_high_ddmrp_warnings"
+                        string="With High Warnings"
+                        domain="[('has_high_ddmrp_warnings', '=', True)]"
+                    />
+                    <filter
+                        name="has_medium_ddmrp_warnings"
+                        string="With Medium Warnings"
+                        domain="[('has_medium_ddmrp_warnings', '=', True)]"
+                    />
+                    <filter
+                        name="has_low_ddmrp_warnings"
+                        string="With Low Warnings"
+                        domain="[('has_low_ddmrp_warnings', '=', True)]"
                     />
                 </group>
             </group>
