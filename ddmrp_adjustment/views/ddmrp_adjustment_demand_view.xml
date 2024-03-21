@@ -18,4 +18,10 @@
             </tree>
         </field>
     </record>
+    <record id="ddmrp_adjustment_demand_action" model="ir.actions.act_window">
+        <field name="name">Buffer Adjustments Demand</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ddmrp.adjustment.demand</field>
+        <field name="view_mode">tree</field>
+    </record>
 </odoo>

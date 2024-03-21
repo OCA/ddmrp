@@ -49,3 +49,4 @@ class TestAduAdjustment(TestDDMRPAdjustmentCommon):
         # Run actions
         self.assertTrue(self.buffer.action_view_demand_to_components())
         self.assertTrue(self.buffer.action_view_affecting_adu())
+        self.assertTrue(self.buffer.action_view_parent_affecting_adu())

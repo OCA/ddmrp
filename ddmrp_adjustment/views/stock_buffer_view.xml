@@ -17,16 +17,23 @@
                 />
             </xpath>
             <button name="action_view_future_adu_indirect_demand" position="after">
+                <field name="daf_applied" invisible="1" />
+                <field name="parent_daf_applied" invisible="1" />
                 <button
-                    title="View DAF Affecting Actual ADU"
+                    title="View DAFs Affecting Actual ADU"
                     name="action_view_affecting_adu"
                     type="object"
                     attrs="{'invisible': [('daf_applied', '=', -1)]}"
                 >
-                    <div name="daf_applied" class="o_row">
-                        DAF: *
-                        <field name="daf_applied" readonly="1" />
-                    </div>
+                    <field name="daf_text" readonly="1" />
+                </button>
+                <button
+                    title="View Demand from parent DAFs Affecting Actual ADU"
+                    name="action_view_parent_affecting_adu"
+                    type="object"
+                    attrs="{'invisible': [('parent_daf_applied', '=', -1)]}"
+                >
+                    <field name="parent_daf_text" readonly="1" />
                 </button>
             </button>
         </field>
