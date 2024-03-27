@@ -302,52 +302,56 @@
                             </group>
                         </group>
                         <group name="ddmrp_chart" string="Buffer summary">
-
                             <div colspan="2">
                                 <field
                                     name="ddmrp_chart"
-                                    widget="bokeh_chart"
+                                    widget="bokeh_chart_json"
                                     nolabel="1"
                                     attrs="{'invisible': [('show_execution_chart', '=', True)]}"
                                 />
                                 <field
                                     name="ddmrp_chart_execution"
-                                    widget="bokeh_chart"
+                                    widget="bokeh_chart_json"
                                     nolabel="1"
                                     attrs="{'invisible': [('show_execution_chart', '=', False)]}"
                                 />
                             </div>
-                            <div cols="3">
-                                <label
-                                    for="show_execution_chart"
-                                    string="Planning"
-                                    class="text-muted"
-                                    attrs="{'invisible': [('show_execution_chart', '=', False)]}"
-                                />
-                                <label
-                                    for="show_execution_chart"
-                                    string="Planning"
-                                    style="font-weight: bold;"
-                                    attrs="{'invisible': [('show_execution_chart', '=', True)]}"
-                                />
+                            <div class="o_row">
+                                <div style="margin-right: 20px;">
+                                    <label
+                                        for="show_execution_chart"
+                                        string="Planning"
+                                        class="text-muted"
+                                        attrs="{'invisible': [('show_execution_chart', '=', False)]}"
+                                    />
+                                    <label
+                                        for="show_execution_chart"
+                                        string="Planning"
+                                        style="font-weight: bold;"
+                                        attrs="{'invisible': [('show_execution_chart', '=', True)]}"
+                                    />
+                                </div>
                                 <field
                                     name="show_execution_chart"
                                     widget="boolean_toggle"
                                     nolabel="1"
                                     options="{'autosave': False}"
+                                    style="margin-left: 50px; margin-right: 20px;"
                                 />
-                                <label
-                                    for="show_execution_chart"
-                                    string="Execution"
-                                    class="text-muted"
-                                    attrs="{'invisible': [('show_execution_chart', '=', True)]}"
-                                />
-                                <label
-                                    for="show_execution_chart"
-                                    string="Execution"
-                                    style="font-weight: bold;"
-                                    attrs="{'invisible': [('show_execution_chart', '=', False)]}"
-                                />
+                                <div style="margin-left: 20px;">
+                                    <label
+                                        for="show_execution_chart"
+                                        string="Execution"
+                                        class="text-muted"
+                                        attrs="{'invisible': [('show_execution_chart', '=', True)]}"
+                                    />
+                                    <label
+                                        for="show_execution_chart"
+                                        string="Execution"
+                                        style="font-weight: bold;"
+                                        attrs="{'invisible': [('show_execution_chart', '=', False)]}"
+                                    />
+                                </div>
                             </div>
                         </group>
                         <group name="execution_settings">
@@ -486,7 +490,7 @@
                                         <field
                                             name="ddmrp_supply_chart"
                                             style="height:400px"
-                                            widget="bokeh_chart"
+                                            widget="bokeh_chart_json"
                                             nolabel="1"
                                         />
                                     </div>
@@ -496,7 +500,7 @@
                                         <field
                                             name="ddmrp_demand_chart"
                                             style="height:400px"
-                                            widget="bokeh_chart"
+                                            widget="bokeh_chart_json"
                                             nolabel="1"
                                         />
                                     </div>

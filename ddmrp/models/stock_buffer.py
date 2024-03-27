@@ -2,7 +2,6 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 
-import json
 import logging
 import operator as py_operator
 import threading
@@ -607,24 +606,12 @@ class StockBuffer(models.Model):
         """This method use the Bokeh library to create a buffer depiction."""
         for rec in self:
             div, script = rec.get_ddmrp_chart_planning()
-            json_data = json.dumps(
-                {
-                    "div": div,
-                    "script": script,
-                }
-            )
-            rec.ddmrp_chart = json_data
+            rec.ddmrp_chart = {"div": div, "script": script}
 
     def _compute_ddmrp_chart_execution(self):
         for rec in self:
             div, script = rec.get_ddmrp_chart_execution()
-            json_data = json.dumps(
-                {
-                    "div": div,
-                    "script": script,
-                }
-            )
-            rec.ddmrp_chart_execution = json_data
+            rec.ddmrp_chart_execution = {"div": div, "script": script}
 
     def _get_colors_hex_map(self, pallete="planning"):
         return DDMRP_COLOR
@@ -880,20 +867,9 @@ class StockBuffer(models.Model):
                 p.add_tools(hover)
 
                 script, div = components(p, wrap_script=False)
-                json_data = json.dumps(
-                    {
-                        "div": div,
-                        "script": script,
-                    }
-                )
-                rec.ddmrp_demand_chart = json_data
+                rec.ddmrp_demand_chart = {"div": div, "script": script}
             else:
-                rec.ddmrp_demand_chart = json.dumps(
-                    {
-                        "div": _("No demand detected."),
-                        "script": "",
-                    }
-                )
+                rec.ddmrp_demand_chart = {"div": _("No demand detected."), "script": ""}
 
             # Plot supply data:
             if supply_data:
@@ -937,20 +913,9 @@ class StockBuffer(models.Model):
                 p.add_tools(hover)
 
                 script, div = components(p, wrap_script=False)
-                json_data = json.dumps(
-                    {
-                        "div": div,
-                        "script": script,
-                    }
-                )
-                rec.ddmrp_supply_chart = json_data
+                rec.ddmrp_supply_chart = {"div": div, "script": script}
             else:
-                rec.ddmrp_supply_chart = json.dumps(
-                    {
-                        "div": _("No supply detected."),
-                        "script": "",
-                    }
-                )
+                rec.ddmrp_supply_chart = {"div": _("No supply detected."), "script": ""}
 
     @api.depends("red_zone_qty")
     def _compute_order_spike_threshold(self):
@@ -1239,19 +1204,19 @@ class StockBuffer(models.Model):
         comodel_name="mrp.production",
         inverse_name="buffer_id",
     )
-    ddmrp_chart = fields.Text(
+    ddmrp_chart = fields.Json(
         string="DDMRP Chart",
         compute=_compute_ddmrp_chart_planning,
     )
-    ddmrp_chart_execution = fields.Text(
+    ddmrp_chart_execution = fields.Json(
         string="DDMRP Execution Chart", compute=_compute_ddmrp_chart_execution
     )
     show_execution_chart = fields.Boolean()
-    ddmrp_demand_chart = fields.Text(
+    ddmrp_demand_chart = fields.Json(
         string="DDMRP Demand Chart",
         compute="_compute_ddmrp_demand_supply_chart",
     )
-    ddmrp_supply_chart = fields.Text(
+    ddmrp_supply_chart = fields.Json(
         string="DDMRP Supply Chart",
         compute="_compute_ddmrp_demand_supply_chart",
     )
