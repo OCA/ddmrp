@@ -37,7 +37,7 @@ class StockBuffer(models.Model):
         return domain
 
     def _calc_adu(self):
-        """Apply DAFs if existing for the buffer."""
+        # Apply DAFs if existing for the buffer.
         res = super()._calc_adu()
         for rec in self:
             dafs_to_apply = self.env["ddmrp.adjustment"].search(
