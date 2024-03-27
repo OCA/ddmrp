@@ -1666,13 +1666,15 @@ class StockBuffer(models.Model):
                 if (
                     demand_by_days.get(date, 0.0) >= rec.order_spike_threshold
                     or date <= today
+                    and demand_by_days.get(date, 0.0) > 0
                 ):
                     qualified_demand += demand_by_days.get(date, 0.0)
                 else:
-                    moves = moves.filtered(lambda x: x.date != date)
+                    moves = moves.filtered(lambda x: x.date.date() != date)
                 if (
                     mrp_moves_by_days.get(date, 0.0) >= rec.order_spike_threshold
                     or date <= today
+                    and mrp_moves_by_days.get(date, 0.0) > 0
                 ):
                     qualified_demand += mrp_moves_by_days.get(date, 0.0)
                 else:
