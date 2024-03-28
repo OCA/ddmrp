@@ -1522,7 +1522,7 @@ class StockBuffer(models.Model):
                 domain, ["product_id", "product_qty"], ["product_id"]
             ):
                 qty += group["product_qty"]
-        return qty / horizon
+        return qty / (horizon + 1)
 
     def _calc_adu_blended(self):
         self.ensure_one()
