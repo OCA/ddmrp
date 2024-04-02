@@ -4,7 +4,7 @@
 {
     "name": "DDMRP Adjustment",
     "summary": "Allow to apply factor adjustments to buffers.",
-    "version": "16.0.1.4.0",
+    "version": "16.0.1.4.1",
     "development_status": "Beta",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],
