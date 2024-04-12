@@ -1,14 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 ForgeFlow S.L. (https://www.forgeflow.com)
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
 <odoo>
 
     <record id="view_warehouse_orderpoint_form" model="ir.ui.view">
         <field name="name">stock.warehouse.orderpoint.form</field>
         <field name="model">stock.warehouse.orderpoint</field>
-        <field name="inherit_id"
-               ref="ddmrp.view_warehouse_orderpoint_form"/>
+        <field name="inherit_id" ref="ddmrp.view_warehouse_orderpoint_form" />
         <field name="arch" type="xml">
             <field name="qty_multiple" position="after">
-                <field name="flow_index_group_id"/>
+                <field name="flow_index_group_id" />
             </field>
         </field>
     </record>

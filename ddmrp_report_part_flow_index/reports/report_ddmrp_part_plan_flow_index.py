@@ -1,36 +1,31 @@
-# Copyright 2018-19 Eficent Business and IT Consulting Services S.L.
-#   (http://www.eficent.com)
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+# Copyright 2017-24 ForgeFlow S.L. (https://www.forgeflow.com)
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 from odoo import api, fields, models, tools
+
 from odoo.addons import decimal_precision as dp
-UNIT = dp.get_precision('Product Unit of Measure')
+
+UNIT = dp.get_precision("Product Unit of Measure")
 
 
 class ReportDdmrpPartsPlanFlowIndex(models.Model):
-    _name = 'report.ddmrp.part.plan.flow.index'
+    _name = "report.ddmrp.part.plan.flow.index"
     _auto = False
 
-    orderpoint_id = fields.Many2one('stock.warehouse.orderpoint',
-                                    string='Buffer',
-                                    readonly=True)
-    product_id = fields.Many2one('product.product',
-                                 string='Product',
-                                 readonly=True)
-    location_id = fields.Many2one('stock.location',
-                                  string='Location',
-                                  readonly=True)
-    adu = fields.Float(string="Average Daily Usage (ADU)",
-                       default=0.0, digits=UNIT, readonly=True)
-    green_zone_qty = fields.Float(string="Green Zone Qty",
-                                  digits=UNIT, readonly=True)
-    order_frequency = fields.Float(string="Order Frequency",
-                                   digits=UNIT, readonly=True)
-    order_frequency_group = fields.Integer(string="Order Frequency Group",
-                                           readonly=True)
-    order_frequency_group_count = fields.Integer(
-        string="Order Frequency Group Count", readonly=True)
+    orderpoint_id = fields.Many2one(
+        "stock.warehouse.orderpoint", string="Buffer", readonly=True
+    )
+    product_id = fields.Many2one("product.product", string="Product", readonly=True)
+    location_id = fields.Many2one("stock.location", string="Location", readonly=True)
+    adu = fields.Float(
+        string="Average Daily Usage (ADU)", default=0.0, digits=UNIT, readonly=True
+    )
+    green_zone_qty = fields.Float(digits=UNIT, readonly=True)
+    order_frequency = fields.Float(digits=UNIT, readonly=True)
+    order_frequency_group = fields.Integer(readonly=True)
+    order_frequency_group_count = fields.Integer(readonly=True)
     flow_index_group_id = fields.Many2one(
-        'ddmrp.flow.index.group', string="Flow Index Group", readonly=True)
+        "ddmrp.flow.index.group", string="Flow Index Group", readonly=True
+    )
 
     @api.model
     def _sub_select(self):
@@ -73,8 +68,7 @@ class ReportDdmrpPartsPlanFlowIndex(models.Model):
 
     @api.model_cr
     def init(self):
-        tools.drop_view_if_exists(self._cr,
-                                  'report_ddmrp_part_plan_flow_index')
+        tools.drop_view_if_exists(self._cr, "report_ddmrp_part_plan_flow_index")
         self._cr.execute(
             """
             CREATE or REPLACE VIEW %s AS (
@@ -91,6 +85,6 @@ class ReportDdmrpPartsPlanFlowIndex(models.Model):
                       ) AS b
                 ON a.order_frequency_group = b.order_frequency_group
                 )
-            """ % (self._table, self._sub_select(), self._select(),
-                   self._join_select())
+            """
+            % (self._table, self._sub_select(), self._select(), self._join_select())
         )
