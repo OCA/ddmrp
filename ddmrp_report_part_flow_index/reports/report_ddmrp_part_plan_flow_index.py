@@ -1,26 +1,23 @@
 # Copyright 2017-24 ForgeFlow S.L. (https://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-from odoo import api, fields, models, tools
-
-from odoo.addons import decimal_precision as dp
-
-UNIT = dp.get_precision("Product Unit of Measure")
+from odoo import api, fields, models
 
 
 class ReportDdmrpPartsPlanFlowIndex(models.Model):
     _name = "report.ddmrp.part.plan.flow.index"
     _auto = False
 
-    orderpoint_id = fields.Many2one(
-        "stock.warehouse.orderpoint", string="Buffer", readonly=True
-    )
+    buffer_id = fields.Many2one("stock.buffer", string="Buffer", readonly=True)
     product_id = fields.Many2one("product.product", string="Product", readonly=True)
     location_id = fields.Many2one("stock.location", string="Location", readonly=True)
     adu = fields.Float(
-        string="Average Daily Usage (ADU)", default=0.0, digits=UNIT, readonly=True
+        string="Average Daily Usage (ADU)",
+        default=0.0,
+        digits="Average Daily Usage",
+        readonly=True,
     )
-    green_zone_qty = fields.Float(digits=UNIT, readonly=True)
-    order_frequency = fields.Float(digits=UNIT, readonly=True)
+    green_zone_qty = fields.Float(digits="Product Unit of Measure", readonly=True)
+    order_frequency = fields.Float(digits="Product Unit of Measure", readonly=True)
     order_frequency_group = fields.Integer(readonly=True)
     order_frequency_group_count = fields.Integer(readonly=True)
     flow_index_group_id = fields.Many2one(
@@ -46,7 +43,7 @@ class ReportDdmrpPartsPlanFlowIndex(models.Model):
     def _select(self):
         select_str = """
             a.id as id,
-            a.id as orderpoint_id,
+            a.id as buffer_id,
             a.product_id as product_id,
             a.location_id as location_id,
             a.adu as adu,
@@ -66,15 +63,12 @@ class ReportDdmrpPartsPlanFlowIndex(models.Model):
         """
         return select_str
 
-    @api.model_cr
-    def init(self):
-        tools.drop_view_if_exists(self._cr, "report_ddmrp_part_plan_flow_index")
-        self._cr.execute(
-            """
-            CREATE or REPLACE VIEW %s AS (
+    @property
+    def _table_query(self):
+        return """
                 WITH a AS
                     (SELECT %s
-                     FROM stock_warehouse_orderpoint)
+                     FROM stock_buffer)
                 SELECT
                     %s
                 FROM a
@@ -84,7 +78,8 @@ class ReportDdmrpPartsPlanFlowIndex(models.Model):
                        GROUP BY order_frequency_group
                       ) AS b
                 ON a.order_frequency_group = b.order_frequency_group
-                )
-            """
-            % (self._table, self._sub_select(), self._select(), self._join_select())
+            """ % (
+            self._sub_select(),
+            self._select(),
+            self._join_select(),
         )
