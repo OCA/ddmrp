@@ -3,12 +3,12 @@
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
 <odoo>
 
-    <record id="view_warehouse_orderpoint_form" model="ir.ui.view">
-        <field name="name">stock.warehouse.orderpoint.form</field>
-        <field name="model">stock.warehouse.orderpoint</field>
-        <field name="inherit_id" ref="ddmrp.view_warehouse_orderpoint_form" />
+    <record id="stock_buffer_view_form_inherited" model="ir.ui.view">
+        <field name="name">stock.buffer.form - Part Flow Index</field>
+        <field name="model">stock.buffer</field>
+        <field name="inherit_id" ref="ddmrp.stock_buffer_view_form" />
         <field name="arch" type="xml">
-            <field name="qty_multiple" position="after">
+            <field name="product_type" position="after">
                 <field name="flow_index_group_id" />
             </field>
         </field>

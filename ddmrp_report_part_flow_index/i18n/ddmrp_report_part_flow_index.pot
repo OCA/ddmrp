@@ -1,12 +1,12 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* ddmrp_report_part_flow_index
+# 	* ddmrp_report_part_flow_index
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,27 +14,33 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group_active
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__active
 msgid "Active"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index_adu
+#: model_terms:ir.ui.view,arch_db:ddmrp_report_part_flow_index.view_ddmrp_flow_index_group_form
+#: model_terms:ir.ui.view,arch_db:ddmrp_report_part_flow_index.view_ddmrp_flow_index_group_search
+msgid "Archived"
+msgstr ""
+
+#. module: ddmrp_report_part_flow_index
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index__adu
 msgid "Average Daily Usage (ADU)"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index_orderpoint_id
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index__buffer_id
 msgid "Buffer"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group_create_uid
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group_create_date
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__create_date
 msgid "Created on"
 msgstr ""
 
@@ -44,97 +50,96 @@ msgid "DDMRP Flow Index Group"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group_display_name
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index_display_name
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__display_name
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index_flow_index_group_id
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_stock_warehouse_orderpoint_flow_index_group_id
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index__flow_index_group_id
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_stock_buffer__flow_index_group_id
 #: model:ir.ui.menu,name:ddmrp_report_part_flow_index.menu_ddmrp_flow_index_group
 msgid "Flow Index Group"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index_green_zone_qty
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index__green_zone_qty
 msgid "Green Zone Qty"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group_id
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index_id
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__id
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index__id
 msgid "ID"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group___last_update
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index___last_update
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group____last_update
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group_write_uid
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group_write_date
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__write_date
 msgid "Last Updated on"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index_location_id
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index__location_id
 msgid "Location"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.ui.view,arch_db:ddmrp_report_part_flow_index.view_ddmrp_flow_index_group_form
+#: model_terms:ir.ui.view,arch_db:ddmrp_report_part_flow_index.view_ddmrp_flow_index_group_form
 msgid "Log a description..."
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group_name
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__name
 msgid "Name"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index_order_frequency
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index__order_frequency
 msgid "Order Frequency"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index_order_frequency_group
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index__order_frequency_group
 msgid "Order Frequency Group"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index_order_frequency_group_count
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index__order_frequency_group_count
 msgid "Order Frequency Group Count"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
 #: model:ir.actions.act_window,name:ddmrp_report_part_flow_index.action_report_part_plan_flow_index_template
 #: model:ir.ui.menu,name:ddmrp_report_part_flow_index.menu_report_part_plan_flow_index
-#: model:ir.ui.view,arch_db:ddmrp_report_part_flow_index.view_part_plan_flow_index_filter
-#: model:ir.ui.view,arch_db:ddmrp_report_part_flow_index.view_part_plan_flow_index_graph
-#: model:ir.ui.view,arch_db:ddmrp_report_part_flow_index.view_part_plan_flow_index_pivot
-#: model:ir.ui.view,arch_db:ddmrp_report_part_flow_index.view_part_plan_flow_index_tree
+#: model_terms:ir.ui.view,arch_db:ddmrp_report_part_flow_index.view_part_plan_flow_index_filter
+#: model_terms:ir.ui.view,arch_db:ddmrp_report_part_flow_index.view_part_plan_flow_index_graph
+#: model_terms:ir.ui.view,arch_db:ddmrp_report_part_flow_index.view_part_plan_flow_index_pivot
 msgid "Parts Plan Flow Index"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index_product_id
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_report_ddmrp_part_plan_flow_index__product_id
 msgid "Product"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model,name:ddmrp_report_part_flow_index.model_stock_warehouse_orderpoint
+#: model:ir.model,name:ddmrp_report_part_flow_index.model_stock_buffer
 msgid "Stock Buffer"
 msgstr ""
 
 #. module: ddmrp_report_part_flow_index
-#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group_summary
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__summary
 msgid "Summary"
 msgstr ""
 
@@ -147,4 +152,3 @@ msgstr ""
 #: model:ir.model,name:ddmrp_report_part_flow_index.model_report_ddmrp_part_plan_flow_index
 msgid "report.ddmrp.part.plan.flow.index"
 msgstr ""
-

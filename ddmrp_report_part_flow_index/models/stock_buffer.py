@@ -4,8 +4,8 @@
 from odoo import fields, models
 
 
-class StockWarehouseOrderpoint(models.Model):
-    _inherit = "stock.warehouse.orderpoint"
+class StockBuffer(models.Model):
+    _inherit = "stock.buffer"
 
     flow_index_group_id = fields.Many2one(
         "ddmrp.flow.index.group", string="Flow Index Group"
