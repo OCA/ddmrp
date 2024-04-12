@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2018 Eficent Business and IT Consulting Services S.L.
-     License AGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 ForgeFlow S.L. (https://www.forgeflow.com)
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
 <odoo>
 
     <record id="view_ddmrp_flow_index_group_tree" model="ir.ui.view">
@@ -8,7 +8,7 @@
         <field name="model">ddmrp.flow.index.group</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="name"/>
+                <field name="name" />
             </tree>
         </field>
     </record>
@@ -20,16 +20,25 @@
             <form>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-check">
-                            <field name="active" widget="boolean_button" options='{"terminology": "active"}'/>
+                        <button
+                            name="toggle_active"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-check"
+                        >
+                            <field
+                                name="active"
+                                widget="boolean_button"
+                                options='{"terminology": "active"}'
+                            />
                         </button>
                     </div>
                     <group>
                         <group>
-                            <field name="name"/>
+                            <field name="name" />
                         </group>
                     </group>
-                    <field name="summary" placeholder="Log a description..."/>
+                    <field name="summary" placeholder="Log a description..." />
                 </sheet>
             </form>
         </field>
@@ -40,7 +49,7 @@
         <field name="model">ddmrp.flow.index.group</field>
         <field name="arch" type="xml">
             <search>
-                <field name="name"/>
+                <field name="name" />
             </search>
         </field>
     </record>
@@ -52,9 +61,11 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem name="Flow Index Group"
-          parent="ddmrp.menu_ddmrp_config"
-          action="action_ddmrp_flow_index_group"
-          id="menu_ddmrp_flow_index_group"/>
+    <menuitem
+        name="Flow Index Group"
+        parent="ddmrp.menu_ddmrp_config"
+        action="action_ddmrp_flow_index_group"
+        id="menu_ddmrp_flow_index_group"
+    />
 
 </odoo>

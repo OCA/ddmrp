@@ -1,14 +1,14 @@
-# Copyright 2018 Eficent Business and IT Consulting Services S.L.
-#   (http://www.eficent.com)
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+# Copyright 2017-24 ForgeFlow S.L. (https://www.forgeflow.com)
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
+
 from odoo import api, fields, models
 
 
 class DdmrpFlowIndexGroup(models.Model):
-    _name = 'ddmrp.flow.index.group'
+    _name = "ddmrp.flow.index.group"
 
-    name = fields.Char('Name', required=True)
-    summary = fields.Text('Summary')
+    name = fields.Char(required=True)
+    summary = fields.Text()
     active = fields.Boolean(default=True)
 
     @api.multi

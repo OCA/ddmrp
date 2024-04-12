@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 ForgeFlow S.L. (https://www.forgeflow.com)
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
 <odoo>
 
     <record id="view_part_plan_flow_index_pivot" model="ir.ui.view">
@@ -6,8 +8,8 @@
         <field name="model">report.ddmrp.part.plan.flow.index</field>
         <field name="arch" type="xml">
             <pivot string="Parts Plan Flow Index">
-                <field name="product_id" type="row"/>
-                <field name="order_frequency_group" type="measure"/>
+                <field name="product_id" type="row" />
+                <field name="order_frequency_group" type="measure" />
             </pivot>
         </field>
     </record>
@@ -17,7 +19,7 @@
         <field name="model">report.ddmrp.part.plan.flow.index</field>
         <field name="arch" type="xml">
             <graph string="Parts Plan Flow Index" type="bar">
-                <field name="order_frequency_group" type="row"/>
+                <field name="order_frequency_group" type="row" />
             </graph>
         </field>
     </record>
@@ -26,16 +28,16 @@
         <field name="name">view.ddmrp.part.plan.flow.index.pivot.tree</field>
         <field name="model">report.ddmrp.part.plan.flow.index</field>
         <field name="arch" type="xml">
-            <tree string="Parts Plan Flow Index">
-                <field name="orderpoint_id"/>
-                <field name="product_id"/>
-                <field name="location_id"/>
-                <field name="green_zone_qty"/>
-                <field name="adu"/>
-                <field name="flow_index_group_id"/>
-                <field name="order_frequency"/>
-                <field name="order_frequency_group"/>
-                <field name="order_frequency_group_count"/>
+            <tree name="Parts Plan Flow Index">
+                <field name="orderpoint_id" />
+                <field name="product_id" />
+                <field name="location_id" />
+                <field name="green_zone_qty" />
+                <field name="adu" />
+                <field name="flow_index_group_id" />
+                <field name="order_frequency" />
+                <field name="order_frequency_group" />
+                <field name="order_frequency_group_count" />
             </tree>
         </field>
     </record>
@@ -45,28 +47,33 @@
         <field name="model">report.ddmrp.part.plan.flow.index</field>
         <field name="arch" type="xml">
             <search string="Parts Plan Flow Index">
-                <field name="product_id"/>
-                <field name="orderpoint_id"/>
-                <field name="location_id"/>
-                <field name="order_frequency_group"/>
-                <field name="flow_index_group_id"/>
+                <field name="product_id" />
+                <field name="orderpoint_id" />
+                <field name="location_id" />
+                <field name="order_frequency_group" />
+                <field name="flow_index_group_id" />
             </search>
         </field>
     </record>
 
-    <record id="action_report_part_plan_flow_index_template" model="ir.actions.act_window">
+    <record
+        id="action_report_part_plan_flow_index_template"
+        model="ir.actions.act_window"
+    >
         <field name="name">Parts Plan Flow Index</field>
         <field name="res_model">report.ddmrp.part.plan.flow.index</field>
         <field name="view_type">form</field>
         <field name="view_mode">graph,tree,pivot</field>
-        <field name="search_view_id" ref="view_part_plan_flow_index_filter"/>
-        <field name="view_id" ref="view_part_plan_flow_index_graph"/>
+        <field name="search_view_id" ref="view_part_plan_flow_index_filter" />
+        <field name="view_id" ref="view_part_plan_flow_index_graph" />
     </record>
 
-    <menuitem id="menu_report_part_plan_flow_index"
-              action="action_report_part_plan_flow_index_template"
-              name="Parts Plan Flow Index"
-              parent="stock.menu_warehouse_report"
-              groups="stock.group_stock_manager"/>
+    <menuitem
+        id="menu_report_part_plan_flow_index"
+        action="action_report_part_plan_flow_index_template"
+        name="Parts Plan Flow Index"
+        parent="stock.menu_warehouse_report"
+        groups="stock.group_stock_manager"
+    />
 
 </odoo>
