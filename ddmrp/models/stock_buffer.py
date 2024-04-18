@@ -960,6 +960,7 @@ class StockBuffer(models.Model):
     def _get_manufactured_bom(self, limit=1):
         return self.env["mrp.bom"].search(
             [
+                ("type", "=", "normal"),
                 "|",
                 ("product_id", "=", self.product_id.id),
                 ("product_tmpl_id", "=", self.product_id.product_tmpl_id.id),
