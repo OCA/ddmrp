@@ -8,7 +8,10 @@
         <field name="model">ddmrp.flow.index.group</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="sequence" widget="handle" />
                 <field name="name" />
+                <field name="lower_range" />
+                <field name="upper_range" />
             </tree>
         </field>
     </record>
@@ -29,6 +32,9 @@
                         <group>
                             <field name="active" invisible="1" />
                             <field name="name" />
+                            <field name="sequence" />
+                            <field name="lower_range" />
+                            <field name="upper_range" />
                         </group>
                     </group>
                     <field name="summary" placeholder="Log a description..." />
