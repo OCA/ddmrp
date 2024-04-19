@@ -103,6 +103,16 @@ msgid "Log a description..."
 msgstr "Registra una descrizione..."
 
 #. module: ddmrp_report_part_flow_index
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__lower_range
+msgid "Lower Range"
+msgstr ""
+
+#. module: ddmrp_report_part_flow_index
+#: model:ir.model.fields,help:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__lower_range
+msgid "Lower range used to assign in stock buffer"
+msgstr ""
+
+#. module: ddmrp_report_part_flow_index
 #: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__name
 msgid "Name"
 msgstr "Nome"
@@ -137,6 +147,11 @@ msgid "Product"
 msgstr "Prodotto"
 
 #. module: ddmrp_report_part_flow_index
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: ddmrp_report_part_flow_index
 #: model:ir.model,name:ddmrp_report_part_flow_index.model_stock_buffer
 msgid "Stock Buffer"
 msgstr "Buffer di materiale"
@@ -145,6 +160,16 @@ msgstr "Buffer di materiale"
 #: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__summary
 msgid "Summary"
 msgstr "Riepilogo"
+
+#. module: ddmrp_report_part_flow_index
+#: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__upper_range
+msgid "Upper Range"
+msgstr ""
+
+#. module: ddmrp_report_part_flow_index
+#: model:ir.model.fields,help:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__upper_range
+msgid "Upper range used to assign in stock buffer"
+msgstr ""
 
 #. module: ddmrp_report_part_flow_index
 #: model:ir.model,name:ddmrp_report_part_flow_index.model_ddmrp_flow_index_group

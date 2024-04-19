@@ -4,7 +4,7 @@
 {
     "name": "DDMRP Report Part Flow Index",
     "summary": "Provides the DDMRP Parts Flow Index Report",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.1.0",
     "development_status": "Beta",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],
