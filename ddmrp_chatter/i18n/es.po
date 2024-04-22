@@ -27,6 +27,11 @@ msgid "Action Needed"
 msgstr "Necesita Acción"
 
 #. module: ddmrp_chatter
+#: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__active
+msgid "Active"
+msgstr ""
+
+#. module: ddmrp_chatter
 #: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__activity_ids
 msgid "Activities"
 msgstr "Actividades"
