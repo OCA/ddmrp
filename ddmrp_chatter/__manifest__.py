@@ -3,7 +3,7 @@
 
 {
     "name": "DDMRP Chatter",
-    "version": "16.0.1.1.0",
+    "version": "16.0.1.1.1",
     "summary": "Adds chatter and activities to stock buffers.",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/ddmrp",
