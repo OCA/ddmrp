@@ -8,6 +8,7 @@ class Buffer(models.Model):
     _name = "stock.buffer"
     _inherit = ["stock.buffer", "mail.thread", "mail.activity.mixin"]
 
+    active = fields.Boolean(tracking=True)
     buffer_profile_id = fields.Many2one(tracking=True)
     adu_calculation_method = fields.Many2one(tracking=True)
     product_id = fields.Many2one(tracking=True)
