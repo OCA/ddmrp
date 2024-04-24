@@ -1781,6 +1781,7 @@ class StockBuffer(models.Model):
     def _procure_qty_to_order(self):
         qty_to_order = self.procure_recommended_qty
         rounding = self.procure_uom_id.rounding or self.product_uom.rounding
+        qty_in_progress = self._quantity_in_progress()[self._origin.id]
         if (
             self.item_type == "distributed"
             and self.buffer_profile_id.replenish_distributed_limit_to_free_qty
@@ -1801,6 +1802,16 @@ class StockBuffer(models.Model):
             else:
                 # move only what we have in stock
                 return min(qty_to_order, self.distributed_source_location_qty)
+        elif (
+            float_compare(qty_in_progress, 0, precision_rounding=rounding) > 0
+            and float_compare(
+                qty_to_order, self.green_zone_qty, precision_rounding=rounding
+            )
+            < 0
+        ):
+            # When there is qty in progress (e.g. RfQ sent), do not keep
+            # auto-procuring small quantities, wait for the qty to be at least GZ.
+            return 0
         return qty_to_order
 
     def do_auto_procure(self):
