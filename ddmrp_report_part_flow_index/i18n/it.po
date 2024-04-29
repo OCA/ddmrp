@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-04-23 14:34+0000\n"
+"PO-Revision-Date: 2024-04-29 07:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -105,12 +105,12 @@ msgstr "Registra una descrizione..."
 #. module: ddmrp_report_part_flow_index
 #: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__lower_range
 msgid "Lower Range"
-msgstr ""
+msgstr "Intervallo inferiore"
 
 #. module: ddmrp_report_part_flow_index
 #: model:ir.model.fields,help:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__lower_range
 msgid "Lower range used to assign in stock buffer"
-msgstr ""
+msgstr "Intervallo inferiore utilizzato per assegnare buffer di magazzino"
 
 #. module: ddmrp_report_part_flow_index
 #: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__name
@@ -149,7 +149,7 @@ msgstr "Prodotto"
 #. module: ddmrp_report_part_flow_index
 #: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Sequenza"
 
 #. module: ddmrp_report_part_flow_index
 #: model:ir.model,name:ddmrp_report_part_flow_index.model_stock_buffer
@@ -164,12 +164,12 @@ msgstr "Riepilogo"
 #. module: ddmrp_report_part_flow_index
 #: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__upper_range
 msgid "Upper Range"
-msgstr ""
+msgstr "Intervallo superiore"
 
 #. module: ddmrp_report_part_flow_index
 #: model:ir.model.fields,help:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__upper_range
 msgid "Upper range used to assign in stock buffer"
-msgstr ""
+msgstr "Intervallo superiore utilizzato per assegnare buffer di magazzino"
 
 #. module: ddmrp_report_part_flow_index
 #: model:ir.model,name:ddmrp_report_part_flow_index.model_ddmrp_flow_index_group
