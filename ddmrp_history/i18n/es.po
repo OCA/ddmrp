@@ -7,30 +7,30 @@ msgstr ""
 "Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-06 11:48+0000\n"
-"PO-Revision-Date: 2020-03-06 12:52+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2024-04-29 11:36+0000\n"
+"Last-Translator: Lois Rilo <lois.rilo@forgeflow.com>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 2.3\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__adu
 msgid "ADU"
-msgstr "CMD"
+msgstr "CPD"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__adu
 msgid "Average Daily Usage"
-msgstr "Consumo Medio Diario"
+msgstr "Consumo Promedio Diario"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__buffer_id
 msgid "Buffer"
-msgstr "Amortiguador"
+msgstr "Búfer"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__create_uid
