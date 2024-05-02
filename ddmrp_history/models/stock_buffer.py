@@ -186,7 +186,9 @@ class StockBuffer(models.Model):
                 domain, order="on_hand_position desc", limit=1
             )
             history_tog = history_model.search(
-                domain, order="top_of_green desc", limit=1
+                domain + [("top_of_green", "!=", False)],
+                order="top_of_green desc",
+                limit=1,
             )
             finish_stack = max(history_oh.on_hand_position, history_tog.top_of_green)
 
