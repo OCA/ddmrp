@@ -5,7 +5,6 @@
         t-name="ddmrp.BomOverviewTable"
         t-inherit="mrp.BomOverviewTable"
         t-inherit-mode="extension"
-        owl="1"
     >
         <xpath expr="//th[@name='th_mrp_bom_h']" position="before">
             <th t-if="showBuffered" class="text-center">Buffered</th>

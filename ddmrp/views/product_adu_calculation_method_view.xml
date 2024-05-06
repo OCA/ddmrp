@@ -35,7 +35,7 @@
                         </div>
                         <field
                                 name="factor_past"
-                                attrs="{'invisible': [('method', '!=', 'blended')]}"
+                                invisible="method == 'blended'"
                             />
                     </group>
                     <group name="future">
@@ -46,7 +46,7 @@
                         </div>
                         <field
                                 name="factor_future"
-                                attrs="{'invisible': [('method', '!=', 'blended')]}"
+                                invisible="method == 'blended'"
                             />
                     </group>
                 </group>

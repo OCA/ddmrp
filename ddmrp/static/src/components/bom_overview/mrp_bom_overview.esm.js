@@ -3,15 +3,15 @@
 import {BomOverviewComponent} from "@mrp/components/bom_overview/mrp_bom_overview";
 import {patch} from "@web/core/utils/patch";
 
-patch(BomOverviewComponent.prototype, "ddmrp", {
+patch(BomOverviewComponent.prototype, {
     setup() {
-        this._super.apply();
+        super.setup();
         this.state.showOptions.is_buffered = true;
         this.state.showOptions.dlt = true;
     },
 
     async getWarehouses() {
-        await this._super.apply();
+        await super.getWarehouses();
         if (this.props.action.context.warehouse_id) {
             this.state.currentWarehouse = this.warehouses.filter(
                 (warehouse) => warehouse.id === this.props.action.context.warehouse_id
@@ -19,11 +19,8 @@ patch(BomOverviewComponent.prototype, "ddmrp", {
         }
     },
 
-    getReportName() {
-        return (
-            this._super.apply(this, arguments) +
-            "&show_buffered=" +
-            this.state.showOptions.is_buffered
-        );
-    },
+
+    getReportName(printAll) {
+        return super.getReportName(...arguments) + "&show_buffered=" + this.state.showOptions.is_buffered;
+    }
 });

@@ -18,6 +18,10 @@
                     options='{"buffer_id": "buffer_ids", "color_from": "execution_priority_level", "field": "ddmrp_chart_execution"}'
                     widget="stock_buffer_info"
                 />
+                <field
+                    name="on_hand_percent"
+                    options='{"buffer_id": "buffer_ids", "color_from": "execution_priority_level", "field": "ddmrp_chart_execution"}'
+                />
             </xpath>
             <xpath
                 expr="//page[@name='purchase_delivery_invoice']/group/group"

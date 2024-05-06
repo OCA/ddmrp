@@ -75,7 +75,7 @@ class StockBuffer(models.Model):
     name = fields.Char(
         copy=False,
         required=True,
-        default=lambda self: self.env["ir.sequence"].next_by_code("stock.buffer"),
+        # default=lambda self: self.env["ir.sequence"].next_by_code("stock.buffer"),
     )
     active = fields.Boolean(default=True)
     warehouse_id = fields.Many2one(
@@ -149,8 +149,7 @@ class StockBuffer(models.Model):
         (
             "stock_buffer_uniq",
             "unique(product_id, location_id)",
-            "The product/location combination must be unique."
-            "Remember that the buffer could be archived.",
+            "The product/location combination must be unique. Remember that the buffer could be archived.",
         ),
     ]
 
@@ -371,7 +370,7 @@ class StockBuffer(models.Model):
             lambda line: line.location_id.is_sublocation_of(self.location_id)
             and not line.location_dest_id.is_sublocation_of(self.location_id)
         )
-        return sum(lines.mapped("reserved_qty"))
+        return sum(lines.mapped("quantity"))
 
     def _update_quantities_dict(self, product):
         self.ensure_one()
@@ -960,7 +959,6 @@ class StockBuffer(models.Model):
     def _get_manufactured_bom(self, limit=1):
         return self.env["mrp.bom"].search(
             [
-                ("type", "=", "normal"),
                 "|",
                 ("product_id", "=", self.product_id.id),
                 ("product_tmpl_id", "=", self.product_id.product_tmpl_id.id),
@@ -1242,10 +1240,10 @@ class StockBuffer(models.Model):
     )
     ddmrp_chart = fields.Text(
         string="DDMRP Chart",
-        compute=_compute_ddmrp_chart_planning,
+        compute="_compute_ddmrp_chart_planning",
     )
     ddmrp_chart_execution = fields.Text(
-        string="DDMRP Execution Chart", compute=_compute_ddmrp_chart_execution
+        string="DDMRP Execution Chart", compute="_compute_ddmrp_chart_execution"
     )
     show_execution_chart = fields.Boolean()
     ddmrp_demand_chart = fields.Text(
@@ -1619,7 +1617,7 @@ class StockBuffer(models.Model):
             demand_by_days[
                 date
             ] += move.product_qty - move.product_uom._compute_quantity(
-                move.reserved_availability, move.product_id.uom_id
+                move.product_uom_qty, move.product_id.uom_id
             )
         return demand_by_days
 
@@ -1781,7 +1779,6 @@ class StockBuffer(models.Model):
     def _procure_qty_to_order(self):
         qty_to_order = self.procure_recommended_qty
         rounding = self.procure_uom_id.rounding or self.product_uom.rounding
-        qty_in_progress = self._quantity_in_progress()[self._origin.id]
         if (
             self.item_type == "distributed"
             and self.buffer_profile_id.replenish_distributed_limit_to_free_qty
@@ -1802,16 +1799,6 @@ class StockBuffer(models.Model):
             else:
                 # move only what we have in stock
                 return min(qty_to_order, self.distributed_source_location_qty)
-        elif (
-            float_compare(qty_in_progress, 0, precision_rounding=rounding) > 0
-            and float_compare(
-                qty_to_order, self.green_zone_qty, precision_rounding=rounding
-            )
-            < 0
-        ):
-            # When there is qty in progress (e.g. RfQ sent), do not keep
-            # auto-procuring small quantities, wait for the qty to be at least GZ.
-            return 0
         return qty_to_order
 
     def do_auto_procure(self):

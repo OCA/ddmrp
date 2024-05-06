@@ -15,7 +15,7 @@
                     name="action_view_stock_buffers"
                     class="oe_stat_button"
                     icon="fa-flask"
-                    attrs="{'invisible': [('buffer_count', '=', 0)]}"
+                    invisible="buffer_count == 0"
                 >
                     <field
                         name="buffer_count"

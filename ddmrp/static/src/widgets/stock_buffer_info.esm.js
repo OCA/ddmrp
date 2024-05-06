@@ -1,12 +1,11 @@
 /** @odoo-module **/
 
-import {FloatField} from "@web/views/fields/float/float_field";
+import {FloatField , floatField} from "@web/views/fields/float/float_field";
 import {loadBundle} from "@web/core/assets";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
-import {useUniquePopover} from "@web/core/model_field_selector/unique_popover_hook";
-
-const {Component, markup, onWillStart} = owl;
+import { usePopover } from "@web/core/popover/popover_hook";
+import { Component, markup, onWillStart }  from "@odoo/owl";
 
 export class StockBufferPopover extends Component {
     setup() {
@@ -69,7 +68,7 @@ StockBufferPopover.template = "ddmrp.StockBufferPopover";
 export class StockBufferInfoWidget extends FloatField {
     setup() {
         super.setup();
-        this.popover = useUniquePopover();
+        this.popover = usePopover(StockBufferPopover);
     }
 
     get classFromDecoration() {
@@ -84,43 +83,47 @@ export class StockBufferInfoWidget extends FloatField {
     showPopup(ev) {
         ev.stopPropagation();
         ev.preventDefault();
-        this.popover.add(
-            ev.currentTarget,
-            this.constructor.components.Popover,
-            {
-                bus: this.bus,
-                record: this.props.record,
-                field: this.props.field,
-                color_from: this.props.color_from,
-                buffer_id: this.props.buffer_id,
-            },
-            {
-                position: "right",
-            }
-        );
+        this.popover.open(ev.currentTarget, {
+            bus: this.bus,
+            record: this.props.record,
+            field: this.props.field,
+            color_from: this.props.color_from,
+            buffer_id: this.props.buffer_id,
+        },
+        {
+            position: "right",
+        });
     }
 }
 
-StockBufferInfoWidget.components = {
-    ...StockBufferInfoWidget.components,
+StockBufferInfoWidget.template = "ddmrp.StockBufferInfoWidget";
+export const stockBufferInfoWidget = {
+    ...floatField,
+    component: StockBufferInfoWidget,
+};
+
+stockBufferInfoWidget.components = {
+    ...stockBufferInfoWidget.components,
     Popover: StockBufferPopover,
 };
-StockBufferInfoWidget.template = "ddmrp.StockBufferInfoWidget";
 
-StockBufferInfoWidget.props = {
-    ...StockBufferInfoWidget.props,
+
+
+stockBufferInfoWidget.props = {
+    ...stockBufferInfoWidget.props,
     color_from: {type: String, optional: true},
     field: {type: String, optional: true},
     buffer_id: {type: String, optional: true},
 };
 
-const StockBufferInfoWidgetExtractProps = StockBufferInfoWidget.extractProps;
-StockBufferInfoWidget.extractProps = ({attrs, field}) => {
-    return Object.assign(StockBufferInfoWidgetExtractProps({attrs, field}), {
-        color_from: attrs.options.color_from,
-        field: attrs.options.field,
-        buffer_id: attrs.options.buffer_id,
+const StockBufferInfoWidgetExtractProps = stockBufferInfoWidget.extractProps;
+
+stockBufferInfoWidget.extractProps = ({attrs, options}) => {
+    return Object.assign(StockBufferInfoWidgetExtractProps({attrs, options}), {
+        color_from: options.color_from,
+        field: options.field,
+        buffer_id: options.buffer_id,
     });
 };
 
-registry.category("fields").add("stock_buffer_info", StockBufferInfoWidget);
+registry.category("fields").add("stock_buffer_info", stockBufferInfoWidget);

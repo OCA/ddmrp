@@ -11,11 +11,11 @@
                         <field name="type" />
                         <field
                             name="product_id"
-                            attrs="{'invisible':[('type','=', 'location')]}"
+                            invisible="type == 'location'"
                         />
                         <field
                             name="location_id"
-                            attrs="{'invisible':[('type','=', 'product')]}"
+                            invisible="type == 'product'"
                         />
                     </group>
                 </group>

@@ -48,6 +48,7 @@ class BomStructureReport(models.AbstractModel):
     def _get_component_data(
         self,
         parent_bom,
+        parent_product,
         warehouse,
         bom_line,
         line_quantity,
@@ -58,6 +59,7 @@ class BomStructureReport(models.AbstractModel):
     ):
         res = super(BomStructureReport, self)._get_component_data(
             parent_bom,
+            parent_product,
             warehouse,
             bom_line,
             line_quantity,
@@ -67,7 +69,8 @@ class BomStructureReport(models.AbstractModel):
             ignore_stock=ignore_stock,
         )
         if bom_line.product_id.bom_ids:
-            lead_time = bom_line.product_id.produce_delay
+            # lead_time = bom_line.product_id.produce_delay
+            lead_time = bom_line.bom_id.produce_delay
         else:
             lead_time = (
                 bom_line.product_id.seller_ids

@@ -30,8 +30,6 @@ class MrpBom(models.Model):
         string="Stock Location",
         compute="_compute_context_location",
     )
-    # This is a legacy field that can be removed in v17
-    location_id = fields.Many2one(related="context_location_id")
 
     def _get_search_buffer_domain(self):
         product = self.product_id
@@ -61,12 +59,12 @@ class MrpBom(models.Model):
         for bom in self:
             bom.is_buffered = True if bom.buffer_id else False
 
-    @api.depends_context("location_id")
+    @api.depends_context("context_location_id")
     def _compute_context_location(self):
         warehouse_model = self.env["stock.warehouse"]
         for rec in self:
-            if self.env.context.get("location_id", None):
-                rec.context_location_id = self.env.context.get("location_id")
+            if self.env.context.get("context_location_id", None):
+                rec.context_location_id = self.env.context.get("context_location_id")
             elif self.env.context.get("warehouse", None):
                 warehouse_id = self.env.context.get("warehouse")
                 rec.context_location_id = warehouse_model.browse(
@@ -81,7 +79,8 @@ class MrpBom(models.Model):
 
     def _get_produce_delay(self):
         self.ensure_one()
-        return self.product_id.produce_delay or self.product_tmpl_id.produce_delay
+        # return self.product_id.produce_delay or self.product_tmpl_id.produce_delay
+        return self.produce_delay
 
     def _get_longest_path(self):
         if not self.bom_line_ids:
@@ -128,7 +127,7 @@ class MrpBom(models.Model):
         return dlt
 
     @api.depends("context_location_id")
-    @api.depends_context("location_id")
+    @api.depends_context("context_location_id")
     def _compute_dlt(self):
         for rec in self:
             rec.dlt = rec._get_manufactured_dlt()
@@ -161,8 +160,6 @@ class MrpBomLine(models.Model):
         compute="_compute_dlt",
     )
     context_location_id = fields.Many2one(related="bom_id.context_location_id")
-    # This is a legacy field that can be removed in v17
-    location_id = fields.Many2one(related="context_location_id")
 
     def _get_search_buffer_domain(self):
         product = self.product_id
@@ -177,7 +174,7 @@ class MrpBomLine(models.Model):
         return domain
 
     @api.depends("context_location_id")
-    @api.depends_context("location_id")
+    @api.depends_context("context_location_id")
     def _compute_is_buffered(self):
         for line in self:
             domain = line._get_search_buffer_domain()

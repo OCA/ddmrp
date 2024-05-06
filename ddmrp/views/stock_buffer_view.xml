@@ -23,22 +23,30 @@
                     groups="uom.group_uom"
                     optional="hide"
                 />
-                <field name="planning_priority_level" invisible="1" />
+                <field name="planning_priority_level" column_invisible="1" />
                 <field
                     name="net_flow_position_percent"
                     options='{"color_from": "planning_priority_level", "field": "ddmrp_chart"}'
                     widget="stock_buffer_info"
                 />
                 <field
+                    name="net_flow_position_percent"
+                    options='{"color_from": "planning_priority_level", "field": "ddmrp_chart"}'
+                />
+                <field
                     name="product_location_qty_available_not_res"
                     string="On-Hand"
                     optional="show"
                 />
-                <field name="execution_priority_level" invisible="1" />
+                <field name="execution_priority_level" column_invisible="1" />
                 <field
                     name="on_hand_percent"
                     options='{"color_from": "execution_priority_level", "field": "ddmrp_chart_execution"}'
                     widget="stock_buffer_info"
+                />
+                <field
+                    name="on_hand_percent"
+                    options='{"color_from": "execution_priority_level", "field": "ddmrp_chart_execution"}'
                 />
                 <button
                     title="Refresh Buffer"
@@ -83,14 +91,14 @@
                     name="action_view_supply_outside_dlt_window"
                     icon="fa-warning"
                     type="object"
-                    attrs="{'invisible':[('incoming_outside_dlt_qty', '=', 0), ('rfq_outside_dlt_qty', '=', 0)]}"
+                    invisible="incoming_outside_dlt_qty == 0 and rfq_outside_dlt_qty == 0"
                 />
                 <button
                     title="No stock available on source location for distributed buffer"
                     name="action_dummy"
                     icon="fa-warning"
                     type="object"
-                    attrs="{'invisible':['|', ('distributed_source_location_id', '=', False), ('distributed_source_location_qty', '>', 0)]}"
+                    invisible="not distributed_source_location_id or distributed_source_location_qty > 0"
                 />
                 <field name="distributed_source_location_id" optional="hide" />
                 <field name="distributed_source_location_qty" optional="hide" />
@@ -132,7 +140,7 @@
                             class="oe_stat_button"
                             string="Estimates"
                             icon="fa-signal"
-                            attrs="{'invisible': [('adu_calculation_method_type', '!=', 'future')]}"
+                            invisible="not adu_calculation_method_type == 'future'"
                         />
                         <button
                             type="object"
@@ -140,7 +148,7 @@
                             class="oe_stat_button"
                             string="Bill of Materials"
                             icon="fa-flask"
-                            attrs="{'invisible': [('item_type', '!=', 'manufactured')]}"
+                            invisible="not item_type == 'manufactured'"
                         />
                         <button
                             type="object"
@@ -148,7 +156,7 @@
                             class="oe_stat_button"
                             string="Manufacturing Orders"
                             icon="fa-wrench"
-                            attrs="{'invisible': [('item_type', '!=', 'manufactured')]}"
+                            invisible="not item_type == 'manufactured'"
                         />
                         <button
                             type="object"
@@ -156,13 +164,13 @@
                             class="oe_stat_button"
                             string="Purchase Orders"
                             icon="fa-credit-card"
-                            attrs="{'invisible': [('item_type', '!=', 'purchased')]}"
+                            invisible="not item_type == 'purchased'"
                         />
                         <button
                             class="oe_stat_button"
                             name="action_used_in_bom"
                             type="object"
-                            attrs="{'invisible':['|',('product_type', 'not in', ['product', 'consu']), ('used_in_bom_count', '=', 0)]}"
+                            invisible="product_type not in ('product','consu') or used_in_bom_count == 0"
                             icon="fa-level-up"
                         >
                             <field
@@ -176,7 +184,7 @@
                         name="web_ribbon"
                         title="Archived"
                         bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
+                        invisible="active"
                     />
                     <group>
                         <group>
@@ -217,15 +225,15 @@
                                 <field name="item_type" invisible="1" />
                                 <field
                                     name="green_override"
-                                    attrs="{'invisible': [('replenish_method', '!=', 'replenish_override')]}"
+                                    invisible="not replenish_method == 'replenish_override'"
                                 />
                                 <field
                                     name="yellow_override"
-                                    attrs="{'invisible': [('replenish_method', '!=', 'replenish_override')]}"
+                                    invisible="not replenish_method == 'replenish_override'"
                                 />
                                 <field
                                     name="red_override"
-                                    attrs="{'invisible': [('replenish_method', '!=', 'replenish_override')]}"
+                                    invisible="not replenish_method == 'replenish_override'"
                                 />
                                 <field name="adu_calculation_method" />
                                 <field
@@ -234,7 +242,7 @@
                                 />
                                 <field
                                     name="adu_fixed"
-                                    attrs="{'invisible': [('adu_calculation_method_type', '!=', 'fixed')]}"
+                                    invisible="not adu_calculation_method_type == 'fixed'"
                                 />
                                 <label for="adu" />
                                 <div name="adu" class="o_row">
@@ -248,33 +256,33 @@
                                         name="action_view_past_adu_direct_demand"
                                         icon="fa-search"
                                         type="object"
-                                        attrs="{'invisible': ['|', ('adu_calculation_method_type', 'in', ['fixed', 'future']), ('adu', '=', 0)]}"
+                                        invisible="adu_calculation_method_type in ('fixed', 'future') or adu == 0"
                                     />
                                     <button
                                         title="View ADU (Past - Indirect Demand)"
                                         name="action_view_past_adu_indirect_demand"
                                         icon="fa-search"
                                         type="object"
-                                        attrs="{'invisible': ['|', '|', ('adu_calculation_method_type', 'in', ['fixed', 'future']), ('used_in_bom_count', '=', 0), ('adu', '=', 0)]}"
+                                        invisible="adu_calculation_method_type in ('fixed', 'future') or used_in_bom_count == 0 or adu == 0"
                                     />
                                     <button
                                         title="View ADU (Future - Direct Demand)"
                                         name="action_view_future_adu_direct_demand"
                                         icon="fa-search"
                                         type="object"
-                                        attrs="{'invisible': ['|', ('adu_calculation_method_type', 'in', ['fixed', 'past']), ('adu', '=', 0)]}"
+                                        invisible="adu_calculation_method_type in ('fixed', 'past') or adu == 0"
                                     />
                                     <button
                                         title="View ADU (Future - Indirect Demand)"
                                         name="action_view_future_adu_indirect_demand"
                                         icon="fa-search"
                                         type="object"
-                                        attrs="{'invisible': ['|', '|', ('adu_calculation_method_type', 'in', ['fixed', 'past']), ('used_in_bom_count', '=', 0), ('adu', '=', 0)]}"
+                                        invisible="adu_calculation_method_type in ('fixed', 'past') or used_in_bom_count == 0 or adu == 0"
                                     />
                                 </div>
                                 <field
                                     name="lead_days"
-                                    attrs="{'invisible': [('item_type', '!=', 'distributed')]}"
+                                    invisible="not item_type == 'distributed'"
                                 />
                                 <label for="dlt" />
                                 <div name="dlt">
@@ -308,13 +316,13 @@
                                     name="ddmrp_chart"
                                     widget="bokeh_chart"
                                     nolabel="1"
-                                    attrs="{'invisible': [('show_execution_chart', '=', True)]}"
+                                    invisible="show_execution_chart"
                                 />
                                 <field
                                     name="ddmrp_chart_execution"
                                     widget="bokeh_chart"
                                     nolabel="1"
-                                    attrs="{'invisible': [('show_execution_chart', '=', False)]}"
+                                    invisible="not show_execution_chart"
                                 />
                             </div>
                             <div cols="3">
@@ -322,13 +330,13 @@
                                     for="show_execution_chart"
                                     string="Planning"
                                     class="text-muted"
-                                    attrs="{'invisible': [('show_execution_chart', '=', False)]}"
+                                    invisible="not show_execution_chart"
                                 />
                                 <label
                                     for="show_execution_chart"
                                     string="Planning"
                                     style="font-weight: bold;"
-                                    attrs="{'invisible': [('show_execution_chart', '=', True)]}"
+                                    invisible="show_execution_chart"
                                 />
                                 <field
                                     name="show_execution_chart"
@@ -340,13 +348,13 @@
                                     for="show_execution_chart"
                                     string="Execution"
                                     class="text-muted"
-                                    attrs="{'invisible': [('show_execution_chart', '=', True)]}"
+                                    invisible="show_execution_chart"
                                 />
                                 <label
                                     for="show_execution_chart"
                                     string="Execution"
                                     style="font-weight: bold;"
-                                    attrs="{'invisible': [('show_execution_chart', '=', False)]}"
+                                    invisible="not show_execution_chart"
                                 />
                             </div>
                         </group>
@@ -380,24 +388,24 @@
                                 />
                                 <field
                                     name="distributed_source_location_id"
-                                    attrs="{'invisible': ['|', ('item_type', '!=', 'distributed'), ('distributed_source_location_id', '=', False)]}"
+                                    invisible="not item_type == 'distributed' or not distributed_source_location_id"
                                 />
                                 <field
                                     name="distributed_source_location_qty"
-                                    attrs="{'invisible': ['|', ('item_type', '!=', 'distributed'), ('distributed_source_location_id', '=', False)]}"
+                                    invisible="not item_type == 'distributed' or not distributed_source_location_id"
                                 />
                                 <field
                                     name="main_supplier_id"
-                                    attrs="{'invisible': [('item_type', '!=', 'purchased')]}"
+                                    invisible="not item_type == 'purchased'"
                                 />
                                 <field
                                     name="product_vendor_code"
-                                    attrs="{'invisible': [('product_vendor_code', '=', False)]}"
+                                    invisible="not product_vendor_code"
                                 />
                                 <field name="auto_procure" />
                                 <field
                                     name="auto_procure_option"
-                                    attrs="{'invisible': [('auto_procure', '=', False)]}"
+                                    invisible="not auto_procure"
                                 />
                             </group>
                         </group>
@@ -416,7 +424,7 @@
                                         name="action_view_supply_inside_dlt_window"
                                         icon="fa-search"
                                         type="object"
-                                        attrs="{'invisible': [('incoming_dlt_qty', '=', 0)]}"
+                                        invisible="incoming_dlt_qty == 0"
                                     />
                                 </div>
                                 <label for="qualified_demand" />
@@ -435,14 +443,14 @@
                                         name="action_view_qualified_demand_pickings"
                                         icon="fa-search"
                                         type="object"
-                                        attrs="{'invisible': ['|', ('qualified_demand', '=', 0), ('qualified_demand_stock_move_ids', '=', [])]}"
+                                        invisible="qualified_demand == 0 or qualified_demand_stock_move_ids == []"
                                     />
                                     <button
                                         title="View Qualified Demand from MRP"
                                         name="action_view_qualified_demand_mrp"
                                         icon="fa-search"
                                         type="object"
-                                        attrs="{'invisible': ['|', ('qualified_demand', '=', 0), ('qualified_demand_mrp_move_ids', '=', [])]}"
+                                        invisible="qualified_demand == 0 or qualified_demand_mrp_move_ids == []"
                                     />
                                 </div>
                                 <field name="net_flow_position" />
