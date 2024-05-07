@@ -29,6 +29,11 @@ msgid "Buffer"
 msgstr ""
 
 #. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__company_id
+msgid "Company"
+msgstr ""
+
+#. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__create_uid
 msgid "Created by"
 msgstr ""
