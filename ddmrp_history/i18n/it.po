@@ -32,6 +32,11 @@ msgid "Buffer"
 msgstr "Buffer"
 
 #. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__company_id
+msgid "Company"
+msgstr ""
+
+#. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__create_uid
 msgid "Created by"
 msgstr "Creato da"
@@ -109,7 +114,6 @@ msgstr "Posizione flusso netta"
 
 #. module: ddmrp_history
 #. odoo-python
-#: code:addons/ddmrp_history/models/stock_buffer.py:0
 #: code:addons/ddmrp_history/models/stock_buffer.py:0
 #, python-format
 msgid "Not enough data available."
