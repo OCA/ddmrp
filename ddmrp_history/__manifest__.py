@@ -13,6 +13,7 @@
     "depends": ["ddmrp"],
     "data": [
         "security/ir.model.access.csv",
+        "security/security.xml",
         "views/ddmrp_history_view.xml",
         "views/stock_buffer_view.xml",
     ],
