@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-12 17:39+0000\n"
+"PO-Revision-Date: 2024-05-08 07:45+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -34,7 +34,7 @@ msgstr "Buffer"
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__company_id
 msgid "Company"
-msgstr ""
+msgstr "Azienda"
 
 #. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__create_uid
