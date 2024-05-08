@@ -38,6 +38,11 @@
                 <field name="order_frequency" />
                 <field name="order_frequency_group" />
                 <field name="order_frequency_group_count" />
+                <field
+                    name="company_id"
+                    groups="base.group_multi_company"
+                    optional="hide"
+                />
             </tree>
         </field>
     </record>
