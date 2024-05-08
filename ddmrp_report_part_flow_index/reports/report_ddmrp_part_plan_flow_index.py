@@ -10,6 +10,7 @@ class ReportDdmrpPartsPlanFlowIndex(models.Model):
     buffer_id = fields.Many2one("stock.buffer", string="Buffer", readonly=True)
     product_id = fields.Many2one("product.product", string="Product", readonly=True)
     location_id = fields.Many2one("stock.location", string="Location", readonly=True)
+    company_id = fields.Many2one("res.company", string="Company", readonly=True)
     adu = fields.Float(
         string="Average Daily Usage (ADU)",
         default=0.0,
@@ -30,6 +31,7 @@ class ReportDdmrpPartsPlanFlowIndex(models.Model):
             id,
             product_id,
             location_id,
+            company_id,
             adu,
             flow_index_group_id,
             green_zone_qty,
@@ -46,6 +48,7 @@ class ReportDdmrpPartsPlanFlowIndex(models.Model):
             a.id as buffer_id,
             a.product_id as product_id,
             a.location_id as location_id,
+            a.company_id as company_id,
             a.adu as adu,
             a.flow_index_group_id as flow_index_group_id,
             a.green_zone_qty as green_zone_qty,

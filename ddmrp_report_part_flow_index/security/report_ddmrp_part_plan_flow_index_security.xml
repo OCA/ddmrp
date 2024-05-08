@@ -1,0 +1,10 @@
+<odoo>
+    <record model="ir.rule" id="report_ddmrp_part_plan_flow_index_comp_rule">
+        <field name="name">Report DDMRP Part Plan Flow Index multi-company</field>
+        <field name="model_id" ref="model_report_ddmrp_part_plan_flow_index" />
+        <field name="global" eval="True" />
+        <field
+            name="domain_force"
+        >['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>
