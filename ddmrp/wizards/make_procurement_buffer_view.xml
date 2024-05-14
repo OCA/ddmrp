@@ -47,8 +47,15 @@
                         />
                         <field name="product_id" />
                         <field name="recommended_qty" />
-                        <field name="qty" />
-                        <field name="qty_without_security" invisible="1" />
+                        <field
+                            name="qty"
+                            readonly="1"
+                            groups="!ddmrp.group_change_buffer_procure_qty"
+                        />
+                        <field
+                            name="qty"
+                            groups="ddmrp.group_change_buffer_procure_qty"
+                        />
                         <field name="uom_id" groups="uom.group_uom" />
                         <field name="date_planned" />
                     </tree>
@@ -63,22 +70,6 @@
                     <button string="Cancel" class="btn-default" special="cancel" />
                 </footer>
             </form>
-        </field>
-    </record>
-    <!--  Make Procurement without security access right -->
-    <record id="view_make_procure_without_security" model="ir.ui.view">
-        <field name="name">Request Procurement</field>
-        <field name="model">make.procurement.buffer</field>
-        <field name="mode">primary</field>
-        <field name="inherit_id" ref="ddmrp.view_make_procurement_buffer_wizard" />
-        <field name="arch" type="xml">
-            <field name="qty" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </field>
-            <field name="qty_without_security" position="attributes">
-                <attribute name="readonly">1</attribute>
-                <attribute name="invisible">0</attribute>
-            </field>
         </field>
     </record>
     <record id="act_make_procurement_from_buffer" model="ir.actions.act_window">
