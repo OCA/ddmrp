@@ -29,7 +29,6 @@ class MakeProcurementBuffer(models.TransientModel):
         return {
             "recommended_qty": buffer.procure_recommended_qty,
             "qty": qty,
-            "qty_without_security": qty,
             "uom_id": buffer.procure_uom_id.id or buffer.product_uom.id,
             "date_planned": buffer._get_date_planned(),
             "buffer_id": buffer.id,
@@ -37,17 +36,6 @@ class MakeProcurementBuffer(models.TransientModel):
             "warehouse_id": buffer.warehouse_id.id,
             "location_id": buffer.location_id.id,
         }
-
-    @api.model
-    def fields_view_get(
-        self, view_id=None, view_type="form", toolbar=False, submenu=False
-    ):
-        if not self.user_has_groups("ddmrp.group_change_buffer_procure_qty"):
-            # Redirect to readonly qty form view
-            view_id = self.env.ref("ddmrp.view_make_procure_without_security").id
-        return super().fields_view_get(
-            view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu
-        )
 
     @api.model
     def default_get(self, fields):
@@ -172,7 +160,6 @@ class MakeProcurementBufferItem(models.TransientModel):
     )
     recommended_qty = fields.Float(readonly=True)
     qty = fields.Float()
-    qty_without_security = fields.Float(string="Quantity")
     uom_id = fields.Many2one(
         string="Unit of Measure",
         comodel_name="uom.uom",
