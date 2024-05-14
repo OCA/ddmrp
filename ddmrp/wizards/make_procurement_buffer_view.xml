@@ -29,6 +29,16 @@
                         <field name="buffer_id" invisible="True" />
                         <field
                             name="warehouse_id"
+                            invisible="1"
+                            groups="!stock.group_stock_multi_locations"
+                        />
+                        <field
+                            name="location_id"
+                            invisible="1"
+                            groups="!stock.group_stock_multi_locations"
+                        />
+                        <field
+                            name="warehouse_id"
                             groups="stock.group_stock_multi_locations"
                         />
                         <field
