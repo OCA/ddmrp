@@ -1333,11 +1333,6 @@ msgid "Qualified Demand Stock Move"
 msgstr ""
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__qty_without_security
-msgid "Quantity"
-msgstr ""
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_location_qty_available_not_res
 msgid "Quantity On Hand (Unreserved)"
 msgstr ""

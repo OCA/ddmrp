@@ -1372,11 +1372,6 @@ msgid "Qualified Demand Stock Move"
 msgstr "Demanda cualificada Movimiento de existencias"
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__qty_without_security
-msgid "Quantity"
-msgstr "Cantidad"
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_location_qty_available_not_res
 msgid "Quantity On Hand (Unreserved)"
 msgstr "Cantidad disponible (no reservada)"
@@ -2129,6 +2124,9 @@ msgstr "días"
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr "o"
+
+#~ msgid "Quantity"
+#~ msgstr "Cantidad"
 
 #~ msgid "No stock available on source location for distributed buffer"
 #~ msgstr ""
