@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-03-18 09:33+0000\n"
+"PO-Revision-Date: 2024-05-15 09:37+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -657,7 +657,7 @@ msgstr "Ricevi allerte configurazione per buffer di materiale."
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_move_tree
 msgid "Go to Source"
-msgstr ""
+msgstr "Vai all'origine"
 
 #. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__mrp_production__execution_priority_level__3_green
@@ -1067,6 +1067,7 @@ msgstr "Nessuna richiesta rilevata."
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "No stock available in source location for distributed buffer"
 msgstr ""
+"Nessuna giacenza disponibile nell'ubicazione origine per buffer distribuito"
 
 #. module: ddmrp
 #. odoo-python
@@ -1600,6 +1601,9 @@ msgid ""
 "rescheduling.                     Press this button to display the involved "
 "RFQs"
 msgstr ""
+"Acune quantità RdP sono fuori dall'orizzonte DLT e possono richiedere "
+"rischedulazione.                     Fare clic su questo pulsante per "
+"visualizzare le RdP coinvolte"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
@@ -1608,6 +1612,10 @@ msgid ""
 "rescheduling.                                          Press this button to "
 "display the involved supply orders"
 msgstr ""
+"Alcune quantità RdP in ingresso sono al di fuori dell'orizzonte DLT e "
+"possono richiedere una "
+"rischedulazione.                                              Fare clic sul "
+"questo pulsante per visualizzare gli ordini di acquisto coinvolti"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
@@ -1616,6 +1624,10 @@ msgid ""
 "rescheduling.                                          Press this button to "
 "display the involved supply orders"
 msgstr ""
+"Alcune quantità in ingresso sono al di fuori dell'orizzonte DLT e possono "
+"richiedere una rischedulazione.                                              "
+"Fare clic sul questo pulsante per visualizzare gli ordini di acquisto "
+"coinvolti"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
@@ -1714,7 +1726,7 @@ msgstr "Consumo movimento di magazzino anno precednete"
 #: code:addons/ddmrp/models/stock_move.py:0
 #, python-format
 msgid "Stock Move Source"
-msgstr ""
+msgstr "Movimento di magazzino origine"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_move_consumption_pivot
@@ -1953,7 +1965,7 @@ msgstr "Visalizza ADU (passato- fabbisogno indiretto)"
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "View Incoming Moves (Within DLT)"
-msgstr ""
+msgstr "Visualizza movimenti di ingresso (interno a DLT)"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
