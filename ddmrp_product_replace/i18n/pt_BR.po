@@ -6,13 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-05-21 03:16+0000\n"
+"Last-Translator: Rodrigo Macedo <sottomaiormacedotec@users.noreply."
+"translation.odoo-community.org>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: ddmrp_product_replace
 #: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.view_ddmrp_adjustment_sheet_wizard_form
@@ -319,7 +322,7 @@ msgstr ""
 #. module: ddmrp_product_replace
 #: model:ir.model,name:ddmrp_product_replace.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento de estoque"
 
 #. module: ddmrp_product_replace
 #: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__new_product_id
