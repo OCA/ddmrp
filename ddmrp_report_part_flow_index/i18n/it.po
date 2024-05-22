@@ -54,6 +54,7 @@ msgstr "Creato il"
 
 #. module: ddmrp_report_part_flow_index
 #: model:ir.actions.act_window,name:ddmrp_report_part_flow_index.action_ddmrp_flow_index_group
+#: model:ir.model,name:ddmrp_report_part_flow_index.model_ddmrp_flow_index_group
 msgid "DDMRP Flow Index Group"
 msgstr "Gruppo indice flusso DDMRP"
 
@@ -152,6 +153,11 @@ msgid "Product"
 msgstr "Prodotto"
 
 #. module: ddmrp_report_part_flow_index
+#: model:ir.model,name:ddmrp_report_part_flow_index.model_report_ddmrp_part_plan_flow_index
+msgid "Report DDMRP Plan Flow Index"
+msgstr ""
+
+#. module: ddmrp_report_part_flow_index
 #: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__sequence
 msgid "Sequence"
 msgstr "Sequenza"
@@ -176,12 +182,8 @@ msgstr "Intervallo superiore"
 msgid "Upper range used to assign in stock buffer"
 msgstr "Intervallo superiore utilizzato per assegnare buffer di magazzino"
 
-#. module: ddmrp_report_part_flow_index
-#: model:ir.model,name:ddmrp_report_part_flow_index.model_ddmrp_flow_index_group
-msgid "ddmrp.flow.index.group"
-msgstr "ddmrp.flow.index.group"
+#~ msgid "ddmrp.flow.index.group"
+#~ msgstr "ddmrp.flow.index.group"
 
-#. module: ddmrp_report_part_flow_index
-#: model:ir.model,name:ddmrp_report_part_flow_index.model_report_ddmrp_part_plan_flow_index
-msgid "report.ddmrp.part.plan.flow.index"
-msgstr "report.ddmrp.part.plan.flow.index"
+#~ msgid "report.ddmrp.part.plan.flow.index"
+#~ msgstr "report.ddmrp.part.plan.flow.index"

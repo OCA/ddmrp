@@ -5,6 +5,7 @@ from odoo import api, fields, models
 
 class ReportDdmrpPartsPlanFlowIndex(models.Model):
     _name = "report.ddmrp.part.plan.flow.index"
+    _description = "Report DDMRP Plan Flow Index"
     _auto = False
 
     buffer_id = fields.Many2one("stock.buffer", string="Buffer", readonly=True)
