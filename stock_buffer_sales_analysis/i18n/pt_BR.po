@@ -6,40 +6,43 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-05-23 00:03+0000\n"
+"Last-Translator: Rodrigo Macedo <sottomaiormacedotec@users.noreply."
+"translation.odoo-community.org>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_buffer_sales_analysis
 #: model_terms:ir.ui.view,arch_db:stock_buffer_sales_analysis.stock_buffer_view_form
 msgid "<span class=\"o_stat_text\">Sold</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Vendida</span>"
 
 #. module: stock_buffer_sales_analysis
 #: model:ir.model.fields,field_description:stock_buffer_sales_analysis.field_stock_buffer__product_id_sale_ok
 msgid "Can be Sold"
-msgstr ""
+msgstr "Pode ser vendido"
 
 #. module: stock_buffer_sales_analysis
 #: model:ir.model.fields,field_description:stock_buffer_sales_analysis.field_stock_buffer__product_id_sales_count
 msgid "Sold"
-msgstr ""
+msgstr "Vendido"
 
 #. module: stock_buffer_sales_analysis
 #: model_terms:ir.ui.view,arch_db:stock_buffer_sales_analysis.stock_buffer_view_form
 msgid "Sold in the last 365 days"
-msgstr ""
+msgstr "Vendido nos últimos 365 dias"
 
 #. module: stock_buffer_sales_analysis
 #: model:ir.model,name:stock_buffer_sales_analysis.model_stock_buffer
 msgid "Stock Buffer"
-msgstr ""
+msgstr "Buffer de estoque"
 
 #. module: stock_buffer_sales_analysis
 #: model:ir.model.fields,field_description:stock_buffer_sales_analysis.field_stock_buffer__product_uom_name
 msgid "Unit of Measure Name"
-msgstr ""
+msgstr "Nome da Unidade de Medida"
