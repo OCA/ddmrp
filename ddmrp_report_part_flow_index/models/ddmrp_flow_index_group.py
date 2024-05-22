@@ -7,6 +7,7 @@ from odoo import fields, models
 class DdmrpFlowIndexGroup(models.Model):
     _name = "ddmrp.flow.index.group"
     _order = "sequence, id"
+    _description = "DDMRP Flow Index Group"
 
     name = fields.Char(required=True)
     summary = fields.Text()
