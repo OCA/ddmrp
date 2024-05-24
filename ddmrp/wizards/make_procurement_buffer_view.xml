@@ -50,6 +50,7 @@
                         <field
                             name="qty"
                             readonly="1"
+                            force_save="1"
                             groups="!ddmrp.group_change_buffer_procure_qty"
                         />
                         <field
