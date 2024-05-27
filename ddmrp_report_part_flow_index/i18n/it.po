@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-05-13 07:40+0000\n"
+"PO-Revision-Date: 2024-05-27 15:38+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -155,7 +155,7 @@ msgstr "Prodotto"
 #. module: ddmrp_report_part_flow_index
 #: model:ir.model,name:ddmrp_report_part_flow_index.model_report_ddmrp_part_plan_flow_index
 msgid "Report DDMRP Plan Flow Index"
-msgstr ""
+msgstr "Resoconto DDMRP indice pflusso piano"
 
 #. module: ddmrp_report_part_flow_index
 #: model:ir.model.fields,field_description:ddmrp_report_part_flow_index.field_ddmrp_flow_index_group__sequence
