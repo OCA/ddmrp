@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-05-21 03:16+0000\n"
+"PO-Revision-Date: 2024-05-29 15:36+0000\n"
 "Last-Translator: Rodrigo Macedo <sottomaiormacedotec@users.noreply."
 "translation.odoo-community.org>\n"
 "Language-Team: none\n"
@@ -317,7 +317,7 @@ msgstr ""
 #. module: ddmrp_product_replace
 #: model:ir.model,name:ddmrp_product_replace.model_stock_buffer
 msgid "Stock Buffer"
-msgstr ""
+msgstr "Buffer de estoque"
 
 #. module: ddmrp_product_replace
 #: model:ir.model,name:ddmrp_product_replace.model_stock_move
