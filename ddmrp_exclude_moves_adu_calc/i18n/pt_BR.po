@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-05-21 03:17+0000\n"
+"PO-Revision-Date: 2024-05-29 15:36+0000\n"
 "Last-Translator: Rodrigo Macedo <sottomaiormacedotec@users.noreply."
 "translation.odoo-community.org>\n"
 "Language-Team: none\n"
@@ -20,17 +20,17 @@ msgstr ""
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.actions.server,name:ddmrp_exclude_moves_adu_calc.action_server_mrp_production_request_refresh
 msgid "Exclude from ADU"
-msgstr ""
+msgstr "Excluir da ADU"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model.fields,field_description:ddmrp_exclude_moves_adu_calc.field_stock_location__exclude_from_adu
 msgid "Exclude this location from ADU calculation"
-msgstr ""
+msgstr "Excluir este local do cálculo do ADU"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model.fields,field_description:ddmrp_exclude_moves_adu_calc.field_stock_move__exclude_from_adu
 msgid "Exclude this move from ADU calculation"
-msgstr ""
+msgstr "Exclua esta mudança do cálculo do ADU"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model.fields,help:ddmrp_exclude_moves_adu_calc.field_stock_location__exclude_from_adu
@@ -38,29 +38,33 @@ msgid ""
 "If this flag is set stock moves into this location will be excluded from ADU "
 "calculation in the origin location buffer."
 msgstr ""
+"Se este sinalizador for definido, as movimentações de estoque para este "
+"local serão excluídas do cálculo da ADU no buffer do local de origem."
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model.fields,help:ddmrp_exclude_moves_adu_calc.field_stock_move__exclude_from_adu
 msgid ""
 "If this flag is set this stock move will be excluded from ADU calculation"
 msgstr ""
+"Se este sinalizador estiver definido, esta movimentação de ações será "
+"excluída do cálculo do ADU"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model,name:ddmrp_exclude_moves_adu_calc.model_stock_location
 msgid "Inventory Locations"
-msgstr ""
+msgstr "Locais de inventário"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #. odoo-python
 #: code:addons/ddmrp_exclude_moves_adu_calc/models/stock_move.py:0
 #, python-format
 msgid "Only buffer maintainers are allowed perform this action."
-msgstr ""
+msgstr "Somente mantenedores de buffer podem executar esta ação."
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model,name:ddmrp_exclude_moves_adu_calc.model_stock_buffer
 msgid "Stock Buffer"
-msgstr ""
+msgstr "Buffer de estoque"
 
 #. module: ddmrp_exclude_moves_adu_calc
 #: model:ir.model,name:ddmrp_exclude_moves_adu_calc.model_stock_move
