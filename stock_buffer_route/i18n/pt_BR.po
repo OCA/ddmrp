@@ -6,53 +6,57 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-05-29 15:36+0000\n"
+"Last-Translator: Rodrigo Macedo <sottomaiormacedotec@users.noreply."
+"translation.odoo-community.org>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_buffer_route
 #: model:ir.model.fields,field_description:stock_buffer_route.field_make_procurement_buffer_item__route_ids
 #: model:ir.model.fields,field_description:stock_buffer_route.field_stock_buffer__route_ids
 msgid "Allowed routes"
-msgstr ""
+msgstr "Rotas permitidas"
 
 #. module: stock_buffer_route
 #: model:ir.model.fields,help:stock_buffer_route.field_make_procurement_buffer__partner_id
 msgid "If set, will be used as preferred vendor for purchase routes."
 msgstr ""
+"Se definido, será usado como fornecedor preferencial para rotas de compra."
 
 #. module: stock_buffer_route
 #: model:ir.model.fields,field_description:stock_buffer_route.field_make_procurement_buffer__item_ids
 msgid "Items"
-msgstr ""
+msgstr "Unidade"
 
 #. module: stock_buffer_route
 #: model:ir.model,name:stock_buffer_route.model_make_procurement_buffer_item
 msgid "Make Procurements from Stock Buffer Item"
-msgstr ""
+msgstr "Fazer compras a partir de item de buffer de estoque"
 
 #. module: stock_buffer_route
 #: model:ir.model,name:stock_buffer_route.model_make_procurement_buffer
 msgid "Make Procurements from Stock Buffers"
-msgstr ""
+msgstr "Faça compras a partir de buffers de estoque"
 
 #. module: stock_buffer_route
 #: model:ir.model.fields,field_description:stock_buffer_route.field_make_procurement_buffer_item__route_id
 #: model:ir.model.fields,field_description:stock_buffer_route.field_stock_buffer__route_id
 #: model_terms:ir.ui.view,arch_db:stock_buffer_route.stock_buffer_search
 msgid "Route"
-msgstr ""
+msgstr "Rota"
 
 #. module: stock_buffer_route
 #: model:ir.model,name:stock_buffer_route.model_stock_buffer
 msgid "Stock Buffer"
-msgstr ""
+msgstr "Buffer de estoque"
 
 #. module: stock_buffer_route
 #: model:ir.model.fields,field_description:stock_buffer_route.field_make_procurement_buffer__partner_id
 msgid "Vendor"
-msgstr ""
+msgstr "Fornecedor"
