@@ -8,12 +8,14 @@
         <field name="inherit_id" ref="ddmrp.stock_buffer_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//div[@name='button_box']" position="inside">
+                <field name="count_ddmrp_adjustment_demand" invisible="1" />
                 <button
                     string="DAF Demand Allocation"
                     name="action_view_demand_to_components"
                     class="oe_stat_button"
                     icon="fa-caret-square-o-down"
                     type="object"
+                    attrs="{'invisible': [('count_ddmrp_adjustment_demand', '=', 0)]}"
                 />
             </xpath>
             <button name="action_view_future_adu_indirect_demand" position="after">

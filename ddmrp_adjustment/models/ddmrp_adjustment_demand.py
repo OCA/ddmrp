@@ -16,6 +16,8 @@ class DdmrpAdjustmentDemand(models.Model):
     buffer_origin_id = fields.Many2one(
         comodel_name="stock.buffer",
         string="Originated from",
+        required=True,
+        ondelete="cascade",
     )
     product_origin_id = fields.Many2one(
         related="buffer_origin_id.product_id",
