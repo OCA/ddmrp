@@ -59,6 +59,11 @@ msgid "Buffer Adjustments"
 msgstr "Correzioni buffer"
 
 #. module: ddmrp_adjustment
+#: model:ir.actions.act_window,name:ddmrp_adjustment.ddmrp_adjustment_demand_action
+msgid "Buffer Adjustments Demand"
+msgstr ""
+
+#. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
 msgid "Buffer Adjustments Wizard"
 msgstr "Procedura guidata correzioni buffer"
@@ -78,6 +83,11 @@ msgstr "Annulla"
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__company_id
 msgid "Company"
 msgstr "Azienda"
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__count_ddmrp_adjustment_demand
+msgid "Count Ddmrp Adjustment Demand"
+msgstr ""
 
 #. module: ddmrp_adjustment
 #: model:ir.actions.act_window,name:ddmrp_adjustment.action_ddmrp_adjustment_sheet_wizard
@@ -107,11 +117,6 @@ msgid "DAF Demand Allocation"
 msgstr "Allocazione fabbisogno DAF"
 
 #. module: ddmrp_adjustment
-#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.stock_buffer_view_form
-msgid "DAF: *"
-msgstr "DAF: *"
-
-#. module: ddmrp_adjustment
 #: model:ir.model,name:ddmrp_adjustment.model_ddmrp_adjustment
 msgid "DDMRP Adjustment"
 msgstr "Correzione DDMRP"
@@ -137,6 +142,11 @@ msgstr "Buffer DDMRP"
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__daf_applied
 msgid "Daf Applied"
 msgstr "DAF applicato"
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__daf_text
+msgid "Daf Text"
+msgstr ""
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__date_start
@@ -168,13 +178,6 @@ msgstr "Unità di misura predefinita per tutte le operazioni di magazzino."
 #: model:ir.model.fields.selection,name:ddmrp_adjustment.selection__ddmrp_adjustment__adjustment_type__daf
 msgid "Demand Adjustment Factor"
 msgstr "Fattore correzione fabbisogno"
-
-#. module: ddmrp_adjustment
-#. odoo-python
-#: code:addons/ddmrp_adjustment/models/stock_buffer.py:0
-#, python-format
-msgid "Demand Allocated to Components"
-msgstr "Fabbisogno allocato ai componenti"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,help:ddmrp_adjustment.field_stock_buffer__extra_demand_ids
@@ -287,6 +290,16 @@ msgid "Originated from"
 msgstr "Originato da"
 
 #. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__parent_daf_applied
+msgid "Parent Daf Applied"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__parent_daf_text
+msgid "Parent Daf Text"
+msgstr ""
+
+#. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__date_range_id
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
 msgid "Period"
@@ -350,8 +363,13 @@ msgstr "Valore"
 
 #. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.stock_buffer_view_form
-msgid "View DAF Affecting Actual ADU"
-msgstr "Visualizza DAF riguardante l'ADU attuale"
+msgid "View DAFs Affecting Actual ADU"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.stock_buffer_view_form
+msgid "View Demand from parent DAFs Affecting Actual ADU"
+msgstr ""
 
 #. module: ddmrp_adjustment
 #. odoo-python
@@ -371,3 +389,13 @@ msgstr "Bisogna selezionare almeno un buffer."
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
 msgid "to"
 msgstr "a"
+
+#~ msgid "DAF: *"
+#~ msgstr "DAF: *"
+
+#, python-format
+#~ msgid "Demand Allocated to Components"
+#~ msgstr "Fabbisogno allocato ai componenti"
+
+#~ msgid "View DAF Affecting Actual ADU"
+#~ msgstr "Visualizza DAF riguardante l'ADU attuale"
