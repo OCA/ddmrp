@@ -15,18 +15,18 @@ class StockMove(models.Model):
     created_purchase_line_id = fields.Many2one(index=True)
 
     def _prepare_procurement_values(self):
-        res = super(StockMove, self)._prepare_procurement_values()
+        res = super()._prepare_procurement_values()
         if self.buffer_ids:
             res["buffer_ids"] = self.buffer_ids
         return res
 
     def _merge_moves_fields(self):
-        res = super(StockMove, self)._merge_moves_fields()
+        res = super()._merge_moves_fields()
         res["buffer_ids"] = [(4, m.id) for m in self.mapped("buffer_ids")]
         return res
 
     def write(self, vals):
-        res = super(StockMove, self).write(vals)
+        res = super().write(vals)
         if self and self.env.company.ddmrp_auto_update_nfp:
             # Stock moves changes can be triggered by users without
             # access to write stock buffers, thus we do it with sudo.
@@ -41,10 +41,10 @@ class StockMove(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        moves = super(StockMove, self).create(vals_list)
+        moves = super().create(vals_list)
         # TODO should we use @api.model_create_single instead?
         moves_to_update_ids = []
-        for vals, move in zip(vals_list, moves):
+        for vals, move in zip(vals_list, moves, strict=False):
             if (
                 "state" in vals
                 and move.state not in ("draft", "cancel")
@@ -64,14 +64,14 @@ class StockMove(models.Model):
         for move in self:
             out_buffers |= move.mapped("product_id.buffer_ids").filtered(
                 lambda buffer: (
-                    move.location_id.is_sublocation_of(buffer.location_id)
-                    and not move.location_dest_id.is_sublocation_of(buffer.location_id)
+                    move.location_id.is_sublocation_of(buffer.location_id)  # noqa: B023
+                    and not move.location_dest_id.is_sublocation_of(buffer.location_id)  # noqa: B023
                 )
             )
             in_buffers |= move.mapped("product_id.buffer_ids").filtered(
                 lambda buffer: (
-                    not move.location_id.is_sublocation_of(buffer.location_id)
-                    and move.location_dest_id.is_sublocation_of(buffer.location_id)
+                    not move.location_id.is_sublocation_of(buffer.location_id)  # noqa: B023
+                    and move.location_dest_id.is_sublocation_of(buffer.location_id)  # noqa: B023
                 )
             )
         return out_buffers, in_buffers
@@ -117,8 +117,8 @@ class StockMove(models.Model):
         """Check if an object has a nested chain of fields."""
         current_object = self
         try:
-            for field in field.split("."):
-                current_object = getattr(current_object, field)
+            for f in field.split("."):
+                current_object = getattr(current_object, f)
             return True
         except AttributeError:
             return False

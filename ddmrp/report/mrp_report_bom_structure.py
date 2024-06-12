@@ -28,7 +28,7 @@ class BomStructureReport(models.AbstractModel):
         product_info=False,
         ignore_stock=False,
     ):
-        res = super(BomStructureReport, self)._get_bom_data(
+        res = super()._get_bom_data(
             bom,
             warehouse,
             product=product,
@@ -56,7 +56,7 @@ class BomStructureReport(models.AbstractModel):
         product_info,
         ignore_stock=False,
     ):
-        res = super(BomStructureReport, self)._get_component_data(
+        res = super()._get_component_data(
             parent_bom,
             warehouse,
             bom_line,
@@ -89,7 +89,9 @@ class BomStructureReport(models.AbstractModel):
             if not component["bom_id"]:
                 continue
             bom_line = next(
-                filter(lambda l: l.get("bom_id", None) == component["bom_id"], lines)
+                filter(
+                    lambda line: line.get("bom_id", None) == component["bom_id"], lines
+                )
             )
             if bom_line:
                 bom_line["is_buffered"] = component["is_buffered"]

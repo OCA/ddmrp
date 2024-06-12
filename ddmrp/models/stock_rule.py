@@ -20,7 +20,7 @@ class StockRule(models.Model):
         values,
         bom,
     ):
-        result = super(StockRule, self)._prepare_mo_vals(
+        result = super()._prepare_mo_vals(
             product_id,
             product_qty,
             product_uom,
