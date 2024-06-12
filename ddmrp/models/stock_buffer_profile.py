@@ -42,7 +42,7 @@ class StockBufferProfile(models.Model):
                 rec.variability_id.factor,
             )
             if rec.distributed_reschedule_max_proc_time > 0.0:
-                name += ", {}min".format(rec.distributed_reschedule_max_proc_time)
+                name += f", {rec.distributed_reschedule_max_proc_time}min"
             rec.name = name
 
     name = fields.Char(compute="_compute_name", store=True)

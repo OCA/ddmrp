@@ -11,7 +11,6 @@ from .common import TestDdmrpCommon
 
 
 class TestDdmrp(TestDdmrpCommon):
-
     # TEST GROUP 1: ADU and Spikes
 
     def test_01_adu_calculation_fixed(self):
@@ -966,7 +965,7 @@ class TestDdmrp(TestDdmrpCommon):
         bom_buffer_a = self.buffer_a._get_manufactured_bom()
         self.assertEqual(bom_buffer_a, self.bom_a)
         bom_line = self.bom_a.bom_line_ids.filtered(
-            lambda l: l.product_id == self.component_a1
+            lambda line: line.product_id == self.component_a1
         )
         self.assertTrue(bom_line)
         self.assertFalse(bom_line.is_buffered)
@@ -1168,7 +1167,8 @@ class TestDdmrp(TestDdmrpCommon):
         productMrpAreaModel = self.env["product.mrp.area"]
         method = self.aducalcmethodModel.create(
             {
-                "name": "Blended (120 d. estimates_mrp past, 120 d. estimates_mrp future)",
+                "name": "Blended (120 d. estimates_mrp past, "
+                "120 d. estimates_mrp future)",
                 "method": "blended",
                 "source_past": "estimates_mrp",
                 "horizon_past": 120,
@@ -1257,7 +1257,8 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_a.adu, to_assert_value)
 
     def test_46_disable_auto_create_orderpoint(self):
-        """If a product has a buffer, do not create a new orderpoint for same location"""
+        """If a product has a buffer, do not create
+        a new orderpoint for same location"""
         op_a = self.orderpoint_model.search(
             [
                 ("product_id", "=", self.productA.id),

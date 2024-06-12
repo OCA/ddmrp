@@ -28,23 +28,25 @@ export class StockBufferPopover extends Component {
             if (bufferField && this.props.record.data[bufferField]) {
                 if (
                     ("field" in this.props.record.data[bufferField] &&
-                        this.props.record.data[bufferField].field.type ==
+                        this.props.record.data[bufferField].field.type ===
                             "many2many") ||
                     bufferField.endsWith("_ids")
                 ) {
                     if (this.props.record.data[bufferField].records.length > 0) {
                         bufferId = this.props.record.data[bufferField].records[0].resId;
                     } else {
-                        bufferId = 0; // Relation is blank, no buffer.
+                        // Relation is blank, no buffer.
+                        bufferId = 0;
                     }
                 } else {
                     // Assume m2o
                     bufferId = this.props.record.data[bufferField][0];
                 }
             } else if (bufferField) {
-                bufferId = 0; // Relation is blank, no buffer.
+                // Relation is blank, no buffer.
+                bufferId = 0;
             }
-            if (bufferId == 0) {
+            if (bufferId === 0) {
                 return;
             }
             this.bokeh_chart = await this.orm.read(

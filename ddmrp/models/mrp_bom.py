@@ -96,15 +96,16 @@ class MrpBom(models.Model):
                 location = line.context_location_id
                 line_boms = line.product_id.bom_ids
                 bom = line_boms.filtered(
-                    lambda bom: bom.context_location_id == location
+                    lambda bom: bom.context_location_id == location  # noqa: B023
                 ) or line_boms.filtered(lambda bom: not bom.context_location_id)
                 if bom:
                     paths[i] += bom[0]._get_produce_delay()
                     paths[i] += bom[0]._get_longest_path()
                 else:
                     _logger.info(
-                        "ddmrp (dlt): Product %s has no BOM for location "
-                        "%s." % (line.product_id.name, location.name)
+                        "ddmrp (dlt): Product {} has no BOM for location " "{}.".format(
+                            line.product_id.name, location.name
+                        )
                     )
                 i += 1
             else:

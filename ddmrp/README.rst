@@ -17,19 +17,20 @@ DDMRP
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fddmrp-lightgray.png?logo=github
-    :target: https://github.com/OCA/ddmrp/tree/16.0/ddmrp
+    :target: https://github.com/OCA/ddmrp/tree/17.0/ddmrp
     :alt: OCA/ddmrp
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/ddmrp-16-0/ddmrp-16-0-ddmrp
+    :target: https://translation.odoo-community.org/projects/ddmrp-17-0/ddmrp-17-0-ddmrp
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/ddmrp&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/ddmrp&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
 Demand Driven Material Requirements Planning is a formal multi-echelon
-planning and execution method developed by Ms. Carol Ptak and Mr. Chad Smith.
+planning and execution method developed by Ms. Carol Ptak and Mr. Chad
+Smith.
 
 DDMRP combines blended aspects of Material Requirements Planning (MRP),
 Distribution Requirements Planning (DRP) with the pull and visibility
@@ -38,49 +39,45 @@ reduction emphasis of Six Sigma.
 
 This method has five sequential components:
 
-#. *Strategic Inventory Positioning*. Answers the question "Given our system
-   and environment, where should we place inventory to have the best
-   protection?" and determines where should decoupling points of inventory be
-   placed.
-
-#. *Buffer Profiles and Levels*. Determine the amount of protection at those
-   decoupling points.
-
-#. *Dynamic Adjustments*. Allow the company to adapt buffers to group and
-   individual part trait changes over time through the use of several types
-   of adjustments.
-
-#. *Demand Driven Planning*. Allow to launch purchase orders (POs),
-   manufacturing orders (MOs) and Transfer Orders (TOs) based on the priority
-   dictated by the buffers.
-
-#. *Visible and Collaborative Execution*. These POs, MOs and TOs have to be
-   effectively managed to synchronize with the changes that often occur within
-   the "execution horizon."
+1. *Strategic Inventory Positioning*. Answers the question "Given our
+   system and environment, where should we place inventory to have the
+   best protection?" and determines where should decoupling points of
+   inventory be placed.
+2. *Buffer Profiles and Levels*. Determine the amount of protection at
+   those decoupling points.
+3. *Dynamic Adjustments*. Allow the company to adapt buffers to group
+   and individual part trait changes over time through the use of
+   several types of adjustments.
+4. *Demand Driven Planning*. Allow to launch purchase orders (POs),
+   manufacturing orders (MOs) and Transfer Orders (TOs) based on the
+   priority dictated by the buffers.
+5. *Visible and Collaborative Execution*. These POs, MOs and TOs have to
+   be effectively managed to synchronize with the changes that often
+   occur within the "execution horizon."
 
 These five components work together to greatly dampen, if not eliminate,
 the nervousness of traditional MRP systems and the bullwhip effect in
 complex and challenging environments.
 
-This approach provides real information about those parts that are
-truly at risk of negatively impacting the planned availability of inventory.
+This approach provides real information about those parts that are truly
+at risk of negatively impacting the planned availability of inventory.
 
-DDMRP sorts the significant few items that require attention from
-the many parts that are being managed. Under the DDMRP approach,
-fewer planners can make better decisions more quickly. That means companies
+DDMRP sorts the significant few items that require attention from the
+many parts that are being managed. Under the DDMRP approach, fewer
+planners can make better decisions more quickly. That means companies
 will be better able to leverage their working and human capital.
 
-Demand Driven Material Requirements Planning is quickly being adopted
-by a wide variety of leading companies across the world.
+Demand Driven Material Requirements Planning is quickly being adopted by
+a wide variety of leading companies across the world.
 
 Some of the benefits reported by the DDMRP method include:
 
-* High fill rate performance
-* Lead time reductions
-* Inventory reductions, while improving customer service
-* Eliminate costs related to expedite
-* Planners see priorities instead of constantly fighting the conflicting
-  messages of MRP
+-  High fill rate performance
+-  Lead time reductions
+-  Inventory reductions, while improving customer service
+-  Eliminate costs related to expedite
+-  Planners see priorities instead of constantly fighting the
+   conflicting messages of MRP
 
 It is highly recommended to read the book 'Demand Driven Material
 Requirements Planning (DDMRP)' by Carol Ptak and Chad Smith.
@@ -93,183 +90,189 @@ Requirements Planning (DDMRP)' by Carol Ptak and Chad Smith.
 Installation
 ============
 
-We strongly recommend to modify the configuration of the reservation method
-to manual in the outgoing operation types (so deliveries
-related to Sales Orders aren't automatically reserved) and to avoid to
-reserve stock for specific moves, buffers are in fact a reservation of stock.
-However, while **reservation is discouraged**, it is still available to be
-used, in case of reserved stock be aware that the buffer will be blind to this
-transfers and stock and you are bypassing the DDMRP reordering flow.
+We strongly recommend to modify the configuration of the reservation
+method to manual in the outgoing operation types (so deliveries related
+to Sales Orders aren't automatically reserved) and to avoid to reserve
+stock for specific moves, buffers are in fact a reservation of stock.
+However, while **reservation is discouraged**, it is still available to
+be used, in case of reserved stock be aware that the buffer will be
+blind to this transfers and stock and you are bypassing the DDMRP
+reordering flow.
 
 Configuration
 =============
 
 Scheduled actions
-~~~~~~~~~~~~~~~~~
+-----------------
 
-* Go to *Settings > Technical*.
-* 'DDMRP Buffer ADU calculation'. Computes the Average Daily Usage for all
-  Buffers.
-* 'Reordering Rule DDMRP calculation'. Computes the Qualified Demand, Net
-  Flow Position, Planning and Execution priorities for all Buffers.
+-  Go to *Settings > Technical*.
+-  'DDMRP Buffer ADU calculation'. Computes the Average Daily Usage for
+   all Buffers.
+-  'Reordering Rule DDMRP calculation'. Computes the Qualified Demand,
+   Net Flow Position, Planning and Execution priorities for all Buffers.
 
 Decoupled Lead Time computation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 The DLT is automatically computed by the system.
 
-For manufactured products' buffers just remember to provide and
-set properly the following information:
+For manufactured products' buffers just remember to provide and set
+properly the following information:
 
-* The *Manufacturing Lead Time* for the manufactured product. It can be found
-  at the product form view under the tab *Sales*.
-* The *Delivery Lead Time* for the preferred vendor of a product. This is
-  important for the products which are purchased and are components in any
-  Bill of Materials.
+-  The *Manufacturing Lead Time* for the manufactured product. It can be
+   found at the product form view under the tab *Sales*.
+-  The *Delivery Lead Time* for the preferred vendor of a product. This
+   is important for the products which are purchased and are components
+   in any Bill of Materials.
 
 For purchased/distributed products' buffers the logic is simpler.
 
-* In the first place the system will look if there are Vendors for the product,
-  if so it will use the *Delivery Lead Time* of the preferred one.
-* In case of absence of vendors, the *Lead Time* at the bottom of the Buffer
-  form view will be used.
+-  In the first place the system will look if there are Vendors for the
+   product, if so it will use the *Delivery Lead Time* of the preferred
+   one.
+-  In case of absence of vendors, the *Lead Time* at the bottom of the
+   Buffer form view will be used.
 
 Usage
 =====
 
 To easily identify were are you maintaining buffers in your Bill of
-Materials, you will need to first provide location information on the Bills
-of Materials.
+Materials, you will need to first provide location information on the
+Bills of Materials.
 
-* Go to *Manufacturing / Products / Bill of Materials* and update the
-  'Location' in all the Bill of Materials and associated lines,
-  indicating where will the parts be placed/used during the manufacturing
-  process.
-
-* Print the report 'BOM Structure' to display where in your BOM are you
-  maintaining buffers, and to identify the Lead Time (LT) of each product, and
-  Decouple Lead Time (DLT).
-
+-  Go to *Manufacturing / Products / Bill of Materials* and update the
+   'Location' in all the Bill of Materials and associated lines,
+   indicating where will the parts be placed/used during the
+   manufacturing process.
+-  Print the report 'BOM Structure' to display where in your BOM are you
+   maintaining buffers, and to identify the Lead Time (LT) of each
+   product, and Decouple Lead Time (DLT).
 
 Buffers
-~~~~~~~
+-------
 
-To list the list of inventory buffers, go to one of the following:
-* *Inventory / Master Data / Stock Buffer Planning*
-* *Inventory / Master Data / Reordering Rules*
-
+To list the list of inventory buffers, go to one of the following: \*
+*Inventory / Master Data / Stock Buffer Planning* \* *Inventory / Master
+Data / Reordering Rules*
 
 Buffer Profiles
-~~~~~~~~~~~~~~~
+---------------
+
 Buffer profiles make maintenance of buffers easier by grouping them in
 profiles. Changes applied to the profiles will be applicable in the
 associated buffer calculations.
 
-* Go to *Inventory / Configuration / Buffer Profiles*.
+-  Go to *Inventory / Configuration / Buffer Profiles*.
 
-The Buffer Profile Lead Time Factor influences the size of the Buffer Green
-zone. Items with longer lead times will usually have smaller green zones, which
-will translate in more frequent supply order generation.
-
-* Go to *Inventory / Configuration / Buffer Profile Lead Time Factor* to
-  chan
-
-The Buffer Profile Variability Factor influences the size of the Buffer Red
-Safety zone. Items with longer lead times will usually have smaller green
+The Buffer Profile Lead Time Factor influences the size of the Buffer
+Green zone. Items with longer lead times will usually have smaller green
 zones, which will translate in more frequent supply order generation.
 
-* Go to *Inventory / Configuration / Buffer Profile Lead Time Factor*.
+-  Go to *Inventory / Configuration / Buffer Profile Lead Time Factor*
+   to chan
 
-Usual factors should range from 0.2 (long lead time) to 0.8 (short lead time).
+The Buffer Profile Variability Factor influences the size of the Buffer
+Red Safety zone. Items with longer lead times will usually have smaller
+green zones, which will translate in more frequent supply order
+generation.
 
+-  Go to *Inventory / Configuration / Buffer Profile Lead Time Factor*.
+
+Usual factors should range from 0.2 (long lead time) to 0.8 (short lead
+time).
 
 Product attributes
-~~~~~~~~~~~~~~~~~~
+------------------
 
-* For manufactured products, go to *Manufacturing / Products* and
-  update the 'Manufacturing Lead Time' field, available in the tab *Inventory*.
-* For purchased products, go to go to *Purchasing / Products* and update the
-  *Delivery Lead Time* for each vendor, available in tab *Purchase* and section
-  *Vendors*.
-
+-  For manufactured products, go to *Manufacturing / Products* and
+   update the 'Manufacturing Lead Time' field, available in the tab
+   *Inventory*.
+-  For purchased products, go to go to *Purchasing / Products* and
+   update the *Delivery Lead Time* for each vendor, available in tab
+   *Purchase* and section *Vendors*.
 
 ADU Calculation Methods
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-The Average Daily Usage (ADU) defines the frequency of demand of a product in a
-certain location. It can be computed in different ways, which you can configure
-with ADU calculation methods as follows:
+The Average Daily Usage (ADU) defines the frequency of demand of a
+product in a certain location. It can be computed in different ways,
+which you can configure with ADU calculation methods as follows:
 
-#. Go to *Inventory / Configuration / DDMRP / ADU calculation methods*.
-#. Indicate a name, a calculation method (fixed, past-looking,
+1. Go to *Inventory / Configuration / DDMRP / ADU calculation methods*.
+2. Indicate a name, a calculation method (fixed, past-looking,
    future-looking or blended).
-#. Fill the corresponding period (past, future or both for blended method) to
-   specify the length of period consideration (in days).
-#. Indicate the source of information: stock moves or demand estimates.
-#. If you use the blended method fill also the *Past Factor* and
-   *Future Factor*.
+3. Fill the corresponding period (past, future or both for blended
+   method) to specify the length of period consideration (in days).
+4. Indicate the source of information: stock moves or demand estimates.
+5. If you use the blended method fill also the *Past Factor* and *Future
+   Factor*.
 
-If you do not have prior history of stock moves in your system, it is advised
-to use fixed method or start to work on future estimates. If you have
-past-history of stock moves, best use past-looking method or blended method.
+If you do not have prior history of stock moves in your system, it is
+advised to use fixed method or start to work on future estimates. If you
+have past-history of stock moves, best use past-looking method or
+blended method.
 
-The ADU is computed every day by default in a background job independently
-from the other buffer fields. This computation can be done with less frequency
-but it is not recommended to run it less than weekly or more than daily.
-Circumstantially, If you need to force the calculation of the ADU go to
-*Inventory / Configuration / DDMRP / Run DDMRP* and click on
-*Run ADU calculation*.
+The ADU is computed every day by default in a background job
+independently from the other buffer fields. This computation can be done
+with less frequency but it is not recommended to run it less than weekly
+or more than daily. Circumstantially, If you need to force the
+calculation of the ADU go to *Inventory / Configuration / DDMRP / Run
+DDMRP* and click on *Run ADU calculation*.
 
 Known issues / Roadmap
 ======================
 
-The DDMRP `roadmap <https://github.com/OCA/ddmrp/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement>`_
-and `known issues <https://github.com/OCA/ddmrp/issues?q=is%3Aopen+is%3Aissue+label%3Abug>`_ can
-be found on GitHub.
+The DDMRP
+`roadmap <https://github.com/OCA/ddmrp/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement>`__
+and `known
+issues <https://github.com/OCA/ddmrp/issues?q=is%3Aopen+is%3Aissue+label%3Abug>`__
+can be found on GitHub.
 
 Changelog
 =========
 
 13.0.1.1.0 (2020-07-01)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 **Features**
 
-- - New setting *Update NFP on Stock Buffers on relevant events*.
-  - New dedicated settings block. (`#50 <https://github.com/OCA/ddmrp/issues/50>`_)
+-  
 
+   -  New setting *Update NFP on Stock Buffers on relevant events*.
+   -  New dedicated settings block.
+      (`#50 <https://github.com/OCA/ddmrp/issues/50>`__)
 
 13.0.1.0.0 (2020-06-11)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-* [MIG/REF] Migration of module to v13 and refactor (added new dedicated model
-  for stock buffer).
+-  [MIG/REF] Migration of module to v13 and refactor (added new
+   dedicated model for stock buffer).
 
 11.0.1.3.0 (2019-02-21)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-* [ADD] New chart that depict information about the supply and demand (
-  displaying also de order spike threshold and horizon) for a buffer.
-  (`#40 <https://github.com/OCA/ddmrp/pull/40>`_)
+-  [ADD] New chart that depict information about the supply and demand (
+   displaying also de order spike threshold and horizon) for a buffer.
+   (`#40 <https://github.com/OCA/ddmrp/pull/40>`__)
 
 11.0.1.2.0 (2019-01-29)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-* [IMP] Performance improvement of execution priority calculation and ADU.
-  (`#36 <https://github.com/OCA/ddmrp/pull/36>`_)
-* [IMP] Use the minimum quantity to adjust the procure recommendation.
-  (`#37 <https://github.com/OCA/ddmrp/pull/37>`_)
+-  [IMP] Performance improvement of execution priority calculation and
+   ADU. (`#36 <https://github.com/OCA/ddmrp/pull/36>`__)
+-  [IMP] Use the minimum quantity to adjust the procure recommendation.
+   (`#37 <https://github.com/OCA/ddmrp/pull/37>`__)
 
 11.0.1.1.0 (2018-08-31)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-* [IMP] Implemented Blended ADU calculation method.
-  (`#23 <https://github.com/OCA/ddmrp/pull/23>`_)
+-  [IMP] Implemented Blended ADU calculation method.
+   (`#23 <https://github.com/OCA/ddmrp/pull/23>`__)
 
 11.0.1.0.0 (2018-07-16)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-* Start of the history
+-  Start of the history
 
 Bug Tracker
 ===========
@@ -277,7 +280,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/ddmrp/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/ddmrp/issues/new?body=module:%20ddmrp%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/ddmrp/issues/new?body=module:%20ddmrp%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -285,28 +288,29 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * ForgeFlow
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
-* Lois Rilo Antelo <lois.rilo@forgeflow.com>
-* Guewen Baconnier <guewen.baconnier@camptocamp.com>
-* Adria Gil Sorribes <adria.gil@forgeflow.com>
-* Christopher Ormaza <chris.ormaza@forgeflow.com>
+-  Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
+-  Lois Rilo Antelo <lois.rilo@forgeflow.com>
+-  Guewen Baconnier <guewen.baconnier@camptocamp.com>
+-  Adria Gil Sorribes <adria.gil@forgeflow.com>
+-  Christopher Ormaza <chris.ormaza@forgeflow.com>
 
 Other credits
-~~~~~~~~~~~~~
+-------------
 
-The initial development of this module has been financially supported by:
+The initial development of this module has been financially supported
+by:
 
-* Aleph Objects, Inc.
+-  Aleph Objects, Inc.
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -332,6 +336,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-JordiBForgeFlow| |maintainer-LoisRForgeFlow| |maintainer-ChrisOForgeFlow| 
 
-This module is part of the `OCA/ddmrp <https://github.com/OCA/ddmrp/tree/16.0/ddmrp>`_ project on GitHub.
+This module is part of the `OCA/ddmrp <https://github.com/OCA/ddmrp/tree/17.0/ddmrp>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

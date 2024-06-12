@@ -27,7 +27,7 @@ try:
     )
     from bokeh.plotting import figure
     from bokeh.util.serialization import convert_datetime_type
-except (ImportError, IOError) as err:
+except (OSError, ImportError) as err:
     _logger.debug(err)
 
 
@@ -289,7 +289,7 @@ class StockBuffer(models.Model):
         self.ensure_one()
         profile = self.buffer_profile_id
         dlt = int(self.dlt)
-        if force_lt and isinstance(force_lt, (int, float)):
+        if force_lt and isinstance(force_lt, (int | float)):
             dlt = force_lt
         if profile.item_type == "distributed":
             max_proc_time = profile.distributed_reschedule_max_proc_time
@@ -542,7 +542,6 @@ class StockBuffer(models.Model):
     def _compute_procure_recommended_qty(self):
         subtract_qty = self.sudo()._quantity_in_progress()
         for rec in self:
-
             procure_recommended_qty = 0.0
             # uses _origin because onchange uses a NewId with the record wrapped
             if rec._origin and rec.net_flow_position < rec.top_of_yellow:
@@ -1034,8 +1033,8 @@ class StockBuffer(models.Model):
                 rec.product_vendor_code = False
                 continue
             supplier_info = rec._get_product_sellers().filtered(
-                lambda r: r.partner_id == rec.main_supplier_id
-                and r.product_id == rec.product_id
+                lambda r: r.partner_id == rec.main_supplier_id  # noqa: B023
+                and r.product_id == rec.product_id  # noqa: B023
             )
             rec.product_vendor_code = fields.first(supplier_info).product_code
 
@@ -1605,10 +1604,11 @@ class StockBuffer(models.Model):
             demand_by_days[move_date] = 0.0
         for move in moves:
             date = move.date.date()
-            demand_by_days[
-                date
-            ] += move.product_qty - move.product_uom._compute_quantity(
-                move.reserved_availability, move.product_id.uom_id
+            demand_by_days[date] += (
+                move.product_qty
+                - move.product_uom._compute_quantity(
+                    move.reserved_availability, move.product_id.uom_id
+                )
             )
         return demand_by_days
 
@@ -1659,14 +1659,18 @@ class StockBuffer(models.Model):
                 ):
                     qualified_demand += demand_by_days.get(date, 0.0)
                 else:
-                    moves = moves.filtered(lambda x: x.date != date)
+                    moves = moves.filtered(
+                        lambda x: x.date != date  # noqa: B023
+                    )
                 if (
                     mrp_moves_by_days.get(date, 0.0) >= rec.order_spike_threshold
                     or date <= today
                 ):
                     qualified_demand += mrp_moves_by_days.get(date, 0.0)
                 else:
-                    mrp_moves = mrp_moves.filtered(lambda x: x.mrp_date != date)
+                    mrp_moves = mrp_moves.filtered(
+                        lambda x: x.mrp_date != date  # noqa: B023
+                    )
             rec.qualified_demand = qualified_demand
             rec.qualified_demand_stock_move_ids = moves
             rec.qualified_demand_mrp_move_ids = mrp_moves
@@ -1684,8 +1688,9 @@ class StockBuffer(models.Model):
                 #  https://github.com/odoo/odoo/pull/58966 is not merged.
                 #  Can be changed in v14.
                 pols = rec.purchase_line_ids.filtered(
-                    lambda l: l.date_planned > fields.Datetime.to_datetime(cut_date)
-                    and l.order_id.state in ("draft", "sent")
+                    lambda line: line.date_planned
+                    > fields.Datetime.to_datetime(cut_date)  # noqa: B023
+                    and line.order_id.state in ("draft", "sent")
                 )
                 rec.rfq_outside_dlt_qty = sum(pols.mapped("product_qty"))
             else:
@@ -1842,13 +1847,13 @@ class StockBuffer(models.Model):
         cut_date = self._get_incoming_supply_date_limit()
         if not outside_dlt:
             pols = self.purchase_line_ids.filtered(
-                lambda l: l.date_planned <= fields.Datetime.to_datetime(cut_date)
-                and l.state in ("draft", "sent")
+                lambda line: line.date_planned <= fields.Datetime.to_datetime(cut_date)
+                and line.state in ("draft", "sent")
             )
         else:
             pols = self.purchase_line_ids.filtered(
-                lambda l: l.date_planned > fields.Datetime.to_datetime(cut_date)
-                and l.state in ("draft", "sent")
+                lambda line: line.date_planned > fields.Datetime.to_datetime(cut_date)
+                and line.state in ("draft", "sent")
             )
         return pols
 
@@ -1992,7 +1997,7 @@ class StockBuffer(models.Model):
             for b in self.browse(buffer_chunk_ids).exists():
                 try:
                     i += 1
-                    _logger.debug("ddmrp cron_adu: {}. ({}/{})".format(b.name, i, j))
+                    _logger.debug(f"ddmrp cron_adu: {b.name}. ({i}/{j})")
                     if automatic:
                         with self.env.cr.savepoint():
                             b._calc_adu()
@@ -2053,7 +2058,7 @@ class StockBuffer(models.Model):
         for buffer_chunk_ids in split_every(self.CRON_DDMRP_CHUNKS, buffer_ids):
             for b in self.browse(buffer_chunk_ids).exists():
                 i += 1
-                _logger.debug("ddmrp cron: {}. ({}/{})".format(b.name, i, j))
+                _logger.debug(f"ddmrp cron: {b.name}. ({i}/{j})")
                 try:
                     if automatic:
                         with self.env.cr.savepoint():
@@ -2089,7 +2094,8 @@ class StockBuffer(models.Model):
                 return rule.location_src_id
             elif rule.procure_method == "make_to_order":
                 # If resupply from another warehouse, this rule can't be retrieved by
-                # method _get_rule, because that we try to get this rule bases on previous rule
+                # method _get_rule, because that we try to
+                # get this rule bases on previous rule
                 pull_rule = self.env["stock.rule"].search(
                     [
                         ("action", "in", ("pull", "pull_push")),

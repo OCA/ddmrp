@@ -68,8 +68,6 @@ class MrpProduction(models.Model):
             ]
         else:
             raise NotImplementedError(
-                "Search operator {} not implemented for value {}".format(
-                    operator, value
-                )
+                f"Search operator {operator} not implemented for value {value}"
             )
         return [("id", "in", found_ids)]
