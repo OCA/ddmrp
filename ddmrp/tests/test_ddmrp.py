@@ -406,7 +406,7 @@ class TestDdmrp(TestDdmrpCommon):
         picking.action_assign()
         self.buffer_a.invalidate_recordset()
         self.buffer_a.cron_actions()
-        self.assertEqual(picking.move_ids.reserved_availability, internal_qty)
+        self.assertEqual(picking.move_ids.quantity, internal_qty)
         self.assertEqual(self.buffer_a.qualified_demand, 0)
         expected_on_hand = 200
         self.assertEqual(
@@ -514,7 +514,7 @@ class TestDdmrp(TestDdmrpCommon):
         # Now we prepare the shipment of 150
         date_move = datetime.today()
         pickingOut = self.create_pickingoutA(date_move, 150)
-        pickingOut.move_ids.quantity_done = 150
+        pickingOut.move_ids.quantity = 150
         pickingOut._action_done()
         self.bufferModel.cron_ddmrp()
 
@@ -678,7 +678,7 @@ class TestDdmrp(TestDdmrpCommon):
 
         # Now we confirm the shipment of the 150
         pickingOut.action_assign()
-        pickingOut.move_ids.quantity_done = 150
+        pickingOut.move_ids.quantity = 150
         pickingOut._action_done()
         self.bufferModel.cron_ddmrp()
 

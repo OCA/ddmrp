@@ -5,7 +5,6 @@
         t-name="ddmrp.BomOverviewSpecialLine"
         t-inherit="mrp.BomOverviewSpecialLine"
         t-inherit-mode="extension"
-        owl="1"
     >
         <xpath expr="//td[@name='td_mrp_bom']" position="before">
             <td t-if="showBuffered" />

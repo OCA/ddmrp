@@ -1,12 +1,11 @@
 /** @odoo-module **/
 
-import {FloatField} from "@web/views/fields/float/float_field";
+import {Component, markup, onWillStart} from "@odoo/owl";
+import {FloatField, floatField} from "@web/views/fields/float/float_field";
 import {loadBundle} from "@web/core/assets";
 import {registry} from "@web/core/registry";
+import {usePopover} from "@web/core/popover/popover_hook";
 import {useService} from "@web/core/utils/hooks";
-import {useUniquePopover} from "@web/core/model_field_selector/unique_popover_hook";
-
-const {Component, markup, onWillStart} = owl;
 
 export class StockBufferPopover extends Component {
     setup() {
@@ -15,12 +14,12 @@ export class StockBufferPopover extends Component {
         onWillStart(async () => {
             await loadBundle({
                 jsLibs: [
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-3.1.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-3.1.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-3.1.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-tables-3.1.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-mathjax-3.1.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-3.1.1.min.js",
+                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-3.4.1.min.js",
+                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-3.4.1.min.js",
+                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-3.4.1.min.js",
+                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-tables-3.4.1.min.js",
+                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-mathjax-3.4.1.min.js",
+                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-3.4.1.min.js",
                 ],
             });
             var bufferId = this.props.record.resId;
@@ -69,9 +68,16 @@ export class StockBufferPopover extends Component {
 StockBufferPopover.template = "ddmrp.StockBufferPopover";
 
 export class StockBufferInfoWidget extends FloatField {
+    static props = {
+        ...FloatField.props,
+        color_from: {type: String, optional: true},
+        field: {type: String, optional: true},
+        buffer_id: {type: String, optional: true},
+    };
+
     setup() {
         super.setup();
-        this.popover = useUniquePopover();
+        this.popover = usePopover(StockBufferPopover, {position: "bottom-start"});
     }
 
     get classFromDecoration() {
@@ -86,9 +92,8 @@ export class StockBufferInfoWidget extends FloatField {
     showPopup(ev) {
         ev.stopPropagation();
         ev.preventDefault();
-        this.popover.add(
+        this.popover.open(
             ev.currentTarget,
-            this.constructor.components.Popover,
             {
                 bus: this.bus,
                 record: this.props.record,
@@ -103,26 +108,26 @@ export class StockBufferInfoWidget extends FloatField {
     }
 }
 
-StockBufferInfoWidget.components = {
-    ...StockBufferInfoWidget.components,
+StockBufferInfoWidget.template = "ddmrp.StockBufferInfoWidget";
+export const stockBufferInfoWidget = {
+    ...floatField,
+    component: StockBufferInfoWidget,
+};
+
+stockBufferInfoWidget.components = {
+    ...stockBufferInfoWidget.components,
     Popover: StockBufferPopover,
 };
 StockBufferInfoWidget.template = "ddmrp.StockBufferInfoWidget";
 
-StockBufferInfoWidget.props = {
-    ...StockBufferInfoWidget.props,
-    color_from: {type: String, optional: true},
-    field: {type: String, optional: true},
-    buffer_id: {type: String, optional: true},
-};
+const StockBufferInfoWidgetExtractProps = stockBufferInfoWidget.extractProps;
 
-const StockBufferInfoWidgetExtractProps = StockBufferInfoWidget.extractProps;
-StockBufferInfoWidget.extractProps = ({attrs, field}) => {
-    return Object.assign(StockBufferInfoWidgetExtractProps({attrs, field}), {
-        color_from: attrs.options.color_from,
-        field: attrs.options.field,
-        buffer_id: attrs.options.buffer_id,
+stockBufferInfoWidget.extractProps = ({attrs, options}) => {
+    return Object.assign(StockBufferInfoWidgetExtractProps({attrs, options}), {
+        color_from: options.color_from,
+        field: options.field,
+        buffer_id: options.buffer_id,
     });
 };
 
-registry.category("fields").add("stock_buffer_info", StockBufferInfoWidget);
+registry.category("fields").add("stock_buffer_info", stockBufferInfoWidget);
