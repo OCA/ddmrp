@@ -124,7 +124,6 @@ class TestDdmrpCommon(common.TransactionCase):
                 "uom_id": cls.uom_unit.id,
                 "default_code": "A",
                 "route_ids": [(6, 0, manufacture_route.ids)],
-                "produce_delay": 10.0,
             }
         )
         cls.component_a1 = cls.productModel.create(
@@ -140,6 +139,7 @@ class TestDdmrpCommon(common.TransactionCase):
             {
                 "product_tmpl_id": cls.productA.product_tmpl_id.id,
                 "product_id": cls.productA.id,
+                "produce_delay": 10.0,
             }
         )
         cls.bomlineModel.create(
@@ -510,7 +510,8 @@ class TestDdmrpCommon(common.TransactionCase):
     def _do_picking(self, picking, date):
         """Do picking with only one move on the given date."""
         picking.action_confirm()
-        picking.move_ids.quantity_done = picking.move_ids.product_uom_qty
+        picking.move_ids.quantity = picking.move_ids.product_qty
+        picking.move_ids.picked = True
         picking._action_done()
         for move in picking.move_ids:
             move.date = date
@@ -544,6 +545,5 @@ class TestDdmrpCommon(common.TransactionCase):
 
     def _do_move(self, move, date):
         move._action_confirm()
-        move.move_line_ids.qty_done = move.move_line_ids.reserved_uom_qty
         move._action_done()
         move.date = date

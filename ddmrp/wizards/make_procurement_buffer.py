@@ -136,9 +136,9 @@ class MakeProcurementBuffer(models.TransientModel):
         try:
             pg_obj.run(procurements)
         except UserError as error:
-            errors.append(error.name)
+            errors.append(error)
         if errors:
-            raise UserError("\n".join(errors))
+            raise UserError(errors)
         # Update buffer computed fields:
         buffers = self.mapped("item_ids.buffer_id")
         buffers.invalidate_recordset()

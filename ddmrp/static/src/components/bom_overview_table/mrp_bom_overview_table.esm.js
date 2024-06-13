@@ -3,7 +3,7 @@
 import {BomOverviewTable} from "@mrp/components/bom_overview_table/mrp_bom_overview_table";
 import {patch} from "@web/core/utils/patch";
 
-patch(BomOverviewTable.prototype, "ddmrp", {
+patch(BomOverviewTable.prototype, {
     // ---- Getters ----
 
     get showBuffered() {
@@ -11,7 +11,7 @@ patch(BomOverviewTable.prototype, "ddmrp", {
     },
 });
 
-patch(BomOverviewTable, "ddmrp", {
+patch(BomOverviewTable, {
     props: {
         ...BomOverviewTable.props,
         showOptions: {

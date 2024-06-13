@@ -24,6 +24,7 @@ class BomStructureReport(models.AbstractModel):
         bom_line=False,
         level=0,
         parent_bom=False,
+        parent_product=False,
         index=0,
         product_info=False,
         ignore_stock=False,
@@ -36,6 +37,7 @@ class BomStructureReport(models.AbstractModel):
             bom_line=bom_line,
             level=level,
             parent_bom=parent_bom,
+            parent_product=parent_product,
             index=index,
             product_info=product_info,
             ignore_stock=ignore_stock,
@@ -44,10 +46,10 @@ class BomStructureReport(models.AbstractModel):
         res["dlt"] = bom.dlt
         return res
 
-    @api.model
     def _get_component_data(
         self,
         parent_bom,
+        parent_product,
         warehouse,
         bom_line,
         line_quantity,
@@ -58,6 +60,7 @@ class BomStructureReport(models.AbstractModel):
     ):
         res = super()._get_component_data(
             parent_bom,
+            parent_product,
             warehouse,
             bom_line,
             line_quantity,
@@ -67,7 +70,7 @@ class BomStructureReport(models.AbstractModel):
             ignore_stock=ignore_stock,
         )
         if bom_line.product_id.bom_ids:
-            lead_time = bom_line.product_id.produce_delay
+            lead_time = bom_line.bom_id.produce_delay
         else:
             lead_time = (
                 bom_line.product_id.seller_ids

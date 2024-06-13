@@ -33,10 +33,7 @@
                         <div name="horizon_past">
                             <field name="horizon_past" class="oe_inline" /> days
                         </div>
-                        <field
-                                name="factor_past"
-                                attrs="{'invisible': [('method', '!=', 'blended')]}"
-                            />
+                        <field name="factor_past" invisible="method != 'blended'" />
                     </group>
                     <group name="future">
                         <field name="source_future" />
@@ -44,10 +41,7 @@
                         <div name="horizon_future">
                             <field name="horizon_future" class="oe_inline" /> days
                         </div>
-                        <field
-                                name="factor_future"
-                                attrs="{'invisible': [('method', '!=', 'blended')]}"
-                            />
+                        <field name="factor_future" invisible="method != 'blended'" />
                     </group>
                 </group>
                 </sheet>

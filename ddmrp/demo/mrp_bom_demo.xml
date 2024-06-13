@@ -4,6 +4,7 @@
     <record id="mrp_bom_fp01" model="mrp.bom">
         <field name="product_tmpl_id" ref="product_product_fp01_product_template" />
         <field name="product_uom_id" ref="uom.product_uom_unit" />
+        <field name="produce_delay">2</field>
         <field name="sequence">5</field>
     </record>
     <record id="mrp_bom_fp01_line_as01" model="mrp.bom.line">
@@ -17,6 +18,7 @@
     <record id="mrp_bom_as01" model="mrp.bom">
         <field name="product_tmpl_id" ref="product_product_as01_product_template" />
         <field name="product_uom_id" ref="uom.product_uom_unit" />
+        <field name="produce_delay">6</field>
         <field name="sequence">5</field>
     </record>
     <record id="mrp_bom_as01_line_rm01" model="mrp.bom.line">

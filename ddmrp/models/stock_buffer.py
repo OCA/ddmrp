@@ -371,7 +371,7 @@ class StockBuffer(models.Model):
             lambda line: line.location_id.is_sublocation_of(self.location_id)
             and not line.location_dest_id.is_sublocation_of(self.location_id)
         )
-        return sum(lines.mapped("reserved_qty"))
+        return sum(lines.mapped("quantity"))
 
     def _update_quantities_dict(self, product):
         self.ensure_one()
@@ -1607,7 +1607,7 @@ class StockBuffer(models.Model):
             demand_by_days[date] += (
                 move.product_qty
                 - move.product_uom._compute_quantity(
-                    move.reserved_availability, move.product_id.uom_id
+                    move.quantity, move.product_id.uom_id
                 )
             )
         return demand_by_days

@@ -30,8 +30,6 @@ class MrpBom(models.Model):
         string="Stock Location",
         compute="_compute_context_location",
     )
-    # This is a legacy field that can be removed in v17
-    location_id = fields.Many2one(related="context_location_id")
 
     def _get_search_buffer_domain(self):
         product = self.product_id
@@ -81,7 +79,7 @@ class MrpBom(models.Model):
 
     def _get_produce_delay(self):
         self.ensure_one()
-        return self.product_id.produce_delay or self.product_tmpl_id.produce_delay
+        return self.produce_delay
 
     def _get_longest_path(self):
         if not self.bom_line_ids:
@@ -162,8 +160,6 @@ class MrpBomLine(models.Model):
         compute="_compute_dlt",
     )
     context_location_id = fields.Many2one(related="bom_id.context_location_id")
-    # This is a legacy field that can be removed in v17
-    location_id = fields.Many2one(related="context_location_id")
 
     def _get_search_buffer_domain(self):
         product = self.product_id

@@ -1,16 +1,16 @@
 /** @odoo-module **/
-
 import {BomOverviewDisplayFilter} from "@mrp/components/bom_overview_display_filter/mrp_bom_overview_display_filter";
+import {_t} from "@web/core/l10n/translation";
 import {patch} from "@web/core/utils/patch";
 
-patch(BomOverviewDisplayFilter.prototype, "ddmrp", {
+patch(BomOverviewDisplayFilter.prototype, {
     setup() {
-        this._super.apply();
-        this.displayOptions.is_buffered = this.env._t("Buffered");
+        super.setup();
+        this.displayOptions.is_buffered = _t("Buffered");
     },
 });
 
-patch(BomOverviewDisplayFilter, "ddmrp", {
+patch(BomOverviewDisplayFilter, {
     props: {
         ...BomOverviewDisplayFilter.props,
         showOptions: {
