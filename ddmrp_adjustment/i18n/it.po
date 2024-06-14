@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-03-05 14:39+0000\n"
+"PO-Revision-Date: 2024-06-14 17:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -61,7 +61,7 @@ msgstr "Correzioni buffer"
 #. module: ddmrp_adjustment
 #: model:ir.actions.act_window,name:ddmrp_adjustment.ddmrp_adjustment_demand_action
 msgid "Buffer Adjustments Demand"
-msgstr ""
+msgstr "Richiesta correzioni buffer"
 
 #. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
@@ -87,7 +87,7 @@ msgstr "Azienda"
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__count_ddmrp_adjustment_demand
 msgid "Count Ddmrp Adjustment Demand"
-msgstr ""
+msgstr "Conteggio richieste correzioni DDRMP"
 
 #. module: ddmrp_adjustment
 #: model:ir.actions.act_window,name:ddmrp_adjustment.action_ddmrp_adjustment_sheet_wizard
@@ -146,7 +146,7 @@ msgstr "DAF applicato"
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__daf_text
 msgid "Daf Text"
-msgstr ""
+msgstr "Testo DAF"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__date_start
@@ -292,12 +292,12 @@ msgstr "Originato da"
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__parent_daf_applied
 msgid "Parent Daf Applied"
-msgstr ""
+msgstr "DAF padre applicato"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__parent_daf_text
 msgid "Parent Daf Text"
-msgstr ""
+msgstr "Testo DAF padre"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__date_range_id
@@ -364,12 +364,12 @@ msgstr "Valore"
 #. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.stock_buffer_view_form
 msgid "View DAFs Affecting Actual ADU"
-msgstr ""
+msgstr "Visualizza DAF riguardanti l'ADU attuale"
 
 #. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.stock_buffer_view_form
 msgid "View Demand from parent DAFs Affecting Actual ADU"
-msgstr ""
+msgstr "Visualizza la richiesta dal DAF padre che influenza l'ADU attuale"
 
 #. module: ddmrp_adjustment
 #. odoo-python
