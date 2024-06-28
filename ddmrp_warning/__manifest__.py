@@ -3,7 +3,7 @@
 
 {
     "name": "DDMRP Warning",
-    "version": "16.0.1.2.0",
+    "version": "16.0.1.2.1",
     "summary": "Adds configuration warnings on stock buffers.",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "development_status": "Beta",
