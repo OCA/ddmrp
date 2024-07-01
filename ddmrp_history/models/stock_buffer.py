@@ -14,7 +14,7 @@ try:
     from bokeh.embed import components
     from bokeh.models import DatetimeTickFormatter, HoverTool
     from bokeh.plotting import figure
-except (ImportError, IOError) as err:
+except (OSError, ImportError) as err:
     _logger.debug(err)
 
 
