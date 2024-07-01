@@ -54,9 +54,7 @@ class Buffer(models.Model):
                 try:
                     i += 1
                     _logger.debug(
-                        "ddmrp cron_generate_ddmrp_warnings: {}. ({}/{})".format(
-                            b.name, i, j
-                        )
+                        f"ddmrp cron_generate_ddmrp_warnings: {b.name}. ({i}/{j})"
                     )
                     if automatic:
                         with self.env.cr.savepoint():
