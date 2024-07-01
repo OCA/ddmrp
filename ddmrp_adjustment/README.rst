@@ -17,29 +17,30 @@ DDMRP Adjustment
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fddmrp-lightgray.png?logo=github
-    :target: https://github.com/OCA/ddmrp/tree/16.0/ddmrp_adjustment
+    :target: https://github.com/OCA/ddmrp/tree/17.0/ddmrp_adjustment
     :alt: OCA/ddmrp
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/ddmrp-16-0/ddmrp-16-0-ddmrp_adjustment
+    :target: https://translation.odoo-community.org/projects/ddmrp-17-0/ddmrp-17-0-ddmrp_adjustment
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/ddmrp&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/ddmrp&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-Allow to extend DDMRP App to be able to apply Adjustments for dynamically
-altering buffers for planned or anticipated events. This include:
+Allow to extend DDMRP App to be able to apply Adjustments for
+dynamically altering buffers for planned or anticipated events. This
+include:
 
-* **Demand Adjustment Factor (DAF)**: is a manipulation of the ADU input
-  within a specific time period. The system will look for existing DAFs when
-  computing the ADU for each buffer and apply them. The system will also
-  explode the resulting increase in demand of parent buffers to all their
-  children buffers using the BoM.
-* **Lead Time Adjustment Factor (LTAF)**: manipulates the Decoupled Lead Time
-  for an individual part or group of parts (buffer profile, same partner...)
-  to adjust for a planned or known expansions of LT.
-* Zone Adjustment Factor (ZAF): pending to implement
+-  **Demand Adjustment Factor (DAF)**: is a manipulation of the ADU
+   input within a specific time period. The system will look for
+   existing DAFs when computing the ADU for each buffer and apply them.
+   The system will also explode the resulting increase in demand of
+   parent buffers to all their children buffers using the BoM.
+-  **Lead Time Adjustment Factor (LTAF)**: manipulates the Decoupled
+   Lead Time for an individual part or group of parts (buffer profile,
+   same partner...) to adjust for a planned or known expansions of LT.
+-  Zone Adjustment Factor (ZAF): pending to implement
 
 **Table of contents**
 
@@ -51,55 +52,56 @@ Usage
 
 To plan buffer adjustments act as follows:
 
-#. Click on *Inventory > Demand Planning > Create Buffer Adjustments*.
-#. In the popup window fill the *Period* and *Date Range Type* to perform
-   your planning.
-#. Check the boxes of the *Factor to Apply* in which you are interested.
-#. Select the DDMRP Buffers where to apply this factors.
-#. Under the title *Sheet* you will see a generated sheet in which you can
-   fill the values for each period.
-#. Click *Validate* to confirm your planning and the system will end up
+1. Click on *Inventory > Demand Planning > Create Buffer Adjustments*.
+2. In the popup window fill the *Period* and *Date Range Type* to
+   perform your planning.
+3. Check the boxes of the *Factor to Apply* in which you are interested.
+4. Select the DDMRP Buffers where to apply this factors.
+5. Under the title *Sheet* you will see a generated sheet in which you
+   can fill the values for each period.
+6. Click *Validate* to confirm your planning and the system will end up
    showing you the newly created DDMRP adjustment records.
 
 Known issues / Roadmap
 ======================
 
-* Implement new factors
-* Reuse existing factor and modify them instead of always creating new ones.
-* Add small graph view in buffer form as a way to overview DAFs.
+-  Implement new factors
+-  Reuse existing factor and modify them instead of always creating new
+   ones.
+-  Add small graph view in buffer form as a way to overview DAFs.
 
 Changelog
 =========
 
 16.0.1.0.0 (2023-12-05)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-* Standard migration to v16.
+-  Standard migration to v16.
 
 15.0.1.0.0 (2022-03-04)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-* Standard migration to v15.
+-  Standard migration to v15.
 
 14.0.1.0.0 (2021-06-17)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-* Standard migration to v14.
+-  Standard migration to v14.
 
 13.0.1.0.0 (2020-07-02)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-* Standard migration to v13.
+-  Standard migration to v13.
 
 11.0.1.1.0 (2019-02-01)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-* Refactor data model to reduce complexity. Functionality unchanged.
+-  Refactor data model to reduce complexity. Functionality unchanged.
 
 11.0.1.0.0 (2018-08-01)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-* Start of the history
+-  Start of the history
 
 Bug Tracker
 ===========
@@ -107,7 +109,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/ddmrp/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/ddmrp/issues/new?body=module:%20ddmrp_adjustment%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/ddmrp/issues/new?body=module:%20ddmrp_adjustment%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -115,19 +117,19 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * ForgeFlow
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Lois Rilo <lois.rilo@forgeflow.com>
-* Jordi Ballester <jordi.ballester@forgeflow.com>
-* Akim Juillerat <akim.juillerat@camptocamp.com>
+-  Lois Rilo <lois.rilo@forgeflow.com>
+-  Jordi Ballester <jordi.ballester@forgeflow.com>
+-  Akim Juillerat <akim.juillerat@camptocamp.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -150,6 +152,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-JordiBForgeFlow| |maintainer-LoisRForgeFlow| 
 
-This module is part of the `OCA/ddmrp <https://github.com/OCA/ddmrp/tree/16.0/ddmrp_adjustment>`_ project on GitHub.
+This module is part of the `OCA/ddmrp <https://github.com/OCA/ddmrp/tree/17.0/ddmrp_adjustment>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

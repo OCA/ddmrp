@@ -124,7 +124,7 @@ class StockBuffer(models.Model):
                 location = line.location_id
                 line_boms = line.product_id.bom_ids
                 child_bom = line_boms.filtered(
-                    lambda bom: bom.location_id == location
+                    lambda bom: bom.location_id == location  # noqa: B023
                 ) or line_boms.filtered(lambda b: not b.location_id)
                 if child_bom:
                     line_qty = line.product_uom_id._compute_quantity(
@@ -185,8 +185,7 @@ class StockBuffer(models.Model):
                 prev = rec.dlt
                 rec.dlt *= ltaf
                 _logger.debug(
-                    "LTAF=%s applied to %s. DLT: %s -> %s"
-                    % (ltaf, rec.name, prev, rec.dlt)
+                    f"LTAF={ltaf} applied to {rec.name}. DLT: {prev} -> {rec.dlt}"
                 )
         return res
 
