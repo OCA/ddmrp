@@ -81,7 +81,7 @@ class PurchaseOrderLine(models.Model):
         move_model = self.env["stock.move"]
         for rec in self.filtered(lambda r: not r.buffer_ids):
             mto_move = move_model.search(
-                [("created_purchase_line_id", "=", rec.id)], limit=1
+                [("created_purchase_line_ids", "in", rec.id)], limit=1
             )
             if mto_move:
                 # MTO lines are not accounted in MTS stock buffers.
