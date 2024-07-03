@@ -13,7 +13,7 @@ class TestAdjustmentWizard(TestDDMRPAdjustmentCommon):
         self.assertEqual(len(wiz.line_ids), 0)
         wiz.apply_daf = True
         wiz.apply_ltaf = True
-        wiz._onchange_sheet()
+        wiz.action_refresh()
         self.assertEqual(len(wiz.line_ids), 6)
 
         next_month = self.now + relativedelta(months=1)

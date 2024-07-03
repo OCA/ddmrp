@@ -29,7 +29,14 @@
                 </group>
                 <group name="factor_sheet" string="Sheet">
                     <p colspan="2">Fill the factors to apply in each period for all the
-                       selected Buffers.</p>
+                       selected Buffers. To refresh the list please click on the following button.</p>
+                    <button
+                        name="action_refresh"
+                        type="object"
+                        icon="fa-refresh"
+                        string="Refresh Grid"
+                        colspan="2"
+                    />
                     <br />
                     <field
                         name="line_ids"

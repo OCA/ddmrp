@@ -15,7 +15,7 @@
                     class="oe_stat_button"
                     icon="fa-caret-square-o-down"
                     type="object"
-                    attrs="{'invisible': [('count_ddmrp_adjustment_demand', '=', 0)]}"
+                    invisible="count_ddmrp_adjustment_demand == 0"
                 />
             </xpath>
             <button name="action_view_future_adu_indirect_demand" position="after">
@@ -25,7 +25,7 @@
                     title="View DAFs Affecting Actual ADU"
                     name="action_view_affecting_adu"
                     type="object"
-                    attrs="{'invisible': [('daf_applied', '=', -1)]}"
+                    invisible="daf_applied == -1"
                 >
                     <field name="daf_text" readonly="1" />
                 </button>
@@ -33,7 +33,7 @@
                     title="View Demand from parent DAFs Affecting Actual ADU"
                     name="action_view_parent_affecting_adu"
                     type="object"
-                    attrs="{'invisible': [('parent_daf_applied', '=', -1)]}"
+                    invisible="parent_daf_applied == -1"
                 >
                     <field name="parent_daf_text" readonly="1" />
                 </button>

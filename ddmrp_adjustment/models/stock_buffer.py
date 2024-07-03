@@ -102,9 +102,7 @@ class StockBuffer(models.Model):
 
         def _create_demand(bom, factor=1, level=0, clt=0):
             level += 1
-            produce_delay = (
-                bom[0].product_id.produce_delay or bom[0].product_tmpl_id.produce_delay
-            )
+            produce_delay = bom[0].produce_delay
             clt += produce_delay
             for line in bom.bom_line_ids:
                 if line.is_buffered:
@@ -121,11 +119,11 @@ class StockBuffer(models.Model):
                             "date_end": date_end,
                         }
                     )
-                location = line.location_id
+                location = line.context_location_id
                 line_boms = line.product_id.bom_ids
                 child_bom = line_boms.filtered(
-                    lambda bom: bom.location_id == location  # noqa: B023
-                ) or line_boms.filtered(lambda b: not b.location_id)
+                    lambda bom: bom.context_location_id == location  # noqa: B023
+                ) or line_boms.filtered(lambda b: not b.context_location_id)
                 if child_bom:
                     line_qty = line.product_uom_id._compute_quantity(
                         line.product_qty, child_bom.product_uom_id

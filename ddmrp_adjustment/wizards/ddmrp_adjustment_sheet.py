@@ -77,22 +77,6 @@ class DdmrpAdjustmentSheet(models.TransientModel):
     apply_daf = fields.Boolean(string="Demand Adjustment Factor")
     apply_ltaf = fields.Boolean(string="Lead Time Adjustment Factor")
 
-    @api.onchange(
-        "date_range_type_id", "date_start", "date_end", "apply_daf", "apply_ltaf"
-    )
-    def _onchange_sheet(self):
-        self.line_ids = [(6, 0, [])]
-        if not (
-            self.date_range_type_id
-            and self.date_start
-            and self.date_end
-            and len(self.buffer_ids) > 0
-        ):
-            return
-        if self.apply_daf or self.apply_ltaf:
-            lines = self._prepare_lines()
-            self.line_ids = lines
-
     def button_validate(self):
         self.ensure_one()
         if not self.buffer_ids:
@@ -115,6 +99,24 @@ class DdmrpAdjustmentSheet(models.TransientModel):
             "res_model": "ddmrp.adjustment",
             "type": "ir.actions.act_window",
         }
+        return action
+
+    def action_refresh(self):
+        self.line_ids = [(6, 0, [])]
+        if not (
+            self.date_range_type_id
+            and self.date_start
+            and self.date_end
+            and len(self.buffer_ids) > 0
+        ):
+            return
+        if self.apply_daf or self.apply_ltaf:
+            lines = self._prepare_lines()
+            self.line_ids = lines
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "ddmrp_adjustment.action_ddmrp_adjustment_sheet_wizard"
+        )
+        action["res_id"] = self.id
         return action
 
 

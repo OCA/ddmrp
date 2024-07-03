@@ -39,7 +39,7 @@ class TestDDMRPAdjustmentCommon(TransactionCase):
             }
         )
         wiz.buffer_ids = [(4, self.buffer.id, False)]
-        wiz._onchange_sheet()
+        wiz.action_refresh()
         return wiz
 
     def setUp(self):

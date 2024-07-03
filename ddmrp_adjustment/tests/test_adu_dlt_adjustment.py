@@ -16,7 +16,7 @@ class TestAduAdjustment(TestDDMRPAdjustmentCommon):
     def test_adu_adjustment(self):
         wiz = self._create_adjustment_wizard(1)
         wiz.apply_daf = True
-        wiz._onchange_sheet()
+        wiz.action_refresh()
 
         values = {
             getattr(self, "month_%i_%i" % (self.now.year, self.now.month)): 1.5,
@@ -32,7 +32,7 @@ class TestAduAdjustment(TestDDMRPAdjustmentCommon):
     def test_dlt_adjustment(self):
         wiz = self._create_adjustment_wizard(1)
         wiz.apply_ltaf = True
-        wiz._onchange_sheet()
+        wiz.action_refresh()
 
         values = {
             getattr(self, "month_%i_%i" % (self.now.year, self.now.month)): 2,
