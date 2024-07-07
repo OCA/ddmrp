@@ -58,7 +58,6 @@ msgstr ""
 
 #. module: ddmrp_warning
 #: model:ir.actions.server,name:ddmrp_warning.ir_cron_ddmrp_warning_calculation_scheduler_action_ir_actions_server
-#: model:ir.cron,cron_name:ddmrp_warning.ir_cron_ddmrp_warning_calculation_scheduler_action
 msgid "DDMRP Buffer Warning calculation"
 msgstr ""
 
@@ -137,12 +136,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__id
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__id
 msgid "ID"
-msgstr ""
-
-#. module: ddmrp_warning
-#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition____last_update
-#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: ddmrp_warning

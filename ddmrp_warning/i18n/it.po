@@ -57,7 +57,6 @@ msgstr "Creato il"
 
 #. module: ddmrp_warning
 #: model:ir.actions.server,name:ddmrp_warning.ir_cron_ddmrp_warning_calculation_scheduler_action_ir_actions_server
-#: model:ir.cron,cron_name:ddmrp_warning.ir_cron_ddmrp_warning_calculation_scheduler_action
 msgid "DDMRP Buffer Warning calculation"
 msgstr "Calcolo avviso buffer DDMRP"
 
@@ -143,12 +142,6 @@ msgid "ID"
 msgstr "ID"
 
 #. module: ddmrp_warning
-#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition____last_update
-#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
-
-#. module: ddmrp_warning
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__write_uid
 #: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_item__write_uid
 msgid "Last Updated by"
@@ -230,8 +223,11 @@ msgstr "Con avvisi"
 #. module: ddmrp_warning
 #: model:ir.model.fields,help:ddmrp_warning.field_ddmrp_warning_definition__python_code
 msgid ""
-"Write Python code that defines when this warning should raise. The result of"
-" executing the expression must be a boolean."
+"Write Python code that defines when this warning should raise. The result of "
+"executing the expression must be a boolean."
 msgstr ""
 "Scrivere codice Python che definisce quando questo avviso dovrebbe "
 "comparire. Il risultato dell'espressione deve essere un booleano."
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
