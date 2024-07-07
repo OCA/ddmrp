@@ -88,11 +88,6 @@ msgid "ID"
 msgstr "ID"
 
 #. module: ddmrp_history
-#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
-
-#. module: ddmrp_history
 #: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__write_uid
 msgid "Last Updated by"
 msgstr "Ultimo aggiornamento di"
@@ -168,3 +163,6 @@ msgstr "Superiore della rossa"
 #: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__top_of_yellow
 msgid "Top of Yellow"
 msgstr "Superiore della gialla"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
