@@ -220,7 +220,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
 msgid ""
 "Fill the factors to apply in each period for all the\n"
-"                       selected Buffers."
+"                       selected Buffers. To refresh the list please click on "
+"the following button."
 msgstr ""
 
 #. module: ddmrp_adjustment
@@ -234,14 +235,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__id
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__id
 msgid "ID"
-msgstr ""
-
-#. module: ddmrp_adjustment
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment____last_update
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand____last_update
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet____last_update
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: ddmrp_adjustment
@@ -316,6 +309,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__product_id
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__product_id
 msgid "Product"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
+msgid "Refresh Grid"
 msgstr ""
 
 #. module: ddmrp_adjustment

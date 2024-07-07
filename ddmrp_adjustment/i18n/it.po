@@ -221,10 +221,9 @@ msgstr "Fattori da applicare"
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
 msgid ""
 "Fill the factors to apply in each period for all the\n"
-"                       selected Buffers."
+"                       selected Buffers. To refresh the list please click on "
+"the following button."
 msgstr ""
-"Compilare i fattori da applicare in ogni periodo per tutti\n"
-"                       i buffer selezionati."
 
 #. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_search
@@ -238,14 +237,6 @@ msgstr "Raggruppa per"
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__id
 msgid "ID"
 msgstr "ID"
-
-#. module: ddmrp_adjustment
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment____last_update
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand____last_update
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet____last_update
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__write_uid
@@ -322,6 +313,11 @@ msgid "Product"
 msgstr "Prodotto"
 
 #. module: ddmrp_adjustment
+#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
+msgid "Refresh Grid"
+msgstr ""
+
+#. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__sheet_id
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
 msgid "Sheet"
@@ -389,6 +385,16 @@ msgstr "Bisogna selezionare almeno un buffer."
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
 msgid "to"
 msgstr "a"
+
+#~ msgid ""
+#~ "Fill the factors to apply in each period for all the\n"
+#~ "                       selected Buffers."
+#~ msgstr ""
+#~ "Compilare i fattori da applicare in ogni periodo per tutti\n"
+#~ "                       i buffer selezionati."
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
 
 #~ msgid "DAF: *"
 #~ msgstr "DAF: *"
