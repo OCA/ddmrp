@@ -24,24 +24,13 @@ msgstr "# LdM Dónde se Utiliza"
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_move_line__state
 msgid ""
-"* New: When the stock move is created and not yet confirmed.\n"
-"* Waiting Another Move: This state can be seen when a move is waiting for "
-"another one, for example in a chained flow.\n"
-"* Waiting Availability: This state is reached when the procurement "
-"resolution is not straight forward. It may need the scheduler to run, a "
-"component to be manufactured...\n"
-"* Available: When products are reserved, it is set to 'Available'.\n"
-"* Done: When the shipment is processed, the state is 'Done'."
+"* New: The stock move is created but not confirmed.\n"
+"* Waiting Another Move: A linked stock move should be done before this one.\n"
+"* Waiting Availability: The stock move is confirmed but the product can't be "
+"reserved.\n"
+"* Available: The product of the stock move is reserved.\n"
+"* Done: The product has been transferred and the transfer has been confirmed."
 msgstr ""
-"* Nuevo: Cuando se crea el movimiento de stock y aún no está confirmado.\n"
-"* Esperando Otro Movimiento: Este estado se puede ver cuando un movimiento "
-"está esperando otro, por ejemplo en un flujo encadenado.\n"
-"* Disponibilidad de Espera: Este estado se alcanza cuando la resolución de "
-"la contratación no es directa. Es posible que necesite el programador para "
-"ejecutarse, un componente para ser fabricado...\n"
-"* Disponible: Cuando los productos están reservados, se establece en "
-"'Disponible'.\n"
-"* Listo: Cuando se procesa el envío, el estado es 'Listo'."
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
@@ -384,11 +373,6 @@ msgid "Create Procurement"
 msgstr "Crear Aprovisionamiento"
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_move__created_purchase_line_id
-msgid "Created Purchase Order Line"
-msgstr "Línea de Pedido de Compra Creada"
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__create_uid
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__create_uid
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__create_uid
@@ -430,13 +414,11 @@ msgstr "Ajustes DDMRP"
 
 #. module: ddmrp
 #: model:ir.actions.server,name:ddmrp.ir_cron_ddmrp_adu_calculation_scheduler_action_ir_actions_server
-#: model:ir.cron,cron_name:ddmrp.ir_cron_ddmrp_adu_calculation_scheduler_action
 msgid "DDMRP Buffer ADU calculation"
 msgstr "Cálculo del CPD del Búfer DDMRP"
 
 #. module: ddmrp
 #: model:ir.actions.server,name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action_ir_actions_server
-#: model:ir.cron,cron_name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action
 msgid "DDMRP Buffer calculation"
 msgstr "Cálculo del Búfer DDMRP"
 
@@ -839,20 +821,6 @@ msgstr "Tipo de Posición"
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__item_ids
 msgid "Items"
 msgstr "Posiciones"
-
-#. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time____last_update
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability____last_update
-msgid "Last Modified on"
-msgstr "Última Modificación el"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__write_uid
@@ -1696,9 +1664,7 @@ msgstr "Búferes de Stock y Empaquetados"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__context_location_id
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__location_id
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__context_location_id
-#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__location_id
 msgid "Stock Location"
 msgstr "Ubicación de Inventario"
 
@@ -2122,6 +2088,32 @@ msgstr "días"
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr "o"
+
+#~ msgid ""
+#~ "* New: When the stock move is created and not yet confirmed.\n"
+#~ "* Waiting Another Move: This state can be seen when a move is waiting for "
+#~ "another one, for example in a chained flow.\n"
+#~ "* Waiting Availability: This state is reached when the procurement "
+#~ "resolution is not straight forward. It may need the scheduler to run, a "
+#~ "component to be manufactured...\n"
+#~ "* Available: When products are reserved, it is set to 'Available'.\n"
+#~ "* Done: When the shipment is processed, the state is 'Done'."
+#~ msgstr ""
+#~ "* Nuevo: Cuando se crea el movimiento de stock y aún no está confirmado.\n"
+#~ "* Esperando Otro Movimiento: Este estado se puede ver cuando un "
+#~ "movimiento está esperando otro, por ejemplo en un flujo encadenado.\n"
+#~ "* Disponibilidad de Espera: Este estado se alcanza cuando la resolución "
+#~ "de la contratación no es directa. Es posible que necesite el programador "
+#~ "para ejecutarse, un componente para ser fabricado...\n"
+#~ "* Disponible: Cuando los productos están reservados, se establece en "
+#~ "'Disponible'.\n"
+#~ "* Listo: Cuando se procesa el envío, el estado es 'Listo'."
+
+#~ msgid "Created Purchase Order Line"
+#~ msgstr "Línea de Pedido de Compra Creada"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última Modificación el"
 
 #~ msgid "Quantity"
 #~ msgstr "Cantidad"
