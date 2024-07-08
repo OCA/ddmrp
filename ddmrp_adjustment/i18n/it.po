@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-06-14 17:42+0000\n"
+"PO-Revision-Date: 2024-07-08 08:59+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__adjustment_type
@@ -224,6 +224,9 @@ msgid ""
 "                       selected Buffers. To refresh the list please click on "
 "the following button."
 msgstr ""
+"Compilare i fattori da utilizzare in ogni periodo per tutti\n"
+"                       i buffer selezionati. Per aggiornare la lista fare "
+"clic sul seguente pulsante."
 
 #. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_search
@@ -315,7 +318,7 @@ msgstr "Prodotto"
 #. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
 msgid "Refresh Grid"
-msgstr ""
+msgstr "Aggiorna griglia"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__sheet_id
