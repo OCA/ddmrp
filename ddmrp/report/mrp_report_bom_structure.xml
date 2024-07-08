@@ -6,7 +6,7 @@
 
         <xpath expr="//td[@name='td_mrp_bom']" position="before">
             <td t-if="data['show_buffered']">
-                <span>
+                <span t-if="data['is_buffered']">
                     <img
                         src='/ddmrp/static/img/is_buffered.png'
                         style="width:30px;height:30px;padding:5px"
