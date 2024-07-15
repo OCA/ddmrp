@@ -69,21 +69,17 @@ class ReportDdmrpPartsPlanFlowIndex(models.Model):
 
     @property
     def _table_query(self):
-        return """
+        return f"""
                 WITH a AS
-                    (SELECT %s
+                    (SELECT {self._sub_select()}
                      FROM stock_buffer)
                 SELECT
-                    %s
+                    {self._select()}
                 FROM a
                 JOIN (SELECT
-                        %s
+                        {self._join_select()}
                        FROM a
                        GROUP BY order_frequency_group
                       ) AS b
                 ON a.order_frequency_group = b.order_frequency_group
-            """ % (
-            self._sub_select(),
-            self._select(),
-            self._join_select(),
-        )
+            """
