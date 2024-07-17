@@ -2077,14 +2077,9 @@ class StockBuffer(models.Model):
     def _values_source_location_from_route(self):
         return {"warehouse_id": self.warehouse_id}
 
-    def _source_location_from_route(self, route=None):
-        """Return the replenishment source location for distributed buffers
-        If no route is passed, it follows the source location of the rules of
-        all the routes it finds until it can no longer find a path.
-        If a route is passed, it stops at the final source location of the
-        rules of this route only.
-        """
-        current_location = self.location_id
+    def _source_location_from_route(self, procure_location=None):
+        """Return the replenishment source location for distributed buffers"""
+        current_location = procure_location or self.location_id
         rule_values = self._values_source_location_from_route()
         while current_location:
             rule = self.env["procurement.group"]._get_rule(
