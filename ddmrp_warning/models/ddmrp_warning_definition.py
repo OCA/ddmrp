@@ -23,7 +23,7 @@ class DdmrpWarningDefinition(models.Model):
     )
     severity = fields.Selection(
         selection=[("1_low", "Low"), ("2_mid", "Medium"), ("3_high", "High")],
-        default="mid",
+        default="2_mid",
     )
     active = fields.Boolean(default=True)
     warning_domain = fields.Char(
