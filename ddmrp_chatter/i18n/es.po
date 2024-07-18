@@ -122,11 +122,6 @@ msgid "Location"
 msgstr "Localización"
 
 #. module: ddmrp_chatter
-#: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__message_main_attachment_id
-msgid "Main Attachment"
-msgstr "Archivo Adjunto Principal"
-
-#. module: ddmrp_chatter
 #: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__procure_max_qty
 msgid "Maximum Procure Batch"
 msgstr "Lote Máximo de Abastecimiento"
@@ -286,3 +281,6 @@ msgid ""
 msgstr ""
 "Siempre que se vuelva a calcular el búfer, si esta opción está activada, se "
 "procurará automáticamente si es necesario."
+
+#~ msgid "Main Attachment"
+#~ msgstr "Archivo Adjunto Principal"

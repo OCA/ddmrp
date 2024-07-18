@@ -122,11 +122,6 @@ msgid "Location"
 msgstr "Ubicazione"
 
 #. module: ddmrp_chatter
-#: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__message_main_attachment_id
-msgid "Main Attachment"
-msgstr "Allegato principale"
-
-#. module: ddmrp_chatter
 #: model:ir.model.fields,field_description:ddmrp_chatter.field_stock_buffer__procure_max_qty
 msgid "Maximum Procure Batch"
 msgstr "Lotto approvvigionamento massimo"
@@ -286,6 +281,9 @@ msgid ""
 msgstr ""
 "Ogni volta che il buffer è ricalcolato, se questa opzione è impostata, se "
 "necessario approvvigionerà automaticamente."
+
+#~ msgid "Main Attachment"
+#~ msgstr "Allegato principale"
 
 #~ msgid "SMS Delivery error"
 #~ msgstr "Errore consegna SMS"
