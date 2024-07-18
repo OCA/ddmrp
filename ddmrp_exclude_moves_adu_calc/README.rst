@@ -17,22 +17,22 @@ DDMRP Exclude Moves ADU Calc
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fddmrp-lightgray.png?logo=github
-    :target: https://github.com/OCA/ddmrp/tree/16.0/ddmrp_exclude_moves_adu_calc
+    :target: https://github.com/OCA/ddmrp/tree/17.0/ddmrp_exclude_moves_adu_calc
     :alt: OCA/ddmrp
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/ddmrp-16-0/ddmrp-16-0-ddmrp_exclude_moves_adu_calc
+    :target: https://translation.odoo-community.org/projects/ddmrp-17-0/ddmrp-17-0-ddmrp_exclude_moves_adu_calc
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/ddmrp&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/ddmrp&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module adds new criteria to exclude moves from the calculation of the
-Average Daily Usage (ADU) on a Buffer, based on:
+This module adds new criteria to exclude moves from the calculation of
+the Average Daily Usage (ADU) on a Buffer, based on:
 
-* Locations
-* Specific stock moves
+-  Locations
+-  Specific stock moves
 
 **Table of contents**
 
@@ -44,23 +44,24 @@ Usage
 
 You can exclude specific moves or all moves towards a specific location:
 
-* Go to *Inventory > Reports > Stock Moves* and click on *Action > Exclude
-  from ADU* for a specific move or several.
-* Go to *Inventory > Configuration > WH Management > Locations* and check the
-  flag *Exclude this location from ADU calculation* for the desired locations.
+-  Go to *Inventory > Reports > Stock Moves* and click on *Action >
+   Exclude from ADU* for a specific move or several.
+-  Go to *Inventory > Configuration > WH Management > Locations* and
+   check the flag *Exclude this location from ADU calculation* for the
+   desired locations.
 
 Changelog
 =========
 
 13.0.1.0.0 (2021-03-15)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-* Standard migration of the module to v13.
+-  Standard migration of the module to v13.
 
 11.0.1.0.0 (2018-09-17)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-* Start of history. Migrated to OCA/ddmrp.
+-  Start of history. Migrated to OCA/ddmrp.
 
 Bug Tracker
 ===========
@@ -68,7 +69,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/ddmrp/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/ddmrp/issues/new?body=module:%20ddmrp_exclude_moves_adu_calc%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/ddmrp/issues/new?body=module:%20ddmrp_exclude_moves_adu_calc%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -76,25 +77,29 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * ForgeFlow
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
-* Lois Rilo Antelo <lois.rilo@forgeflow.com>
-* `Trobz <https://trobz.com>`_:
-    * Khoi Vo <khoivha@trobz.com>
+-  Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
+
+-  Lois Rilo Antelo <lois.rilo@forgeflow.com>
+
+-  `Trobz <https://trobz.com>`__:
+
+   -  Khoi Vo <khoivha@trobz.com>
 
 Other credits
-~~~~~~~~~~~~~
+-------------
 
-The migration of this module from 13.0 to 14.0 was financially supported by Camptocamp
+The migration of this module from 13.0 to 14.0 was financially supported
+by Camptocamp
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -117,6 +122,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-JordiBForgeFlow| |maintainer-LoisRForgeFlow| 
 
-This module is part of the `OCA/ddmrp <https://github.com/OCA/ddmrp/tree/16.0/ddmrp_exclude_moves_adu_calc>`_ project on GitHub.
+This module is part of the `OCA/ddmrp <https://github.com/OCA/ddmrp/tree/17.0/ddmrp_exclude_moves_adu_calc>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
