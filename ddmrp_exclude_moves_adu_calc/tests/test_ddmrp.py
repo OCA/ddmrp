@@ -160,7 +160,8 @@ class TestDdmrp(common.TransactionCase):
 
     def _do_picking(self, picking, date):
         picking.action_confirm()
-        picking.move_ids.quantity_done = picking.move_ids.product_uom_qty
+        picking.move_ids.quantity = picking.move_ids.product_qty
+        picking.move_ids.picked = True
         picking._action_done()
         for move in picking.move_ids:
             move.date = date
