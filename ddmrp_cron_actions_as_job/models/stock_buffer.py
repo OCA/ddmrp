@@ -13,16 +13,14 @@ class Buffer(models.Model):
         return {
             "identity_key": identity_exact,
             "priority": 15,
-            "description": "DDMRP Buffer calculation ({})".format(self.display_name),
+            "description": f"DDMRP Buffer calculation ({self.display_name})",
         }
 
     def _calc_adu_job_options(self):
         return {
             "identity_key": identity_exact,
             "priority": 15,
-            "description": "DDMRP Buffer ADU calculation ({})".format(
-                self.display_name
-            ),
+            "description": f"DDMRP Buffer ADU calculation ({self.display_name})",
         }
 
     def _register_hook(self):
