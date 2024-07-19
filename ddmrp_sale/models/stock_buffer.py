@@ -15,12 +15,13 @@ class StockBuffer(models.Model):
         comodel_name="sale.order.line",
     )
 
-    def _get_sale_source_location(self):
+    def _get_sale_source_location(self, route_id=False):
         self.ensure_one()
         proc_loc = self.env.ref("stock.stock_location_customers")
         values = {
             "warehouse_id": self.warehouse_id,
             "company_id": self.company_id,
+            "route_ids": route_id,
         }
         rule = self.env["procurement.group"]._get_rule(
             self.product_id, proc_loc, values
@@ -52,6 +53,15 @@ class StockBuffer(models.Model):
     def _search_sales_qualified_demand(self):
         domain = self._search_sales_qualified_demand_domain()
         so_lines = self.env["sale.order.line"].search(domain)
+        locations = self.env["stock.location"].search(
+            [("id", "child_of", [self.location_id.id])]
+        )
+        for so_line in so_lines:
+            if not so_line.route_id:
+                continue
+            source_location = self._get_sale_source_location(so_line.route_id)
+            if not source_location or source_location not in locations:
+                so_lines -= so_line
         return so_lines
 
     def _get_so_lines_by_days(self, so_lines):

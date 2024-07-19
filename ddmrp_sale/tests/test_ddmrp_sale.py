@@ -29,6 +29,37 @@ class TestDDMRPSale(TestDdmrpCommon):
             }
         )
 
+        # Create dropship route
+        cls.route = cls.env["stock.route"].create(
+            {
+                "name": "Dropship",
+                "sale_selectable": True,
+            }
+        )
+        supplier_location = cls.env.ref("stock.stock_location_suppliers")
+        customer_location = cls.env.ref("stock.stock_location_customers")
+        picking_type = cls.env["stock.picking.type"].create(
+            {
+                "name": "Dropship",
+                "warehouse_id": False,
+                "code": "incoming",
+                "default_location_src_id": supplier_location.id,
+                "default_location_dest_id": customer_location.id,
+                "sequence_code": "DS",
+            }
+        )
+        cls.env["stock.rule"].create(
+            {
+                "name": "Dropship",
+                "route_id": cls.route.id,
+                "location_src_id": supplier_location.id,
+                "location_dest_id": customer_location.id,
+                "action": "buy",
+                "picking_type_id": picking_type.id,
+                "procure_method": "make_to_stock",
+            }
+        )
+
     @classmethod
     def _refresh_involved_buffers(cls):
         cls.buffer_a.invalidate_recordset()
@@ -113,3 +144,38 @@ class TestDDMRPSale(TestDdmrpCommon):
         self._refresh_involved_buffers()
         diff = self.buffer_a.qualified_demand - self.buffer_internal.qualified_demand
         self.assertEqual(diff, 24)
+
+    def test_04_sales_quotation_not_included_as_demand(self):
+        self._refresh_involved_buffers()
+        self.assertEqual(
+            self.buffer_a.qualified_demand, self.buffer_internal.qualified_demand
+        )
+        so_date = dt.today() + td(days=2)
+        so = self.so_model.create(
+            {
+                "partner_id": self.customer.id,
+                "partner_invoice_id": self.customer.id,
+                "partner_shipping_id": self.customer.id,
+                "commitment_date": so_date,
+                "order_line": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.productA.id,
+                            "name": "cool product",
+                            "price_unit": 100.0,
+                            "product_uom_qty": 17,  # it is a spike.
+                            "commitment_date": so_date,
+                            "route_id": self.route.id,
+                        },
+                    )
+                ],
+            }
+        )
+        self.assertEqual(so.state, "draft")
+        self._refresh_involved_buffers()
+        # Qualified demand ignored as the line route does not affect the buffer
+        # location
+        self.assertEqual(self.buffer_a.qualified_demand, 0)
+        self.assertEqual(self.buffer_internal.qualified_demand, 0)
