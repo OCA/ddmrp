@@ -24,8 +24,7 @@ msgstr "Escudere dal calcolo ADU"
 #. module: ddmrp_exclude_moves_adu_calc_sales
 #: model:ir.model.fields,help:ddmrp_exclude_moves_adu_calc_sales.field_sale_order_line__exclude_from_adu
 msgid ""
-"If this flag is set related stock moves will be excluded from ADU "
-"calculation"
+"If this flag is set related stock moves will be excluded from ADU calculation"
 msgstr ""
 "Se questa opzione è attiva, i movimenti di magazzino relativi verranno "
 "esclusi dal calcolo ADU"
