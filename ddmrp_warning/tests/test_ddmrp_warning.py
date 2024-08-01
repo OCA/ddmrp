@@ -45,3 +45,17 @@ class TestDDMRPWarning(TestDdmrpCommon):
         self._refresh_involved_buffers()
         new_count = len(self.buffer_warnings.ddmrp_warning_item_ids)
         self.assertEqual(prev_count - new_count, 1)
+
+    def test_02_buffer_archive(self):
+        self._refresh_involved_buffers()
+        self.assertTrue(self.buffer_warnings.ddmrp_warning_item_ids)
+        self.buffer_warnings.active = False
+        self.assertFalse(self.buffer_warnings.ddmrp_warning_item_ids)
+
+    def test_03_definition_archive(self):
+        self._refresh_involved_buffers()
+        self.assertTrue(self.spike_warning.ddmrp_warning_item_ids)
+        self.assertTrue(self.buffer_warnings.ddmrp_warning_item_ids)
+        self.spike_warning.active = False
+        self.assertFalse(self.spike_warning.ddmrp_warning_item_ids)
+        self.assertFalse(self.buffer_warnings.ddmrp_warning_item_ids)
