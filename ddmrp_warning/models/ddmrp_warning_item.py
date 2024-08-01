@@ -11,6 +11,7 @@ class DdmrpWarningItem(models.Model):
 
     warning_definition_id = fields.Many2one(
         comodel_name="ddmrp.warning.definition",
+        ondelete="cascade",
     )
     buffer_id = fields.Many2one(comodel_name="stock.buffer", ondelete="cascade")
     name = fields.Char(

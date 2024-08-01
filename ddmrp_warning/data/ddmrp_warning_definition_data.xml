@@ -15,7 +15,7 @@
         <field name="name">Quantity multiple bigger than MOQ</field>
         <field
             name="python_code"
-        >buffer.minimum_order_quantity &lt; buffer.qty_multiple</field>
+        >buffer.minimum_order_quantity &gt; 0 and buffer.minimum_order_quantity &lt; buffer.qty_multiple</field>
         <field name="severity">2_mid</field>
     </record>
     <record

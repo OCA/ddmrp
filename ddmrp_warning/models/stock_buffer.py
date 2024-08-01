@@ -68,3 +68,10 @@ class Buffer(models.Model):
             if auto_commit:
                 self._cr.commit()  # pylint: disable=E8102
         return True
+
+    def write(self, vals):
+        # Unlink warning items when buffer is archived
+        res = super().write(vals)
+        if "active" in vals and not vals.get("active"):
+            self.ddmrp_warning_item_ids.unlink()
+        return res
