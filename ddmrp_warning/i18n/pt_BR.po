@@ -87,6 +87,7 @@ msgid "DDMRP Warnings"
 msgstr ""
 
 #. module: ddmrp_warning
+#: model:ir.model.fields,field_description:ddmrp_warning.field_ddmrp_warning_definition__ddmrp_warning_item_ids
 #: model:ir.model.fields,field_description:ddmrp_warning.field_stock_buffer__ddmrp_warning_item_ids
 msgid "Ddmrp Warning Item"
 msgstr ""
