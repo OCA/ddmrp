@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-05-02 01:34+0000\n"
+"PO-Revision-Date: 2024-09-19 01:06+0000\n"
 "Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es_AR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__used_in_bom_count
@@ -31,6 +31,13 @@ msgid ""
 "* Available: The product of the stock move is reserved.\n"
 "* Done: The product has been transferred and the transfer has been confirmed."
 msgstr ""
+"* Nuevo: el movimiento de inventario se ha creado pero no se ha confirmado.\n"
+"* Esperando otro movimiento: se debe realizar un movimiento de inventario "
+"vinculado antes de este.\n"
+"* Esperando disponibilidad: el movimiento de inventario se ha confirmado "
+"pero no se puede reservar el producto.\n"
+"* Disponible: el producto del movimiento de inventario está reservado.\n"
+"* Hecho: el producto se ha transferido y se ha confirmado la transferencia."
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
@@ -642,7 +649,7 @@ msgstr "Obtener configuración de advertencias para búferes de stock."
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_move_tree
 msgid "Go to Source"
-msgstr ""
+msgstr "Ir al Recurso"
 
 #. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__mrp_production__execution_priority_level__3_green
@@ -1037,6 +1044,7 @@ msgstr "No hay demanda detectada."
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "No stock available in source location for distributed buffer"
 msgstr ""
+"No hay stock disponible en la ubicación de origen para el búfer distribuido"
 
 #. module: ddmrp
 #. odoo-python
@@ -1571,6 +1579,9 @@ msgid ""
 "rescheduling.                     Press this button to display the involved "
 "RFQs"
 msgstr ""
+"Algunas cantidades de RFQ están fuera del horizonte de DLT y pueden requerir "
+"una reprogramación.                     Presione este botón para visualizar "
+"las RFQ involucradas"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
@@ -1579,6 +1590,10 @@ msgid ""
 "rescheduling.                                          Press this button to "
 "display the involved supply orders"
 msgstr ""
+"Algunas solicitudes de cotización entrantes están fuera del horizonte de DLT "
+"y pueden requerir una "
+"reprogramación.                                          Presione este botón "
+"para visualizar las órdenes de suministro involucradas"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
@@ -1587,6 +1602,9 @@ msgid ""
 "rescheduling.                                          Press this button to "
 "display the involved supply orders"
 msgstr ""
+"Algunas cantidades entrantes están fuera del horizonte de DLT y es posible "
+"que sea necesario reprogramarlas.                                          "
+"Presione este botón para visualizar los pedidos de suministro involucrados"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
@@ -1683,7 +1701,7 @@ msgstr "Consumo del Año Pasado del Movimiento de Stock"
 #: code:addons/ddmrp/models/stock_move.py:0
 #, python-format
 msgid "Stock Move Source"
-msgstr ""
+msgstr "Recurso de Movimiento de Inventario"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_move_consumption_pivot
@@ -1920,7 +1938,7 @@ msgstr "Ver ADU (Pasado - Demanda Indirecta)"
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "View Incoming Moves (Within DLT)"
-msgstr ""
+msgstr "Ver Movimientos de Entrada (Sin DLT)"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
