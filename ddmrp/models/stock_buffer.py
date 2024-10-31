@@ -1195,6 +1195,12 @@ class StockBuffer(models.Model):
         help="Request for Quotation total quantity that is planned outside of "
         "the DLT horizon.",
     )
+    rfq_inside_dlt_qty = fields.Float(
+        string="RFQ Qty (Inside DLT)",
+        readonly=True,
+        help="Request for Quotation total quantity that is planned inside of "
+        "the DLT horizon.",
+    )
     net_flow_position = fields.Float(
         digits="Product Unit of Measure",
         readonly=True,
@@ -1683,18 +1689,13 @@ class StockBuffer(models.Model):
             outside_dlt_moves = self._search_stock_moves_incoming(outside_dlt=True)
             rec.incoming_outside_dlt_qty = sum(outside_dlt_moves.mapped("product_qty"))
             if rec.item_type == "purchased":
-                cut_date = rec._get_incoming_supply_date_limit()
-                # FIXME: filter using order_id.state while
-                #  https://github.com/odoo/odoo/pull/58966 is not merged.
-                #  Can be changed in v14.
-                pols = rec.purchase_line_ids.filtered(
-                    lambda line: line.date_planned
-                    > fields.Datetime.to_datetime(cut_date)  # noqa: B023
-                    and line.order_id.state in ("draft", "sent")
-                )
-                rec.rfq_outside_dlt_qty = sum(pols.mapped("product_qty"))
+                pols_outside_dlt = rec._get_rfq_dlt(outside_dlt=True)
+                rec.rfq_outside_dlt_qty = sum(pols_outside_dlt.mapped("product_qty"))
+                pols_inside_dlt = rec._get_rfq_dlt()
+                rec.rfq_inside_dlt_qty = sum(pols_inside_dlt.mapped("product_qty"))
             else:
                 rec.rfq_outside_dlt_qty = 0.0
+                rec.rfq_inside_dlt_qty = 0.0
             rec.incoming_total_qty = rec.incoming_dlt_qty + rec.incoming_outside_dlt_qty
         return True
 
@@ -1848,12 +1849,12 @@ class StockBuffer(models.Model):
         if not outside_dlt:
             pols = self.purchase_line_ids.filtered(
                 lambda line: line.date_planned <= fields.Datetime.to_datetime(cut_date)
-                and line.state in ("draft", "sent")
+                and line.state in ("draft", "sent", "to approve")
             )
         else:
             pols = self.purchase_line_ids.filtered(
                 lambda line: line.date_planned > fields.Datetime.to_datetime(cut_date)
-                and line.state in ("draft", "sent")
+                and line.state in ("draft", "sent", "to approve")
             )
         return pols
 
