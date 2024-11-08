@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 ForgeFlow S.L. (http://www.forgeflow.com)
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo noupdate="1">
+    <record id="job_function_stock_buffer_cron_actions" model="queue.job.function">
+        <field name="model_id" ref="ddmrp.model_stock_buffer" />
+        <field name="method">_generate_ddmrp_warnings</field>
+        <field name="channel_id" ref="ddmrp_cron_actions_as_job.channel_ddmrp" />
+    </record>
+</odoo>
