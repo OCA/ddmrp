@@ -71,6 +71,7 @@
                     type="object"
                     attrs="{'invisible':[('incoming_outside_dlt_qty', '=', 0)]}"
                 />
+                <field name="rfq_total_qty" optional="hide" />
                 <field name="rfq_outside_dlt_qty" invisible="1" />
                 <button
                     title="Some RFQ quantities are outside of the DLT Horizon and may require rescheduling.
