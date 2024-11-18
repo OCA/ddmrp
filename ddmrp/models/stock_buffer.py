@@ -1194,6 +1194,11 @@ class StockBuffer(models.Model):
         help="Request for Quotation total quantity that is planned inside of "
         "the DLT horizon.",
     )
+    rfq_total_qty = fields.Float(
+        string="RFQ Total Qty",
+        readonly=True,
+        help="Request for Quotation total quantity that is planned",
+    )
     net_flow_position = fields.Float(
         digits="Product Unit of Measure",
         readonly=True,
@@ -1686,9 +1691,11 @@ class StockBuffer(models.Model):
                 rec.rfq_outside_dlt_qty = sum(pols_outside_dlt.mapped("product_qty"))
                 pols_inside_dlt = rec._get_rfq_dlt(dlt_interval="inside")
                 rec.rfq_inside_dlt_qty = sum(pols_inside_dlt.mapped("product_qty"))
+                rec.rfq_total_qty = rec.rfq_inside_dlt_qty + rec.rfq_outside_dlt_qty
             else:
                 rec.rfq_outside_dlt_qty = 0.0
                 rec.rfq_inside_dlt_qty = 0.0
+                rec.rfq_total_qty = 0.0
             rec.incoming_total_qty = rec.incoming_dlt_qty + rec.incoming_outside_dlt_qty
         return True
 
