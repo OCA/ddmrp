@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-07-08 08:59+0000\n"
+"PO-Revision-Date: 2024-11-26 20:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -308,7 +308,7 @@ msgid ""
 msgstr ""
 "Modifica l'ubicazione di inventario che è considerata nel calcolo quando un "
 "prodotto è a socrta o meno.\n"
-"                    Questo potenziamente cambia il valore del lead time "
+"                    Questo potenzialmente cambia il valore del lead time "
 "disaccoppiato (DLT).\n"
 "                    La modifica è solo informativa e non influisce in alcun "
 "processo o dimensione della scorta e raccomandazione."
@@ -1834,7 +1834,7 @@ msgstr "Trasferimento"
 msgid ""
 "Transfer status changes can trigger the update of relevant buffer's NFP."
 msgstr ""
-"La modifiche dello stato trasferimento possono attivare l'aggiornamento ddi "
+"La modifiche dello stato trasferimento possono attivare l'aggiornamento di "
 "buffer dell' NFP rilevanti."
 
 #. module: ddmrp
@@ -1871,7 +1871,7 @@ msgstr "UdM"
 #: model:ir.model.fields,field_description:ddmrp.field_res_company__ddmrp_auto_update_nfp
 #: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__ddmrp_auto_update_nfp
 msgid "Update NFP on Stock Buffers on relevant events."
-msgstr "Aggiorna NFP nei bufferi di materiale negli eventi rilevanti."
+msgstr "Aggiorna NFP nei buffer di materiale negli eventi rilevanti."
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_packaging
