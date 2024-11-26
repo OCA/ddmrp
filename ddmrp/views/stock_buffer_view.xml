@@ -71,6 +71,7 @@
                     type="object"
                     attrs="{'invisible':[('incoming_outside_dlt_qty', '=', 0)]}"
                 />
+                <field name="rfq_total_qty" optional="hide" />
                 <field name="rfq_outside_dlt_qty" invisible="1" />
                 <button
                     title="Some RFQ quantities are outside of the DLT Horizon and may require rescheduling.
@@ -79,6 +80,15 @@
                     icon="fa-warning"
                     type="object"
                     attrs="{'invisible':[('rfq_outside_dlt_qty', '=', 0)]}"
+                />
+                <field name="rfq_inside_dlt_qty" optional="hide" />
+                <button
+                    title="Some RFQs are inside of the DLT Horizon and waiting validation to be accounted into the NFP.
+                    Press this button to display them."
+                    name="action_view_supply_rfq_inside_dlt_window"
+                    icon="fa-warning"
+                    type="object"
+                    attrs="{'invisible':[('rfq_inside_dlt_qty', '=', 0)]}"
                 />
                 <button
                     title="No stock available in source location for distributed buffer"
@@ -464,6 +474,15 @@
                                         icon="fa-search"
                                         type="object"
                                         attrs="{'invisible': ['|', ('qualified_demand', '=', 0), ('qualified_demand_mrp_move_ids', '=', [])]}"
+                                    />
+                                    <field name="rfq_inside_dlt_qty" invisible="1" />
+                                    <button
+                                        title="Some RFQs are inside of the DLT Horizon and waiting validation to be accounted into the NFP.
+                                        Press this button to display them."
+                                        name="action_view_supply_rfq_inside_dlt_window"
+                                        icon="fa-warning"
+                                        type="object"
+                                        attrs="{'invisible':[('rfq_inside_dlt_qty', '=', 0)]}"
                                     />
                                 </div>
                                 <field name="net_flow_position" />

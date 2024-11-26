@@ -158,18 +158,11 @@ class StockBuffer(models.Model):
         """Return Quantities that are not yet in virtual stock but should
         be deduced from buffers (example: purchases created from buffers)"""
         res = {}.fromkeys(self.ids, 0.0)
-        polines = self.env["purchase.order.line"].search(
-            [
-                ("state", "in", ("draft", "sent", "to approve")),
-                ("buffer_ids", "in", self.ids),
-            ]
-        )
-        for poline in polines:
-            for buffer in poline.buffer_ids:
-                if buffer.id not in self.ids:
-                    continue
-                res[buffer.id] += poline.product_uom._compute_quantity(
-                    poline.product_qty, buffer.product_uom, round=False
+        for buffer in self:
+            polines = buffer._get_rfq_dlt(dlt_interval=None)
+            for line in polines:
+                res[buffer.id] += line.product_uom._compute_quantity(
+                    line.product_qty, buffer.product_uom, round=False
                 )
         return res
 
@@ -1183,6 +1176,17 @@ class StockBuffer(models.Model):
         help="Request for Quotation total quantity that is planned outside of "
         "the DLT horizon.",
     )
+    rfq_inside_dlt_qty = fields.Float(
+        string="RFQ Qty (Inside DLT)",
+        readonly=True,
+        help="Request for Quotation total quantity that is planned inside of "
+        "the DLT horizon.",
+    )
+    rfq_total_qty = fields.Float(
+        string="RFQ Total Qty",
+        readonly=True,
+        help="Request for Quotation total quantity that is planned",
+    )
     net_flow_position = fields.Float(
         digits="Product Unit of Measure",
         readonly=True,
@@ -1668,17 +1672,15 @@ class StockBuffer(models.Model):
             outside_dlt_moves = self._search_stock_moves_incoming(outside_dlt=True)
             rec.incoming_outside_dlt_qty = sum(outside_dlt_moves.mapped("product_qty"))
             if rec.item_type == "purchased":
-                cut_date = rec._get_incoming_supply_date_limit()
-                # FIXME: filter using order_id.state while
-                #  https://github.com/odoo/odoo/pull/58966 is not merged.
-                #  Can be changed in v14.
-                pols = rec.purchase_line_ids.filtered(
-                    lambda l: l.date_planned > fields.Datetime.to_datetime(cut_date)
-                    and l.order_id.state in ("draft", "sent")
-                )
-                rec.rfq_outside_dlt_qty = sum(pols.mapped("product_qty"))
+                pols_outside_dlt = rec._get_rfq_dlt(dlt_interval="outside")
+                rec.rfq_outside_dlt_qty = sum(pols_outside_dlt.mapped("product_qty"))
+                pols_inside_dlt = rec._get_rfq_dlt(dlt_interval="inside")
+                rec.rfq_inside_dlt_qty = sum(pols_inside_dlt.mapped("product_qty"))
+                rec.rfq_total_qty = rec.rfq_inside_dlt_qty + rec.rfq_outside_dlt_qty
             else:
                 rec.rfq_outside_dlt_qty = 0.0
+                rec.rfq_inside_dlt_qty = 0.0
+                rec.rfq_total_qty = 0.0
             rec.incoming_total_qty = rec.incoming_dlt_qty + rec.incoming_outside_dlt_qty
         return True
 
@@ -1826,18 +1828,22 @@ class StockBuffer(models.Model):
         result["domain"] = [("id", "in", moves.ids)]
         return result
 
-    def _get_rfq_dlt(self, outside_dlt=False):
+    def _get_rfq_dlt(self, dlt_interval=None):
         self.ensure_one()
         cut_date = self._get_incoming_supply_date_limit()
-        if not outside_dlt:
+        if dlt_interval == "inside":
             pols = self.purchase_line_ids.filtered(
                 lambda l: l.date_planned <= fields.Datetime.to_datetime(cut_date)
-                and l.state in ("draft", "sent")
+                and l.state in ("draft", "sent", "to approve")
+            )
+        elif dlt_interval == "outside":
+            pols = self.purchase_line_ids.filtered(
+                lambda l: l.date_planned > fields.Datetime.to_datetime(cut_date)
+                and l.state in ("draft", "sent", "to approve")
             )
         else:
             pols = self.purchase_line_ids.filtered(
-                lambda l: l.date_planned > fields.Datetime.to_datetime(cut_date)
-                and l.state in ("draft", "sent")
+                lambda l: l.state in ("draft", "sent", "to approve")
             )
         return pols
 
@@ -1857,7 +1863,7 @@ class StockBuffer(models.Model):
 
     def action_view_supply_rfq_inside_dlt_window(self):
         result = self.env["ir.actions.actions"]._for_xml_id("purchase.purchase_rfq")
-        pols = self._get_rfq_dlt()
+        pols = self._get_rfq_dlt(dlt_interval="inside")
         pos = pols.mapped("order_id")
         result["context"] = {}
         result["domain"] = [("id", "in", pos.ids)]
@@ -1865,7 +1871,7 @@ class StockBuffer(models.Model):
 
     def action_view_supply_rfq_outside_dlt_window(self):
         result = self.env["ir.actions.actions"]._for_xml_id("purchase.purchase_rfq")
-        pols = self._get_rfq_dlt(outside_dlt=True)
+        pols = self._get_rfq_dlt(dlt_interval="outside")
         pos = pols.mapped("order_id")
         result["context"] = {}
         result["domain"] = [("id", "in", pos.ids)]
