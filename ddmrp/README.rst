@@ -328,13 +328,10 @@ promote its widespread use.
 .. |maintainer-LoisRForgeFlow| image:: https://github.com/LoisRForgeFlow.png?size=40px
     :target: https://github.com/LoisRForgeFlow
     :alt: LoisRForgeFlow
-.. |maintainer-ChrisOForgeFlow| image:: https://github.com/ChrisOForgeFlow.png?size=40px
-    :target: https://github.com/ChrisOForgeFlow
-    :alt: ChrisOForgeFlow
 
 Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-JordiBForgeFlow| |maintainer-LoisRForgeFlow| |maintainer-ChrisOForgeFlow| 
+|maintainer-JordiBForgeFlow| |maintainer-LoisRForgeFlow| 
 
 This module is part of the `OCA/ddmrp <https://github.com/OCA/ddmrp/tree/17.0/ddmrp>`_ project on GitHub.
 
