@@ -1379,9 +1379,19 @@ msgid "Quantity must be positive."
 msgstr "La quantità deve essere positiva."
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_inside_dlt_qty
+msgid "RFQ Qty (Inside DLT)"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_outside_dlt_qty
 msgid "RFQ Qty (Outside DLT)"
 msgstr "Q.tà RdP (fuori da DLT)"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_total_qty
+msgid "RFQ Total Qty"
+msgstr ""
 
 #. module: ddmrp
 #: model:product.template,name:ddmrp.product_product_rm01_product_template
@@ -1470,6 +1480,18 @@ msgstr "Metodo rifornimento"
 #: model:ir.actions.act_window,name:ddmrp.act_make_procurement_from_buffer
 msgid "Request Procurement"
 msgstr "Richiesta approvvigionamento"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__rfq_total_qty
+msgid "Request for Quotation total quantity that is planned"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__rfq_inside_dlt_qty
+msgid ""
+"Request for Quotation total quantity that is planned inside of the DLT "
+"horizon."
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__rfq_outside_dlt_qty
@@ -1580,6 +1602,22 @@ msgstr ""
 "Acune quantità RdP sono fuori dall'orizzonte DLT e possono richiedere "
 "rischedulazione.                     Fare clic su questo pulsante per "
 "visualizzare le RdP coinvolte"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid ""
+"Some RFQs are inside of the DLT Horizon and waiting validation to be "
+"accounted into the NFP.                                         Press this "
+"button to display them."
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid ""
+"Some RFQs are inside of the DLT Horizon and waiting validation to be "
+"accounted into the NFP.                     Press this button to display "
+"them."
+msgstr ""
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
