@@ -1341,8 +1341,18 @@ msgid "Quantity must be positive."
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_inside_dlt_qty
+msgid "RFQ Qty (Inside DLT)"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_outside_dlt_qty
 msgid "RFQ Qty (Outside DLT)"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_total_qty
+msgid "RFQ Total Qty"
 msgstr ""
 
 #. module: ddmrp
@@ -1431,6 +1441,18 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.actions.act_window,name:ddmrp.act_make_procurement_from_buffer
 msgid "Request Procurement"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__rfq_total_qty
+msgid "Request for Quotation total quantity that is planned"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__rfq_inside_dlt_qty
+msgid ""
+"Request for Quotation total quantity that is planned inside of the DLT "
+"horizon."
 msgstr ""
 
 #. module: ddmrp
@@ -1526,6 +1548,22 @@ msgid ""
 "Some RFQ quantities are outside of the DLT Horizon and may require "
 "rescheduling.                     Press this button to display the involved "
 "RFQs"
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid ""
+"Some RFQs are inside of the DLT Horizon and waiting validation to be "
+"accounted into the NFP.                                         Press this "
+"button to display them."
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid ""
+"Some RFQs are inside of the DLT Horizon and waiting validation to be "
+"accounted into the NFP.                     Press this button to display "
+"them."
 msgstr ""
 
 #. module: ddmrp
