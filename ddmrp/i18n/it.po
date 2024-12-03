@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-26 20:06+0000\n"
+"PO-Revision-Date: 2024-12-03 11:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -1381,7 +1381,7 @@ msgstr "La quantità deve essere positiva."
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_inside_dlt_qty
 msgid "RFQ Qty (Inside DLT)"
-msgstr ""
+msgstr "Q.tà RdP (interno a DLT)"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_outside_dlt_qty
@@ -1391,7 +1391,7 @@ msgstr "Q.tà RdP (fuori da DLT)"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_total_qty
 msgid "RFQ Total Qty"
-msgstr ""
+msgstr "Q.tà totale RdP"
 
 #. module: ddmrp
 #: model:product.template,name:ddmrp.product_product_rm01_product_template
@@ -1484,7 +1484,7 @@ msgstr "Richiesta approvvigionamento"
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__rfq_total_qty
 msgid "Request for Quotation total quantity that is planned"
-msgstr ""
+msgstr "Richiesta di preventivo della quantità totale pianificata"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__rfq_inside_dlt_qty
@@ -1492,6 +1492,8 @@ msgid ""
 "Request for Quotation total quantity that is planned inside of the DLT "
 "horizon."
 msgstr ""
+"Richiesta di preventivo per la quantità totale pianificata all'interno "
+"dell'orizzonte DLT."
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__rfq_outside_dlt_qty
@@ -1610,6 +1612,9 @@ msgid ""
 "accounted into the NFP.                                         Press this "
 "button to display them."
 msgstr ""
+"Alcune RdP sono all'interno dell'orizzonte DLT e in attesa di validazione "
+"per essere contabilizzate nel NFP.                                         "
+"Fare clic su questo pulsante per visualizzarle."
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
@@ -1618,6 +1623,9 @@ msgid ""
 "accounted into the NFP.                     Press this button to display "
 "them."
 msgstr ""
+"Alcune RdP sono all'interno dell'orizzonte DLT e in attesa di validazione "
+"per essere contabilizzate nel NFP.                      Fare clic su questo "
+"pulsante per visualizzarle."
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
