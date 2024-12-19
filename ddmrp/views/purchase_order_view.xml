@@ -11,8 +11,8 @@
                 expr="//field[@name='order_line']//field[@name='date_planned']"
                 position="after"
             >
-                <field name="buffer_ids" invisible="1" />
-                <field name="execution_priority_level" invisible="1" />
+                <field name="buffer_ids" column_invisible="1" />
+                <field name="execution_priority_level" column_invisible="1" />
                 <field
                     name="on_hand_percent"
                     options='{"buffer_id": "buffer_ids", "color_from": "execution_priority_level", "field": "ddmrp_chart_execution"}'
