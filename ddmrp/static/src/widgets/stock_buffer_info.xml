@@ -14,7 +14,7 @@
         </xpath>
     </t>
     <t t-name="ddmrp.StockBufferPopover">
-        <div>
+        <div class="stock-buffer-popover">
             <t t-out="json_value.div" />
             <script type="text/javascript" t-out="json_value.script" />
         </div>
