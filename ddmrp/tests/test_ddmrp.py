@@ -1141,15 +1141,7 @@ class TestDdmrp(TestDdmrpCommon):
                 ],
             }
         )
-        # because of the issue discussed here https://github.com/odoo/odoo/pull/188846
-        # we need to apply routes explicitly in the proper order (by sequence)
-        self.product_purchased.route_ids = [
-            (
-                6,
-                0,
-                (route + self.env.ref("purchase_stock.route_warehouse0_buy")).ids,
-            )
-        ]
+        self.product_purchased.route_ids |= route
         buffer_distributed = self.bufferModel.create(
             {
                 "buffer_profile_id": self.buffer_profile_distr.id,
