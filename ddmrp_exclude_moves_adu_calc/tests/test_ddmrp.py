@@ -209,6 +209,5 @@ class TestDdmrp(common.TransactionCase):
         # Exclude specific moves:
         for move in pick_excluded.move_ids:
             move.exclude_from_adu = True
-        self.bufferModel.cron_ddmrp_adu()
         to_assert_value = 60 / 120
         self.assertEqual(buffer_a.adu, to_assert_value)
