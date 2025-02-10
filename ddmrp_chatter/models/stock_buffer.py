@@ -22,3 +22,4 @@ class Buffer(models.Model):
     qty_multiple = fields.Float(tracking=True)
     auto_procure = fields.Boolean(tracking=True)
     auto_procure_option = fields.Selection(tracking=True)
+    procure_recommended_qty = fields.Float(tracking=True)
