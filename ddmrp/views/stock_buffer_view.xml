@@ -304,9 +304,9 @@
                                 <label for="extra_lead_time" />
                                 <div name="extra_lead_time">
                                     <field
-                                        name="extra_lead_time"
-                                        class="oe_inline"
-                                    /> days
+                                    name="extra_lead_time"
+                                    class="oe_inline"
+                                /> days
                                 </div>
                                 <field name="minimum_order_quantity" />
                                 <label for="order_cycle" />
@@ -316,7 +316,6 @@
                             </group>
                         </group>
                         <group name="ddmrp_chart" string="Buffer summary">
-
                             <div colspan="2">
                                 <field
                                     name="ddmrp_chart"
@@ -373,9 +372,9 @@
                                 <label for="order_spike_horizon" />
                                 <div name="order_spike_horizon">
                                     <field
-                                        name="order_spike_horizon"
-                                        class="oe_inline"
-                                    /> days
+                                    name="order_spike_horizon"
+                                    class="oe_inline"
+                                /> days
                                 </div>
                                 <field name="order_spike_threshold" />
                             </group>
@@ -496,9 +495,9 @@
                                 <label for="net_flow_position_percent" />
                                 <div name="net_flow_position_percent">
                                     <field
-                                        name="net_flow_position_percent"
-                                        class="oe_inline"
-                                    /> %
+                                    name="net_flow_position_percent"
+                                    class="oe_inline"
+                                /> %
                                 </div>
                             </group>
                             <group />
@@ -514,13 +513,13 @@
                                 <label for="on_hand_target_min" />
                                 <div name="on_hand_target_range">
                                     <field
-                                        name="on_hand_target_min"
-                                        class="oe_inline"
-                                    /> -
+                                    name="on_hand_target_min"
+                                    class="oe_inline"
+                                /> -
                                     <field
-                                        name="on_hand_target_max"
-                                        class="oe_inline"
-                                    />
+                                    name="on_hand_target_max"
+                                    class="oe_inline"
+                                />
                                 </div>
                             </group>
                         </group>

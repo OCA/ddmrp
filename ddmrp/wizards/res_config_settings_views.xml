@@ -36,7 +36,7 @@
                             id="module_ddmrp_coverage_days"
                             help="Shows the current on-hand for stock buffers expressed as coverage days."
                         >
-                                <field
+                            <field
                                 name="module_ddmrp_coverage_days"
                                 string="Show Coverage Days in Stock Buffers"
                             />
@@ -45,7 +45,7 @@
                             id="module_ddmrp_packaging"
                             help="Use packagings on stock buffers."
                         >
-                                <field
+                            <field
                                 name="module_ddmrp_packaging"
                                 string="Stock Buffers &amp; Packagings"
                             />
@@ -54,27 +54,25 @@
                             id="module_stock_buffer_capacity_limit"
                             help="Set an storage capacity limit on stock buffers."
                         >
-                                <field name="module_stock_buffer_capacity_limit" />
+                            <field name="module_stock_buffer_capacity_limit" />
                         </setting>
                         <setting
                             id="module_ddmrp_chatter"
                             help="Adds chatter and activities to stock buffers."
                         >
-                                <field name="module_ddmrp_chatter" />
+                            <field name="module_ddmrp_chatter" />
                         </setting>
                         <setting
                             id="module_ddmrp_purchase_hide_onhand_status"
                             help="Hides on-hand status from purchase order line."
                         >
-                                <field
-                                name="module_ddmrp_purchase_hide_onhand_status"
-                            />
+                            <field name="module_ddmrp_purchase_hide_onhand_status" />
                         </setting>
                         <setting
                             id="module_ddmrp_warning"
                             help="Get configuration warnings for stock buffers."
                         >
-                                <field name="module_ddmrp_warning" />
+                            <field name="module_ddmrp_warning" />
                         </setting>
                     </block>
                     <block
@@ -87,24 +85,24 @@
                             company_dependent="1"
                             help="Transfer status changes can trigger the update of relevant buffer's NFP."
                         >
-                                <field
+                            <field
                                 name="ddmrp_auto_update_nfp"
                                 string="Auto update Net Flow Position"
                             />
                         </setting>
                         <setting id="ddmrp_adu_calc_include_scrap">
-                                <field name="ddmrp_adu_calc_include_scrap" />
+                            <field name="ddmrp_adu_calc_include_scrap" />
                         </setting>
                         <setting>
-                                <label for="ddmrp_qty_multiple_tolerance" />
-                                <span
+                            <label for="ddmrp_qty_multiple_tolerance" />
+                            <span
                                 class="fa fa-lg fa-building-o"
                                 title="Values set here are company-specific."
                                 role="img"
                                 aria-label="Values set here are company-specific."
                                 groups="base.group_multi_company"
                             />
-                                <div class="text-muted">
+                            <div class="text-muted">
                                     Set a tolerance value to apply to quantity multiple in stock buffers.
                                     If the quantity needed is below this tolerance threshold, the recommended
                                     quantity will be reduced a bit instead of adding another bucket.

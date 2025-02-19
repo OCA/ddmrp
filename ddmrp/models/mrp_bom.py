@@ -101,9 +101,9 @@ class MrpBom(models.Model):
                     paths[i] += bom[0]._get_longest_path()
                 else:
                     _logger.info(
-                        "ddmrp (dlt): Product {} has no BOM for location " "{}.".format(
-                            line.product_id.name, location.name
-                        )
+                        f"ddmrp (dlt): Product {line.product_id.name} "
+                        f"has no BOM for location "
+                        f"{location.name}."
                     )
                 i += 1
             else:
@@ -112,8 +112,8 @@ class MrpBom(models.Model):
                     paths[i] = line.product_id.seller_ids[0].delay
                 else:
                     _logger.info(
-                        "ddmrp (dlt): Product %s has no seller set."
-                        % line.product_id.name
+                        f"ddmrp (dlt): Product {line.product_id.name} "
+                        f"has no seller set."
                     )
                 i += 1
         return max(paths)

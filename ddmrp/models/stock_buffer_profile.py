@@ -33,13 +33,10 @@ class StockBufferProfile(models.Model):
     def _compute_name(self):
         """Get the right summary for this job."""
         for rec in self:
-            name = "{} {}, {}({}), {}({})".format(
-                rec.replenish_method,
-                rec.item_type,
-                rec.lead_time_id.name,
-                rec.lead_time_id.factor,
-                rec.variability_id.name,
-                rec.variability_id.factor,
+            name = (
+                f"{rec.replenish_method} {rec.item_type}, {rec.lead_time_id.name}"
+                f"({rec.lead_time_id.factor}), {rec.variability_id.name}"
+                f"({rec.variability_id.factor})"
             )
             if rec.distributed_reschedule_max_proc_time > 0.0:
                 name += f", {rec.distributed_reschedule_max_proc_time}min"

@@ -23,9 +23,9 @@
         <xpath expr="//td[@t-if='showLeadTimes']" position="after">
             <td t-if="showLeadTimes" class="text-end">
                 <t
-                    t-esc="data.dlt"
-                    t-options='{"widget": "float", "decimal_precision": "Lead Time"}'
-                /> Days
+                t-esc="data.dlt"
+                t-options='{"widget": "float", "decimal_precision": "Lead Time"}'
+            /> Days
             </td>
         </xpath>
     </t>
