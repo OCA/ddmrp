@@ -22,7 +22,6 @@
         <xpath expr="//td[@name='td_mrp_bom_byproducts_f']" position="before">
             <td t-if="data['show_buffered']" />
         </xpath>
-
     </template>
 
     <template

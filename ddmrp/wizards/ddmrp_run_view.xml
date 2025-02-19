@@ -7,18 +7,18 @@
             <form string="Run DDMRP">
                 <footer>
                     <button
-                        name="run_cron_ddmrp_adu"
-                        string="Run ADU calculation"
-                        type="object"
-                        class="oe_highlight"
-                    />
+                    name="run_cron_ddmrp_adu"
+                    string="Run ADU calculation"
+                    type="object"
+                    class="oe_highlight"
+                />
                     or
                     <button
-                        name="run_cron_ddmrp"
-                        string="Run DDMRP Buffer calculation"
-                        type="object"
-                        class="oe_highlight"
-                    />
+                    name="run_cron_ddmrp"
+                    string="Run DDMRP Buffer calculation"
+                    type="object"
+                    class="oe_highlight"
+                />
                     or
                     <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>

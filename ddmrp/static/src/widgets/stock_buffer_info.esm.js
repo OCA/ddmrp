@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import {Component, markup, onWillStart} from "@odoo/owl";
 import {FloatField, floatField} from "@web/views/fields/float/float_field";
 import {loadBundle} from "@web/core/assets";
@@ -60,7 +58,7 @@ export class StockBufferPopover extends Component {
             var value = JSON.parse(this.bokeh_chart[0][this.props.field]);
             value.div = markup(value.div.trim());
             return value;
-        } catch (error) {
+        } catch {
             return {};
         }
     }

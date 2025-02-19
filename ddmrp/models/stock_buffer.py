@@ -869,7 +869,7 @@ class StockBuffer(models.Model):
 
                 unit = rec.product_uom.name
                 hover = HoverTool(
-                    tooltips=[("qty", "$y %s" % unit)], point_policy="follow_mouse"
+                    tooltips=[("qty", f"$y {unit}")], point_policy="follow_mouse"
                 )
                 p.add_tools(hover)
 
@@ -926,7 +926,7 @@ class StockBuffer(models.Model):
 
                 unit = rec.product_uom.name
                 hover = HoverTool(
-                    tooltips=[("qty", "$y %s" % unit)], point_policy="follow_mouse"
+                    tooltips=[("qty", f"$y {unit}")], point_policy="follow_mouse"
                 )
                 p.add_tools(hover)
 
