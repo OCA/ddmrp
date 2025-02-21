@@ -6,7 +6,7 @@
         <field name="name">ddmrp.history.tree</field>
         <field name="model">ddmrp.history</field>
         <field name="arch" type="xml">
-            <tree create="0">
+            <list create="0">
                 <field name="buffer_id" />
                 <field name="adu" />
                 <field name="top_of_green" />
@@ -20,7 +20,7 @@
                     groups="base.group_multi_company"
                     optional="hide"
                 />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_ddmrp_history_search" model="ir.ui.view">
@@ -35,7 +35,7 @@
     <record id="action_ddmrp_history" model="ir.actions.act_window">
         <field name="name">DDMRP Buffer History</field>
         <field name="res_model">ddmrp.history</field>
-        <field name="view_mode">tree,pivot,graph</field>
+        <field name="view_mode">list,pivot,graph</field>
     </record>
     <menuitem
         name="DDMRP Buffer History"

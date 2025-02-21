@@ -18,34 +18,34 @@ class DdmrpHistory(models.Model):
     top_of_red = fields.Float(
         string="TOR",
         help="Top of Red",
-        group_operator="avg",
+        aggregator="avg",
     )
     top_of_yellow = fields.Float(
         string="TOY",
         help="Top of Yellow",
-        group_operator="avg",
+        aggregator="avg",
     )
     top_of_green = fields.Float(
         string="TOG",
         help="Top of Green",
-        group_operator="avg",
+        aggregator="avg",
     )
     net_flow_position = fields.Float(
         string="NFP",
         digits="Product Unit of Measure",
         help="Net flow position",
-        group_operator="avg",
+        aggregator="avg",
     )
     on_hand_position = fields.Float(
         string="OHP",
         digits="Product Unit of Measure",
         help="On-Hand Position",
-        group_operator="avg",
+        aggregator="avg",
     )
     adu = fields.Float(
         string="ADU",
         digits="Product Unit of Measure",
-        group_operator="avg",
+        aggregator="avg",
         help="Average Daily Usage",
     )
     company_id = fields.Many2one(
