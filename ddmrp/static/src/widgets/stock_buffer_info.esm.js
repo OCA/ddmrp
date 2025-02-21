@@ -1,6 +1,6 @@
 import {Component, markup, onWillStart} from "@odoo/owl";
 import {FloatField, floatField} from "@web/views/fields/float/float_field";
-import {loadBundle} from "@web/core/assets";
+import {loadBokehLibraries} from "@web_widget_bokeh_chart/js/web_widget_bokeh_chart.esm";
 import {registry} from "@web/core/registry";
 import {usePopover} from "@web/core/popover/popover_hook";
 import {useService} from "@web/core/utils/hooks";
@@ -10,16 +10,7 @@ export class StockBufferPopover extends Component {
         this.actionService = useService("action");
         this.orm = useService("orm");
         onWillStart(async () => {
-            await loadBundle({
-                jsLibs: [
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-tables-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-mathjax-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-3.4.1.min.js",
-                ],
-            });
+            await loadBokehLibraries();
             var bufferId = this.props.record.resId;
             var bufferField = this.props.buffer_id;
             if (bufferField && this.props.record.data[bufferField]) {
@@ -66,6 +57,9 @@ export class StockBufferPopover extends Component {
 StockBufferPopover.template = "ddmrp.StockBufferPopover";
 
 export class StockBufferInfoWidget extends FloatField {
+    static components = {
+        Popover: StockBufferPopover,
+    };
     static props = {
         ...FloatField.props,
         color_from: {type: String, optional: true},
@@ -111,12 +105,6 @@ export const stockBufferInfoWidget = {
     ...floatField,
     component: StockBufferInfoWidget,
 };
-
-stockBufferInfoWidget.components = {
-    ...stockBufferInfoWidget.components,
-    Popover: StockBufferPopover,
-};
-StockBufferInfoWidget.template = "ddmrp.StockBufferInfoWidget";
 
 const StockBufferInfoWidgetExtractProps = stockBufferInfoWidget.extractProps;
 

@@ -53,13 +53,15 @@ class TestDdmrpCommon(common.TransactionCase):
                 "code": "WH2",
             }
         )
-        cls.warehouse_sc = cls.env.ref("stock.stock_warehouse_shop0")
+        cls.warehouse_sc = cls.env["stock.warehouse"].search(
+            [("company_id", "=", cls.second_company.id)]
+        )
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.stock_location_sc = cls.warehouse_sc.lot_stock_id
         cls.location_shelf1 = cls.env.ref("stock.stock_location_components")
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
-        cls.inter_wh = cls.env.ref("stock.stock_location_inter_wh")
+        cls.inter_wh = cls.env.ref("stock.stock_location_inter_company")
         cls.inventory_location = cls.env["stock.location"].search(
             [("usage", "=", "inventory"), ("company_id", "=", cls.main_company.id)],
             limit=1,
@@ -120,7 +122,7 @@ class TestDdmrpCommon(common.TransactionCase):
             {
                 "name": "product A",
                 "standard_price": 1,
-                "type": "product",
+                "is_storable": True,
                 "uom_id": cls.uom_unit.id,
                 "default_code": "A",
                 "route_ids": [(6, 0, manufacture_route.ids)],
@@ -130,7 +132,7 @@ class TestDdmrpCommon(common.TransactionCase):
             {
                 "name": "Component A-1",
                 "standard_price": 1,
-                "type": "product",
+                "is_storable": True,
                 "uom_id": cls.uom_unit.id,
                 "default_code": "RM-test01",
             }
@@ -185,7 +187,7 @@ class TestDdmrpCommon(common.TransactionCase):
             {
                 "name": "product Purchased",
                 "standard_price": 1,
-                "type": "product",
+                "is_storable": True,
                 "uom_id": cls.uom_unit.id,
                 "default_code": "B",
                 "route_ids": [(6, 0, buy_route.ids)],
@@ -195,7 +197,7 @@ class TestDdmrpCommon(common.TransactionCase):
             {
                 "name": "product Purchased 2",
                 "standard_price": 1,
-                "type": "product",
+                "is_storable": True,
                 "uom_id": cls.uom_unit.id,
                 "default_code": "B",
                 "route_ids": [(6, 0, buy_route.ids)],
@@ -213,7 +215,7 @@ class TestDdmrpCommon(common.TransactionCase):
         cls.template_c = cls.templateModel.create(
             {
                 "name": "Product C",
-                "type": "product",
+                "is_storable": True,
                 "uom_id": cls.uom_unit.id,
                 "default_code": "C",
                 "route_ids": [(6, 0, buy_route.ids)],
@@ -273,7 +275,7 @@ class TestDdmrpCommon(common.TransactionCase):
             {
                 "name": "product Distributed",
                 "standard_price": 1,
-                "type": "product",
+                "is_storable": True,
                 "uom_id": cls.uom_unit.id,
                 "default_code": "D",
                 # TODO: "route_ids": [(6, 0, distribution_route.id)],

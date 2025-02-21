@@ -27,7 +27,7 @@
                 </div>
             </field>
             <xpath
-                expr="//field[@name='bom_line_ids']/tree/field[@name='product_uom_id']"
+                expr="//field[@name='bom_line_ids']/list/field[@name='product_uom_id']"
                 position="after"
             >
                 <field name="is_buffered" />
