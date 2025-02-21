@@ -25,7 +25,7 @@
                     />
                 </group>
                 <field name="item_ids" nolabel="1">
-                    <tree nocreate="1" editable="top">
+                    <list nocreate="1" editable="top">
                         <field name="buffer_id" column_invisible="1" />
                         <field
                             name="warehouse_id"
@@ -59,7 +59,7 @@
                         />
                         <field name="uom_id" groups="uom.group_uom" />
                         <field name="date_planned" />
-                    </tree>
+                    </list>
                 </field>
                 <footer>
                     <button

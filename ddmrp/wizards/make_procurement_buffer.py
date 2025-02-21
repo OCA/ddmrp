@@ -110,8 +110,7 @@ class MakeProcurementBuffer(models.TransientModel):
             # _run_manufacture), ensure the current user has write access on
             # the buffer to make a procurement. Otherwise, any user can request
             # a procurement on any buffer
-            item.buffer_id.check_access_rights("write")
-            item.buffer_id.check_access_rule("write")
+            item.buffer_id.check_access("write")
             if item.qty <= 0.0:
                 raise ValidationError(_("Quantity must be positive."))
             if not item.buffer_id:

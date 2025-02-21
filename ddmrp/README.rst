@@ -17,13 +17,13 @@ DDMRP
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fddmrp-lightgray.png?logo=github
-    :target: https://github.com/OCA/ddmrp/tree/17.0/ddmrp
+    :target: https://github.com/OCA/ddmrp/tree/18.0/ddmrp
     :alt: OCA/ddmrp
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/ddmrp-17-0/ddmrp-17-0-ddmrp
+    :target: https://translation.odoo-community.org/projects/ddmrp-18-0/ddmrp-18-0-ddmrp
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/ddmrp&target_branch=17.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/ddmrp&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -72,12 +72,12 @@ a wide variety of leading companies across the world.
 
 Some of the benefits reported by the DDMRP method include:
 
-- High fill rate performance
-- Lead time reductions
-- Inventory reductions, while improving customer service
-- Eliminate costs related to expedite
-- Planners see priorities instead of constantly fighting the conflicting
-  messages of MRP
+-  High fill rate performance
+-  Lead time reductions
+-  Inventory reductions, while improving customer service
+-  Eliminate costs related to expedite
+-  Planners see priorities instead of constantly fighting the
+   conflicting messages of MRP
 
 It is highly recommended to read the book 'Demand Driven Material
 Requirements Planning (DDMRP)' by Carol Ptak and Chad Smith.
@@ -105,11 +105,11 @@ Configuration
 Scheduled actions
 -----------------
 
-- Go to *Settings > Technical*.
-- 'DDMRP Buffer ADU calculation'. Computes the Average Daily Usage for
-  all Buffers.
-- 'Reordering Rule DDMRP calculation'. Computes the Qualified Demand,
-  Net Flow Position, Planning and Execution priorities for all Buffers.
+-  Go to *Settings > Technical*.
+-  'DDMRP Buffer ADU calculation'. Computes the Average Daily Usage for
+   all Buffers.
+-  'Reordering Rule DDMRP calculation'. Computes the Qualified Demand,
+   Net Flow Position, Planning and Execution priorities for all Buffers.
 
 Decoupled Lead Time computation
 -------------------------------
@@ -119,19 +119,19 @@ The DLT is automatically computed by the system.
 For manufactured products' buffers just remember to provide and set
 properly the following information:
 
-- The *Manufacturing Lead Time* for the manufactured product. It can be
-  found at the product form view under the tab *Sales*.
-- The *Delivery Lead Time* for the preferred vendor of a product. This
-  is important for the products which are purchased and are components
-  in any Bill of Materials.
+-  The *Manufacturing Lead Time* for the manufactured product. It can be
+   found at the product form view under the tab *Sales*.
+-  The *Delivery Lead Time* for the preferred vendor of a product. This
+   is important for the products which are purchased and are components
+   in any Bill of Materials.
 
 For purchased/distributed products' buffers the logic is simpler.
 
-- In the first place the system will look if there are Vendors for the
-  product, if so it will use the *Delivery Lead Time* of the preferred
-  one.
-- In case of absence of vendors, the *Lead Time* at the bottom of the
-  Buffer form view will be used.
+-  In the first place the system will look if there are Vendors for the
+   product, if so it will use the *Delivery Lead Time* of the preferred
+   one.
+-  In case of absence of vendors, the *Lead Time* at the bottom of the
+   Buffer form view will be used.
 
 Usage
 =====
@@ -140,13 +140,13 @@ To easily identify were are you maintaining buffers in your Bill of
 Materials, you will need to first provide location information on the
 Bills of Materials.
 
-- Go to *Manufacturing / Products / Bill of Materials* and update the
-  'Location' in all the Bill of Materials and associated lines,
-  indicating where will the parts be placed/used during the
-  manufacturing process.
-- Print the report 'BOM Structure' to display where in your BOM are you
-  maintaining buffers, and to identify the Lead Time (LT) of each
-  product, and Decouple Lead Time (DLT).
+-  Go to *Manufacturing / Products / Bill of Materials* and update the
+   'Location' in all the Bill of Materials and associated lines,
+   indicating where will the parts be placed/used during the
+   manufacturing process.
+-  Print the report 'BOM Structure' to display where in your BOM are you
+   maintaining buffers, and to identify the Lead Time (LT) of each
+   product, and Decouple Lead Time (DLT).
 
 Buffers
 -------
@@ -162,21 +162,21 @@ Buffer profiles make maintenance of buffers easier by grouping them in
 profiles. Changes applied to the profiles will be applicable in the
 associated buffer calculations.
 
-- Go to *Inventory / Configuration / Buffer Profiles*.
+-  Go to *Inventory / Configuration / Buffer Profiles*.
 
 The Buffer Profile Lead Time Factor influences the size of the Buffer
 Green zone. Items with longer lead times will usually have smaller green
 zones, which will translate in more frequent supply order generation.
 
-- Go to *Inventory / Configuration / Buffer Profile Lead Time Factor* to
-  chan
+-  Go to *Inventory / Configuration / Buffer Profile Lead Time Factor*
+   to chan
 
 The Buffer Profile Variability Factor influences the size of the Buffer
 Red Safety zone. Items with longer lead times will usually have smaller
 green zones, which will translate in more frequent supply order
 generation.
 
-- Go to *Inventory / Configuration / Buffer Profile Lead Time Factor*.
+-  Go to *Inventory / Configuration / Buffer Profile Lead Time Factor*.
 
 Usual factors should range from 0.2 (long lead time) to 0.8 (short lead
 time).
@@ -184,11 +184,12 @@ time).
 Product attributes
 ------------------
 
-- For manufactured products, go to *Manufacturing / Products* and update
-  the 'Manufacturing Lead Time' field, available in the tab *Inventory*.
-- For purchased products, go to go to *Purchasing / Products* and update
-  the *Delivery Lead Time* for each vendor, available in tab *Purchase*
-  and section *Vendors*.
+-  For manufactured products, go to *Manufacturing / Products* and
+   update the 'Manufacturing Lead Time' field, available in the tab
+   *Inventory*.
+-  For purchased products, go to go to *Purchasing / Products* and
+   update the *Delivery Lead Time* for each vendor, available in tab
+   *Purchase* and section *Vendors*.
 
 ADU Calculation Methods
 -----------------------
@@ -235,43 +236,43 @@ Changelog
 
 **Features**
 
-- 
+-  
 
-  - New setting *Update NFP on Stock Buffers on relevant events*.
-  - New dedicated settings block.
-    (`#50 <https://github.com/OCA/ddmrp/issues/50>`__)
+   -  New setting *Update NFP on Stock Buffers on relevant events*.
+   -  New dedicated settings block.
+      (`#50 <https://github.com/OCA/ddmrp/issues/50>`__)
 
 13.0.1.0.0 (2020-06-11)
 -----------------------
 
-- [MIG/REF] Migration of module to v13 and refactor (added new dedicated
-  model for stock buffer).
+-  [MIG/REF] Migration of module to v13 and refactor (added new
+   dedicated model for stock buffer).
 
 11.0.1.3.0 (2019-02-21)
 -----------------------
 
-- [ADD] New chart that depict information about the supply and demand (
-  displaying also de order spike threshold and horizon) for a buffer.
-  (`#40 <https://github.com/OCA/ddmrp/pull/40>`__)
+-  [ADD] New chart that depict information about the supply and demand (
+   displaying also de order spike threshold and horizon) for a buffer.
+   (`#40 <https://github.com/OCA/ddmrp/pull/40>`__)
 
 11.0.1.2.0 (2019-01-29)
 -----------------------
 
-- [IMP] Performance improvement of execution priority calculation and
-  ADU. (`#36 <https://github.com/OCA/ddmrp/pull/36>`__)
-- [IMP] Use the minimum quantity to adjust the procure recommendation.
-  (`#37 <https://github.com/OCA/ddmrp/pull/37>`__)
+-  [IMP] Performance improvement of execution priority calculation and
+   ADU. (`#36 <https://github.com/OCA/ddmrp/pull/36>`__)
+-  [IMP] Use the minimum quantity to adjust the procure recommendation.
+   (`#37 <https://github.com/OCA/ddmrp/pull/37>`__)
 
 11.0.1.1.0 (2018-08-31)
 -----------------------
 
-- [IMP] Implemented Blended ADU calculation method.
-  (`#23 <https://github.com/OCA/ddmrp/pull/23>`__)
+-  [IMP] Implemented Blended ADU calculation method.
+   (`#23 <https://github.com/OCA/ddmrp/pull/23>`__)
 
 11.0.1.0.0 (2018-07-16)
 -----------------------
 
-- Start of the history
+-  Start of the history
 
 Bug Tracker
 ===========
@@ -279,7 +280,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/ddmrp/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/ddmrp/issues/new?body=module:%20ddmrp%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/ddmrp/issues/new?body=module:%20ddmrp%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -294,11 +295,11 @@ Authors
 Contributors
 ------------
 
-- Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
-- Lois Rilo Antelo <lois.rilo@forgeflow.com>
-- Guewen Baconnier <guewen.baconnier@camptocamp.com>
-- Adria Gil Sorribes <adria.gil@forgeflow.com>
-- Christopher Ormaza <chris.ormaza@forgeflow.com>
+-  Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
+-  Lois Rilo Antelo <lois.rilo@forgeflow.com>
+-  Guewen Baconnier <guewen.baconnier@camptocamp.com>
+-  Adria Gil Sorribes <adria.gil@forgeflow.com>
+-  Christopher Ormaza <chris.ormaza@forgeflow.com>
 
 Other credits
 -------------
@@ -306,7 +307,7 @@ Other credits
 The initial development of this module has been financially supported
 by:
 
-- Aleph Objects, Inc.
+-  Aleph Objects, Inc.
 
 Maintainers
 -----------
@@ -332,6 +333,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-JordiBForgeFlow| |maintainer-LoisRForgeFlow| 
 
-This module is part of the `OCA/ddmrp <https://github.com/OCA/ddmrp/tree/17.0/ddmrp>`_ project on GitHub.
+This module is part of the `OCA/ddmrp <https://github.com/OCA/ddmrp/tree/18.0/ddmrp>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

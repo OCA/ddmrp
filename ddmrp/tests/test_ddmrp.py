@@ -1270,7 +1270,7 @@ class TestDdmrp(TestDdmrpCommon):
             {
                 "name": "Non Buffered Product",
                 "standard_price": 1,
-                "type": "product",
+                "is_storable": True,
                 "uom_id": self.uom_unit.id,
                 "default_code": "NBP",
             }

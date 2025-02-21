@@ -5,7 +5,7 @@
 {
     "name": "DDMRP",
     "summary": "Demand Driven Material Requirements Planning",
-    "version": "17.0.1.1.4",
+    "version": "18.0.1.0.0",
     "license": "LGPL-3",
     "development_status": "Production/Stable",
     "author": "ForgeFlow, " "Odoo Community Association (OCA)",
@@ -19,7 +19,7 @@
         "mrp_multi_level",
         "base_cron_exclusion",
         "stock_warehouse_calendar",
-        "stock_helper",
+        "stock_location_is_sublocation",
     ],
     "data": [
         "data/product_adu_calculation_method_data.xml",

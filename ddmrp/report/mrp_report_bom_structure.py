@@ -28,6 +28,7 @@ class BomStructureReport(models.AbstractModel):
         index=0,
         product_info=False,
         ignore_stock=False,
+        simulated_leaves_per_workcenter=False,
     ):
         res = super()._get_bom_data(
             bom,
@@ -41,6 +42,7 @@ class BomStructureReport(models.AbstractModel):
             index=index,
             product_info=product_info,
             ignore_stock=ignore_stock,
+            simulated_leaves_per_workcenter=simulated_leaves_per_workcenter,
         )
         res["is_buffered"] = bom.is_buffered
         res["dlt"] = bom.dlt
