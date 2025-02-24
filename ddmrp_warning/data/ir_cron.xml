@@ -10,13 +10,11 @@
         <field name="user_id" ref="base.user_root" />
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
-        <field name="numbercall">-1</field>
         <field name="priority">5</field>
         <field
             name="mutually_exclusive_cron_ids"
             eval="[(6, 0, [ref('ddmrp.ir_cron_ddmrp_calculation_scheduler_action'),])]"
         />
-        <field eval="False" name="doall" />
         <field name="model_id" ref="ddmrp.model_stock_buffer" />
         <field name="code">model.cron_generate_ddmrp_warnings(True)</field>
     </record>

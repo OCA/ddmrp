@@ -7,7 +7,7 @@
         <field name="name">ddmrp.warning.item.tree</field>
         <field name="model">ddmrp.warning.item</field>
         <field name="arch" type="xml">
-            <tree
+            <list
                 decoration-info="severity == '1_low'"
                 decoration-warning="severity == '2_mid'"
                 decoration-danger="severity == '3_high'"
@@ -17,7 +17,7 @@
                 <field name="severity" />
                 <field name="location_id" groups="stock.group_stock_multi_locations" />
                 <field name="company_id" groups="base.group_multi_company" />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_ddmrp_warning_item_form" model="ir.ui.view">
@@ -84,7 +84,7 @@
     <record id="action_ddmrp_warning_item" model="ir.actions.act_window">
         <field name="name">DDMRP Warning Items</field>
         <field name="res_model">ddmrp.warning.item</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <menuitem
         name="DDMRP Warnings"
