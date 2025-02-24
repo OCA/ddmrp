@@ -33,7 +33,7 @@ class DdmrpWarningItem(models.Model):
 
     def _compute_name(self):
         for rec in self:
-            rec.name = "{} in {}".format(
-                rec.warning_definition_id.display_name,
-                rec.buffer_id.display_name,
+            rec.name = (
+                f"{rec.warning_definition_id.display_name}"
+                f" in {rec.buffer_id.display_name}"
             )
