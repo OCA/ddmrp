@@ -9,11 +9,7 @@
         <field name="inherit_id" ref="ddmrp.stock_buffer_view_form" />
         <field name="arch" type="xml">
             <sheet position="after">
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" groups="base.group_user" />
-                    <field name="activity_ids" />
-                    <field name="message_ids" />
-                </div>
+                <chatter />
             </sheet>
         </field>
     </record>
