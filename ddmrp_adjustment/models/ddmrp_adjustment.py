@@ -37,7 +37,7 @@ class DdmrpAdjustment(models.Model):
             (LTAF_string, "Lead Time Adjustment Factor"),
         ],
     )
-    value = fields.Float(group_operator="avg")
+    value = fields.Float(aggregator="avg")
     company_id = fields.Many2one(
         comodel_name="res.company",
         related="buffer_id.company_id",

@@ -95,7 +95,7 @@ class DdmrpAdjustmentSheet(models.TransientModel):
             "domain": [("id", "in", res)],
             "name": _("DDMRP Buffer Adjustment"),
             "src_model": "ddmrp.adjustment.sheet",
-            "view_mode": "tree",
+            "view_mode": "list",
             "res_model": "ddmrp.adjustment",
             "type": "ir.actions.act_window",
         }

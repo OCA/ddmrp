@@ -15,12 +15,12 @@
                 </group>
                 <group name="buffers" string="Buffers">
                     <field name="buffer_ids" nolabel="1" colspan="2">
-                        <tree name="buffer_tree">
+                        <list name="buffer_tree">
                             <field name="name" />
                             <field name="product_id" />
                             <field name="location_id" />
                             <field name="buffer_profile_id" />
-                        </tree>
+                        </list>
                     </field>
                 </group>
                 <group name="factor" string="Factors to Apply">
@@ -47,11 +47,11 @@
                         field_y_axis="factor"
                         field_value="value"
                     >
-                        <tree editable="True" nolabel="1" create="false">
+                        <list editable="bottom" nolabel="1" create="false">
                             <field name="date_range_id" />
                             <field name="factor" />
                             <field name="value" />
-                        </tree>
+                        </list>
                     </field>
                 </group>
                 <footer>
