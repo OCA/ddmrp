@@ -8,9 +8,9 @@
                 <group name="dates" string="Periods">
                     <label for="date_start" string="Period" />
                     <div><field name="date_start" class="oe_inline" /> to <field
-                            name="date_end"
-                            class="oe_inline"
-                        /></div>
+                        name="date_end"
+                        class="oe_inline"
+                    /></div>
                     <field name="date_range_type_id" />
                 </group>
                 <group name="buffers" string="Buffers">
