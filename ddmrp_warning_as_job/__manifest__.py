@@ -3,12 +3,12 @@
 
 {
     "name": "DDMRP Warning as job",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "summary": "Run DDMRP Warning as jobs",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/ddmrp",
     "category": "Warehouse Management",
-    "depends": ["ddmrp_warning", "ddmrp_cron_actions_as_job", "queue_job"],
+    "depends": ["ddmrp_warning", "ddmrp_cron_actions_as_job"],
     "data": ["data/queue_job_function_data.xml"],
     "license": "LGPL-3",
     "installable": True,
