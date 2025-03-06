@@ -2,7 +2,6 @@
 <!-- Copyright 2024 ForgeFlow S.L. (https://www.forgeflow.com)
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
 <odoo>
-
     <record id="view_ddmrp_flow_index_group_tree" model="ir.ui.view">
         <field name="name">ddmrp.flow.index.group.tree</field>
         <field name="model">ddmrp.flow.index.group</field>
@@ -71,5 +70,4 @@
         action="action_ddmrp_flow_index_group"
         id="menu_ddmrp_flow_index_group"
     />
-
 </odoo>
