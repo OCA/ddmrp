@@ -27,7 +27,7 @@
         <field name="name">view.ddmrp.part.plan.flow.index.pivot.tree</field>
         <field name="model">report.ddmrp.part.plan.flow.index</field>
         <field name="arch" type="xml">
-            <tree name="Parts Plan Flow Index">
+            <list name="Parts Plan Flow Index">
                 <field name="buffer_id" />
                 <field name="product_id" />
                 <field name="location_id" />
@@ -42,7 +42,7 @@
                     groups="base.group_multi_company"
                     optional="hide"
                 />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -66,7 +66,7 @@
     >
         <field name="name">Parts Plan Flow Index</field>
         <field name="res_model">report.ddmrp.part.plan.flow.index</field>
-        <field name="view_mode">graph,tree,pivot</field>
+        <field name="view_mode">graph,list,pivot</field>
         <field name="search_view_id" ref="view_part_plan_flow_index_filter" />
         <field name="view_id" ref="view_part_plan_flow_index_graph" />
     </record>
