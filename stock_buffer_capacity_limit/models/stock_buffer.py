@@ -29,11 +29,11 @@ class StockBuffer(models.Model):
         return res
 
     def cron_actions(self, only_nfp=False):
-        self.invalidate_cache(
+        self.ensure_one()
+        self.invalidate_recordset(
             fnames=[
                 "product_location_qty",
             ],
-            ids=self.ids,
         )
         return super().cron_actions(only_nfp)
 
