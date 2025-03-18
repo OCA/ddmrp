@@ -28,7 +28,7 @@ class TestDdmrpCoverageDays(common.TransactionCase):
                 "name": "product A",
                 "standard_price": 100.0,
                 "weight": 2.0,
-                "type": "product",
+                "is_storable": True,
                 "uom_id": self.uom_unit.id,
                 "default_code": "A",
                 "route_ids": [(6, 0, purchase_route.ids)],
