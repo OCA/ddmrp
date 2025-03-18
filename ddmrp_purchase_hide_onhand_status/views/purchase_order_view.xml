@@ -12,27 +12,27 @@
         <field name="model">purchase.order</field>
         <field name="inherit_id" ref="ddmrp.purchase_order_form" />
         <field name="arch" type="xml">
-          <xpath
+            <xpath
                 expr="//field[@name='order_line']//field[@name='buffer_ids']"
                 position="replace"
             />
-          <xpath
+            <xpath
                 expr="//field[@name='order_line']//field[@name='execution_priority_level']"
                 position="replace"
             />
-          <xpath
+            <xpath
                 expr="//field[@name='order_line']//field[@name='on_hand_percent']"
                 position="replace"
             />
-          <div name="button_box" position="inside">
-            <button
+            <div name="button_box" position="inside">
+                <button
                     name="action_ddmrp_line_details"
                     type="object"
                     string="Line On-Hand Status"
                     class="oe_stat_button"
                     icon="fa-tasks"
                 />
-          </div>
+            </div>
         </field>
     </record>
 </odoo>
