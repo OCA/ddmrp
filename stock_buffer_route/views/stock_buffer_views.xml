@@ -13,7 +13,6 @@
                     options="{'no_create': True}"
                     groups="stock.group_adv_location"
                 />
-                <field name="route_ids" invisible="1" />
             </field>
         </field>
     </record>

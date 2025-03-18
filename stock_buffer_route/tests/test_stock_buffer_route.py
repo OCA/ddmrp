@@ -125,7 +125,7 @@ class TestStockBufferRoute(common.TransactionCase):
                 default_code=default_code,
                 uom_id=self.env.ref("uom.product_uom_unit").id,
                 company_id=company_id,
-                type="product",
+                is_storable=True,
                 **vals,
             )
         )
