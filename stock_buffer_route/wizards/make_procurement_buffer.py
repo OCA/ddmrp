@@ -20,7 +20,7 @@ class MakeProcurementBuffer(models.TransientModel):
 
     @api.model
     def _prepare_item(self, buffer, qty_override=None):
-        res = super(MakeProcurementBuffer, self)._prepare_item(buffer, qty_override)
+        res = super()._prepare_item(buffer, qty_override)
         res["route_ids"] = buffer.route_ids.ids
         res["route_id"] = buffer.route_id.id
         return res

@@ -126,7 +126,7 @@ class TestStockBufferRoute(common.TransactionCase):
                 uom_id=self.env.ref("uom.product_uom_unit").id,
                 company_id=company_id,
                 type="product",
-                **vals
+                **vals,
             )
         )
 
