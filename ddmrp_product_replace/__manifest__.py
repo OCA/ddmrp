@@ -4,13 +4,13 @@
 {
     "name": "DDMRP Product Replace",
     "summary": "Provides a assisting tool for product replacement.",
-    "version": "16.0.1.1.0",
+    "version": "17.0.1.1.0",
     "development_status": "Beta",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],
     "website": "https://github.com/OCA/ddmrp",
     "category": "Warehouse Management",
-    "depends": ["ddmrp"],
+    "depends": ["ddmrp_chatter"],
     "data": [
         "security/ir.model.access.csv",
         "wizards/ddmrp_product_replace_view.xml",

@@ -9,7 +9,7 @@
                 <div
                     class="alert alert-danger"
                     role="alert"
-                    attrs="{'invisible': [('has_replaced_buffers', '=', False)]}"
+                    invisible="not has_replaced_buffers"
                     style="margin-bottom:0px;"
                 >
                     <p>

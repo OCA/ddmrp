@@ -11,7 +11,7 @@
                 <div
                     class="alert alert-danger"
                     role="alert"
-                    attrs="{'invisible': [('replaced_by_id', '=', False)]}"
+                    invisible="not replaced_by_id"
                     style="margin-bottom:0px;"
                 >
                     <p>
@@ -30,7 +30,7 @@
                     name="action_view_buffers_replaced"
                     class="oe_stat_button"
                     icon="fa-signal"
-                    attrs="{'invisible': [('replacement_for_count', '=', 0)]}"
+                    invisible="replacement_for_count == 0"
                 >
                     <field
                         name="replacement_for_count"
@@ -46,7 +46,7 @@
                 <page
                     name="product_replacement"
                     string="Product Replacement"
-                    attrs="{'invisible': [('demand_product_ids','=',[]), ('replacement_for_count', '=', 0)]}"
+                    invisible="not demand_product_ids and replacement_for_count == 0"
                     groups="stock.group_stock_manager"
                 >
                     <group>
