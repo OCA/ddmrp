@@ -93,7 +93,7 @@ class StockBuffer(models.Model):
     product_id = fields.Many2one(
         comodel_name="product.product",
         string="Product",
-        domain=[("type", "=", "product")],
+        domain=[("is_storable", "=", True)],
         ondelete="cascade",
         required=True,
     )
