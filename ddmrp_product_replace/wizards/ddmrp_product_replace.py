@@ -139,7 +139,7 @@ class DdmrpProductReplace(models.TransientModel):
             # Do not create buffers for non-primary products.
             # Instead assign one of the already created.
             replacing = fields.first(
-                new_buffers.filtered(lambda b: b.location_id == replaced.location_id)
+                new_buffers.filtered(lambda b: b.location_id == replaced.location_id)  # noqa: B023
             )
             if not replacing:
                 replacing = new_buffers[0]
