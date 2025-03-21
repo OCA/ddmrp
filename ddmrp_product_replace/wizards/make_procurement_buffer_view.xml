@@ -22,9 +22,6 @@
                     </p>
                 </div>
             </xpath>
-            <field name="partner_id" position="after">
-                <field name="has_replaced_buffers" invisible="1" />
-            </field>
         </field>
     </record>
 </odoo>

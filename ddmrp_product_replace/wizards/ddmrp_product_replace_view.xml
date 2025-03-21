@@ -16,7 +16,6 @@
                         widget="many2many_tags"
                         options="{'no_create': True}"
                     />
-                    <field name="multi_product" invisible="1" />
                     <div invisible="not multi_product" colspan="2">
                         <p> <i class="fa fa-info-circle" style="margin-right:5px" />
                             When there are more than one product replaced, only the buffer(s) of the primary product in
@@ -28,7 +27,7 @@
                         invisible="not multi_product"
                     />
                     <field name="buffer_ids">
-                        <tree decoration-danger="replaced_by_id">
+                        <list decoration-danger="replaced_by_id">
                             <field name="name" />
                             <field name="warehouse_id" />
                             <field name="location_id" />
@@ -37,9 +36,8 @@
                                 groups="base.group_multi_company"
                             />
                             <field name="replaced_by_id" optional="hide" />
-                        </tree>
+                        </list>
                     </field>
-                    <field name="is_already_replaced" invisible="1" />
                 </group>
                 <group name="new_product" string="Select Replacing Product">
                     <field name="use_existing" />

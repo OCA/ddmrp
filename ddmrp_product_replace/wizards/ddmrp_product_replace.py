@@ -167,7 +167,7 @@ class DdmrpProductReplace(models.TransientModel):
         return {
             "name": _("New Stock Buffers"),
             "domain": [("id", "in", new_buffers.ids)],
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "res_model": "stock.buffer",
             "type": "ir.actions.act_window",
         }
