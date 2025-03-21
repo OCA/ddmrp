@@ -23,11 +23,11 @@ class MakeProcurementBuffer(models.TransientModel):
                 for item in rec.item_ids:
                     if item.buffer_id.replaced_by_id:
                         replacement = item.buffer_id.replaced_by_id
-                        alert_text += "\n - {} ({}) replaced by {} ({})".format(
-                            item.buffer_id.display_name,
-                            item.buffer_id.product_id.display_name,
-                            replacement.display_name,
-                            replacement.product_id.display_name,
+                        alert_text += (
+                            f"\n - {item.buffer_id.display_name} "
+                            f"({item.buffer_id.product_id.display_name}) "
+                            f"replaced by {replacement.display_name} "
+                            f"({replacement.product_id.display_name})"
                         )
                 rec.replaced_by_alert_text = alert_text
             else:
