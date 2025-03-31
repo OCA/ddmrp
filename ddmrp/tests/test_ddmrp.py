@@ -42,6 +42,19 @@ class TestDdmrp(TestDdmrpCommon):
         self.bufferModel.cron_ddmrp_adu()
         to_assert_value = (60 + 60) / 120  # Doesn't include inventory loss qty
         self.assertEqual(self.buffer_a.adu, to_assert_value)
+        # Create one more move in a different UoM but do not validate it fully
+        days = 90
+        date_move = self.calendar.plan_days(-1 * days - 1, datetime.today())
+        pick_out_3 = self.create_pickingoutA(date_move, 5, uom=self.dozen_unit)
+        self.assertEqual(pick_out_3.move_ids.product_uom_qty, 5.0)
+        self.assertEqual(pick_out_3.move_ids.product_qty, 60.0)
+        self._do_picking(pick_out_3, date_move, done_qty=2)
+        self.assertEqual(pick_out_3.state, "done")
+        self.assertEqual(pick_out_3.move_ids.quantity, 2.0)
+        self.assertEqual(pick_out_3.move_ids.product_uom_qty, 5.0)
+        to_assert_value = (60 + 60 + 24) / 120  # Only considers the done qty.
+        self.buffer_a._calc_adu()
+        self.assertEqual(self.buffer_a.adu, to_assert_value)
 
     def test_03_adu_calculation_window_past(self):
         """Test that the window considered to calculate the ADU is correct."""
