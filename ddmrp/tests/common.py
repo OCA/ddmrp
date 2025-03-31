@@ -509,10 +509,14 @@ class TestDdmrpCommon(common.TransactionCase):
         picking.action_confirm()
         return picking
 
-    def _do_picking(self, picking, date):
+    def _do_picking(self, picking, date, done_qty=None):
         """Do picking with only one move on the given date."""
         picking.action_confirm()
-        picking.move_ids.quantity = picking.move_ids.product_qty
+        if not done_qty:
+            done_qty = picking.move_ids.product_qty
+        else:
+            picking = picking.with_context(cancel_backorder=True)
+        picking.move_ids.quantity = done_qty
         picking.move_ids.picked = True
         picking._action_done()
         for move in picking.move_ids:

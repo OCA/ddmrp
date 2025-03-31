@@ -1451,9 +1451,9 @@ class StockBuffer(models.Model):
         elif self.adu_calculation_method.source_past == "actual":
             domain = self._past_moves_domain(date_from, date_to, locations)
             for group in self.env["stock.move"].read_group(
-                domain, ["product_id", "product_qty"], ["product_id"]
+                domain, ["product_id", "quantity_product_uom"], ["product_id"]
             ):
-                qty += group["product_qty"]
+                qty += group["quantity_product_uom"]
         return qty / horizon
 
     def _get_horizon_adu_future_demand(self):

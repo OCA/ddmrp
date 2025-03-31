@@ -20,6 +20,7 @@
         "base_cron_exclusion",
         "stock_warehouse_calendar",
         "stock_location_is_sublocation",
+        "stock_move_quantity_product_uom",
     ],
     "data": [
         "data/product_adu_calculation_method_data.xml",
