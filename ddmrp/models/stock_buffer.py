@@ -1845,6 +1845,7 @@ class StockBuffer(models.Model):
             outside_dlt=True
         )
         result["domain"] = [("id", "in", moves.ids)]
+        result["views"] = sorted(result["views"], key=lambda view: view[1] != "list")
         return result
 
     def _get_rfq_dlt(self, dlt_interval=None):
@@ -1871,6 +1872,7 @@ class StockBuffer(models.Model):
         moves = self._search_stock_moves_incoming()
         result["context"] = {}
         result["domain"] = [("id", "in", moves.ids)]
+        result["views"] = sorted(result["views"], key=lambda view: view[1] != "list")
         return result
 
     def action_view_supply_moves_outside_dlt_window(self):
@@ -1878,6 +1880,7 @@ class StockBuffer(models.Model):
         moves = self._search_stock_moves_incoming(outside_dlt=True)
         result["context"] = {}
         result["domain"] = [("id", "in", moves.ids)]
+        result["views"] = sorted(result["views"], key=lambda view: view[1] != "list")
         return result
 
     def action_view_supply_rfq_inside_dlt_window(self):
@@ -1900,6 +1903,7 @@ class StockBuffer(models.Model):
         result = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")
         result["context"] = {}
         result["domain"] = [("id", "in", self.qualified_demand_stock_move_ids.ids)]
+        result["views"] = sorted(result["views"], key=lambda view: view[1] != "list")
         return result
 
     def action_view_qualified_demand_mrp(self):
@@ -1924,6 +1928,9 @@ class StockBuffer(models.Model):
             )
             result["context"] = {}
             result["domain"] = [("id", "in", moves.ids)]
+            result["views"] = sorted(
+                result["views"], key=lambda view: view[1] != "list"
+            )
         else:
             domain = self._demand_estimate_domain(locations, date_from, date_to)
             estimates = self.env["stock.demand.estimate"].search(domain)
@@ -1963,6 +1970,9 @@ class StockBuffer(models.Model):
             )
             result["context"] = {}
             result["domain"] = [("id", "in", moves.ids)]
+            result["views"] = sorted(
+                result["views"], key=lambda view: view[1] != "list"
+            )
         else:
             domain = self._demand_estimate_domain(locations, date_from, date_to)
             estimates = self.env["stock.demand.estimate"].search(domain)
