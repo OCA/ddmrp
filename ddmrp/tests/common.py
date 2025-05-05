@@ -199,7 +199,7 @@ class TestDdmrpCommon(common.TransactionCase):
                 "standard_price": 1,
                 "is_storable": True,
                 "uom_id": cls.uom_unit.id,
-                "default_code": "B",
+                "default_code": "B2",
                 "route_ids": [(6, 0, buy_route.ids)],
             }
         )
