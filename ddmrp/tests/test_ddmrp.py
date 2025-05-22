@@ -743,7 +743,7 @@ class TestDdmrp(TestDdmrpCommon):
 
         # Now we create a procurement order, based on the procurement
         # recommendation
-        self.create_orderpoint_procurement(self.buffer_a)
+        self.create_buffer_procurement(self.buffer_a)
         # should have generated a manufacturing order
         self.assertEqual(len(self.buffer_a.mrp_production_ids), 1)
         self.assertEqual(self.buffer_a.mrp_production_ids.product_qty, 40.0)
@@ -757,7 +757,7 @@ class TestDdmrp(TestDdmrpCommon):
         pol = self.pol_model.search([("product_id", "=", self.product_purchased.id)])
         self.assertFalse(pol)
         self.assertGreater(self.buffer_purchase.procure_recommended_qty, 0)
-        self.create_orderpoint_procurement(self.buffer_purchase)
+        self.create_buffer_procurement(self.buffer_purchase)
         pol = self.pol_model.search([("product_id", "=", self.product_purchased.id)])
         self.assertEqual(len(pol), 1)
         self.assertIn(pol.buffer_ids, self.buffer_purchase)
@@ -1317,3 +1317,131 @@ class TestDdmrp(TestDdmrpCommon):
             ]
         )
         self.assertTrue(op_nbp)
+
+    def test_47_incoming_quantity_from_final_location(self):
+        """Test that final location is considered in incoming calculation"""
+        # Enable 3 step routes
+        self.warehouse.write(
+            {
+                "delivery_steps": "pick_pack_ship",
+                "reception_steps": "three_steps",
+            }
+        )
+        # create incoming first step
+        self.assertEqual(self.buffer_purchase.procure_recommended_qty, 225)
+        self.create_buffer_procurement(self.buffer_purchase)
+        pol = self.env["purchase.order.line"].search(
+            [("product_id", "=", self.product_purchased.id)]
+        )
+        pol.order_id.button_confirm()
+        move = self.env["stock.move"].search(
+            [
+                ("product_id", "=", self.product_purchased.id),
+                ("location_id.usage", "!=", "internal"),
+            ]
+        )
+        self.assertEqual(len(move), 1)
+        self.assertEqual(move.location_dest_id, self.warehouse.wh_input_stock_loc_id)
+        self.assertEqual(move.location_final_id, self.warehouse.lot_stock_id)
+        self.assertEqual(move.product_qty, 225)
+        self.buffer_purchase.cron_actions()
+        self.assertEqual(self.buffer_purchase.incoming_dlt_qty, 225.0)
+        # Validating should generate the next picking.
+        self.assertFalse(move.move_dest_ids)
+        picking_1 = move.picking_id
+        self._do_picking(picking_1, datetime.today())
+        self.assertEqual(len(move.move_dest_ids), 1)
+        picking_2 = move.move_dest_ids.picking_id
+        move_2 = picking_2.move_ids
+        self.assertEqual(len(move_2), 1)
+        self.assertEqual(move_2.location_dest_id, self.warehouse.wh_qc_stock_loc_id)
+        self.assertEqual(move_2.location_final_id, self.warehouse.lot_stock_id)
+        self.buffer_purchase.cron_actions()
+        # Incoming qty should be the same.
+        self.assertEqual(self.buffer_purchase.incoming_dlt_qty, 225.0)
+
+        # Validating once again to generate the last picking.
+        self.assertFalse(move_2.move_dest_ids)
+        self._do_picking(picking_2, datetime.today())
+        self.assertEqual(len(move.move_dest_ids), 1)
+        picking_3 = move_2.move_dest_ids.picking_id
+        move_3 = picking_3.move_ids
+        self.assertEqual(len(move_3), 1)
+        self.assertEqual(move_3.location_dest_id, self.warehouse.lot_stock_id)
+        self.assertEqual(move_3.location_final_id, self.warehouse.lot_stock_id)
+        self.buffer_purchase.cron_actions()
+        # Incoming qty should be the same.
+        self.assertEqual(self.buffer_purchase.incoming_dlt_qty, 225.0)
+        # Validate last step should finally fill the buffer
+        self.assertEqual(self.buffer_purchase.product_location_qty_available_not_res, 0)
+        self._do_picking(picking_3, datetime.today())
+        self.buffer_purchase.cron_actions()
+        self.assertEqual(self.buffer_purchase.incoming_dlt_qty, 0)
+        self.assertEqual(
+            self.buffer_purchase.product_location_qty_available_not_res, 225
+        )
+
+    def test_48_outgoing_quantity_with_final_location(self):
+        """Test that final location is considered in incoming calculation"""
+        # Enable 3 step routes
+        self.warehouse.write(
+            {
+                "delivery_steps": "pick_pack_ship",
+                "reception_steps": "three_steps",
+            }
+        )
+        # Change buffer location to include intermediate locations.
+        # A planned operation from WH/stock to WH/Packing Zone should
+        # still be considered demand if the final destination is out of
+        # the buffer loc (case of standard deliver in 3-step route).
+        self.buffer_purchase.location_id = self.warehouse.view_location_id
+        self.buffer_purchase.cron_actions()
+        self.assertEqual(self.buffer_purchase.qualified_demand, 0.0)
+        # Create delivery first step
+        self._run_procurement(self.product_purchased)
+        move = self.env["stock.move"].search(
+            [("product_id", "=", self.product_purchased.id)]
+        )
+        self.assertEqual(len(move), 1)
+        self.assertEqual(move.location_dest_id, self.warehouse.wh_pack_stock_loc_id)
+        self.assertEqual(move.location_final_id, self.customer_location)
+        self.assertEqual(move.product_qty, 10)
+        self.buffer_purchase.cron_actions()
+        self.assertEqual(self.buffer_purchase.qualified_demand, 10.0)
+        # Validating should generate the next picking.
+        self.assertFalse(move.move_dest_ids)
+        picking_1 = move.picking_id
+        self._do_picking(picking_1, datetime.today())
+        self.assertEqual(len(move.move_dest_ids), 1)
+        picking_2 = move.move_dest_ids.picking_id
+        move_2 = picking_2.move_ids
+        self.assertEqual(len(move_2), 1)
+        self.assertEqual(move_2.location_dest_id, self.warehouse.wh_output_stock_loc_id)
+        self.assertEqual(move_2.location_final_id, self.customer_location)
+        move_2._do_unreserve()  # reserved moves are ignored by the buffer.
+        self.assertEqual(move_2.state, "confirmed")
+        self.buffer_purchase.cron_actions()
+        # demand qty should be the same.
+        self.assertEqual(self.buffer_purchase.qualified_demand, 10.0)
+        # Validating once again to generate the last picking.
+        self.assertFalse(move_2.move_dest_ids)
+        self._do_picking(picking_2, datetime.today())
+        self.assertEqual(len(move.move_dest_ids), 1)
+        picking_3 = move_2.move_dest_ids.picking_id
+        move_3 = picking_3.move_ids
+        self.assertEqual(len(move_3), 1)
+        self.assertEqual(move_3.location_dest_id, self.customer_location)
+        self.assertEqual(move_3.location_final_id, self.customer_location)
+        move_3._do_unreserve()
+        self.assertEqual(move_3.state, "confirmed")
+        self.buffer_purchase.cron_actions()
+        # outgoing qty should be the same.
+        self.assertEqual(self.buffer_purchase.qualified_demand, 10.0)
+        # Validate last step should finally deplete the buffer
+        self.assertEqual(self.buffer_purchase.product_location_qty_available_not_res, 0)
+        self._do_picking(picking_3, datetime.today())
+        self.buffer_purchase.cron_actions()
+        self.assertEqual(self.buffer_purchase.qualified_demand, 0)
+        self.assertEqual(
+            self.buffer_purchase.product_location_qty_available_not_res, -10
+        )

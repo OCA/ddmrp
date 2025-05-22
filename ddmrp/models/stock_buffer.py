@@ -1560,7 +1560,13 @@ class StockBuffer(models.Model):
         moves = self.env["stock.move"].search(domain)
         moves = moves.filtered(
             lambda move: move.location_id.is_sublocation_of(self.location_id)
-            and not move.location_dest_id.is_sublocation_of(self.location_id)
+            and (
+                not move.location_dest_id.is_sublocation_of(self.location_id)
+                or (
+                    move.location_final_id
+                    and not move.location_final_id.is_sublocation_of(self.location_id)
+                )
+            )
         )
         return moves
 
@@ -1588,7 +1594,13 @@ class StockBuffer(models.Model):
         moves = self.env["stock.move"].search(domain)
         moves = moves.filtered(
             lambda move: not move.location_id.is_sublocation_of(self.location_id)
-            and move.location_dest_id.is_sublocation_of(self.location_id)
+            and (
+                move.location_dest_id.is_sublocation_of(self.location_id)
+                or (
+                    move.location_final_id
+                    and move.location_final_id.is_sublocation_of(self.location_id)
+                )
+            )
         )
         return moves
 

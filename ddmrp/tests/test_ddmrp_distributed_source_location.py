@@ -116,9 +116,7 @@ class TestDdmrpDistributedSourceLocation(TestDdmrpCommon):
         # applied)
         self.buffer_dist.procure_recommended_qty = 10000
 
-        return self.create_orderpoint_procurement(
-            self.buffer_dist, make_procurement=False
-        )
+        return self.create_buffer_procurement(self.buffer_dist, make_procurement=False)
 
     def test_distributed_source_limit_replenish(self):
         wizard = self._set_qty_and_create_replenish_wizard()
