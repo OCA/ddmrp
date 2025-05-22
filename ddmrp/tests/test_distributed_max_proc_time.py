@@ -89,7 +89,7 @@ class TestDdmrpMaxProcTime(TestDdmrpCommon):
         # lie about the recommended qty to force creation of replenishment
         self.buffer_dist.procure_recommended_qty = 10000
 
-        self.create_orderpoint_procurement(self.buffer_dist)
+        self.create_buffer_procurement(self.buffer_dist)
         moves = self.env["stock.move"].search(
             [("product_id", "=", self.product_c_green.id)]
         )
@@ -113,7 +113,7 @@ class TestDdmrpMaxProcTime(TestDdmrpCommon):
         # lie about the recommended qty to force creation of replenishment
         self.buffer_dist.procure_recommended_qty = 10000
 
-        self.create_orderpoint_procurement(self.buffer_dist)
+        self.create_buffer_procurement(self.buffer_dist)
         moves = self.env["stock.move"].search(
             [("product_id", "=", self.product_c_green.id)]
         )

@@ -522,7 +522,7 @@ class TestDdmrpCommon(common.TransactionCase):
         for move in picking.move_ids:
             move.date = date
 
-    def create_orderpoint_procurement(self, buffer, make_procurement=True):
+    def create_buffer_procurement(self, buffer, make_procurement=True):
         """Make Procurement from Reordering Rule"""
         wizard = (
             self.make_procurement_wiz.with_user(self.user)
@@ -553,3 +553,27 @@ class TestDdmrpCommon(common.TransactionCase):
         move._action_confirm()
         move._action_done()
         move.date = date
+
+    @classmethod
+    def _run_procurement(
+        cls, product, location=None, product_qty=10.0, extra_values=None
+    ):
+        if not location:
+            location = cls.customer_location
+        values = {"warehouse_id": cls.warehouse}
+        if extra_values and isinstance(extra_values, dict):
+            values.update(extra_values)
+        return cls.env["procurement.group"].run(
+            [
+                cls.env["procurement.group"].Procurement(
+                    product,
+                    product_qty,
+                    product.uom_id,
+                    location,
+                    product.name,
+                    "/",
+                    cls.env.company,
+                    values,
+                )
+            ]
+        )
