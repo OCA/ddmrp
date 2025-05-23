@@ -1,12 +1,20 @@
 # Copyright 2019-20 ForgeFlow S.L. (http://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from odoo import _, api, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
+
+    buffer_count = fields.Integer(compute="_compute_buffer_count")
+
+    def _compute_buffer_count(self):
+        for rec in self:
+            rec.buffer_count = sum(
+                variant.buffer_count for variant in rec.product_variant_ids
+            )
 
     # UOM: (stock_orderpoint_uom):
     @api.constrains("uom_id")
@@ -26,3 +34,6 @@ class ProductTemplate(models.Model):
                         "different Procurement unit of measure category."
                     )
                 )
+
+    def action_view_stock_buffers(self):
+        return self.product_variant_ids.action_view_stock_buffers()
