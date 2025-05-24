@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-12-03 11:06+0000\n"
+"PO-Revision-Date: 2025-05-24 15:27+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__used_in_bom_count
@@ -645,6 +645,8 @@ msgid ""
 "Goods are tangible materials and merchandise you provide.\n"
 "A service is a non-material product you provide."
 msgstr ""
+"I beni sono materiali tangibili e merci che si forniscono. \n"
+"Un servizio è un prodotto immateriale che si fornisce."
 
 #. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__mrp_production__execution_priority_level__3_green
@@ -935,7 +937,7 @@ msgstr "Prodotto"
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_mrp_production
 msgid "Manufacturing Order"
-msgstr ""
+msgstr "Ordine di produzione"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__mrp_production_ids
@@ -1266,7 +1268,7 @@ msgstr "Movimenti prodotto (riga movimento di magazzino)"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_type
 msgid "Product Type"
-msgstr ""
+msgstr "Tipologia prodotto"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_product_product
