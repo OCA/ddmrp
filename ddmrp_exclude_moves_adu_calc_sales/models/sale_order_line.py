@@ -9,14 +9,20 @@ class SaleOrderLine(models.Model):
 
     exclude_from_adu = fields.Boolean(
         string="Exclude from ADU calculation",
+        compute="_compute_exclude_from_adu",
+        inverse="_inverse_exclude_from_adu",
         copy=False,
         help="If this flag is set related stock moves will be excluded from "
         "ADU calculation",
     )
 
-    def write(self, vals):
-        if "exclude_from_adu" in vals:
-            self.mapped("move_ids").write(
-                {"exclude_from_adu": vals.get("exclude_from_adu")}
-            )
-        return super().write(vals)
+    def _compute_exclude_from_adu(self):
+        for rec in self:
+            rec.exclude_from_adu = all(move.exclude_from_adu for move in rec.move_ids)
+
+    def _inverse_exclude_from_adu(self):
+        for rec in self:
+            if rec.exclude_from_adu:
+                rec.move_ids.write({"exclude_from_adu": True})
+            else:
+                rec.move_ids.write({"exclude_from_adu": False})
