@@ -4,7 +4,7 @@
 {
     "name": "DDMRP Exclude Moves ADU Calc Sales",
     "summary": "DDMRP Exclude Moves ADU Calc integration with Sales app.",
-    "version": "18.0.1.0.0",
+    "version": "18.0.2.0.0",
     "development_status": "Beta",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "maintainers": ["DavidJForgeFlow"],
