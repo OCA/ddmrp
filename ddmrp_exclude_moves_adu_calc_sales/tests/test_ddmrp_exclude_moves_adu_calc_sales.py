@@ -81,5 +81,6 @@ class TestDdmrp(common.TransactionCase):
         self.assertTrue(so.order_line.exclude_from_adu)
         self.assertTrue(so.picking_ids.move_ids.exclude_from_adu)
         so.picking_ids.move_ids._toggle_exclude_from_adu()
+        so.order_line.invalidate_recordset()
         self.assertFalse(so.order_line.exclude_from_adu)
         self.assertFalse(so.picking_ids.move_ids.exclude_from_adu)
