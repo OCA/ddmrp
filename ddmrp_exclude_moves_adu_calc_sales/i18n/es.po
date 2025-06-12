@@ -34,7 +34,5 @@ msgstr ""
 msgid "Sales Order Line"
 msgstr "Línea de Orden de Venta"
 
-#. module: ddmrp_exclude_moves_adu_calc_sales
-#: model:ir.model,name:ddmrp_exclude_moves_adu_calc_sales.model_stock_move
-msgid "Stock Move"
-msgstr "Movimiento de Almacén"
+#~ msgid "Stock Move"
+#~ msgstr "Movimiento de Almacén"
