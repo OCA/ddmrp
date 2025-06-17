@@ -100,6 +100,13 @@ class StockBuffer(models.Model):
     product_uom = fields.Many2one(
         related="product_id.uom_id",
     )
+    product_categ_id = fields.Many2one(
+        comodel_name="product.category",
+        string="Product Category",
+        related="product_id.categ_id",
+        store=True,
+        readonly=True,
+    )
     # TODO: fix in method _compute_procure_recommended_qty.
     # not sure maybe they are useful for tweak batches like in multi level mrp
     procure_min_qty = fields.Float(
