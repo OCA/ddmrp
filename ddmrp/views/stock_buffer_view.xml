@@ -602,6 +602,7 @@
                 <field name="main_supplier_id" />
                 <field name="company_id" groups="base.group_multi_company" />
                 <field name="product_id" />
+                <field name="product_categ_id" />
                 <field name="dlt" />
                 <field name="order_cycle" />
                 <field name="minimum_order_quantity" />
@@ -706,6 +707,12 @@
                         name="main_supplier_group_filter"
                         domain="[]"
                         context="{'group_by':'main_supplier_id'}"
+                    />
+                    <filter
+                        string="Product Category"
+                        name="product_categ_id"
+                        domain="[]"
+                        context="{'group_by': 'product_categ_id'}"
                     />
                 </group>
             </search>
