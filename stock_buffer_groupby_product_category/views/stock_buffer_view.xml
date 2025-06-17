@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_buffer_search_inherit_product_categ" model="ir.ui.view">
+        <field
+            name="name"
+        >stock.buffer.search - stock_buffer_groupby_product_category</field>
+        <field name="model">stock.buffer</field>
+        <field name="inherit_id" ref="ddmrp.stock_buffer_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@expand='0']" position="inside">
+                <filter
+                    string="Product Category"
+                    name="product_categ_id"
+                    context="{'group_by': 'product_categ_id'}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
