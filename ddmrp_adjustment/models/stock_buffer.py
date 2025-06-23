@@ -140,7 +140,10 @@ class StockBuffer(models.Model):
         components after the cron update of all the buffers."""
         res = super().cron_ddmrp_adu(automatic)
         today = fields.Date.today()
-        for op in self.search([]).filtered("extra_demand_ids"):
+        self.search(
+            [("parent_daf_applied", "!=", -1), ("extra_demand_ids", "=", False)]
+        ).write({"parent_daf_applied": -1})
+        for op in self.search([("extra_demand_ids", "!=", False)]):
             op.parent_daf_applied = -1
             daf_parent = sum(
                 op.extra_demand_ids.filtered(
