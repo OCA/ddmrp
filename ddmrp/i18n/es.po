@@ -152,6 +152,11 @@ msgid "Blended"
 msgstr "Mezclado"
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Buffer"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_product__buffer_count
 #: model:ir.model.fields,field_description:ddmrp.field_product_template__buffer_count
 msgid "Buffer Count"
@@ -1250,6 +1255,12 @@ msgstr "Método de cálculo del Consumo Medio Diario de Producto"
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_picking_form
 msgid "Product Buffers"
 msgstr "Búferes de Productos"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_categ_id
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Product Category"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_move_line

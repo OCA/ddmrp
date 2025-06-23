@@ -147,6 +147,11 @@ msgid "Blended"
 msgstr ""
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Buffer"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_product__buffer_count
 #: model:ir.model.fields,field_description:ddmrp.field_product_template__buffer_count
 msgid "Buffer Count"
@@ -1238,6 +1243,12 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_picking_form
 msgid "Product Buffers"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_categ_id
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Product Category"
 msgstr ""
 
 #. module: ddmrp
