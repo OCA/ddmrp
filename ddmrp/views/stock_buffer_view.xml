@@ -593,7 +593,13 @@
         <field name="model">stock.buffer</field>
         <field name="arch" type="xml">
             <search>
-                <field name="name" />
+                <field
+                    name="name"
+                    string="Buffer"
+                    filter_domain="[
+                        '|', '|',
+                        ('name', 'ilike', self), ('product_id', 'ilike', self), ('location_id', 'ilike', self)]"
+                />
                 <field name="buffer_profile_id" />
                 <field
                     name="warehouse_id"
@@ -603,6 +609,7 @@
                 <field name="main_supplier_id" />
                 <field name="company_id" groups="base.group_multi_company" />
                 <field name="product_id" />
+                <field name="product_categ_id" />
                 <field name="dlt" />
                 <field name="order_cycle" />
                 <field name="minimum_order_quantity" />
@@ -707,6 +714,12 @@
                         name="main_supplier_group_filter"
                         domain="[]"
                         context="{'group_by':'main_supplier_id'}"
+                    />
+                    <filter
+                        string="Product Category"
+                        name="product_categ_id"
+                        domain="[]"
+                        context="{'group_by': 'product_categ_id'}"
                     />
                 </group>
             </search>
