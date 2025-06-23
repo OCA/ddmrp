@@ -592,7 +592,13 @@
         <field name="model">stock.buffer</field>
         <field name="arch" type="xml">
             <search>
-                <field name="name" />
+                <field
+                    name="name"
+                    string="Buffer"
+                    filter_domain="[
+                        '|', '|',
+                        ('name', 'ilike', self), ('product_id', 'ilike', self), ('location_id', 'ilike', self)]"
+                />
                 <field name="buffer_profile_id" />
                 <field
                     name="warehouse_id"
