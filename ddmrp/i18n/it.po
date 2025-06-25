@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-24 15:27+0000\n"
+"PO-Revision-Date: 2025-06-25 09:25+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -161,7 +161,7 @@ msgstr "Misto"
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
 msgid "Buffer"
-msgstr ""
+msgstr "Buffer"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_product__buffer_count
@@ -1269,7 +1269,7 @@ msgstr "Buffer prodotto"
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_categ_id
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
 msgid "Product Category"
-msgstr ""
+msgstr "Categoria prodotto"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_move_line
