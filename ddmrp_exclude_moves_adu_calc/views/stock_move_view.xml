@@ -17,4 +17,32 @@
         <field name="state">code</field>
         <field name="code">records._toggle_exclude_from_adu()</field>
     </record>
+    <record id="view_move_tree" model="ir.ui.view">
+        <field name="name">stock.move.tree - ddmrp_exclude_moves_adu_calc</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="exclude_from_adu" invisible="1" />
+            </xpath>
+            <list position="attributes">
+                <attribute name="decoration-muted">exclude_from_adu == True</attribute>
+            </list>
+        </field>
+    </record>
+    <record id="view_move_search" model="ir.ui.view">
+        <field name="name">stock.move.search - ddmrp_exclude_moves_adu_calc</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='inventory']" position="after">
+                <separator />
+                <filter
+                    string="Not Excluded from ADU"
+                    name="not_excluded_from_adu"
+                    domain="[('exclude_from_adu', '=', False)]"
+                />
+            </xpath>
+        </field>
+    </record>
 </odoo>
