@@ -31,8 +31,8 @@ DDMRP Exclude Moves ADU Calc
 This module adds new criteria to exclude moves from the calculation of
 the Average Daily Usage (ADU) on a Buffer, based on:
 
-- Locations
-- Specific stock moves
+-  Locations
+-  Specific stock moves
 
 **Table of contents**
 
@@ -44,24 +44,17 @@ Usage
 
 You can exclude specific moves or all moves towards a specific location:
 
-- Go to *Inventory > Reports > Stock Moves* and click on *Action >
-  Exclude from ADU* for a specific move or several.
-- Go to *Inventory > Configuration > WH Management > Locations* and
-  check the flag *Exclude this location from ADU calculation* for the
-  desired locations.
+-  Go to *Inventory > Reports > Stock Moves* and click on *Action >
+   Exclude from ADU* for a specific move or several.
+-  Go to *Inventory > Configuration > WH Management > Locations* and
+   check the flag *Exclude this location from ADU calculation* for the
+   desired locations.
 
 Changelog
 =========
 
-13.0.1.0.0 (2021-03-15)
------------------------
-
-- Standard migration of the module to v13.
-
-11.0.1.0.0 (2018-09-17)
------------------------
-
-- Start of history. Migrated to OCA/ddmrp.
+Follow the history of changes in `GitHub Pull
+Requests <https://github.com/OCA/ddmrp/pulls?q=is%3Apr+ddmrp_exclude_moves_adu_calc+is%3Aclosed>`__.
 
 Bug Tracker
 ===========
@@ -84,13 +77,13 @@ Authors
 Contributors
 ------------
 
-- Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
+-  Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
 
-- Lois Rilo Antelo <lois.rilo@forgeflow.com>
+-  Lois Rilo Antelo <lois.rilo@forgeflow.com>
 
-- `Trobz <https://trobz.com>`__:
+-  `Trobz <https://trobz.com>`__:
 
-  - Khoi Vo <khoivha@trobz.com>
+   -  Khoi Vo <khoivha@trobz.com>
 
 Other credits
 -------------
