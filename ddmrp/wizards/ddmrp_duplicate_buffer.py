@@ -91,7 +91,7 @@ class DdmrpDuplicateBuffer(models.TransientModel):
                 {
                     "name": _("Duplicated Buffers"),
                     "res_model": "stock.buffer",
-                    "view_mode": "tree,form",
+                    "view_mode": "list,form",
                     "domain": [("id", "in", copy_buffers.ids)],
                 }
             )

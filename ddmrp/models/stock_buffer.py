@@ -1380,7 +1380,7 @@ class StockBuffer(models.Model):
         views = []
         tree_view = self.env.ref("stock.view_move_tree", False)
         if tree_view:
-            views += [(tree_view.id, "tree")]
+            views += [(tree_view.id, "list")]
         form_view = self.env.ref("stock.view_move_form", False)
         if form_view:
             views += [(form_view.id, "form")]
@@ -1391,7 +1391,7 @@ class StockBuffer(models.Model):
             "res_model": "stock.move",
             "view_type": "form",
             "views": views,
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "domain": str([("id", "in", lines.ids)]),
         }
 
@@ -2150,5 +2150,5 @@ class StockBuffer(models.Model):
             current_location = rule.location_src_id
 
     def action_dummy(self):
-        # no action, used to show an image in the tree view
+        # no action, used to show an image in the list view
         return
