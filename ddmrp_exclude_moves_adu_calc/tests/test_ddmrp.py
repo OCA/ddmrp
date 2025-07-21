@@ -211,3 +211,10 @@ class TestDdmrp(common.TransactionCase):
             move.exclude_from_adu = True
         to_assert_value = 60 / 120
         self.assertEqual(buffer_a.adu, to_assert_value)
+
+        # Test action:
+        action_dict = buffer_a.action_view_past_adu_direct_demand()
+        self.assertEqual(
+            action_dict["domain"][0][2], [pick_excluded.move_ids.id, pick_a.move_ids.id]
+        )
+        self.assertIn("search_default_not_excluded_from_adu", action_dict["context"])
