@@ -61,15 +61,31 @@ class StockMove(models.Model):
         out_buffers = in_buffers = self.env["stock.buffer"]
         for move in self:
             out_buffers |= move.mapped("product_id.buffer_ids").filtered(
-                lambda buffer: (
-                    move.location_id.is_sublocation_of(buffer.location_id)  # noqa: B023
-                    and not move.location_dest_id.is_sublocation_of(buffer.location_id)  # noqa: B023
+                lambda buffer, move=move: (
+                    move.location_id.is_sublocation_of(buffer.location_id)
+                    and (
+                        not move.location_dest_id.is_sublocation_of(buffer.location_id)
+                        or (
+                            move.location_final_id
+                            and not move.location_final_id.is_sublocation_of(
+                                buffer.location_id
+                            )
+                        )
+                    )
                 )
             )
             in_buffers |= move.mapped("product_id.buffer_ids").filtered(
-                lambda buffer: (
-                    not move.location_id.is_sublocation_of(buffer.location_id)  # noqa: B023
-                    and move.location_dest_id.is_sublocation_of(buffer.location_id)  # noqa: B023
+                lambda buffer, move=move: (
+                    not move.location_id.is_sublocation_of(buffer.location_id)
+                    and (
+                        move.location_dest_id.is_sublocation_of(buffer.location_id)
+                        or (
+                            move.location_final_id
+                            and move.location_final_id.is_sublocation_of(
+                                buffer.location_id
+                            )
+                        )
+                    )
                 )
             )
         return out_buffers, in_buffers
