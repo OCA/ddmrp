@@ -97,6 +97,13 @@ class StockBuffer(models.Model):
         ondelete="cascade",
         required=True,
     )
+    product_tmpl_id = fields.Many2one(
+        comodel_name="product.template",
+        string="Product Template",
+        related="product_id.product_tmpl_id",
+        readonly=True,
+        store=True,
+    )
     product_uom = fields.Many2one(
         related="product_id.uom_id",
     )
