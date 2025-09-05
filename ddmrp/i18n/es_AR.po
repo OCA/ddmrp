@@ -174,6 +174,11 @@ msgid "Blended"
 msgstr "Mezclado"
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Buffer"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_product__buffer_count
 msgid "Buffer Count"
 msgstr "Cuenta de Búfer"
@@ -1274,6 +1279,12 @@ msgid "Product Buffers"
 msgstr "Búferes de Producto"
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_categ_id
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Product Category"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
 msgstr "Movimientos de Producto (Líneas de Movimiento de Inventario)"
@@ -1554,6 +1565,11 @@ msgstr "Buscar Perfiles de Búfer"
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "Secondary Buffer size factors"
 msgstr "Factores de tamaño del Búfer Secundario"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__product_categ_id
+msgid "Select category for the current product"
+msgstr ""
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form

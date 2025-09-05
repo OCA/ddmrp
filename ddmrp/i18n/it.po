@@ -38,15 +38,15 @@ msgid ""
 "* Available: When products are reserved, it is set to 'Available'.\n"
 "* Done: When the shipment is processed, the state is 'Done'."
 msgstr ""
-"* Nuovo: quando il movimento di magazzino è creato ma non ancora confermato."
-"\n"
+"* Nuovo: quando il movimento di magazzino è creato ma non ancora "
+"confermato.\n"
 "* Attesa altro movimento: questo stato si attiva quando un movimento è in "
 "attesa dI un altro, per esempio in un flusso concatenato.\n"
 "* Attesa disponibilità: questo stato viene raggiunto quando il completamento "
 "dell'approvvigionamento non è semplice. Richiede l'esecuzione della "
 "schedulazione, la lavorazione di un componente...\n"
-"* Disponibile: quando i prodotti sono prenotati, è impostato a 'Disponibile'."
-"\n"
+"* Disponibile: quando i prodotti sono prenotati, è impostato a "
+"'Disponibile'.\n"
 "* Eseguito: quando la spedizione viene elaborata, lo stato è 'Eseguito'."
 
 #. module: ddmrp
@@ -172,6 +172,11 @@ msgstr "Distinta base"
 #, python-format
 msgid "Blended"
 msgstr "Misto"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Buffer"
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_product__buffer_count
@@ -1267,6 +1272,12 @@ msgid "Product Buffers"
 msgstr "Buffer prodotto"
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_categ_id
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Product Category"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
 msgstr "Movimenti prodotto (riga movimento di magazzino)"
@@ -1547,6 +1558,11 @@ msgstr "Cerca profili buffer"
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "Secondary Buffer size factors"
 msgstr "Fattori dimensione buffer secondari"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__product_categ_id
+msgid "Select category for the current product"
+msgstr ""
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
