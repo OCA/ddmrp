@@ -53,6 +53,7 @@
         <field name="name">Buffer Profile Lead Time Factor</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">stock.buffer.profile.lead.time</field>
+        <field name="path">buffer-profiles-lt</field>
         <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="view_stock_buffer_profile_lead_time_search" />
         <field name="help" type="html">
