@@ -35,6 +35,7 @@
     <record id="action_ddmrp_history" model="ir.actions.act_window">
         <field name="name">DDMRP Buffer History</field>
         <field name="res_model">ddmrp.history</field>
+        <field name="path">buffer-history</field>
         <field name="view_mode">list,pivot,graph</field>
     </record>
     <menuitem
