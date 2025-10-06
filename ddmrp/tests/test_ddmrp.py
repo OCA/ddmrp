@@ -15,7 +15,7 @@ class TestDdmrp(TestDdmrpCommon):
 
     def test_01_adu_calculation_fixed(self):
         """Test fixed ADU assigned correctly with fixed method."""
-        self.bufferModel.cron_ddmrp_adu()
+        self.bufferModel.cron_ddmrp_adu(domain=[("id", "=", self.buffer_a.id)])
         to_assert_value = 4
         self.assertEqual(self.buffer_a.adu, to_assert_value)
 
@@ -158,7 +158,7 @@ class TestDdmrp(TestDdmrpCommon):
             picking.action_assign()
             picking._action_done()
 
-        self.bufferModel.cron_ddmrp_adu()
+        self.bufferModel.cron_ddmrp_adu(domain=[("id", "=", self.buffer_a.id)])
 
         to_assert_value = 0
         self.assertEqual(self.buffer_a.adu, to_assert_value)
@@ -326,7 +326,10 @@ class TestDdmrp(TestDdmrpCommon):
         date_move = datetime.today()
         expected_result = self.buffer_a.order_spike_threshold * 2
         self.create_pickingoutA(date_move, expected_result)
-        self.bufferModel.cron_ddmrp()
+        # Test domain in cron by skipping the buffer being checked:
+        self.bufferModel.cron_ddmrp(domain=[("id", "!=", self.buffer_a.id)])
+        self.assertNotEqual(self.buffer_a.qualified_demand, expected_result)
+        self.bufferModel.cron_ddmrp(domain=[("id", "=", self.buffer_a.id)])
         self.assertEqual(self.buffer_a.qualified_demand, expected_result)
 
     def test_11_qualified_demand_2(self):
