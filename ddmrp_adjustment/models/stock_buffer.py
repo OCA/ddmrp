@@ -135,10 +135,10 @@ class StockBuffer(models.Model):
         return True
 
     @api.model
-    def cron_ddmrp_adu(self, automatic=False):
+    def cron_ddmrp_adu(self, automatic=False, domain=None):
         """Apply extra demand originated by Demand Adjustment Factors to
         components after the cron update of all the buffers."""
-        res = super().cron_ddmrp_adu(automatic)
+        res = super().cron_ddmrp_adu(automatic=automatic, domain=domain)
         today = fields.Date.today()
         self.search(
             [("parent_daf_applied", "!=", -1), ("extra_demand_ids", "=", False)]
