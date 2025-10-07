@@ -38,12 +38,12 @@ class Buffer(models.Model):
         )
         return super()._register_hook()
 
-    def cron_ddmrp(self, automatic=False):
+    def cron_ddmrp(self, automatic=False, domain=None):
         return super(
             Buffer, self.with_context(auto_delay_ddmrp_cron_actions=True)
-        ).cron_ddmrp(automatic=automatic)
+        ).cron_ddmrp(automatic=automatic, domain=domain)
 
-    def cron_ddmrp_adu(self, automatic=False):
+    def cron_ddmrp_adu(self, automatic=False, domain=None):
         return super(
             Buffer, self.with_context(auto_delay_ddmrp_calc_adu=True)
-        ).cron_ddmrp_adu(automatic=automatic)
+        ).cron_ddmrp_adu(automatic=automatic, domain=domain)
