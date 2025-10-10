@@ -3,3 +3,4 @@
 - Guewen Baconnier \<<guewen.baconnier@camptocamp.com>\>
 - Adria Gil Sorribes \<<adria.gil@forgeflow.com>\>
 - Christopher Ormaza \<<chris.ormaza@forgeflow.com>\>
+- Jacques-Etienne Baudoux \<<je@bcim.be>\>

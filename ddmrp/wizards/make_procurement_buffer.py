@@ -1,4 +1,5 @@
 # Copyright 2019-20 ForgeFlow S.L. (http://www.forgeflow.com)
+# Copyright 2021 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import _, api, fields, models
@@ -30,7 +31,6 @@ class MakeProcurementBuffer(models.TransientModel):
             "recommended_qty": buffer.procure_recommended_qty,
             "qty": qty,
             "uom_id": buffer.procure_uom_id.id or buffer.product_uom.id,
-            "date_planned": buffer._get_date_planned(),
             "buffer_id": buffer.id,
             "product_id": buffer.product_id.id,
             "warehouse_id": buffer.warehouse_id.id,
@@ -163,7 +163,12 @@ class MakeProcurementBufferItem(models.TransientModel):
         string="Unit of Measure",
         comodel_name="uom.uom",
     )
-    date_planned = fields.Datetime(string="Planned Date", required=False)
+    date_planned = fields.Datetime(
+        string="Planned Date",
+        required=False,
+        compute="_compute_date_planned",
+        readonly=False,
+    )
     buffer_id = fields.Many2one(
         string="Stock Buffer",
         comodel_name="stock.buffer",
@@ -191,6 +196,16 @@ class MakeProcurementBufferItem(models.TransientModel):
             rec.qty = rec.buffer_id.product_uom._compute_quantity(
                 rec.buffer_id.procure_recommended_qty, rec.uom_id
             )
+
+    @api.depends("warehouse_id", "location_id")
+    def _compute_date_planned(self):
+        for rec in self:
+            if not rec.buffer_id:
+                rec.date_planned = False
+                continue
+            rec.date_planned = rec.buffer_id.with_context(
+                location_id=rec.location_id, warehouse=rec.warehouse_id.id
+            )._get_date_planned()
 
     def _prepare_values_make_procurement(self):
         values = self.buffer_id._prepare_procurement_values(self.qty)

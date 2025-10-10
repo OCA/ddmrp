@@ -1,4 +1,5 @@
 # Copyright 2017-24 ForgeFlow S.L. (http://www.forgeflow.com)
+# Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import logging
@@ -59,7 +60,7 @@ class MrpBom(models.Model):
         for bom in self:
             bom.is_buffered = True if bom.buffer_id else False
 
-    @api.depends_context("location_id")
+    @api.depends_context("location_id", "warehouse")
     def _compute_context_location(self):
         warehouse_model = self.env["stock.warehouse"]
         for rec in self:
