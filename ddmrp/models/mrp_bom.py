@@ -167,7 +167,7 @@ class MrpBomLine(models.Model):
             product = self.product_tmpl_id.product_variant_ids[0]
         domain = [
             ("product_id", "=", product.id),
-            ("location_id", "=", self.context_location_id.id),
+            ("location_id", "child_of", self.context_location_id.id),
         ]
         if self.company_id:
             domain.append(("company_id", "=", self.company_id.id))
