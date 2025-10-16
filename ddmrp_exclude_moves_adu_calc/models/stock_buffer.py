@@ -13,7 +13,13 @@ class StockBuffer(models.Model):
 
     @api.model
     def _past_moves_domain(self, date_from, date_to, locations):
-        new_locs = locations.filtered(lambda loc: not loc.exclude_from_adu)
+        # NOTE: do not use .filtered(...) for two reasons:
+        #   - number of locations could be high
+        #   - prefetch is retrieving too much columns when accessing .exclude_from_adu
+        #     (with_prefetch=False improves a bit, but not as much as a search)
+        new_locs = self.env["stock.location"].search(
+            [("id", "in", locations.ids), ("exclude_from_adu", "=", False)]
+        )
         res = super()._past_moves_domain(date_from, date_to, new_locs)
         if self.env.context.get("ddmrp_move_include_excluded"):
             return res
