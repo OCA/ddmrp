@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-25 09:25+0000\n"
+"PO-Revision-Date: 2025-10-21 09:43+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -805,7 +805,7 @@ msgstr "Origine informazione utitlizzata per calcoli del passato."
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__on_hand_target_max
 msgid "It denotes how far you are on average from the target"
-msgstr "Indica quato si è lontani mediamente dall'obbiettivo"
+msgstr "Indica quanto si è lontani mediamente dall'obiettivo"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__on_hand_target_position
