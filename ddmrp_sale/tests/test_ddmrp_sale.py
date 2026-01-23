@@ -39,6 +39,9 @@ class TestDDMRPSale(TestDdmrpCommon):
     def test_01_can_serve_sales(self):
         self.assertTrue(self.buffer_a.can_serve_sales)
         self.assertFalse(self.buffer_internal.can_serve_sales)
+        self.warehouse.delivery_steps = "pick_pack_ship"
+        self.buffer_a._compute_can_serve_sales()
+        self.assertTrue(self.buffer_a.can_serve_sales)
 
     def test_02_sales_quotation_included_as_demand(self):
         self._refresh_involved_buffers()
