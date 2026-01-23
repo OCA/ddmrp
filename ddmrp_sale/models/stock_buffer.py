@@ -63,7 +63,6 @@ class StockBuffer(models.Model):
             ),
             ("commitment_date", "<=", date_to),
             ("order_id.warehouse_id", "=", self.warehouse_id.id),
-            ("move_ids", "=", False),
         ]
 
     def _search_sales_qualified_demand(self):
