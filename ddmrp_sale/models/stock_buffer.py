@@ -15,23 +15,40 @@ class StockBuffer(models.Model):
         comodel_name="sale.order.line",
     )
 
-    def _get_sale_source_location(self):
+    def _get_sale_source_location(self, proc_locs):
+        # Adapting this method to be very similar to _get_source_location_from_route
+        # from stock_helper but not using that as it disappears in future versions and
+        # we don't want to add dependency to the new module.
         self.ensure_one()
-        proc_loc = self.env.ref("stock.stock_location_customers")
         values = {
             "warehouse_id": self.warehouse_id,
             "company_id": self.company_id,
         }
-        rule = self.env["procurement.group"]._get_rule(
-            self.product_id, proc_loc, values
-        )
-        return rule and rule.location_src_id
+        sale_source_locations = self.env["stock.location"]
+        for proc_loc in proc_locs:
+            current_location = proc_loc
+            while current_location:
+                rule = self.env["procurement.group"]._get_rule(
+                    self.product_id, current_location, values
+                )
+                if not rule:
+                    break
+                if rule.procure_method == "make_to_stock":
+                    sale_source_locations |= rule.location_src_id
+                    break
+                if rule.location_src_id == current_location:
+                    break
+                current_location = rule.location_src_id
+        return sale_source_locations
 
     @api.depends("warehouse_id", "location_id")
     def _compute_can_serve_sales(self):
+        proc_locations = self.env["stock.location"].search([("usage", "=", "customer")])
         for rec in self:
-            loc = rec._get_sale_source_location()
-            rec.can_serve_sales = loc.is_sublocation_of(rec.location_id)
+            locs = rec._get_sale_source_location(proc_locations)
+            rec.can_serve_sales = any(
+                [loc.is_sublocation_of(rec.location_id) for loc in locs]
+            )
 
     def _search_sales_qualified_demand_domain(self):
         self.ensure_one()
