@@ -116,3 +116,69 @@ class TestDDMRPSale(TestDdmrpCommon):
         self._refresh_involved_buffers()
         diff = self.buffer_a.qualified_demand - self.buffer_internal.qualified_demand
         self.assertEqual(diff, 24)
+
+    def test_04_sales_quotation_canceled_included_as_demand(self):
+        """
+        The quotation is canceled and therefore its stock.moves canceled, so we can take
+        into account the quotation if it's set as draft again.
+
+        You cannot cancel a sale order if it has done moves.
+        """
+        self._refresh_involved_buffers()
+        self.assertEqual(
+            self.buffer_a.qualified_demand, self.buffer_internal.qualified_demand
+        )
+        so_date = dt.today() + td(days=2)
+        so = self.so_model.create(
+            {
+                "partner_id": self.customer.id,
+                "partner_invoice_id": self.customer.id,
+                "partner_shipping_id": self.customer.id,
+                "commitment_date": so_date,
+                "order_line": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.productA.id,
+                            "name": "cool product",
+                            "price_unit": 100.0,
+                            "product_uom_qty": 17,  # it is a spike.
+                            "commitment_date": so_date,
+                        },
+                    )
+                ],
+            }
+        )
+        self.assertEqual(so.state, "draft")
+        self._refresh_involved_buffers()
+        self.assertNotEqual(
+            self.buffer_a.qualified_demand, self.buffer_internal.qualified_demand
+        )
+        # Buffer A sees quotations because it can serve SO's.
+        diff = self.buffer_a.qualified_demand - self.buffer_internal.qualified_demand
+        self.assertEqual(diff, 17)
+        so.action_confirm()
+        self.assertTrue(so.order_line.move_ids)
+        self._refresh_involved_buffers()
+        self.assertEqual(
+            self.buffer_a.qualified_demand, self.buffer_internal.qualified_demand
+        )
+        so._action_cancel()
+        so.action_draft()
+        self.assertEqual(so.state, "draft")
+        self._refresh_involved_buffers()
+        self.assertNotEqual(
+            self.buffer_a.qualified_demand, self.buffer_internal.qualified_demand
+        )
+        diff = self.buffer_a.qualified_demand - self.buffer_internal.qualified_demand
+        buffer_a_prev_nfp = self.buffer_a.net_flow_position
+        buffer_internal_prev_nfp = self.buffer_internal.net_flow_position
+        self.assertEqual(diff, 17)
+        so.action_confirm()
+        self.assertTrue(so.picking_ids)
+        self._refresh_involved_buffers()
+        self.assertEqual(self.buffer_a.net_flow_position, buffer_a_prev_nfp)
+        self.assertEqual(
+            buffer_internal_prev_nfp - self.buffer_internal.net_flow_position, 17
+        )
