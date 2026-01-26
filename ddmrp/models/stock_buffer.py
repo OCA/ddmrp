@@ -1997,12 +1997,15 @@ class StockBuffer(models.Model):
         )
         return action
 
+    def _get_buffers_to_calculate_domain(self):
+        return []
+
     @api.model
     def cron_ddmrp_adu(self, automatic=False):
         """calculate ADU for each DDMRP buffer. Called by cronjob."""
         auto_commit = not getattr(threading.current_thread(), "testing", False)
         _logger.info("Start cron_ddmrp_adu.")
-        buffer_ids = self.search([]).ids
+        buffer_ids = self.search(self._get_buffers_to_calculate_domain()).ids
         i = 0
         j = len(buffer_ids)
         for buffer_chunk_ids in split_every(self.CRON_DDMRP_CHUNKS, buffer_ids):
