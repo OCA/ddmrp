@@ -39,8 +39,19 @@
                     />
                 </button>
             </div>
-            <field name="product_vendor_code" position="after">
-                <field name="replaced_by_id" />
+            <field name="product_id" position="after">
+                <label for="replaced_by_id" />
+                <div name="replaced_by_id" class="o_row">
+                    <field name="replaced_by_id" class="oe_inline" />
+                    <button
+                        title="Replace Buffer"
+                        name="%(action_ddmrp_product_replace_wizard)d"
+                        icon="fa-edit"
+                        type="action"
+                        context="{'default_old_product_ids': [product_id]}"
+                        invisible="replaced_by_id"
+                    />
+                </div>
             </field>
             <notebook position="inside">
                 <page

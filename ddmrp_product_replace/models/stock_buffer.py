@@ -18,6 +18,7 @@ class StockBuffer(models.Model):
         "same time: A replaces B that replaces C, then A aggregates both B"
         " and C where B only aggregates C",
         tracking=True,
+        readonly=True,
     )
     replaced_by_alert_text = fields.Char(
         compute="_compute_replaced_by_alert_text",
