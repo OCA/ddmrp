@@ -224,6 +224,11 @@ msgid "Product to be replaced."
 msgstr ""
 
 #. module: ddmrp_product_replace
+#: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.stock_buffer_view_form
+msgid "Replace Buffer"
+msgstr ""
+
+#. module: ddmrp_product_replace
 #: model:ir.model.fields.selection,name:ddmrp_product_replace.selection__ddmrp_product_replace__mode__use_existing
 msgid "Replace product in existing buffers"
 msgstr ""
