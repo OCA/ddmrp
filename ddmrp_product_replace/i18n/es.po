@@ -50,6 +50,11 @@ msgstr ""
 "right:5px\"/>"
 
 #. module: ddmrp_product_replace
+#: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.view_ddmrp_adjustment_sheet_wizard_form
+msgid "<span class=\"mx-2 text-muted\">or</span>"
+msgstr ""
+
+#. module: ddmrp_product_replace
 #: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__buffer_ids
 msgid "Affected Buffers"
 msgstr "Búferes afectados"
@@ -57,14 +62,12 @@ msgstr "Búferes afectados"
 #. module: ddmrp_product_replace
 #. odoo-python
 #: code:addons/ddmrp_product_replace/models/stock_buffer.py:0
-#, python-format
 msgid "Buffered product must be considered as demand."
 msgstr "El producto tamponado debe considerarse como demanda."
 
 #. module: ddmrp_product_replace
 #. odoo-python
 #: code:addons/ddmrp_product_replace/models/stock_buffer.py:0
-#, python-format
 msgid "Buffers Replaced"
 msgstr "Búferes sustituidos"
 
@@ -163,11 +166,6 @@ msgid "Is Already Replaced"
 msgstr "Ya ha sido Sustituido"
 
 #. module: ddmrp_product_replace
-#: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace____last_update
-msgid "Last Modified on"
-msgstr "Última Actualización el"
-
-#. module: ddmrp_product_replace
 #: model:ir.model.fields,field_description:ddmrp_product_replace.field_ddmrp_product_replace__write_uid
 msgid "Last Updated by"
 msgstr "Última Actualzacíón por"
@@ -205,14 +203,12 @@ msgstr "Nuevo Nombre de Producto"
 #. module: ddmrp_product_replace
 #. odoo-python
 #: code:addons/ddmrp_product_replace/wizards/ddmrp_product_replace.py:0
-#, python-format
 msgid "New Stock Buffers"
 msgstr "Nuevos Topes de Existencias"
 
 #. module: ddmrp_product_replace
 #. odoo-python
 #: code:addons/ddmrp_product_replace/wizards/ddmrp_product_replace.py:0
-#, python-format
 msgid "No affected buffers found."
 msgstr "No se ha encontrado ningún búfer afectado."
 
@@ -242,6 +238,11 @@ msgstr "Producto que va a sustituir al otro."
 #: model:ir.model.fields,help:ddmrp_product_replace.field_ddmrp_product_replace__old_product_ids
 msgid "Product to be replaced."
 msgstr "Producto que debe sustituirse."
+
+#. module: ddmrp_product_replace
+#: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.stock_buffer_view_form
+msgid "Replace Buffer"
+msgstr ""
 
 #. module: ddmrp_product_replace
 #: model:ir.model.fields.selection,name:ddmrp_product_replace.selection__ddmrp_product_replace__mode__use_existing
@@ -288,7 +289,6 @@ msgstr "Sustituye"
 #. module: ddmrp_product_replace
 #. odoo-python
 #: code:addons/ddmrp_product_replace/wizards/ddmrp_product_replace.py:0
-#, python-format
 msgid "Replacing Product"
 msgstr "Sustitución del Producto"
 
@@ -305,7 +305,6 @@ msgstr "Seleccione el Producto Sustitutivo"
 #. module: ddmrp_product_replace
 #. odoo-python
 #: code:addons/ddmrp_product_replace/wizards/ddmrp_product_replace.py:0
-#, python-format
 msgid ""
 "Some of the affected buffers have a different product than the replaced ones."
 msgstr ""
@@ -315,14 +314,12 @@ msgstr ""
 #. module: ddmrp_product_replace
 #. odoo-python
 #: code:addons/ddmrp_product_replace/wizards/ddmrp_product_replace.py:0
-#, python-format
 msgid "Some of the buffers have already been replaced."
 msgstr "Algunos de los topes ya han sido sustituidos."
 
 #. module: ddmrp_product_replace
 #. odoo-python
 #: code:addons/ddmrp_product_replace/wizards/make_procurement_buffer.py:0
-#, python-format
 msgid "Some products are being replaced:"
 msgstr "Algunos productos están siendo sustituidos:"
 
@@ -376,7 +373,6 @@ msgstr ""
 #. module: ddmrp_product_replace
 #. odoo-python
 #: code:addons/ddmrp_product_replace/models/stock_buffer.py:0
-#, python-format
 msgid "This product is replaced by %s."
 msgstr "Este producto se sustituye por %s."
 
@@ -398,11 +394,11 @@ msgstr "Validado"
 #. module: ddmrp_product_replace
 #. odoo-python
 #: code:addons/ddmrp_product_replace/models/stock_buffer.py:0
-#, python-format
 msgid "You cannot create recursive \"Replaced by\" chains."
 msgstr "No se pueden crear cadenas \"Sustituido por\" recursivas."
 
-#. module: ddmrp_product_replace
-#: model_terms:ir.ui.view,arch_db:ddmrp_product_replace.view_ddmrp_adjustment_sheet_wizard_form
-msgid "or"
-msgstr "o"
+#~ msgid "Last Modified on"
+#~ msgstr "Última Actualización el"
+
+#~ msgid "or"
+#~ msgstr "o"
