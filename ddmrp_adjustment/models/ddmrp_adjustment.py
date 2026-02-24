@@ -5,6 +5,9 @@ from odoo import fields, models
 
 DAF_string = "DAF"
 LTAF_string = "LTAF"
+RZAF_string = "RZAF"
+YZAF_string = "YZAF"
+GZAF_string = "GZAF"
 
 
 class DdmrpAdjustment(models.Model):
@@ -35,6 +38,9 @@ class DdmrpAdjustment(models.Model):
         selection=[
             (DAF_string, "Demand Adjustment Factor"),
             (LTAF_string, "Lead Time Adjustment Factor"),
+            (RZAF_string, "Red Zone Adjustment Factor"),
+            (YZAF_string, "Yellow Zone Adjustment Factor"),
+            (GZAF_string, "Green Zone Adjustment Factor"),
         ],
     )
     value = fields.Float(aggregator="avg")

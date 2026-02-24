@@ -6,7 +6,13 @@ from datetime import timedelta as td
 
 from odoo import api, fields, models
 
-from ..models.ddmrp_adjustment import DAF_string, LTAF_string
+from ..models.ddmrp_adjustment import (
+    DAF_string,
+    GZAF_string,
+    LTAF_string,
+    RZAF_string,
+    YZAF_string,
+)
 
 _logger = logging.getLogger(__name__)
 
@@ -29,6 +35,12 @@ class StockBuffer(models.Model):
     count_ddmrp_adjustment_demand = fields.Integer(
         compute="_compute_count_ddmrp_adjustment_demand"
     )
+    rzaf_applied = fields.Float(default=-1, readonly=True)
+    yzaf_applied = fields.Float(default=-1, readonly=True)
+    gzaf_applied = fields.Float(default=-1, readonly=True)
+    rzaf_text = fields.Char(compute="_compute_zaf_text")
+    yzaf_text = fields.Char(compute="_compute_zaf_text")
+    gzaf_text = fields.Char(compute="_compute_zaf_text")
 
     def _compute_count_ddmrp_adjustment_demand(self):
         for rec in self:
@@ -44,12 +56,19 @@ class StockBuffer(models.Model):
             rec.daf_text = "DAF: *" + str(round(rec.daf_applied, 2))
             rec.parent_daf_text = "P. DAF: +" + str(round(rec.parent_daf_applied, 2))
 
-    def _daf_to_apply_domain(self, current=True):
+    @api.depends("rzaf_applied", "yzaf_applied", "gzaf_applied")
+    def _compute_zaf_text(self):
+        for rec in self:
+            rec.rzaf_text = "RZAF: *" + str(round(rec.rzaf_applied, 2))
+            rec.yzaf_text = "YZAF: *" + str(round(rec.yzaf_applied, 2))
+            rec.gzaf_text = "GZAF: *" + str(round(rec.gzaf_applied, 2))
+
+    def _adjustment_to_apply_domain(self, adjustment_type, current=True):
         self.ensure_one()
         today = fields.Date.today()
         domain = [
             ("buffer_id", "=", self.id),
-            ("adjustment_type", "=", DAF_string),
+            ("adjustment_type", "=", adjustment_type),
             ("date_range_id.date_end", ">=", today),
         ]
         if current:
@@ -64,7 +83,7 @@ class StockBuffer(models.Model):
                 [("buffer_origin_id", "=", rec.id)]
             ).unlink()
             dafs_to_apply = self.env["ddmrp.adjustment"].search(
-                rec._daf_to_apply_domain()
+                rec._adjustment_to_apply_domain(DAF_string)
             )
             rec.daf_applied = -1
             if dafs_to_apply:
@@ -80,7 +99,7 @@ class StockBuffer(models.Model):
                 )
             # Compute generated demand to be applied to components:
             dafs_to_explode = self.env["ddmrp.adjustment"].search(
-                rec._daf_to_apply_domain(False)
+                rec._adjustment_to_apply_domain(DAF_string, current=False)
             )
             for daf in dafs_to_explode:
                 prev = rec.adu
@@ -159,22 +178,12 @@ class StockBuffer(models.Model):
                 )
         return res
 
-    def _ltaf_to_apply_domain(self):
-        self.ensure_one()
-        today = fields.Date.today()
-        return [
-            ("buffer_id", "=", self.id),
-            ("adjustment_type", "=", LTAF_string),
-            ("date_range_id.date_start", "<=", today),
-            ("date_range_id.date_end", ">=", today),
-        ]
-
     def _compute_dlt(self):
         """Apply Lead Time Adj Factor if existing"""
         res = super()._compute_dlt()
         for rec in self:
             ltaf_to_apply = self.env["ddmrp.adjustment"].search(
-                rec._ltaf_to_apply_domain()
+                rec._adjustment_to_apply_domain(LTAF_string)
             )
             if ltaf_to_apply:
                 ltaf = 1
@@ -185,6 +194,71 @@ class StockBuffer(models.Model):
                 rec.dlt *= ltaf
                 _logger.debug(
                     f"LTAF={ltaf} applied to {rec.name}. DLT: {prev} -> {rec.dlt}"
+                )
+        return res
+
+    def _compute_red_zone(self):
+        """Apply Red Zone Adj Factor if existing"""
+        res = super()._compute_red_zone()
+        for rec in self:
+            rzaf_to_apply = self.env["ddmrp.adjustment"].search(
+                rec._adjustment_to_apply_domain(RZAF_string)
+            )
+            rec.rzaf_applied = -1
+            if rzaf_to_apply:
+                rec.rzaf_applied = 1
+                values = rzaf_to_apply.mapped("value")
+                for val in values:
+                    rec.rzaf_applied *= val
+                prev = rec.red_zone_qty
+                rec.red_zone_qty *= rec.rzaf_applied
+                _logger.debug(
+                    f"RZAF={rec.rzaf_applied} applied to {rec.name}."
+                    f" red_zone_qty: {prev} -> {rec.red_zone_qty}"
+                )
+        return res
+
+    def _compute_yellow_zone(self):
+        """Apply Yellow Zone Adj Factor if existing"""
+        res = super()._compute_yellow_zone()
+        for rec in self:
+            yzaf_to_apply = self.env["ddmrp.adjustment"].search(
+                rec._adjustment_to_apply_domain(YZAF_string)
+            )
+            rec.yzaf_applied = -1
+            if yzaf_to_apply:
+                rec.yzaf_applied = 1
+                values = yzaf_to_apply.mapped("value")
+                for val in values:
+                    rec.yzaf_applied *= val
+                prev = rec.yellow_zone_qty
+                rec.yellow_zone_qty *= rec.yzaf_applied
+                rec.top_of_yellow = rec.yellow_zone_qty + rec.red_zone_qty
+                _logger.debug(
+                    f"YZAF={rec.yzaf_applied} applied to {rec.name}."
+                    f" yellow_zone_qty: {prev} -> {rec.yellow_zone_qty}"
+                )
+        return res
+
+    def _compute_green_zone(self):
+        """Apply Green Zone Adj Factor if existing"""
+        res = super()._compute_green_zone()
+        for rec in self:
+            gzaf_to_apply = self.env["ddmrp.adjustment"].search(
+                rec._adjustment_to_apply_domain(GZAF_string)
+            )
+            rec.gzaf_applied = -1
+            if gzaf_to_apply:
+                rec.gzaf_applied = 1
+                values = gzaf_to_apply.mapped("value")
+                for val in values:
+                    rec.gzaf_applied *= val
+                prev = rec.green_zone_qty
+                rec.green_zone_qty *= rec.gzaf_applied
+                rec.top_of_green = rec.green_zone_qty + rec.top_of_yellow
+                _logger.debug(
+                    f"GZAF={rec.gzaf_applied} applied to {rec.name}."
+                    f" green_zone_qty: {prev} -> {rec.green_zone_qty}"
                 )
         return res
 
@@ -209,13 +283,52 @@ class StockBuffer(models.Model):
     def action_view_affecting_adu(self):
         demand_ids = (
             self.env["ddmrp.adjustment"]
-            .search(self._daf_to_apply_domain(current=False))
+            .search(self._adjustment_to_apply_domain(DAF_string, current=False))
             .ids
         )
         action = self.env["ir.actions.act_window"]._for_xml_id(
             "ddmrp_adjustment.ddmrp_adjustment_action"
         )
         action["domain"] = [("id", "in", demand_ids)]
+        action["context"] = {"search_default_current": 1}
+        return action
+
+    def action_view_affecting_red_zone(self):
+        adjustment_ids = (
+            self.env["ddmrp.adjustment"]
+            .search(self._adjustment_to_apply_domain(RZAF_string, current=False))
+            .ids
+        )
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "ddmrp_adjustment.ddmrp_adjustment_action"
+        )
+        action["domain"] = [("id", "in", adjustment_ids)]
+        action["context"] = {"search_default_current": 1}
+        return action
+
+    def action_view_affecting_yellow_zone(self):
+        adjustment_ids = (
+            self.env["ddmrp.adjustment"]
+            .search(self._adjustment_to_apply_domain(YZAF_string, current=False))
+            .ids
+        )
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "ddmrp_adjustment.ddmrp_adjustment_action"
+        )
+        action["domain"] = [("id", "in", adjustment_ids)]
+        action["context"] = {"search_default_current": 1}
+        return action
+
+    def action_view_affecting_green_zone(self):
+        adjustment_ids = (
+            self.env["ddmrp.adjustment"]
+            .search(self._adjustment_to_apply_domain(GZAF_string, current=False))
+            .ids
+        )
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "ddmrp_adjustment.ddmrp_adjustment_action"
+        )
+        action["domain"] = [("id", "in", adjustment_ids)]
         action["context"] = {"search_default_current": 1}
         return action
 

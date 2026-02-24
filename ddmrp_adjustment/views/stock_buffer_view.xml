@@ -35,6 +35,36 @@
                     <field name="parent_daf_text" readonly="1" />
                 </button>
             </button>
+            <xpath expr="//div[@name='red_zone_qty_row']" position="inside">
+                <button
+                    title="View RZAFs Affecting Red Zone"
+                    name="action_view_affecting_red_zone"
+                    type="object"
+                    invisible="rzaf_applied == -1"
+                >
+                    <field name="rzaf_text" readonly="1" />
+                </button>
+            </xpath>
+            <xpath expr="//div[@name='yellow_zone_qty_row']" position="inside">
+                <button
+                    title="View YZAFs Affecting Yellow Zone"
+                    name="action_view_affecting_yellow_zone"
+                    type="object"
+                    invisible="yzaf_applied == -1"
+                >
+                    <field name="yzaf_text" readonly="1" />
+                </button>
+            </xpath>
+            <xpath expr="//div[@name='green_zone_qty_row']" position="inside">
+                <button
+                    title="View GZAFs Affecting Green Zone"
+                    name="action_view_affecting_green_zone"
+                    type="object"
+                    invisible="gzaf_applied == -1"
+                >
+                    <field name="gzaf_text" readonly="1" />
+                </button>
+            </xpath>
         </field>
     </record>
 </odoo>
