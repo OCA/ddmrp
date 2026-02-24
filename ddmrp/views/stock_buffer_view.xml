@@ -560,7 +560,10 @@
                                     <field name="green_zone_oc" />
                                     <field name="green_zone_moq" />
                                     <field name="green_zone_lt_factor" />
-                                    <field name="green_zone_qty" />
+                                    <label for="green_zone_qty" />
+                                    <div name="green_zone_qty_row" class="o_row">
+                                        <field name="green_zone_qty" />
+                                    </div>
                                 </group>
                                 <group name="yellow_zone" string="Yellow zone">
                                     <div class="no_print" colspan="2">
@@ -568,7 +571,10 @@
                                             class="oe_grey"
                                         >The yellow zone represents the stock required to cover a full lead time.</p>
                                     </div>
-                                    <field name="yellow_zone_qty" />
+                                    <label for="yellow_zone_qty" />
+                                    <div name="yellow_zone_qty_row" class="o_row">
+                                        <field name="yellow_zone_qty" />
+                                    </div>
                                 </group>
                                 <group name="red_zone" string="Red zone">
                                     <div class="no_print" colspan="2">
@@ -578,7 +584,10 @@
                                     </div>
                                     <field name="red_base_qty" />
                                     <field name="red_safety_qty" />
-                                    <field name="red_zone_qty" />
+                                    <label for="red_zone_qty" />
+                                    <div name="red_zone_qty_row" class="o_row">
+                                        <field name="red_zone_qty" />
+                                    </div>
                                 </group>
                             </group>
                         </page>
