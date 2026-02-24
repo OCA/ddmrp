@@ -1,7 +1,8 @@
 # Copyright 2017-24 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 DAF_string = "DAF"
 LTAF_string = "LTAF"
@@ -50,3 +51,9 @@ class DdmrpAdjustment(models.Model):
     )
     date_start = fields.Date(related="date_range_id.date_start")
     date_end = fields.Date(related="date_range_id.date_end")
+
+    @api.constrains("value")
+    def _check_value_positive(self):
+        for rec in self:
+            if rec.value < 0:
+                raise ValidationError(_("Adjustment value must be positive."))
