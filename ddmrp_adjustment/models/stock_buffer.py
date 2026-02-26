@@ -69,10 +69,10 @@ class StockBuffer(models.Model):
         domain = [
             ("buffer_id", "=", self.id),
             ("adjustment_type", "=", adjustment_type),
-            ("date_range_id.date_end", ">=", today),
+            ("date_end", ">=", today),
         ]
         if current:
-            domain.append(("date_range_id.date_start", "<=", today))
+            domain.append(("date_start", "<=", today))
         return domain
 
     def _calc_adu(self):
@@ -126,8 +126,8 @@ class StockBuffer(models.Model):
                 if line.is_buffered:
                     buffer_id = line.buffer_id
                     extra_demand = _get_extra_demand(bom, line, buffer_id, factor)
-                    date_start = daf.date_range_id.date_start - td(days=clt)
-                    date_end = daf.date_range_id.date_end - td(days=clt)
+                    date_start = daf.date_start - td(days=clt)
+                    date_end = daf.date_end - td(days=clt)
                     demand_obj.sudo().create(
                         {
                             "buffer_id": buffer_id.id,

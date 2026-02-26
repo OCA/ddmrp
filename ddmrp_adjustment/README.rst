@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ================
 DDMRP Adjustment
 ================
@@ -17,7 +13,7 @@ DDMRP Adjustment
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fddmrp-lightgray.png?logo=github
@@ -44,7 +40,9 @@ include:
 - **Lead Time Adjustment Factor (LTAF)**: manipulates the Decoupled Lead
   Time for an individual part or group of parts (buffer profile, same
   partner...) to adjust for a planned or known expansions of LT.
-- Zone Adjustment Factor (ZAF): pending to implement
+- **Zone Adjustment Factor (ZAF)**: Adjustment done to any of the zones
+  of the buffer to modify the ordering size and frequency (green),
+  demand coverage (yellow) or safety (red).
 
 **Table of contents**
 

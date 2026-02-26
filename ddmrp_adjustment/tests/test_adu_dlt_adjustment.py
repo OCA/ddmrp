@@ -2,6 +2,8 @@
 # Copyright 2020 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from calendar import monthrange
+
 from .test_common import TestDDMRPAdjustmentCommon
 
 
@@ -98,6 +100,31 @@ class TestAduAdjustment(TestDDMRPAdjustmentCommon):
         self.buffer._compute_green_zone()
 
         self.assertEqual(self.buffer.green_zone_qty, self.green_zone_qty_before * 1.5)
+
+    def test_manual_date_adjustment(self):
+        """Test that adjustments work with manual dates instead of date ranges."""
+        today = self.now.date()
+        adj = self.env["ddmrp.adjustment"].create(
+            {
+                "buffer_id": self.buffer.id,
+                "adjustment_type": "DAF",
+                "value": 1.5,
+                "manual_date_start": today.replace(day=1),
+                "manual_date_end": today.replace(
+                    day=monthrange(today.year, today.month)[1]
+                ),
+            }
+        )
+        # Verify computed dates
+        self.assertEqual(adj.date_start, today.replace(day=1))
+        self.assertEqual(
+            adj.date_end,
+            today.replace(day=monthrange(today.year, today.month)[1]),
+        )
+        self.assertFalse(adj.date_range_id)
+        # Verify adjustment is applied
+        self.env["stock.buffer"].cron_ddmrp_adu()
+        self.assertEqual(self.buffer.adu, self.adu_before * 1.5)
 
     def test_dummy(self):
         # Run actions
