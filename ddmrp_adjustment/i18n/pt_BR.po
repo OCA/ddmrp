@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2024-05-29 15:36+0000\n"
-"Last-Translator: Rodrigo Macedo <sottomaiormacedotec@users.noreply."
-"translation.odoo-community.org>\n"
+"Last-Translator: Rodrigo Macedo "
+"<sottomaiormacedotec@users.noreply.translation.odoo-community.org>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -20,6 +20,12 @@ msgstr ""
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__adjustment_type
 msgid "Adjustment Type"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#. odoo-python
+#: code:addons/ddmrp_adjustment/models/ddmrp_adjustment.py:0
+msgid "Adjustment value must be positive."
 msgstr ""
 
 #. module: ddmrp_adjustment
@@ -130,7 +136,6 @@ msgstr ""
 #. module: ddmrp_adjustment
 #. odoo-python
 #: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:0
-#, python-format
 msgid "DDMRP Buffer Adjustment"
 msgstr ""
 
@@ -225,8 +230,24 @@ msgid ""
 msgstr ""
 
 #. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__apply_gzaf
+#: model:ir.model.fields.selection,name:ddmrp_adjustment.selection__ddmrp_adjustment__adjustment_type__gzaf
+msgid "Green Zone Adjustment Factor"
+msgstr ""
+
+#. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_search
 msgid "Group By"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__gzaf_applied
+msgid "Gzaf Applied"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__gzaf_text
+msgid "Gzaf Text"
 msgstr ""
 
 #. module: ddmrp_adjustment
@@ -312,8 +333,24 @@ msgid "Product"
 msgstr ""
 
 #. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__apply_rzaf
+#: model:ir.model.fields.selection,name:ddmrp_adjustment.selection__ddmrp_adjustment__adjustment_type__rzaf
+msgid "Red Zone Adjustment Factor"
+msgstr ""
+
+#. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
 msgid "Refresh Grid"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__rzaf_applied
+msgid "Rzaf Applied"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__rzaf_text
+msgid "Rzaf Text"
 msgstr ""
 
 #. module: ddmrp_adjustment
@@ -336,7 +373,6 @@ msgstr "Buffer de estoque"
 #. module: ddmrp_adjustment
 #. odoo-python
 #: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:0
-#, python-format
 msgid "The start date cannot be later than the end date."
 msgstr ""
 
@@ -367,17 +403,46 @@ msgid "View Demand from parent DAFs Affecting Actual ADU"
 msgstr ""
 
 #. module: ddmrp_adjustment
+#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.stock_buffer_view_form
+msgid "View GZAFs Affecting Green Zone"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.stock_buffer_view_form
+msgid "View RZAFs Affecting Red Zone"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.stock_buffer_view_form
+msgid "View YZAFs Affecting Yellow Zone"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__apply_yzaf
+#: model:ir.model.fields.selection,name:ddmrp_adjustment.selection__ddmrp_adjustment__adjustment_type__yzaf
+msgid "Yellow Zone Adjustment Factor"
+msgstr ""
+
+#. module: ddmrp_adjustment
 #. odoo-python
 #: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:0
-#, python-format
 msgid "You must apply at least one factor"
 msgstr ""
 
 #. module: ddmrp_adjustment
 #. odoo-python
 #: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:0
-#, python-format
 msgid "You must select at least one buffer."
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__yzaf_applied
+msgid "Yzaf Applied"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__yzaf_text
+msgid "Yzaf Text"
 msgstr ""
 
 #. module: ddmrp_adjustment
