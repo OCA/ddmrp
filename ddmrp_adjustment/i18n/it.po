@@ -201,6 +201,11 @@ msgid "Display Name"
 msgstr "Nome visualizzato"
 
 #. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__manual_date_end
+msgid "End Date (Manual)"
+msgstr ""
+
+#. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__date_end
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__date_end
 msgid "End date"
@@ -365,6 +370,15 @@ msgstr "Foglio"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__date_start
+msgid "Start Date"
+msgstr ""
+
+#. module: ddmrp_adjustment
+#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__manual_date_start
+msgid "Start Date (Manual)"
+msgstr ""
+
+#. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__date_start
 msgid "Start date"
 msgstr "Data inizio"
@@ -432,6 +446,12 @@ msgstr ""
 #: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:0
 msgid "You must apply at least one factor"
 msgstr "Bisogna applicare almeno un fattore"
+
+#. module: ddmrp_adjustment
+#. odoo-python
+#: code:addons/ddmrp_adjustment/models/ddmrp_adjustment.py:0
+msgid "You must either set a Date Range or provide manual Date From/Date To."
+msgstr ""
 
 #. module: ddmrp_adjustment
 #. odoo-python
