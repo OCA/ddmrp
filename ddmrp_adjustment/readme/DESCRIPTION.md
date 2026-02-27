@@ -10,4 +10,6 @@ include:
 - **Lead Time Adjustment Factor (LTAF)**: manipulates the Decoupled Lead
   Time for an individual part or group of parts (buffer profile, same
   partner...) to adjust for a planned or known expansions of LT.
-- Zone Adjustment Factor (ZAF): pending to implement
+- **Zone Adjustment Factor (ZAF)**: Adjustment done to any of the zones
+  of the buffer to modify the ordering size and frequency (green),
+  demand coverage (yellow) or safety (red).

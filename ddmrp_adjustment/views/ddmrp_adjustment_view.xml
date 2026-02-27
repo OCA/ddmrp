@@ -10,7 +10,21 @@
                 <field name="buffer_id" />
                 <field name="product_id" />
                 <field name="location_id" />
-                <field name="date_range_id" />
+                <field name="date_range_id" optional="show" />
+                <field
+                    name="manual_date_start"
+                    readonly="date_range_id"
+                    invisible="date_range_id"
+                    optional="show"
+                />
+                <field
+                    name="manual_date_end"
+                    readonly="date_range_id"
+                    invisible="date_range_id"
+                    optional="show"
+                />
+                <field name="date_start" optional="hide" />
+                <field name="date_end" optional="hide" />
                 <field name="adjustment_type" />
                 <field name="value" />
                 <field name="company_id" groups="base.group_multi_company" />
@@ -54,7 +68,7 @@
         <field name="model">ddmrp.adjustment</field>
         <field name="arch" type="xml">
             <graph>
-                <field name="date_range_id" type="column" />
+                <field name="date_start" type="column" />
                 <field name="value" type="measure" />
             </graph>
         </field>
