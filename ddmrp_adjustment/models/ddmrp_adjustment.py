@@ -1,10 +1,14 @@
 # Copyright 2017-24 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 DAF_string = "DAF"
 LTAF_string = "LTAF"
+RZAF_string = "RZAF"
+YZAF_string = "YZAF"
+GZAF_string = "GZAF"
 
 
 class DdmrpAdjustment(models.Model):
@@ -35,6 +39,9 @@ class DdmrpAdjustment(models.Model):
         selection=[
             (DAF_string, "Demand Adjustment Factor"),
             (LTAF_string, "Lead Time Adjustment Factor"),
+            (RZAF_string, "Red Zone Adjustment Factor"),
+            (YZAF_string, "Yellow Zone Adjustment Factor"),
+            (GZAF_string, "Green Zone Adjustment Factor"),
         ],
     )
     value = fields.Float(group_operator="avg")
@@ -44,3 +51,9 @@ class DdmrpAdjustment(models.Model):
     )
     date_start = fields.Date(related="date_range_id.date_start")
     date_end = fields.Date(related="date_range_id.date_end")
+
+    @api.constrains("value")
+    def _check_value_positive(self):
+        for rec in self:
+            if rec.value < 0:
+                raise ValidationError(_("Adjustment value must be positive."))

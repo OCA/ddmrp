@@ -26,6 +26,9 @@
                 <group name="factor" string="Factors to Apply">
                     <field name="apply_daf" />
                     <field name="apply_ltaf" />
+                    <field name="apply_rzaf" />
+                    <field name="apply_yzaf" />
+                    <field name="apply_gzaf" />
                 </group>
                 <group name="factor_sheet" string="Sheet">
                     <p colspan="2">Fill the factors to apply in each period for all the

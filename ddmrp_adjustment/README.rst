@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ================
 DDMRP Adjustment
 ================
@@ -17,7 +13,7 @@ DDMRP Adjustment
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fddmrp-lightgray.png?logo=github
@@ -36,15 +32,15 @@ Allow to extend DDMRP App to be able to apply Adjustments for
 dynamically altering buffers for planned or anticipated events. This
 include:
 
-- **Demand Adjustment Factor (DAF)**: is a manipulation of the ADU input
-  within a specific time period. The system will look for existing DAFs
-  when computing the ADU for each buffer and apply them. The system will
-  also explode the resulting increase in demand of parent buffers to all
-  their children buffers using the BoM.
-- **Lead Time Adjustment Factor (LTAF)**: manipulates the Decoupled Lead
-  Time for an individual part or group of parts (buffer profile, same
-  partner...) to adjust for a planned or known expansions of LT.
-- Zone Adjustment Factor (ZAF): pending to implement
+-  **Demand Adjustment Factor (DAF)**: is a manipulation of the ADU
+   input within a specific time period. The system will look for
+   existing DAFs when computing the ADU for each buffer and apply them.
+   The system will also explode the resulting increase in demand of
+   parent buffers to all their children buffers using the BoM.
+-  **Lead Time Adjustment Factor (LTAF)**: manipulates the Decoupled
+   Lead Time for an individual part or group of parts (buffer profile,
+   same partner...) to adjust for a planned or known expansions of LT.
+-  Zone Adjustment Factor (ZAF): pending to implement
 
 **Table of contents**
 
@@ -69,43 +65,14 @@ To plan buffer adjustments act as follows:
 Known issues / Roadmap
 ======================
 
-- Implement new factors
-- Reuse existing factor and modify them instead of always creating new
-  ones.
-- Add small graph view in buffer form as a way to overview DAFs.
+-  Reuse existing factor and modify them instead of always creating new
+   ones.
 
 Changelog
 =========
 
-16.0.1.0.0 (2023-12-05)
------------------------
-
-- Standard migration to v16.
-
-15.0.1.0.0 (2022-03-04)
------------------------
-
-- Standard migration to v15.
-
-14.0.1.0.0 (2021-06-17)
------------------------
-
-- Standard migration to v14.
-
-13.0.1.0.0 (2020-07-02)
------------------------
-
-- Standard migration to v13.
-
-11.0.1.1.0 (2019-02-01)
------------------------
-
-- Refactor data model to reduce complexity. Functionality unchanged.
-
-11.0.1.0.0 (2018-08-01)
------------------------
-
-- Start of the history
+Follow the history of changes in `GitHub Pull
+Requests <https://github.com/OCA/ddmrp/pulls?q=is%3Apr+ddmrp_adjustment+is%3Aclosed>`__.
 
 Bug Tracker
 ===========
@@ -128,9 +95,9 @@ Authors
 Contributors
 ------------
 
-- Lois Rilo <lois.rilo@forgeflow.com>
-- Jordi Ballester <jordi.ballester@forgeflow.com>
-- Akim Juillerat <akim.juillerat@camptocamp.com>
+-  Lois Rilo <lois.rilo@forgeflow.com>
+-  Jordi Ballester <jordi.ballester@forgeflow.com>
+-  Akim Juillerat <akim.juillerat@camptocamp.com>
 
 Maintainers
 -----------
