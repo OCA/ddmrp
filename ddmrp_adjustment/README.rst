@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ================
 DDMRP Adjustment
 ================
@@ -17,9 +13,9 @@ DDMRP Adjustment
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
-    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
-    :alt: License: AGPL-3
+.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
+    :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
+    :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fddmrp-lightgray.png?logo=github
     :target: https://github.com/OCA/ddmrp/tree/18.0/ddmrp_adjustment
     :alt: OCA/ddmrp
@@ -36,17 +32,17 @@ Allow to extend DDMRP App to be able to apply Adjustments for
 dynamically altering buffers for planned or anticipated events. This
 include:
 
-- **Demand Adjustment Factor (DAF)**: is a manipulation of the ADU input
-  within a specific time period. The system will look for existing DAFs
-  when computing the ADU for each buffer and apply them. The system will
-  also explode the resulting increase in demand of parent buffers to all
-  their children buffers using the BoM.
-- **Lead Time Adjustment Factor (LTAF)**: manipulates the Decoupled Lead
-  Time for an individual part or group of parts (buffer profile, same
-  partner...) to adjust for a planned or known expansions of LT.
-- **Zone Adjustment Factor (ZAF)**: Adjustment done to any of the zones
-  of the buffer to modify the ordering size and frequency (green),
-  demand coverage (yellow) or safety (red).
+-  **Demand Adjustment Factor (DAF)**: is a manipulation of the ADU
+   input within a specific time period. The system will look for
+   existing DAFs when computing the ADU for each buffer and apply them.
+   The system will also explode the resulting increase in demand of
+   parent buffers to all their children buffers using the BoM.
+-  **Lead Time Adjustment Factor (LTAF)**: manipulates the Decoupled
+   Lead Time for an individual part or group of parts (buffer profile,
+   same partner...) to adjust for a planned or known expansions of LT.
+-  **Zone Adjustment Factor (ZAF)**: Adjustment done to any of the zones
+   of the buffer to modify the ordering size and frequency (green),
+   demand coverage (yellow) or safety (red).
 
 **Table of contents**
 
@@ -56,23 +52,11 @@ include:
 Usage
 =====
 
-To plan buffer adjustments act as follows:
+You can create and manage buffer adjustments from *Inventory > Demand
+Planning > Buffer Adjustments*.
 
-1. Click on *Inventory > Demand Planning > Create Buffer Adjustments*.
-2. In the popup window fill the *Period* and *Date Range Type* to
-   perform your planning.
-3. Check the boxes of the *Factor to Apply* in which you are interested.
-4. Select the DDMRP Buffers where to apply this factors.
-5. Under the title *Sheet* you will see a generated sheet in which you
-   can fill the values for each period.
-6. Click *Validate* to confirm your planning and the system will end up
-   showing you the newly created DDMRP adjustment records.
-
-Known issues / Roadmap
-======================
-
-- Reuse existing factor and modify them instead of always creating new
-  ones.
+To create adjustments in bulk using a 2D matrix wizard, install the
+companion module ``ddmrp_adjustment_matrix``.
 
 Changelog
 =========
@@ -101,9 +85,9 @@ Authors
 Contributors
 ------------
 
-- Lois Rilo <lois.rilo@forgeflow.com>
-- Jordi Ballester <jordi.ballester@forgeflow.com>
-- Akim Juillerat <akim.juillerat@camptocamp.com>
+-  Lois Rilo <lois.rilo@forgeflow.com>
+-  Jordi Ballester <jordi.ballester@forgeflow.com>
+-  Akim Juillerat <akim.juillerat@camptocamp.com>
 
 Maintainers
 -----------

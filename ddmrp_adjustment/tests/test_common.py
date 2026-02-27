@@ -1,11 +1,9 @@
 # Copyright 2018 Camptocamp SA
-# Copyright 2020 ForgeFlow S.L. (https://www.forgeflow.com)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2020-26 ForgeFlow S.L. (https://www.forgeflow.com)
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 import datetime
 from calendar import monthrange
-
-from dateutil.relativedelta import relativedelta
 
 from odoo.tests import TransactionCase
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
@@ -25,22 +23,6 @@ class TestDDMRPAdjustmentCommon(TransactionCase):
                 ).strftime(DEFAULT_SERVER_DATE_FORMAT),
             }
         )
-
-    def _create_adjustment_wizard(self, number_of_periods):
-        date_start = datetime.datetime(year=self.now.year, month=self.now.month, day=1)
-        date_end = (
-            date_start + relativedelta(months=number_of_periods) - relativedelta(days=1)
-        )
-        wiz = self.env["ddmrp.adjustment.sheet"].create(
-            {
-                "date_start": date_start.strftime(DEFAULT_SERVER_DATE_FORMAT),
-                "date_end": date_end.strftime(DEFAULT_SERVER_DATE_FORMAT),
-                "date_range_type_id": self.month_date_range_type.id,
-            }
-        )
-        wiz.buffer_ids = [(4, self.buffer.id, False)]
-        wiz.action_refresh()
-        return wiz
 
     def setUp(self):
         super().setUp()

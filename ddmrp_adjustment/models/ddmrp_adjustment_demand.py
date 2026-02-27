@@ -1,5 +1,5 @@
-# Copyright 2017-20 ForgeFlow S.L. (https://www.forgeflow.com)
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+# Copyright 2017-26 ForgeFlow S.L. (https://www.forgeflow.com)
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import fields, models
 

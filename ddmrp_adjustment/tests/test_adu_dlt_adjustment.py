@@ -1,6 +1,6 @@
 # Copyright 2018 Camptocamp SA
-# Copyright 2020 ForgeFlow S.L. (https://www.forgeflow.com)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2020-26 ForgeFlow S.L. (https://www.forgeflow.com)
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from calendar import monthrange
 
@@ -20,85 +20,68 @@ class TestAduAdjustment(TestDDMRPAdjustmentCommon):
         self.red_zone_qty_before = self.buffer.red_zone_qty
         self.yellow_zone_qty_before = self.buffer.yellow_zone_qty
         self.green_zone_qty_before = self.buffer.green_zone_qty
+        self.current_month = getattr(
+            self, "month_%i_%i" % (self.now.year, self.now.month)
+        )
 
     def test_adu_adjustment(self):
-        wiz = self._create_adjustment_wizard(1)
-        wiz.apply_daf = True
-        wiz.action_refresh()
-
-        values = {
-            getattr(self, "month_%i_%i" % (self.now.year, self.now.month)): 1.5,
-        }
-        for line in wiz.line_ids:
-            line.value = values.get(line.date_range_id)
-        wiz.button_validate()
-
+        self.env["ddmrp.adjustment"].create(
+            {
+                "buffer_id": self.buffer.id,
+                "date_range_id": self.current_month.id,
+                "adjustment_type": "DAF",
+                "value": 1.5,
+            }
+        )
         self.env["stock.buffer"].cron_ddmrp_adu()
-
         self.assertEqual(self.buffer.adu, self.adu_before * 1.5)
 
     def test_dlt_adjustment(self):
-        wiz = self._create_adjustment_wizard(1)
-        wiz.apply_ltaf = True
-        wiz.action_refresh()
-
-        values = {
-            getattr(self, "month_%i_%i" % (self.now.year, self.now.month)): 2,
-        }
-        for line in wiz.line_ids:
-            line.value = values.get(line.date_range_id)
-        wiz.button_validate()
-
+        self.env["ddmrp.adjustment"].create(
+            {
+                "buffer_id": self.buffer.id,
+                "date_range_id": self.current_month.id,
+                "adjustment_type": "LTAF",
+                "value": 2,
+            }
+        )
         self.buffer._compute_dlt()
-
         self.assertEqual(self.buffer.dlt, self.dlt_before * 2)
 
     def test_red_zone_adjustment(self):
-        wiz = self._create_adjustment_wizard(1)
-        wiz.apply_rzaf = True
-        wiz.action_refresh()
-
-        values = {
-            getattr(self, "month_%i_%i" % (self.now.year, self.now.month)): 1.5,
-        }
-        for line in wiz.line_ids:
-            line.value = values.get(line.date_range_id)
-        wiz.button_validate()
-
+        self.env["ddmrp.adjustment"].create(
+            {
+                "buffer_id": self.buffer.id,
+                "date_range_id": self.current_month.id,
+                "adjustment_type": "RZAF",
+                "value": 1.5,
+            }
+        )
         self.buffer._compute_red_zone()
-
         self.assertEqual(self.buffer.red_zone_qty, self.red_zone_qty_before * 1.5)
 
     def test_yellow_zone_adjustment(self):
-        wiz = self._create_adjustment_wizard(1)
-        wiz.apply_yzaf = True
-        wiz.action_refresh()
-
-        values = {
-            getattr(self, "month_%i_%i" % (self.now.year, self.now.month)): 1.5,
-        }
-        for line in wiz.line_ids:
-            line.value = values.get(line.date_range_id)
-        wiz.button_validate()
-
+        self.env["ddmrp.adjustment"].create(
+            {
+                "buffer_id": self.buffer.id,
+                "date_range_id": self.current_month.id,
+                "adjustment_type": "YZAF",
+                "value": 1.5,
+            }
+        )
         self.buffer._compute_yellow_zone()
-
         self.assertEqual(self.buffer.yellow_zone_qty, self.yellow_zone_qty_before * 1.5)
 
     def test_green_zone_adjustment(self):
-        wiz = self._create_adjustment_wizard(1)
-        wiz.apply_gzaf = True
-        wiz.action_refresh()
-
-        values = {
-            getattr(self, "month_%i_%i" % (self.now.year, self.now.month)): 1.5,
-        }
-        for line in wiz.line_ids:
-            line.value = values.get(line.date_range_id)
-        wiz.button_validate()
-
+        self.env["ddmrp.adjustment"].create(
+            {
+                "buffer_id": self.buffer.id,
+                "date_range_id": self.current_month.id,
+                "adjustment_type": "GZAF",
+                "value": 1.5,
+            }
+        )
         self.buffer._compute_green_zone()
-
         self.assertEqual(self.buffer.green_zone_qty, self.green_zone_qty_before * 1.5)
 
     def test_manual_date_adjustment(self):
