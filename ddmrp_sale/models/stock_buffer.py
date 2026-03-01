@@ -99,8 +99,9 @@ class StockBuffer(models.Model):
                     ):
                         qualified_demand += so_lines_by_days.get(date, 0.0)
                     else:
+                        excluded_date = date
                         lines = lines.filtered(
-                            lambda x: x.commitment_date.date() != date
+                            lambda x, d=excluded_date: x.commitment_date.date() != d
                         )
                 rec.qualified_demand += qualified_demand
                 rec.qualified_demand_sale_order_line_ids = lines
@@ -108,8 +109,7 @@ class StockBuffer(models.Model):
 
     def action_view_qualified_demand_so_lines(self):
         lines = self.qualified_demand_sale_order_line_ids
-        action = self.env.ref("sale.action_quotations")
-        result = action.read()[0]
-        result["context"] = {}
-        result["domain"] = [("id", "in", lines.mapped("order_id.id"))]
-        return result
+        action = self.env["ir.actions.actions"]._for_xml_id("sale.action_quotations")
+        action["context"] = {}
+        action["domain"] = [("id", "in", lines.mapped("order_id.id"))]
+        return action

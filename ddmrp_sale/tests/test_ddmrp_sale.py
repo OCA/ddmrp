@@ -1,7 +1,8 @@
 # Copyright 2021 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from datetime import datetime as dt, timedelta as td
+from datetime import datetime as dt
+from datetime import timedelta as td
 
 from odoo.addons.ddmrp.tests.common import TestDdmrpCommon
 
