@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-01-27 12:06+0000\n"
+"PO-Revision-Date: 2026-03-02 18:45+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__adjustment_type
@@ -25,7 +25,7 @@ msgstr "Tipo correzione"
 #. odoo-python
 #: code:addons/ddmrp_adjustment/models/ddmrp_adjustment.py:0
 msgid "Adjustment value must be positive."
-msgstr ""
+msgstr "Il valore correzione deve essere positivo."
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__line_ids
@@ -203,7 +203,7 @@ msgstr "Nome visualizzato"
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__manual_date_end
 msgid "End Date (Manual)"
-msgstr ""
+msgstr "Data fine (manuale)"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__date_end
@@ -242,7 +242,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__apply_gzaf
 #: model:ir.model.fields.selection,name:ddmrp_adjustment.selection__ddmrp_adjustment__adjustment_type__gzaf
 msgid "Green Zone Adjustment Factor"
-msgstr ""
+msgstr "Fattore correzione zona verde"
 
 #. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_search
@@ -252,12 +252,12 @@ msgstr "Raggruppa per"
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__gzaf_applied
 msgid "Gzaf Applied"
-msgstr ""
+msgstr "FCZV applicato"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__gzaf_text
 msgid "Gzaf Text"
-msgstr ""
+msgstr "Testo FCZV"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__id
@@ -345,7 +345,7 @@ msgstr "Prodotto"
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__apply_rzaf
 #: model:ir.model.fields.selection,name:ddmrp_adjustment.selection__ddmrp_adjustment__adjustment_type__rzaf
 msgid "Red Zone Adjustment Factor"
-msgstr ""
+msgstr "Fattore correzione zona rossa"
 
 #. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
@@ -355,12 +355,12 @@ msgstr "Aggiorna griglia"
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__rzaf_applied
 msgid "Rzaf Applied"
-msgstr ""
+msgstr "FCZR applicato"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__rzaf_text
 msgid "Rzaf Text"
-msgstr ""
+msgstr "Testo FCZR"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__sheet_id
@@ -371,12 +371,12 @@ msgstr "Foglio"
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__date_start
 msgid "Start Date"
-msgstr ""
+msgstr "Data inizio"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__manual_date_start
 msgid "Start Date (Manual)"
-msgstr ""
+msgstr "Data inizio (manuale)"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__date_start
@@ -423,23 +423,23 @@ msgstr "Visualizza la richiesta dal DAF padre che influenza l'ADU attuale"
 #. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.stock_buffer_view_form
 msgid "View GZAFs Affecting Green Zone"
-msgstr ""
+msgstr "Visualizza FCZV che interessano la zona verde"
 
 #. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.stock_buffer_view_form
 msgid "View RZAFs Affecting Red Zone"
-msgstr ""
+msgstr "Visualizza FCZR che interessano la zona rossa"
 
 #. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.stock_buffer_view_form
 msgid "View YZAFs Affecting Yellow Zone"
-msgstr ""
+msgstr "Visualizza FCZG che interessano la zona gialla"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__apply_yzaf
 #: model:ir.model.fields.selection,name:ddmrp_adjustment.selection__ddmrp_adjustment__adjustment_type__yzaf
 msgid "Yellow Zone Adjustment Factor"
-msgstr ""
+msgstr "Fattore correzione zona gialla"
 
 #. module: ddmrp_adjustment
 #. odoo-python
@@ -451,7 +451,7 @@ msgstr "Bisogna applicare almeno un fattore"
 #. odoo-python
 #: code:addons/ddmrp_adjustment/models/ddmrp_adjustment.py:0
 msgid "You must either set a Date Range or provide manual Date From/Date To."
-msgstr ""
+msgstr "Bisogna inserire un intervallo date o fornire manualmente le data da/a."
 
 #. module: ddmrp_adjustment
 #. odoo-python
@@ -462,12 +462,12 @@ msgstr "Bisogna selezionare almeno un buffer."
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__yzaf_applied
 msgid "Yzaf Applied"
-msgstr ""
+msgstr "FCZG applicato"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__yzaf_text
 msgid "Yzaf Text"
-msgstr ""
+msgstr "Testo FCZG"
 
 #. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
