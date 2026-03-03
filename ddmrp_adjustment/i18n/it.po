@@ -28,11 +28,6 @@ msgid "Adjustment value must be positive."
 msgstr "Il valore correzione deve essere positivo."
 
 #. module: ddmrp_adjustment
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__line_ids
-msgid "Adjustments"
-msgstr "Correzioni"
-
-#. module: ddmrp_adjustment
 #: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_search
 msgid "Affecting Currently"
 msgstr "Riguardante attualmente"
@@ -49,16 +44,6 @@ msgid "Buffer"
 msgstr "Buffer"
 
 #. module: ddmrp_adjustment
-#: model:ir.model,name:ddmrp_adjustment.model_ddmrp_adjustment_sheet
-msgid "Buffer Adjustment Sheet"
-msgstr "Foglio correzione buffer"
-
-#. module: ddmrp_adjustment
-#: model:ir.model,name:ddmrp_adjustment.model_ddmrp_adjustment_sheet_line
-msgid "Buffer Adjustment Sheet Line"
-msgstr "Riga foglio correzione buffer"
-
-#. module: ddmrp_adjustment
 #: model:ir.actions.act_window,name:ddmrp_adjustment.ddmrp_adjustment_action
 #: model:ir.ui.menu,name:ddmrp_adjustment.menu_ddmrp_adjustment
 msgid "Buffer Adjustments"
@@ -68,21 +53,6 @@ msgstr "Correzioni buffer"
 #: model:ir.actions.act_window,name:ddmrp_adjustment.ddmrp_adjustment_demand_action
 msgid "Buffer Adjustments Demand"
 msgstr "Richiesta correzioni buffer"
-
-#. module: ddmrp_adjustment
-#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
-msgid "Buffer Adjustments Wizard"
-msgstr "Procedura guidata correzioni buffer"
-
-#. module: ddmrp_adjustment
-#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
-msgid "Buffers"
-msgstr "Buffer"
-
-#. module: ddmrp_adjustment
-#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
-msgid "Cancel"
-msgstr "Annulla"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__company_id
@@ -96,24 +66,14 @@ msgid "Count Ddmrp Adjustment Demand"
 msgstr "Conteggio richieste correzioni DDRMP"
 
 #. module: ddmrp_adjustment
-#: model:ir.actions.act_window,name:ddmrp_adjustment.action_ddmrp_adjustment_sheet_wizard
-#: model:ir.ui.menu,name:ddmrp_adjustment.menu_ddmrp_adjustment_sheet_wizard
-msgid "Create Buffer Adjustments"
-msgstr "Crea correzioni buffer"
-
-#. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__create_uid
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__create_uid
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__create_uid
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__create_uid
 msgid "Created by"
 msgstr "Creato da"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__create_date
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__create_date
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__create_date
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__create_date
 msgid "Created on"
 msgstr "Creato il"
 
@@ -133,17 +93,6 @@ msgid "DDMRP Adjustment Demand"
 msgstr "Fabbisogno correzione DDMRP"
 
 #. module: ddmrp_adjustment
-#. odoo-python
-#: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:0
-msgid "DDMRP Buffer Adjustment"
-msgstr "Correzione buffer DDMRP"
-
-#. module: ddmrp_adjustment
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__buffer_ids
-msgid "DDMRP Buffers"
-msgstr "Buffer DDMRP"
-
-#. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__daf_applied
 msgid "Daf Applied"
 msgstr "DAF applicato"
@@ -154,24 +103,9 @@ msgid "Daf Text"
 msgstr "Testo DAF"
 
 #. module: ddmrp_adjustment
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__date_start
-msgid "Date From"
-msgstr "Dalla data"
-
-#. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__date_range_id
 msgid "Date Range"
 msgstr "Intervallo data"
-
-#. module: ddmrp_adjustment
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__date_range_type_id
-msgid "Date Range Type"
-msgstr "Tipo intervallo data"
-
-#. module: ddmrp_adjustment
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__date_end
-msgid "Date To"
-msgstr "Alla data"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,help:ddmrp_adjustment.field_ddmrp_adjustment_demand__product_uom_id
@@ -179,7 +113,6 @@ msgid "Default unit of measure used for all stock operations."
 msgstr "Unità di misura predefinita per tutte le operazioni di magazzino."
 
 #. module: ddmrp_adjustment
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__apply_daf
 #: model:ir.model.fields.selection,name:ddmrp_adjustment.selection__ddmrp_adjustment__adjustment_type__daf
 msgid "Demand Adjustment Factor"
 msgstr "Fattore correzione fabbisogno"
@@ -195,8 +128,6 @@ msgstr ""
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__display_name
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__display_name
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__display_name
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
 
@@ -218,28 +149,6 @@ msgid "Extra Demand"
 msgstr "Fabbisogno extra"
 
 #. module: ddmrp_adjustment
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__factor
-msgid "Factors"
-msgstr "Fattori"
-
-#. module: ddmrp_adjustment
-#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
-msgid "Factors to Apply"
-msgstr "Fattori da applicare"
-
-#. module: ddmrp_adjustment
-#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
-msgid ""
-"Fill the factors to apply in each period for all the\n"
-"                       selected Buffers. To refresh the list please click on "
-"the following button."
-msgstr ""
-"Compilare i fattori da utilizzare in ogni periodo per tutti\n"
-"                       i buffer selezionati. Per aggiornare la lista fare "
-"clic sul seguente pulsante."
-
-#. module: ddmrp_adjustment
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__apply_gzaf
 #: model:ir.model.fields.selection,name:ddmrp_adjustment.selection__ddmrp_adjustment__adjustment_type__gzaf
 msgid "Green Zone Adjustment Factor"
 msgstr "Fattore correzione zona verde"
@@ -262,29 +171,22 @@ msgstr "Testo FCZV"
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__id
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__id
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__id
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__id
 msgid "ID"
 msgstr "ID"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__write_uid
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__write_uid
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__write_uid
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__write_uid
 msgid "Last Updated by"
 msgstr "Ultimo aggiornamento di"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__write_date
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__write_date
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__write_date
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__write_date
 msgid "Last Updated on"
 msgstr "Ultimo aggiornamento il"
 
 #. module: ddmrp_adjustment
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__apply_ltaf
 #: model:ir.model.fields.selection,name:ddmrp_adjustment.selection__ddmrp_adjustment__adjustment_type__ltaf
 msgid "Lead Time Adjustment Factor"
 msgstr "Fattore tempo esecuzione aggiustamento"
@@ -320,17 +222,6 @@ msgid "Parent Daf Text"
 msgstr "Testo DAF padre"
 
 #. module: ddmrp_adjustment
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__date_range_id
-#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
-msgid "Period"
-msgstr "Periodo"
-
-#. module: ddmrp_adjustment
-#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
-msgid "Periods"
-msgstr "Periodi"
-
-#. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__pre_daf_adu
 msgid "Pre Daf Adu"
 msgstr "ADU pre DAF"
@@ -342,15 +233,9 @@ msgid "Product"
 msgstr "Prodotto"
 
 #. module: ddmrp_adjustment
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__apply_rzaf
 #: model:ir.model.fields.selection,name:ddmrp_adjustment.selection__ddmrp_adjustment__adjustment_type__rzaf
 msgid "Red Zone Adjustment Factor"
 msgstr "Fattore correzione zona rossa"
-
-#. module: ddmrp_adjustment
-#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
-msgid "Refresh Grid"
-msgstr "Aggiorna griglia"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__rzaf_applied
@@ -361,12 +246,6 @@ msgstr "FCZR applicato"
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__rzaf_text
 msgid "Rzaf Text"
 msgstr "Testo FCZR"
-
-#. module: ddmrp_adjustment
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__sheet_id
-#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
-msgid "Sheet"
-msgstr "Foglio"
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__date_start
@@ -389,24 +268,12 @@ msgid "Stock Buffer"
 msgstr "Buffer di materiale"
 
 #. module: ddmrp_adjustment
-#. odoo-python
-#: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:0
-msgid "The start date cannot be later than the end date."
-msgstr "La data di inizio non può essere successiva alla data di fine."
-
-#. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_demand__product_uom_id
 msgid "Unit of Measure"
 msgstr "Unità di misura"
 
 #. module: ddmrp_adjustment
-#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
-msgid "Validate"
-msgstr "Valida"
-
-#. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment__value
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet_line__value
 msgid "Value"
 msgstr "Valore"
 
@@ -436,28 +303,16 @@ msgid "View YZAFs Affecting Yellow Zone"
 msgstr "Visualizza FCZG che interessano la zona gialla"
 
 #. module: ddmrp_adjustment
-#: model:ir.model.fields,field_description:ddmrp_adjustment.field_ddmrp_adjustment_sheet__apply_yzaf
 #: model:ir.model.fields.selection,name:ddmrp_adjustment.selection__ddmrp_adjustment__adjustment_type__yzaf
 msgid "Yellow Zone Adjustment Factor"
 msgstr "Fattore correzione zona gialla"
 
 #. module: ddmrp_adjustment
 #. odoo-python
-#: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:0
-msgid "You must apply at least one factor"
-msgstr "Bisogna applicare almeno un fattore"
-
-#. module: ddmrp_adjustment
-#. odoo-python
 #: code:addons/ddmrp_adjustment/models/ddmrp_adjustment.py:0
 msgid "You must either set a Date Range or provide manual Date From/Date To."
-msgstr "Bisogna inserire un intervallo date o fornire manualmente le data da/a."
-
-#. module: ddmrp_adjustment
-#. odoo-python
-#: code:addons/ddmrp_adjustment/wizards/ddmrp_adjustment_sheet.py:0
-msgid "You must select at least one buffer."
-msgstr "Bisogna selezionare almeno un buffer."
+msgstr ""
+"Bisogna inserire un intervallo date o fornire manualmente le data da/a."
 
 #. module: ddmrp_adjustment
 #: model:ir.model.fields,field_description:ddmrp_adjustment.field_stock_buffer__yzaf_applied
@@ -469,10 +324,83 @@ msgstr "FCZG applicato"
 msgid "Yzaf Text"
 msgstr "Testo FCZG"
 
-#. module: ddmrp_adjustment
-#: model_terms:ir.ui.view,arch_db:ddmrp_adjustment.view_ddmrp_adjustment_sheet_wizard_form
-msgid "to"
-msgstr "a"
+#~ msgid "Adjustments"
+#~ msgstr "Correzioni"
+
+#~ msgid "Buffer Adjustment Sheet"
+#~ msgstr "Foglio correzione buffer"
+
+#~ msgid "Buffer Adjustment Sheet Line"
+#~ msgstr "Riga foglio correzione buffer"
+
+#~ msgid "Buffer Adjustments Wizard"
+#~ msgstr "Procedura guidata correzioni buffer"
+
+#~ msgid "Buffers"
+#~ msgstr "Buffer"
+
+#~ msgid "Cancel"
+#~ msgstr "Annulla"
+
+#~ msgid "Create Buffer Adjustments"
+#~ msgstr "Crea correzioni buffer"
+
+#~ msgid "DDMRP Buffer Adjustment"
+#~ msgstr "Correzione buffer DDMRP"
+
+#~ msgid "DDMRP Buffers"
+#~ msgstr "Buffer DDMRP"
+
+#~ msgid "Date From"
+#~ msgstr "Dalla data"
+
+#~ msgid "Date Range Type"
+#~ msgstr "Tipo intervallo data"
+
+#~ msgid "Date To"
+#~ msgstr "Alla data"
+
+#~ msgid "Factors"
+#~ msgstr "Fattori"
+
+#~ msgid "Factors to Apply"
+#~ msgstr "Fattori da applicare"
+
+#~ msgid ""
+#~ "Fill the factors to apply in each period for all the\n"
+#~ "                       selected Buffers. To refresh the list please click "
+#~ "on the following button."
+#~ msgstr ""
+#~ "Compilare i fattori da utilizzare in ogni periodo per tutti\n"
+#~ "                       i buffer selezionati. Per aggiornare la lista fare "
+#~ "clic sul seguente pulsante."
+
+#~ msgid "Period"
+#~ msgstr "Periodo"
+
+#~ msgid "Periods"
+#~ msgstr "Periodi"
+
+#~ msgid "Refresh Grid"
+#~ msgstr "Aggiorna griglia"
+
+#~ msgid "Sheet"
+#~ msgstr "Foglio"
+
+#~ msgid "The start date cannot be later than the end date."
+#~ msgstr "La data di inizio non può essere successiva alla data di fine."
+
+#~ msgid "Validate"
+#~ msgstr "Valida"
+
+#~ msgid "You must apply at least one factor"
+#~ msgstr "Bisogna applicare almeno un fattore"
+
+#~ msgid "You must select at least one buffer."
+#~ msgstr "Bisogna selezionare almeno un buffer."
+
+#~ msgid "to"
+#~ msgstr "a"
 
 #~ msgid ""
 #~ "Fill the factors to apply in each period for all the\n"
