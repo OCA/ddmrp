@@ -373,7 +373,7 @@ class StockBuffer(models.Model):
             lambda line: line.location_id.is_sublocation_of(self.location_id)
             and not line.location_dest_id.is_sublocation_of(self.location_id)
         )
-        return sum(lines.mapped("quantity"))
+        return sum(lines.mapped("quantity_product_uom"))
 
     def _update_quantities_dict(self, product):
         self.ensure_one()
