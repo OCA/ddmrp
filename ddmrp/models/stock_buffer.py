@@ -1867,23 +1867,25 @@ class StockBuffer(models.Model):
         result["views"] = sorted(result["views"], key=lambda view: view[1] != "list")
         return result
 
+    def _get_unconfirmed_po_states(self):
+        return ("draft", "sent", "to approve")
+
     def _get_rfq_dlt(self, dlt_interval=None):
         self.ensure_one()
         cut_date = self._get_incoming_supply_date_limit()
+        po_states = self._get_unconfirmed_po_states()
         if dlt_interval == "inside":
             pols = self.purchase_line_ids.filtered(
                 lambda line: line.date_planned <= fields.Datetime.to_datetime(cut_date)
-                and line.state in ("draft", "sent", "to approve")
+                and line.state in po_states
             )
         elif dlt_interval == "outside":
             pols = self.purchase_line_ids.filtered(
                 lambda line: line.date_planned > fields.Datetime.to_datetime(cut_date)
-                and line.state in ("draft", "sent", "to approve")
+                and line.state in po_states
             )
         else:
-            pols = self.purchase_line_ids.filtered(
-                lambda line: line.state in ("draft", "sent", "to approve")
-            )
+            pols = self.purchase_line_ids.filtered(lambda line: line.state in po_states)
         return pols
 
     def action_view_supply_moves_inside_dlt_window(self):
