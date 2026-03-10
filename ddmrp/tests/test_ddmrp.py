@@ -1460,3 +1460,29 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(
             self.buffer_purchase.product_location_qty_available_not_res, -10
         )
+
+    def test_49_outgoing_reservation_qty_uom(self):
+        """Outgoing reservation qty must be expressed in the product's UoM,
+        not in the move's UoM.  When the picking is created in dozens (1 dozen
+        = 12 units) and stock is reserved, the on-hand-unreserved position must
+        be reduced by the equivalent in product UoM (units), not by the raw
+        move-line quantity stored in dozens."""
+        date_move = datetime.today()
+        dozens_qty = 5
+        units_qty = dozens_qty * 12  # 60 units
+        # Product A UoM is units; we create an outgoing picking in dozens.
+        picking = self.create_pickingoutA(date_move, dozens_qty, uom=self.dozen_unit)
+        on_hand_before = self.buffer_a.product_location_qty_available_not_res
+        # Reserve stock: move line quantity will be in dozens, but
+        # quantity_product_uom must be in units.
+        picking.action_assign()
+        self.assertEqual(picking.move_ids.state, "assigned")
+        self.buffer_a.invalidate_recordset()
+        self.buffer_a.cron_actions()
+        # The reserved qty must reduce on-hand by units_qty (60), not by
+        # dozens_qty (5).
+        self.assertAlmostEqual(
+            self.buffer_a.product_location_qty_available_not_res,
+            on_hand_before - units_qty,
+            places=2,
+        )
