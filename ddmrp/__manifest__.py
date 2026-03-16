@@ -8,7 +8,7 @@
     "version": "18.0.1.6.2",
     "license": "LGPL-3",
     "development_status": "Production/Stable",
-    "author": "ForgeFlow, " "Odoo Community Association (OCA)",
+    "author": "ForgeFlow, Odoo Community Association (OCA)",
     "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],
     "website": "https://github.com/OCA/ddmrp",
     "category": "Warehouse",
