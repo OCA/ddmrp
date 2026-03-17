@@ -17,9 +17,9 @@ DDMRP Sale
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
-    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
-    :alt: License: AGPL-3
+.. |badge2| image:: https://img.shields.io/badge/license-LGPL--3-blue.png
+    :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
+    :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fddmrp-lightgray.png?logo=github
     :target: https://github.com/OCA/ddmrp/tree/16.0/ddmrp_sale
     :alt: OCA/ddmrp
@@ -46,10 +46,7 @@ quotations as demand.
 Changelog
 =========
 
-13.0.1.0.0 (2021-01-15)
-~~~~~~~~~~~~~~~~~~~~~~~
-
-* Start of the history
+Follow the history of changes in `GitHub Pull Requests <https://github.com/OCA/ddmrp/pulls?q=is%3Apr+ddmrp_sale+is%3Aclosed>`_.
 
 Bug Tracker
 ===========

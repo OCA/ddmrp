@@ -1,5 +1,5 @@
-# Copyright 2021 ForgeFlow S.L. (https://www.forgeflow.com)
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
+# Copyright 2021-26 ForgeFlow S.L. (https://www.forgeflow.com)
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import api, fields, models
 
@@ -61,7 +61,7 @@ class StockBuffer(models.Model):
                 "in",
                 ["draft", "sent"],
             ),
-            ("commitment_date", "<=", date_to),
+            ("order_id.commitment_date", "<=", date_to),
             ("order_id.warehouse_id", "=", self.warehouse_id.id),
         ]
 
@@ -70,14 +70,18 @@ class StockBuffer(models.Model):
         so_lines = self.env["sale.order.line"].search(domain)
         return so_lines
 
+    def _get_sol_date(self, sol):
+        """Return the date to use for a sale order line in DDMRP demand calculation."""
+        return sol.order_id.commitment_date
+
     def _get_so_lines_by_days(self, so_lines):
         so_lines_by_days = {}
-        sol_dates = [dt.date() for dt in so_lines.mapped("commitment_date")]
+        sol_dates = [self._get_sol_date(sol).date() for sol in so_lines]
         for d in sol_dates:
             if not so_lines_by_days.get(d):
                 so_lines_by_days[d] = 0.0
         for sol in so_lines:
-            date = sol.commitment_date.date()
+            date = self._get_sol_date(sol).date()
             so_lines_by_days[date] += sol.product_uom._compute_quantity(
                 sol.product_uom_qty, sol.product_id.uom_id
             )
@@ -100,7 +104,7 @@ class StockBuffer(models.Model):
                         qualified_demand += so_lines_by_days.get(date, 0.0)
                     else:
                         lines = lines.filtered(
-                            lambda x: x.commitment_date.date() != date
+                            lambda x: rec._get_sol_date(x).date() != date
                         )
                 rec.qualified_demand += qualified_demand
                 rec.qualified_demand_sale_order_line_ids = lines

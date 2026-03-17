@@ -1,5 +1,5 @@
-# Copyright 2021 ForgeFlow S.L. (https://www.forgeflow.com)
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
+# Copyright 2021-26 ForgeFlow S.L. (https://www.forgeflow.com)
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from datetime import datetime as dt, timedelta as td
 
@@ -64,7 +64,6 @@ class TestDDMRPSale(TestDdmrpCommon):
                             "name": "cool product",
                             "price_unit": 100.0,
                             "product_uom_qty": 17,  # it is a spike.
-                            "commitment_date": so_date,
                         },
                     )
                 ],
@@ -106,7 +105,6 @@ class TestDDMRPSale(TestDdmrpCommon):
                             "price_unit": 100.0,
                             "product_uom_qty": 2,  # 2 dozens, it is a spike.
                             "product_uom": self.uom_dozen.id,
-                            "commitment_date": so_date,
                         },
                     )
                 ],
@@ -144,7 +142,6 @@ class TestDDMRPSale(TestDdmrpCommon):
                             "name": "cool product",
                             "price_unit": 100.0,
                             "product_uom_qty": 17,  # it is a spike.
-                            "commitment_date": so_date,
                         },
                     )
                 ],
