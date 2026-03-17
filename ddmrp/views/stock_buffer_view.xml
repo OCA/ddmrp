@@ -201,6 +201,7 @@
                                 name="product_uom"
                                 options="{'no_open': True, 'no_create': True}"
                                 groups="uom.group_uom"
+                                widget="many2one_uom"
                             />
                             <field name="product_type" invisible="1" />
                         </group>
@@ -623,7 +624,7 @@
                 <field name="minimum_order_quantity" />
                 <field name="planning_priority_level" />
                 <field name="execution_priority_level" />
-                <group name="planning_priority" string="Planning Priority Zones">
+                <group name="planning_priority">
                     <filter
                         name="planning_priority_level_red"
                         string="Red"
@@ -641,7 +642,7 @@
                     />
                 </group>
                 <separator />
-                <group name="execution_priority" string="On Hand Alert Zones">
+                <group name="execution_priority">
                     <filter
                         name="execution_priority_level_red"
                         string="Red"
@@ -659,7 +660,7 @@
                     />
                 </group>
                 <separator />
-                <group name="item_type" string="Type">
+                <group name="item_type">
                     <filter
                         name="item_type_manufactured"
                         string="Manufactured"
@@ -677,7 +678,7 @@
                     />
                 </group>
                 <separator />
-                <group name="procure_recommendation" string="Procurement">
+                <group name="procure_recommendation">
                     <filter
                         name="procure_recommended"
                         string="Procurement recommended"
@@ -702,7 +703,7 @@
                     name="inactive"
                     domain="[('active','=',False)]"
                 />
-                <group expand="0" string="Group By">
+                <group>
                     <filter
                         string="Warehouse"
                         name="warehouse"

@@ -1,7 +1,7 @@
 # Copyright 2019-20 ForgeFlow S.L. (http://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class StockMove(models.Model):
@@ -157,7 +157,7 @@ class StockMove(models.Model):
         record = self._get_source_record()
         if record:
             return {
-                "name": getattr(record, "name", _("Stock Move Source")),
+                "name": getattr(record, "name", self.env._("Stock Move Source")),
                 "view_mode": "form",
                 "res_model": record._name,
                 "type": "ir.actions.act_window",

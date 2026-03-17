@@ -1,7 +1,7 @@
 # Copyright 2019-20 ForgeFlow S.L. (http://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_compare
 
@@ -103,7 +103,7 @@ class MakeProcurementBuffer(models.TransientModel):
     def make_procurement(self):
         self.ensure_one()
         errors = []
-        pg_obj = self.env["procurement.group"]
+        pg_obj = self.env["stock.rule"]
         procurements = []
         for item in self.item_ids:
             # As procurement is processed with SUPERUSER_ID (see _run_buy and
@@ -112,9 +112,9 @@ class MakeProcurementBuffer(models.TransientModel):
             # a procurement on any buffer
             item.buffer_id.check_access("write")
             if item.qty <= 0.0:
-                raise ValidationError(_("Quantity must be positive."))
+                raise ValidationError(self.env._("Quantity must be positive."))
             if not item.buffer_id:
-                raise ValidationError(_("No stock buffer found."))
+                raise ValidationError(self.env._("No stock buffer found."))
             values = item._prepare_values_make_procurement()
             proc_location = self._get_procurement_location(item)
             proc_name = self._get_procurement_name(item)

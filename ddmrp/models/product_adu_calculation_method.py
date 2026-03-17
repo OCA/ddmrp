@@ -2,7 +2,7 @@
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -13,10 +13,10 @@ class ProductAduCalculationMethod(models.Model):
     @api.model
     def _get_calculation_method(self):
         return [
-            ("fixed", _("Fixed ADU")),
-            ("past", _("Past-looking")),
-            ("future", _("Future-looking")),
-            ("blended", _("Blended")),
+            ("fixed", self.env._("Fixed ADU")),
+            ("past", self.env._("Past-looking")),
+            ("future", self.env._("Future-looking")),
+            ("blended", self.env._("Blended")),
         ]
 
     @api.model
@@ -71,17 +71,17 @@ class ProductAduCalculationMethod(models.Model):
     def _check_horizon(self):
         for rec in self:
             if rec.method in ["past", "blended"] and not rec.horizon_past:
-                raise ValidationError(_("Please indicate a Past Horizon."))
+                raise ValidationError(rec.env._("Please indicate a Past Horizon."))
             if rec.method in ["blended", "future"] and not rec.horizon_future:
-                raise ValidationError(_("Please indicate a Future Horizon."))
+                raise ValidationError(rec.env._("Please indicate a Future Horizon."))
 
     @api.constrains("method", "source_past", "source_future")
     def _check_source(self):
         for rec in self:
             if rec.method in ["past", "blended"] and not rec.source_past:
-                raise ValidationError(_("Please indicate a Past Source."))
+                raise ValidationError(rec.env._("Please indicate a Past Source."))
             if rec.method in ["blended", "future"] and not rec.source_future:
-                raise ValidationError(_("Please indicate a Future Source."))
+                raise ValidationError(rec.env._("Please indicate a Future Source."))
 
     @api.constrains("method", "factor_past", "factor_future")
     def _check_factor(self):
@@ -92,7 +92,7 @@ class ProductAduCalculationMethod(models.Model):
                 or rec.factor_past < 0.0
             ):
                 raise ValidationError(
-                    _(
+                    rec.env._(
                         "In blended method, past and future factors must be "
                         "positive and sum exactly 1,0."
                     )

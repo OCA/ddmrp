@@ -113,10 +113,9 @@ class TestDdmrp(TestDdmrpCommon):
         self._do_picking(picking_1, date_move_1)
         # The next moves should be considered
         today = datetime.today()
-        # 8:00 AM is the start of working time for today.
-        # 7:59 AM will make odoo to use the start of woking time for previous
-        # days, which is 1:00 PM of yesterday.
-        day_dt = datetime.combine(today.date(), time(8, 0, 0))
+        # Use 8:00:01 AM to ensure today is included in the working interval
+        # (In Odoo 19, the interval [8:00-12:00] has exclusive boundary at 8:00:00)
+        day_dt = datetime.combine(today.date(), time(8, 0, 1))
         days = 2
         date_move_2 = self.calendar.plan_days(-1 * days - 1, day_dt)
         picking_2 = self.create_pickingoutA(date_move_2, 20)
@@ -884,31 +883,26 @@ class TestDdmrp(TestDdmrpCommon):
 
     def test_31_bom_dlt_computation(self):
         """Tests that DLT computation is correct removing buffers."""
-        bom_fp01 = self.env.ref("ddmrp.mrp_bom_fp01")
-        self.assertEqual(bom_fp01.dlt, 22)
+        self.assertEqual(self.bom_fp01.dlt, 22)
         # Remove RM-01 buffer:
-        orderpoint_rm01 = self.env.ref("ddmrp.stock_buffer_rm01")
-        bom_line_rm01 = self.env.ref("ddmrp.mrp_bom_as01_line_rm01")
-        orderpoint_rm01.active = False
-        bom_line_rm01._compute_is_buffered()
-        self.assertFalse(bom_line_rm01.is_buffered)
-        bom_fp01._compute_dlt()
-        self.assertEqual(bom_fp01.dlt, 33.0)
+        self.buffer_rm01.active = False
+        self.bom_line_as01_rm01._compute_is_buffered()
+        self.assertFalse(self.bom_line_as01_rm01.is_buffered)
+        self.bom_fp01._compute_dlt()
+        self.assertEqual(self.bom_fp01.dlt, 33.0)
 
     def test_32_bom_dlt_computation(self):
         """Tests that DLT computation is correct adding buffers."""
-        product_as01 = self.env.ref("ddmrp.product_product_as01")
         self.bufferModel.create(
             {
                 "buffer_profile_id": self.buffer_profile_mmm.id,
-                "product_id": product_as01.id,
+                "product_id": self.product_as01.id,
                 "warehouse_id": self.warehouse.id,
                 "location_id": self.stock_location.id,
                 "adu_calculation_method": self.adu_fixed.id,
             }
         )
-        bom_fp01 = self.env.ref("ddmrp.mrp_bom_fp01")
-        self.assertEqual(bom_fp01.dlt, 2.0)
+        self.assertEqual(self.bom_fp01.dlt, 2.0)
 
     def test_33_auto_compute_nfp_off(self):
         self.main_company.ddmrp_auto_update_nfp = False
@@ -1014,19 +1008,15 @@ class TestDdmrp(TestDdmrpCommon):
         If AS01 bom has no location it means that it can be manufactured
         in more than one location.
         """
-        bom_fp01 = self.env.ref("ddmrp.mrp_bom_fp01")
-        buffer1_fp01 = self.env.ref("ddmrp.stock_buffer_fp01")
-        self.assertEqual(bom_fp01.dlt, 22.0)
-        self.assertEqual(bom_fp01.buffer_id, buffer1_fp01)
-        self.assertEqual(len(bom_fp01.bom_line_ids), 1)
-        self.assertEqual(bom_fp01.bom_line_ids.is_buffered, False)
+        self.assertEqual(self.bom_fp01.dlt, 22.0)
+        self.assertEqual(self.bom_fp01.buffer_id, self.buffer_fp01)
+        self.assertEqual(len(self.bom_fp01.bom_line_ids), 1)
+        self.assertEqual(self.bom_fp01.bom_line_ids.is_buffered, False)
         # Now create buffers in another location and check in that context
-        product_fp01 = self.env.ref("ddmrp.product_product_fp01")
-        product_as01 = self.env.ref("ddmrp.product_product_as01")
         buffer2_fp01 = self.bufferModel.create(
             {
                 "buffer_profile_id": self.buffer_profile_mmm.id,
-                "product_id": product_fp01.id,
+                "product_id": self.product_fp01.id,
                 "warehouse_id": self.warehouse.id,
                 "location_id": self.supplier_location.id,
                 "adu_calculation_method": self.adu_fixed.id,
@@ -1035,26 +1025,26 @@ class TestDdmrp(TestDdmrpCommon):
         buffer_as01 = self.bufferModel.create(
             {
                 "buffer_profile_id": self.buffer_profile_mmm.id,
-                "product_id": product_as01.id,
+                "product_id": self.product_as01.id,
                 "warehouse_id": self.warehouse.id,
                 "location_id": self.supplier_location.id,
                 "adu_calculation_method": self.adu_fixed.id,
             }
         )
-        bom_fp01.context_location_id = self.supplier_location.id
-        bom_fp01.bom_line_ids._compute_is_buffered()
-        bom_fp01._compute_dlt()
-        bom_fp01.bom_line_ids._compute_dlt()
-        self.assertEqual(bom_fp01.dlt, 2.0)
-        self.assertEqual(bom_fp01.buffer_id, buffer2_fp01)
-        self.assertEqual(len(bom_fp01.bom_line_ids), 1)
-        self.assertEqual(bom_fp01.bom_line_ids.is_buffered, True)
-        self.assertEqual(bom_fp01.bom_line_ids.buffer_id, buffer_as01)
+        self.bom_fp01.context_location_id = self.supplier_location.id
+        self.bom_fp01.bom_line_ids._compute_is_buffered()
+        self.bom_fp01._compute_dlt()
+        self.bom_fp01.bom_line_ids._compute_dlt()
+        self.assertEqual(self.bom_fp01.dlt, 2.0)
+        self.assertEqual(self.bom_fp01.buffer_id, buffer2_fp01)
+        self.assertEqual(len(self.bom_fp01.bom_line_ids), 1)
+        self.assertEqual(self.bom_fp01.bom_line_ids.is_buffered, True)
+        self.assertEqual(self.bom_fp01.bom_line_ids.buffer_id, buffer_as01)
         # Check at the same time the DLT of 2 buffers using the same bom:
-        buffers = buffer1_fp01 + buffer2_fp01
+        buffers = self.buffer_fp01 + buffer2_fp01
         buffers.invalidate_recordset()
         buffers._compute_dlt()
-        self.assertEqual(buffer1_fp01.dlt, 22)
+        self.assertEqual(self.buffer_fp01.dlt, 22)
         self.assertEqual(buffer2_fp01.dlt, 2)
 
     def test_40_bokeh_charts(self):
@@ -1069,7 +1059,7 @@ class TestDdmrp(TestDdmrpCommon):
 
     def test_41_archive_template(self):
         # archive a product template:
-        self.template_c.toggle_active()
+        self.template_c.action_archive()
         self.assertFalse(self.template_c.active)
         self.assertFalse(self.product_c_blue.active)
         self.assertFalse(self.product_c_orange.active)
@@ -1078,17 +1068,17 @@ class TestDdmrp(TestDdmrpCommon):
 
     def test_42_archive_variant(self):
         # archive a variant
-        self.product_c_blue.toggle_active()
+        self.product_c_blue.action_archive()
         self.assertTrue(self.template_c.active)
         self.assertFalse(self.product_c_blue.active)
         self.assertTrue(self.product_c_orange.active)
         self.assertFalse(self.buffer_c_blue.active)
         self.assertTrue(self.buffer_c_orange.active)
         # toggle a buffer before toggling product:
-        self.buffer_c_blue.toggle_active()
+        self.buffer_c_blue.action_unarchive()
         self.assertTrue(self.buffer_c_blue.active)
         self.assertFalse(self.product_c_blue.active)
-        self.product_c_blue.toggle_active()
+        self.product_c_blue.action_unarchive()
         self.assertTrue(self.buffer_c_blue.active)
         self.assertTrue(self.product_c_blue.active)
 

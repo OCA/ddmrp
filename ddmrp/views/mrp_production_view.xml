@@ -23,7 +23,7 @@
         <field name="arch" type="xml">
             <field name="product_id" position="before">
                 <field name="execution_priority_level" />
-                <group name="execution_priority" string="On Hand Alert Zones">
+                <group>
                     <filter
                         name="execution_priority_level_red"
                         string="Red"
