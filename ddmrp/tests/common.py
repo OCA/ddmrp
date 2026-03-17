@@ -44,7 +44,9 @@ class TestDdmrpCommon(common.TransactionCase):
 
         # Refs
         cls.main_company = cls.env.ref("base.main_company")
-        cls.second_company = cls.env.ref("stock.res_company_1")
+        cls.second_company = cls.env["res.company"].create(
+            {"name": "Test Second Company"}
+        )
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.warehouse2 = cls.wh_model.create(
             {
@@ -58,7 +60,14 @@ class TestDdmrpCommon(common.TransactionCase):
         )
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.stock_location_sc = cls.warehouse_sc.lot_stock_id
-        cls.location_shelf1 = cls.env.ref("stock.stock_location_components")
+        cls.location_shelf1 = cls.locationModel.create(
+            {
+                "usage": "internal",
+                "name": "Test Shelf",
+                "location_id": cls.stock_location.id,
+                "company_id": cls.main_company.id,
+            }
+        )
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
         cls.inter_wh = cls.env.ref("stock.stock_location_inter_company")
@@ -282,6 +291,93 @@ class TestDdmrpCommon(common.TransactionCase):
             }
         )
 
+        # Products and BoMs for DLT tests (FP-01 -> AS-01 -> RM-01 + RM-02):
+        cls.product_fp01 = cls.productModel.create(
+            {
+                "name": "FP-01",
+                "is_storable": True,
+                "uom_id": cls.uom_unit.id,
+                "route_ids": [(6, 0, manufacture_route.ids)],
+            }
+        )
+        cls.product_as01 = cls.productModel.create(
+            {
+                "name": "AS-01",
+                "is_storable": True,
+                "uom_id": cls.uom_unit.id,
+                "route_ids": [(6, 0, manufacture_route.ids)],
+            }
+        )
+        cls.product_rm01 = cls.productModel.create(
+            {
+                "name": "RM-01",
+                "is_storable": True,
+                "uom_id": cls.uom_unit.id,
+                "route_ids": [(6, 0, buy_route.ids)],
+            }
+        )
+        cls.product_rm02 = cls.productModel.create(
+            {
+                "name": "RM-02",
+                "is_storable": True,
+                "uom_id": cls.uom_unit.id,
+                "route_ids": [(6, 0, buy_route.ids)],
+            }
+        )
+        cls.supinfo_model.create(
+            {
+                "product_tmpl_id": cls.product_rm01.product_tmpl_id.id,
+                "partner_id": vendor.id,
+                "delay": 25.0,
+                "min_qty": 50.0,
+                "price": 100.0,
+            }
+        )
+        cls.supinfo_model.create(
+            {
+                "product_tmpl_id": cls.product_rm02.product_tmpl_id.id,
+                "partner_id": vendor.id,
+                "delay": 14.0,
+                "min_qty": 10.0,
+                "price": 100.0,
+            }
+        )
+        cls.bom_fp01 = cls.bomModel.create(
+            {
+                "product_tmpl_id": cls.product_fp01.product_tmpl_id.id,
+                "product_uom_id": cls.uom_unit.id,
+                "produce_delay": 2.0,
+            }
+        )
+        cls.bomlineModel.create(
+            {
+                "product_id": cls.product_as01.id,
+                "product_qty": 1.0,
+                "bom_id": cls.bom_fp01.id,
+            }
+        )
+        cls.bom_as01 = cls.bomModel.create(
+            {
+                "product_tmpl_id": cls.product_as01.product_tmpl_id.id,
+                "product_uom_id": cls.uom_unit.id,
+                "produce_delay": 6.0,
+            }
+        )
+        cls.bom_line_as01_rm01 = cls.bomlineModel.create(
+            {
+                "product_id": cls.product_rm01.id,
+                "product_qty": 1.0,
+                "bom_id": cls.bom_as01.id,
+            }
+        )
+        cls.bomlineModel.create(
+            {
+                "product_id": cls.product_rm02.id,
+                "product_qty": 1.0,
+                "bom_id": cls.bom_as01.id,
+            }
+        )
+
         # Create buffers:
         cls.buffer_a = cls.bufferModel.create(
             {
@@ -341,6 +437,32 @@ class TestDdmrpCommon(common.TransactionCase):
                 "lead_days": 20,
             }
         )
+        cls.buffer_fp01 = cls.bufferModel.create(
+            {
+                "buffer_profile_id": cls.buffer_profile_mmm.id,
+                "product_id": cls.product_fp01.id,
+                "location_id": cls.stock_location.id,
+                "warehouse_id": cls.warehouse.id,
+                "qty_multiple": 1.0,
+                "adu_calculation_method": cls.adu_fixed.id,
+                "adu_fixed": 60.0,
+                "order_spike_horizon": 15.0,
+                "minimum_order_quantity": 5.0,
+            }
+        )
+        cls.buffer_rm01 = cls.bufferModel.create(
+            {
+                "buffer_profile_id": cls.buffer_profile_pur.id,
+                "product_id": cls.product_rm01.id,
+                "location_id": cls.stock_location.id,
+                "warehouse_id": cls.warehouse.id,
+                "qty_multiple": 1.0,
+                "adu_calculation_method": cls.adu_fixed.id,
+                "adu_fixed": 50.0,
+                "order_spike_horizon": 30.0,
+                "minimum_order_quantity": 50.0,
+            }
+        )
 
         # dates for a period of 120 days for estimates.
         cls.estimate_date_from = cls.calendar.plan_days(1, datetime.today()).date()
@@ -362,7 +484,7 @@ class TestDdmrpCommon(common.TransactionCase):
                 "login": login,
                 "password": "demo",
                 "email": "test@yourcompany.com",
-                "groups_id": [(6, 0, group_ids)],
+                "group_ids": [(6, 0, group_ids)],
             }
         )
         return user
@@ -383,7 +505,6 @@ class TestDdmrpCommon(common.TransactionCase):
                         0,
                         0,
                         {
-                            "name": "Test move",
                             "product_id": self.productA.id,
                             "date": date_move,
                             "product_uom": uom.id,
@@ -410,7 +531,6 @@ class TestDdmrpCommon(common.TransactionCase):
                         0,
                         0,
                         {
-                            "name": "Test move",
                             "product_id": self.productA.id,
                             "date": date_move,
                             "date_deadline": date_move,
@@ -438,7 +558,6 @@ class TestDdmrpCommon(common.TransactionCase):
                         0,
                         0,
                         {
-                            "name": "Test move",
                             "product_id": self.productA.id,
                             "date": date_move,
                             "product_uom": self.productA.uom_id.id,
@@ -467,7 +586,6 @@ class TestDdmrpCommon(common.TransactionCase):
                         0,
                         0,
                         {
-                            "name": "Test move",
                             "product_id": product.id,
                             "date": date_move,
                             "product_uom": product.uom_id.id,
@@ -494,7 +612,6 @@ class TestDdmrpCommon(common.TransactionCase):
                         0,
                         0,
                         {
-                            "name": "Test move",
                             "product_id": product.id,
                             "date": date_move,
                             "product_uom": product.uom_id.id,
@@ -538,7 +655,6 @@ class TestDdmrpCommon(common.TransactionCase):
     def create_inventorylossA(self, date_move, qty):
         move = self.moveModel.with_user(self.user).create(
             {
-                "name": "Test inventory move",
                 "product_id": self.productA.id,
                 "date": date_move,
                 "product_uom": self.productA.uom_id.id,
@@ -563,9 +679,9 @@ class TestDdmrpCommon(common.TransactionCase):
         values = {"warehouse_id": cls.warehouse}
         if extra_values and isinstance(extra_values, dict):
             values.update(extra_values)
-        return cls.env["procurement.group"].run(
+        return cls.env["stock.rule"].run(
             [
-                cls.env["procurement.group"].Procurement(
+                cls.env["stock.rule"].Procurement(
                     product,
                     product_qty,
                     product.uom_id,

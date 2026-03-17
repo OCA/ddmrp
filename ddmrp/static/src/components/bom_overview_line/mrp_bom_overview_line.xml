@@ -20,8 +20,11 @@
             </td>
             <td t-if="props.showOptions.is_buffered and !data.is_buffered" />
         </xpath>
-        <xpath expr="//td[@t-if='showLeadTimes']" position="after">
-            <td t-if="showLeadTimes" class="text-end">
+        <xpath
+            expr="//td[@t-if='forecastMode'][span[@t-if='hasLeadTime']]"
+            position="after"
+        >
+            <td t-if="forecastMode" class="text-end">
                 <t
                 t-esc="data.dlt"
                 t-options='{"widget": "float", "decimal_precision": "Lead Time"}'

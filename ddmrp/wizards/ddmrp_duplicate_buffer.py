@@ -1,7 +1,7 @@
 # Copyright 2023 ForgeFlow S.L. (http://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -60,9 +60,9 @@ class DdmrpDuplicateBuffer(models.TransientModel):
         buffer_ids = self.env.context["active_ids"] or []
 
         if self.type in ["product", "both"] and not self.product_id:
-            raise UserError(_("Please select a New Product."))
+            raise UserError(self.env._("Please select a New Product."))
         if self.type in ["location", "both"] and not self.location_id:
-            raise UserError(_("Please select a New Location."))
+            raise UserError(self.env._("Please select a New Location."))
 
         copy_buffers = self.env["stock.buffer"]
         for buffer in buffer_obj.browse(buffer_ids):
@@ -77,7 +77,7 @@ class DdmrpDuplicateBuffer(models.TransientModel):
         if len(copy_buffers) == 1:
             view_id = self.env.ref("ddmrp.stock_buffer_view_form").id
             return {
-                "name": _("Duplicated Buffers"),
+                "name": self.env._("Duplicated Buffers"),
                 "type": "ir.actions.act_window",
                 "res_model": "stock.buffer",
                 "res_id": copy_buffers.id,
@@ -89,7 +89,7 @@ class DdmrpDuplicateBuffer(models.TransientModel):
             action = self.env["ir.actions.act_window"]._for_xml_id(xmlid)
             action.update(
                 {
-                    "name": _("Duplicated Buffers"),
+                    "name": self.env._("Duplicated Buffers"),
                     "res_model": "stock.buffer",
                     "view_mode": "list,form",
                     "domain": [("id", "in", copy_buffers.ids)],

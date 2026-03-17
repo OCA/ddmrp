@@ -5,7 +5,6 @@
         <field name="categ_id" ref="product_category_ddmrp" />
         <field name="is_storable" eval="True" />
         <field name="uom_id" ref="uom.product_uom_unit" />
-        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field
             name="route_ids"
             eval="[(6, 0, [ref('mrp.route_warehouse0_manufacture')])]"
@@ -16,7 +15,6 @@
         <field name="categ_id" ref="product_category_ddmrp" />
         <field name="is_storable" eval="True" />
         <field name="uom_id" ref="uom.product_uom_unit" />
-        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field
             name="route_ids"
             eval="[(6, 0, [ref('mrp.route_warehouse0_manufacture')])]"
@@ -27,7 +25,6 @@
         <field name="categ_id" ref="product_category_ddmrp" />
         <field name="is_storable" eval="True" />
         <field name="uom_id" ref="uom.product_uom_unit" />
-        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field
             name="route_ids"
             eval="[(6, 0, [ref('purchase_stock.route_warehouse0_buy')])]"
@@ -38,7 +35,6 @@
         <field name="categ_id" ref="product_category_ddmrp" />
         <field name="is_storable" eval="True" />
         <field name="uom_id" ref="uom.product_uom_unit" />
-        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field
             name="route_ids"
             eval="[(6, 0, [ref('purchase_stock.route_warehouse0_buy')])]"

@@ -5,13 +5,13 @@
 import json
 import logging
 import operator as py_operator
-import threading
 from collections import defaultdict
 from datetime import datetime, timedelta
 from math import pi
 
-from odoo import _, api, exceptions, fields, models
+from odoo import api, exceptions, fields, models, modules
 from odoo.exceptions import ValidationError
+from odoo.models import Constraint
 from odoo.tools import float_compare, float_round
 from odoo.tools.misc import split_every
 
@@ -100,6 +100,10 @@ class StockBuffer(models.Model):
     product_uom = fields.Many2one(
         related="product_id.uom_id",
     )
+    valid_uom_ids = fields.Many2many(
+        comodel_name="uom.uom",
+        compute="_compute_valid_uom_ids",
+    )
     product_categ_id = fields.Many2one(
         comodel_name="product.category",
         string="Product Category",
@@ -127,7 +131,7 @@ class StockBuffer(models.Model):
         "If it is 0, the exact quantity will be used.",
     )
     group_id = fields.Many2one(
-        comodel_name="procurement.group",
+        comodel_name="stock.rule",
         string="Procurement Group",
         copy=False,
         help="Moves created through this buffer will be put in this "
@@ -147,19 +151,15 @@ class StockBuffer(models.Model):
         help="Lead time for distributed products.",
     )
 
-    _sql_constraints = [
-        (
-            "qty_multiple_check",
-            "CHECK( qty_multiple >= 0 )",
-            "Qty Multiple must be greater than or equal to zero.",
-        ),
-        (
-            "stock_buffer_uniq",
-            "unique(product_id, location_id)",
-            "The product/location combination must be unique."
-            "Remember that the buffer could be archived.",
-        ),
-    ]
+    _qty_multiple_check = Constraint(
+        "CHECK( qty_multiple >= 0 )",
+        "Qty Multiple must be greater than or equal to zero.",
+    )
+    _stock_buffer_uniq = Constraint(
+        "unique(product_id, location_id)",
+        "The product/location combination must be unique. "
+        "Remember that the buffer could be archived.",
+    )
 
     def _quantity_in_progress(self):
         """Return Quantities that are not yet in virtual stock but should
@@ -168,7 +168,7 @@ class StockBuffer(models.Model):
         for buffer in self:
             polines = buffer._get_rfq_dlt(dlt_interval=None)
             for line in polines:
-                res[buffer.id] += line.product_uom._compute_quantity(
+                res[buffer.id] += line.product_uom_id._compute_quantity(
                     line.product_qty, buffer.product_uom, round=False
                 )
         return res
@@ -237,13 +237,13 @@ class StockBuffer(models.Model):
     @api.constrains("product_id")
     def _check_product_uom(self):
         if any(
-            buffer.product_id.uom_id.category_id != buffer.product_uom.category_id
+            not buffer.product_id.uom_id._has_common_reference(buffer.product_uom)
             for buffer in self
         ):
             raise ValidationError(
-                _(
-                    "You have to select a product unit of measure that is in"
-                    "the same category than the default unit of"
+                self.env._(
+                    "You have to select a product unit of measure that is in "
+                    "the same category than the default unit of "
                     "measure of the product"
                 )
             )
@@ -252,19 +252,6 @@ class StockBuffer(models.Model):
     def onchange_warehouse_id(self):
         if self.warehouse_id:
             self.location_id = self.warehouse_id.lot_stock_id.id
-
-    @api.onchange("product_id")
-    def onchange_product_id(self):
-        if self.product_id:
-            self.product_uom = self.product_id.uom_id.id
-            return {
-                "domain": {
-                    "product_uom": [
-                        ("category_id", "=", self.product_id.uom_id.category_id.id)
-                    ]
-                }
-            }
-        return {"domain": {"product_uom": []}}
 
     def _prepare_procurement_values(
         self,
@@ -300,10 +287,10 @@ class StockBuffer(models.Model):
         # For purchased items we always consider calendar days,
         # not work days.
         if profile.item_type == "purchased":
-            dt_planned = fields.datetime.today() + timedelta(days=dlt)
+            dt_planned = fields.Datetime.today() + timedelta(days=dlt)
         else:
             if self.warehouse_id.calendar_id:
-                dt_planned = self.warehouse_id.wh_plan_days(fields.datetime.now(), dlt)
+                dt_planned = self.warehouse_id.wh_plan_days(fields.Datetime.now(), dlt)
                 if max_proc_time:
                     calendar = self.warehouse_id.calendar_id
                     # We found the day with "wh_plan_day", now determine
@@ -318,7 +305,7 @@ class StockBuffer(models.Model):
 
             else:
                 dt_planned = (
-                    fields.datetime.now()
+                    fields.Datetime.now()
                     + timedelta(days=dlt)
                     + timedelta(minutes=max_proc_time)
                 )
@@ -335,6 +322,7 @@ class StockBuffer(models.Model):
         compute="_compute_procure_uom_id",
         readonly=False,
         store=True,
+        domain="[('id', 'in', valid_uom_ids)]",
     )
 
     @api.constrains("product_id", "procure_uom_id")
@@ -342,11 +330,11 @@ class StockBuffer(models.Model):
         if any(
             buffer.product_uom
             and buffer.procure_uom_id
-            and buffer.product_uom.category_id != buffer.procure_uom_id.category_id
+            and not buffer.product_uom._has_common_reference(buffer.procure_uom_id)
             for buffer in self
         ):
             raise ValidationError(
-                _(
+                self.env._(
                     "Error: The product default Unit of Measure and the "
                     "procurement Unit of Measure must be in the same category."
                 )
@@ -562,6 +550,17 @@ class StockBuffer(models.Model):
             if procure_recommended_qty > 0.0:
                 adjusted_qty = rec._adjust_procure_qty(procure_recommended_qty)
             rec.procure_recommended_qty = adjusted_qty
+
+    @api.depends("product_id")
+    def _compute_valid_uom_ids(self):
+        for rec in self:
+            if rec.product_id:
+                root_id = int(rec.product_id.uom_id.parent_path.split("/")[0])
+                rec.valid_uom_ids = self.env["uom.uom"].search(
+                    [("id", "child_of", root_id)]
+                )
+            else:
+                rec.valid_uom_ids = self.env["uom.uom"]
 
     @api.depends("product_uom")
     def _compute_procure_uom_id(self):
@@ -891,7 +890,7 @@ class StockBuffer(models.Model):
             else:
                 rec.ddmrp_demand_chart = json.dumps(
                     {
-                        "div": _("No demand detected."),
+                        "div": rec.env._("No demand detected."),
                         "script": "",
                     }
                 )
@@ -948,7 +947,7 @@ class StockBuffer(models.Model):
             else:
                 rec.ddmrp_supply_chart = json.dumps(
                     {
-                        "div": _("No supply detected."),
+                        "div": rec.env._("No supply detected."),
                         "script": "",
                     }
                 )
@@ -982,7 +981,7 @@ class StockBuffer(models.Model):
                 dlt = rec.lead_days
             else:
                 sellers = rec._get_product_sellers()
-                dlt = sellers and fields.first(sellers).delay or rec.lead_days
+                dlt = sellers[0].delay if sellers else rec.lead_days
             rec.dlt = dlt
 
     def _get_product_sellers(self):
@@ -1038,7 +1037,9 @@ class StockBuffer(models.Model):
                 lambda r: r.partner_id == rec.main_supplier_id  # noqa: B023
                 and (not r.product_id or r.product_id == rec.product_id)  # noqa: B023
             )
-            rec.product_vendor_code = fields.first(supplier_info).product_code
+            rec.product_vendor_code = (
+                supplier_info[0].product_code if supplier_info else False
+            )
 
     buffer_profile_id = fields.Many2one(
         comodel_name="stock.buffer.profile",
@@ -1254,10 +1255,10 @@ class StockBuffer(models.Model):
     )
     ddmrp_chart = fields.Text(
         string="DDMRP Chart",
-        compute=_compute_ddmrp_chart_planning,
+        compute="_compute_ddmrp_chart_planning",
     )
     ddmrp_chart_execution = fields.Text(
-        string="DDMRP Execution Chart", compute=_compute_ddmrp_chart_execution
+        string="DDMRP Execution Chart", compute="_compute_ddmrp_chart_execution"
     )
     show_execution_chart = fields.Boolean()
     ddmrp_demand_chart = fields.Text(
@@ -1356,7 +1357,7 @@ class StockBuffer(models.Model):
 
     def _search_distributed_source_location_qty(self, operator, value):
         if operator not in OPERATORS:
-            raise exceptions.UserError(_("Unsupported operator %s") % (operator,))
+            raise exceptions.UserError(self.env._("Unsupported operator %s", operator))
         buffers = self.search([("distributed_source_location_id", "!=", False)])
         operator_func = OPERATORS[operator]
         buffers = buffers.filtered(
@@ -1386,7 +1387,7 @@ class StockBuffer(models.Model):
             views += [(form_view.id, "form")]
 
         return {
-            "name": _("Non-completed Moves"),
+            "name": self.env._("Non-completed Moves"),
             "type": "ir.actions.act_window",
             "res_model": "stock.move",
             "view_type": "form",
@@ -1424,13 +1425,15 @@ class StockBuffer(models.Model):
             ("state", "=", "done"),
             ("location_id", "in", locations.ids),
             ("location_dest_id", "not in", locations.ids),
+            "|",
             ("location_dest_id.usage", "!=", "inventory"),
+            ("scrap_id", "!=", False),
             ("product_id", "=", self.product_id.id),
             ("date", ">=", date_from),
             ("date", "<=", date_to),
         ]
         if not self.env.company.ddmrp_adu_calc_include_scrap:
-            domain.append(("location_id.scrap_location", "=", False))
+            domain.append(("scrap_id", "=", False))
         return domain
 
     def _calc_adu_past_demand(self):
@@ -1457,10 +1460,10 @@ class StockBuffer(models.Model):
                 )
         elif self.adu_calculation_method.source_past == "actual":
             domain = self._past_moves_domain(date_from, date_to, locations)
-            for group in self.env["stock.move"].read_group(
-                domain, ["product_id", "quantity_product_uom"], ["product_id"]
+            for [total] in self.env["stock.move"]._read_group(
+                domain, aggregates=["quantity_product_uom:sum"]
             ):
-                qty += group["quantity_product_uom"]
+                qty += total or 0.0
         return qty / horizon
 
     def _get_horizon_adu_future_demand(self):
@@ -1493,13 +1496,15 @@ class StockBuffer(models.Model):
             ("state", "not in", ["done", "cancel"]),
             ("location_id", "in", locations.ids),
             ("location_dest_id", "not in", locations.ids),
+            "|",
             ("location_dest_id.usage", "!=", "inventory"),
+            ("scrap_id", "!=", False),
             ("product_id", "=", self.product_id.id),
             ("date", ">=", date_from),
             ("date", "<=", date_to),
         ]
         if not self.env.company.ddmrp_adu_calc_include_scrap:
-            domain.append(("location_id.scrap_location", "=", False))
+            domain.append(("scrap_id", "=", False))
         return domain
 
     def _calc_adu_future_demand(self):
@@ -1522,10 +1527,10 @@ class StockBuffer(models.Model):
                 )
         elif self.adu_calculation_method.source_future == "actual":
             domain = self._future_moves_domain(date_from, date_to, locations)
-            for group in self.env["stock.move"].read_group(
-                domain, ["product_id", "product_qty"], ["product_id"]
+            for [total] in self.env["stock.move"]._read_group(
+                domain, aggregates=["product_uom_qty:sum"]
             ):
-                qty += group["product_qty"]
+                qty += total or 0.0
         return qty / horizon
 
     def _calc_adu_blended(self):
@@ -1671,7 +1676,7 @@ class StockBuffer(models.Model):
         return mrp_moves_by_days
 
     def _calc_qualified_demand(self, current_date=False):
-        today = current_date or fields.date.today()
+        today = current_date or fields.Date.today()
         for rec in self:
             qualified_demand = 0.0
             moves = rec._search_stock_moves_qualified_demand()
@@ -2028,7 +2033,7 @@ class StockBuffer(models.Model):
     @api.model
     def cron_ddmrp_adu(self, automatic=False, domain=None):
         """calculate ADU for each DDMRP buffer. Called by cronjob."""
-        auto_commit = not getattr(threading.current_thread(), "testing", False)
+        auto_commit = not modules.module.current_test
         _logger.info("Start cron_ddmrp_adu.")
         if not domain:
             domain = []
@@ -2050,7 +2055,7 @@ class StockBuffer(models.Model):
                     if not automatic:
                         raise
             if auto_commit:
-                self._cr.commit()  # pylint: disable=E8102
+                self.env.cr.commit()  # pylint: disable=E8102
         _logger.info("End cron_ddmrp_adu.")
         return True
 
@@ -2092,7 +2097,7 @@ class StockBuffer(models.Model):
     def cron_ddmrp(self, automatic=False, domain=None):
         """Calculate key DDMRP parameters for each buffer.
         Called by cronjob."""
-        auto_commit = not getattr(threading.current_thread(), "testing", False)
+        auto_commit = not modules.module.current_test
         _logger.info("Start cron_ddmrp.")
         if not domain:
             domain = []
@@ -2114,7 +2119,7 @@ class StockBuffer(models.Model):
                     if not automatic:
                         raise
             if auto_commit:
-                self._cr.commit()  # pylint: disable=E8102
+                self.env.cr.commit()  # pylint: disable=E8102
         _logger.info("End cron_ddmrp.")
         return True
 
@@ -2126,7 +2131,7 @@ class StockBuffer(models.Model):
         current_location = procure_location or self.location_id
         rule_values = self._values_source_location_from_route()
         while current_location:
-            rule = self.env["procurement.group"]._get_rule(
+            rule = self.env["stock.rule"]._get_rule(
                 self.product_id, current_location, rule_values
             )
             if rule.procure_method == "make_to_stock":

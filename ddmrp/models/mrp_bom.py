@@ -3,7 +3,7 @@
 
 import logging
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -135,7 +135,7 @@ class MrpBom(models.Model):
     def action_change_context_location(self):
         return {
             "type": "ir.actions.act_window",
-            "name": _("Change MRP BoM Location"),
+            "name": self.env._("Change MRP BoM Location"),
             "res_model": "mrp.bom.change.location",
             "view_mode": "form",
             "target": "new",

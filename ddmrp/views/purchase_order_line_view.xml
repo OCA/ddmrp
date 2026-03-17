@@ -47,7 +47,7 @@
                     domain="[('buffer_ids','!=',False), ('execution_priority_level','!=',False)]"
                 />
                 <separator />
-                <group name="execution_priority" string="On Hand Alert Zones">
+                <group name="execution_priority">
                     <filter
                         name="execution_priority_level_red"
                         string="Red"
