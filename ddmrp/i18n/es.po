@@ -620,6 +620,7 @@ msgstr "Horizonte Futuro"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__source_future
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method_source_future
 msgid "Future Source"
 msgstr "Fuente a Futuro"
 
@@ -780,11 +781,13 @@ msgstr "Entrante Dentro de DLT"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method__source_future
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__adu_calculation_method_source_future
 msgid "Information source used for future calculation."
 msgstr "Fuente de información para cálculo a futuro."
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method__source_past
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__adu_calculation_method_source_past
 msgid "Information source used for past calculation."
 msgstr "Fuente de información para cálculo a pasado."
 
@@ -1127,6 +1130,7 @@ msgstr "Horizonte a Pasado"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__source_past
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method_source_past
 msgid "Past Source"
 msgstr "Fuente a Pasado"
 

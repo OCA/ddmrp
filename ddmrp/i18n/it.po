@@ -625,6 +625,7 @@ msgstr "Orizzonte futuro"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__source_future
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method_source_future
 msgid "Future Source"
 msgstr "Origine futura"
 
@@ -786,11 +787,13 @@ msgstr "In arrivo all'interno di DLT"
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method__source_future
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__adu_calculation_method_source_future
 msgid "Information source used for future calculation."
 msgstr "Origine informazione utilizzata per calcoli futuri."
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method__source_past
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__adu_calculation_method_source_past
 msgid "Information source used for past calculation."
 msgstr "Origine informazione utitlizzata per calcoli del passato."
 
@@ -1134,6 +1137,7 @@ msgstr "Orizzonte passato"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__source_past
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method_source_past
 msgid "Past Source"
 msgstr "Sorgente passata"
 
