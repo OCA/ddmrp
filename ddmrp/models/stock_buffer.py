@@ -1095,6 +1095,12 @@ class StockBuffer(models.Model):
     adu_calculation_method_type = fields.Selection(
         related="adu_calculation_method.method",
     )
+    adu_calculation_method_source_past = fields.Selection(
+        related="adu_calculation_method.source_past",
+    )
+    adu_calculation_method_source_future = fields.Selection(
+        related="adu_calculation_method.source_future",
+    )
     adu_fixed = fields.Float(
         string="Fixed ADU",
         default=1.0,
