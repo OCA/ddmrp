@@ -248,6 +248,14 @@
                                     invisible="1"
                                 />
                                 <field
+                                    name="adu_calculation_method_source_past"
+                                    invisible="1"
+                                />
+                                <field
+                                    name="adu_calculation_method_source_future"
+                                    invisible="1"
+                                />
+                                <field
                                     name="adu_fixed"
                                     invisible="adu_calculation_method_type != 'fixed'"
                                 />
@@ -270,7 +278,7 @@
                                         name="action_view_past_adu_indirect_demand"
                                         icon="fa-search"
                                         type="object"
-                                        invisible="adu_calculation_method_type in ['fixed', 'future'] or used_in_bom_count == 0 or adu == 0"
+                                        invisible="adu_calculation_method_type in ['fixed', 'future'] or adu_calculation_method_source_past != 'estimates_mrp' or used_in_bom_count == 0 or adu == 0"
                                     />
                                     <button
                                         title="View ADU (Future - Direct Demand)"
@@ -284,7 +292,7 @@
                                         name="action_view_future_adu_indirect_demand"
                                         icon="fa-search"
                                         type="object"
-                                        invisible="adu_calculation_method_type in ['fixed', 'past'] or used_in_bom_count == 0 or adu == 0"
+                                        invisible="adu_calculation_method_type in ['fixed', 'past'] or adu_calculation_method_source_future != 'estimates_mrp' or used_in_bom_count == 0 or adu == 0"
                                     />
                                 </div>
                                 <field
@@ -469,7 +477,7 @@
                                         invisible="1"
                                     />
                                     <button
-                                        title="View Qualified Demand from Pickings"
+                                        title="View Qualified Demand from Moves"
                                         name="action_view_qualified_demand_moves"
                                         icon="fa-search"
                                         type="object"
