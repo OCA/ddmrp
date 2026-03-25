@@ -30,6 +30,16 @@
             </field>
         </field>
     </record>
+    <record id="view_move_search" model="ir.ui.view">
+        <field name="name">stock.move.search</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_search" />
+        <field name="arch" type="xml">
+            <field name="location_dest_id" position="after">
+                <field name="qualified_demand_buffer_ids" />
+            </field>
+        </field>
+    </record>
     <record id="view_move_consumption_pivot" model="ir.ui.view">
         <field name="name">stock.move.consumption.pivot</field>
         <field name="model">stock.move</field>

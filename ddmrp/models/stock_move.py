@@ -11,6 +11,13 @@ class StockMove(models.Model):
         comodel_name="stock.buffer",
         string="Linked Stock Buffers",
     )
+    qualified_demand_buffer_ids = fields.Many2many(
+        comodel_name="stock.buffer",
+        relation="stock_buffer_qualified_demand_stock_move_rel",
+        column1="stock_move_id",
+        column2="stock_buffer_id",
+        string="Qualified Demand For Buffers",
+    )
 
     def _prepare_procurement_values(self):
         res = super()._prepare_procurement_values()
