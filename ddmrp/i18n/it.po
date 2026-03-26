@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-02-17 09:09+0000\n"
+"PO-Revision-Date: 2026-03-26 10:13+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -74,7 +74,7 @@ msgstr "Aggiunge messaggi e attività ai buffer di materiale."
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__demand_stock_move_ids
 msgid "All demand stock moves for this buffer"
-msgstr ""
+msgstr "Tutti i movimenti di magazzino del fabbisogno per questo buffer"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
@@ -515,7 +515,7 @@ msgstr "Fabbisogno"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__demand_stock_move_ids
 msgid "Demand Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino fabbisogno"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__display_name
@@ -1355,7 +1355,7 @@ msgstr "Fabbisogno qualificato"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_move__qualified_demand_buffer_ids
 msgid "Qualified Demand For Buffers"
-msgstr ""
+msgstr "Fabbisogno qualificato per i buffer"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__qualified_demand_mrp_move_ids
@@ -1783,7 +1783,7 @@ msgstr "Regola di giacenza"
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__qualified_demand_stock_move_ids
 msgid "Stock moves considered qualified demand for this buffer"
-msgstr ""
+msgstr "Movimenti di magazzino considerati qualificati per questo buffer"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_stock_buffer_capacity_limit
