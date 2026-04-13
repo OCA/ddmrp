@@ -724,7 +724,10 @@ class StockBuffer(models.Model):
             precision_rounding=self.product_uom.rounding,
         )
         tor2_exec = self.top_of_green
-        toy2_exec = (tor2_exec + tog_exec) / 2
+        toy2_exec = float_round(
+            (tor2_exec + tog_exec) / 2,
+            precision_rounding=self.product_uom.rounding,
+        )
         hex_colors = self._get_colors_hex_map(pallete="execution")
         red = p.vbar(
             x=1,
