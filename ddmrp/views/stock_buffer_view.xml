@@ -16,7 +16,11 @@
                 <field name="product_id" />
                 <field name="product_vendor_code" optional="hide" />
                 <field name="warehouse_id" optional="show" />
-                <field name="location_id" groups="stock.group_stock_multi_locations" />
+                <field
+                    name="location_id"
+                    groups="stock.group_stock_multi_locations"
+                    optional="show"
+                />
                 <field
                     name="product_uom"
                     string="UoM"
