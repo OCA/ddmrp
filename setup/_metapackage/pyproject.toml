@@ -1,0 +1,11 @@
+[project]
+name = "odoo-addons-oca-ddmrp"
+version = "19.0.20260429.0"
+dependencies = [
+    "odoo-addon-ddmrp==19.0.*",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 19.0",
+]
