@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_buffer_view_tree" model="ir.ui.view">
+        <field name="name">stock.buffer.tree</field>
+        <field name="model">stock.buffer</field>
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="procure_recommended_qty &gt; 0">
+                <header>
+                    <button
+                        name="action_request_procurement"
+                        type="object"
+                        string="Procure"
+                    />
+                </header>
+                <field name="product_id" />
+                <field name="product_vendor_code" optional="hide" />
+                <field name="warehouse_id" optional="show" />
+                <field
+                    name="location_id"
+                    groups="stock.group_stock_multi_locations"
+                    optional="show"
+                />
+                <field
+                    name="product_uom"
+                    string="UoM"
+                    groups="uom.group_uom"
+                    optional="hide"
+                />
+                <field name="planning_priority_level" column_invisible="1" />
+                <field
+                    name="net_flow_position_percent"
+                    options='{"color_from": "planning_priority_level", "field": "ddmrp_chart"}'
+                    widget="stock_buffer_info"
+                />
+                <field
+                    name="product_location_qty_available_not_res"
+                    string="On-Hand"
+                    optional="show"
+                />
+                <field name="execution_priority_level" column_invisible="1" />
+                <field
+                    name="on_hand_percent"
+                    options='{"color_from": "execution_priority_level", "field": "ddmrp_chart_execution"}'
+                    widget="stock_buffer_info"
+                />
+                <button
+                    title="Refresh Buffer"
+                    name="refresh_buffer"
+                    icon="fa-refresh"
+                    type="object"
+                />
+                <field name="incoming_dlt_qty" string="Incoming Within DLT" />
+                <field
+                    name="incoming_outside_dlt_qty"
+                    string="Incoming Outside DLT"
+                    optional="hide"
+                />
+                <field
+                    name="incoming_total_qty"
+                    string="Total Incoming"
+                    optional="show"
+                />
+                <button
+                    title="Total Incoming"
+                    name="action_view_supply_moves"
+                    icon="fa-exchange"
+                    type="object"
+                />
+                <field name="qualified_demand" />
+                <field name="net_flow_position" />
+                <field name="procure_recommended_qty" />
+                <field name="procure_uom_id" groups="uom.group_uom" optional="show" />
+                <button
+                    title="Create Procurement"
+                    name="%(ddmrp.act_make_procurement_from_buffer)d"
+                    icon="fa-cogs"
+                    type="action"
+                />
+                <button
+                    title="Some incoming quantities are outside of the DLT Horizon and may require rescheduling. Press this button to display the involved supply orders"
+                    name="action_view_supply_moves_outside_dlt_window"
+                    icon="fa-warning"
+                    type="object"
+                    invisible="incoming_outside_dlt_qty == 0"
+                />
+                <field name="rfq_total_qty" optional="hide" />
+                <field name="rfq_outside_dlt_qty" column_invisible="1" />
+                <button
+                    title="Some RFQ quantities are outside of the DLT Horizon and may require rescheduling.
+                    Press this button to display the involved RFQs"
+                    name="action_view_supply_rfq_outside_dlt_window"
+                    icon="fa-warning"
+                    type="object"
+                    invisible="rfq_outside_dlt_qty == 0"
+                />
+                <field name="rfq_inside_dlt_qty" optional="hide" />
+                <button
+                    title="Some RFQs are inside of the DLT Horizon and waiting validation to be accounted into the NFP.
+                    Press this button to display them."
+                    name="action_view_supply_rfq_inside_dlt_window"
+                    icon="fa-warning"
+                    type="object"
+                    invisible="rfq_inside_dlt_qty == 0"
+                />
+                <button
+                    title="No stock available in source location for distributed buffer"
+                    name="action_dummy"
+                    icon="fa-warning"
+                    type="object"
+                    invisible="distributed_source_location_id == False or distributed_source_location_qty > 0"
+                />
+                <field name="distributed_source_location_id" optional="hide" />
+                <field name="distributed_source_location_qty" optional="hide" />
+                <field name="item_type" optional="show" />
+                <field name="main_supplier_id" optional="show" />
+                <field name="adu" optional="hide" />
+                <field name="dlt" optional="hide" />
+                <field name="top_of_red" optional="hide" />
+                <field name="top_of_yellow" optional="hide" />
+                <field name="top_of_green" optional="hide" />
+            </list>
+        </field>
+    </record>
+    <record id="stock_buffer_view_form" model="ir.ui.view">
+        <field name="name">stock.buffer.form</field>
+        <field name="model">stock.buffer</field>
+        <field name="arch" type="xml">
+            <form duplicate="0">
+                <header>
+                    <button
+                        string="Refresh Buffer"
+                        name="refresh_buffer"
+                        icon="fa-refresh"
+                        type="object"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            type="object"
+                            name="action_view_yearly_consumption"
+                            class="oe_stat_button"
+                            string="Consumption"
+                            icon="fa-fire"
+                        />
+                        <button
+                            type="object"
+                            name="action_view_stock_demand_estimates"
+                            class="oe_stat_button"
+                            string="Estimates"
+                            icon="fa-signal"
+                            invisible="adu_calculation_method_type != 'future'"
+                        />
+                        <button
+                            type="object"
+                            name="action_view_bom"
+                            class="oe_stat_button"
+                            string="Bill of Materials"
+                            icon="fa-flask"
+                            invisible="item_type != 'manufactured'"
+                        />
+                        <button
+                            type="object"
+                            name="action_view_mrp_productions"
+                            class="oe_stat_button"
+                            string="Manufacturing Orders"
+                            icon="fa-wrench"
+                            invisible="item_type != 'manufactured'"
+                        />
+                        <button
+                            type="object"
+                            name="action_view_purchase"
+                            class="oe_stat_button"
+                            string="Purchase Orders"
+                            icon="fa-credit-card"
+                            invisible="item_type != 'purchased'"
+                        />
+                        <button
+                            class="oe_stat_button"
+                            name="action_used_in_bom"
+                            type="object"
+                            invisible="product_type not in ['product', 'consu'] or used_in_bom_count == 0"
+                            icon="fa-level-up"
+                        >
+                            <field
+                                string="Used In"
+                                name="used_in_bom_count"
+                                widget="statinfo"
+                            />
+                        </button>
+                    </div>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        invisible="active == True"
+                    />
+                    <group>
+                        <group>
+                            <field name="active" invisible="1" />
+                            <field name="name" />
+                            <field name="product_id" />
+                            <field
+                                name="product_uom"
+                                options="{'no_open': True, 'no_create': True}"
+                                groups="uom.group_uom"
+                                widget="many2one_uom"
+                            />
+                            <field name="product_type" invisible="1" />
+                        </group>
+                        <group>
+                            <field
+                                name="location_id"
+                                groups="stock.group_stock_multi_locations"
+                            />
+                            <field
+                                name="warehouse_id"
+                                widget="selection"
+                                groups="stock.group_stock_multi_locations"
+                            />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                                options="{'no_create': True}"
+                            />
+                        </group>
+                        <group name="buffer_size_factors">
+                            <group
+                                name="main_buffer_size_factors"
+                                string="Main Buffer size factors"
+                                colspan="2"
+                            >
+                                <field name="buffer_profile_id" />
+                                <field name="replenish_method" invisible="1" />
+                                <field name="item_type" invisible="1" />
+                                <field
+                                    name="green_override"
+                                    invisible="replenish_method != 'replenish_override'"
+                                />
+                                <field
+                                    name="yellow_override"
+                                    invisible="replenish_method != 'replenish_override'"
+                                />
+                                <field
+                                    name="red_override"
+                                    invisible="replenish_method != 'replenish_override'"
+                                />
+                                <field name="adu_calculation_method" />
+                                <field
+                                    name="adu_calculation_method_type"
+                                    invisible="1"
+                                />
+                                <field
+                                    name="adu_calculation_method_source_past"
+                                    invisible="1"
+                                />
+                                <field
+                                    name="adu_calculation_method_source_future"
+                                    invisible="1"
+                                />
+                                <field
+                                    name="adu_fixed"
+                                    invisible="adu_calculation_method_type != 'fixed'"
+                                />
+                                <label for="adu" />
+                                <div name="adu" class="o_row">
+                                    <field
+                                        name="adu"
+                                        force_save="1"
+                                        class="oe_inline"
+                                    />
+                                    <button
+                                        title="View ADU (Past - Direct Demand)"
+                                        name="action_view_past_adu_direct_demand"
+                                        icon="fa-search"
+                                        type="object"
+                                        invisible="adu_calculation_method_type in ['fixed', 'future'] or adu == 0"
+                                    />
+                                    <button
+                                        title="View ADU (Past - Indirect Demand)"
+                                        name="action_view_past_adu_indirect_demand"
+                                        icon="fa-search"
+                                        type="object"
+                                        invisible="adu_calculation_method_type in ['fixed', 'future'] or adu_calculation_method_source_past != 'estimates_mrp' or used_in_bom_count == 0 or adu == 0"
+                                    />
+                                    <button
+                                        title="View ADU (Future - Direct Demand)"
+                                        name="action_view_future_adu_direct_demand"
+                                        icon="fa-search"
+                                        type="object"
+                                        invisible="adu_calculation_method_type in ['fixed', 'past'] or adu == 0"
+                                    />
+                                    <button
+                                        title="View ADU (Future - Indirect Demand)"
+                                        name="action_view_future_adu_indirect_demand"
+                                        icon="fa-search"
+                                        type="object"
+                                        invisible="adu_calculation_method_type in ['fixed', 'past'] or adu_calculation_method_source_future != 'estimates_mrp' or used_in_bom_count == 0 or adu == 0"
+                                    />
+                                </div>
+                                <field
+                                    name="lead_days"
+                                    invisible="item_type != 'distributed'"
+                                />
+                                <label for="dlt" />
+                                <div name="dlt">
+                                    <field name="dlt" class="oe_inline" /> days
+                                </div>
+                            </group>
+                            <group />
+                            <group
+                                name="secondary_buffer_size_factors"
+                                string="Secondary Buffer size factors"
+                                colspan="2"
+                            >
+                                <label for="extra_lead_time" />
+                                <div name="extra_lead_time">
+                                    <field
+                                    name="extra_lead_time"
+                                    class="oe_inline"
+                                /> days
+                                </div>
+                                <field name="minimum_order_quantity" />
+                                <label for="order_cycle" />
+                                <div name="order_cycle">
+                                    <field name="order_cycle" class="oe_inline" /> days
+                                </div>
+                            </group>
+                        </group>
+                        <group name="ddmrp_chart" string="Buffer summary">
+                            <div colspan="2">
+                                <field
+                                    name="ddmrp_chart"
+                                    widget="bokeh_chart"
+                                    nolabel="1"
+                                    invisible="show_execution_chart == True"
+                                />
+                                <field
+                                    name="ddmrp_chart_execution"
+                                    widget="bokeh_chart"
+                                    nolabel="1"
+                                    invisible="show_execution_chart == False"
+                                />
+                            </div>
+                            <div cols="3">
+                                <label
+                                    for="show_execution_chart"
+                                    string="Planning"
+                                    class="text-muted"
+                                    invisible="show_execution_chart == False"
+                                />
+                                <label
+                                    for="show_execution_chart"
+                                    string="Planning"
+                                    style="font-weight: bold;"
+                                    invisible="show_execution_chart == True"
+                                />
+                                <field
+                                    name="show_execution_chart"
+                                    widget="boolean_toggle"
+                                    nolabel="1"
+                                    options="{'autosave': False}"
+                                />
+                                <label
+                                    for="show_execution_chart"
+                                    string="Execution"
+                                    class="text-muted"
+                                    invisible="show_execution_chart == True"
+                                />
+                                <label
+                                    for="show_execution_chart"
+                                    string="Execution"
+                                    style="font-weight: bold;"
+                                    invisible="show_execution_chart == False"
+                                />
+                            </div>
+                        </group>
+                        <group name="execution_settings">
+                            <group
+                                name="qualified_demand"
+                                string="Qualified Demand"
+                                colspan="2"
+                            >
+                                <label for="order_spike_horizon" />
+                                <div name="order_spike_horizon">
+                                    <field
+                                    name="order_spike_horizon"
+                                    class="oe_inline"
+                                /> days
+                                </div>
+                                <field name="order_spike_threshold" />
+                            </group>
+                            <group
+                                name="procurement_settings"
+                                string="Procurement Settings"
+                                colspan="2"
+                            >
+                                <field name="procure_uom_id" groups="uom.group_uom" />
+                                <field name="qty_multiple" />
+                                <field name="procure_min_qty" />
+                                <field name="procure_max_qty" />
+                                <field
+                                    name="group_id"
+                                    groups="stock.group_adv_location"
+                                />
+                                <field
+                                    name="distributed_source_location_id"
+                                    invisible="item_type != 'distributed' or distributed_source_location_id == False"
+                                />
+                                <field
+                                    name="distributed_source_location_qty"
+                                    invisible="item_type != 'distributed' or distributed_source_location_id == False"
+                                />
+                                <field
+                                    name="main_supplier_id"
+                                    invisible="item_type != 'purchased'"
+                                />
+                                <field
+                                    name="product_vendor_code"
+                                    invisible="product_vendor_code == False"
+                                />
+                                <field name="auto_procure" />
+                                <field
+                                    name="auto_procure_option"
+                                    invisible="auto_procure == False"
+                                />
+                            </group>
+                        </group>
+                        <group name="buffer_summary">
+                            <group
+                                name="buffer_information"
+                                string="Buffer Information"
+                                colspan="2"
+                            >
+                                <field name="product_location_qty_available_not_res" />
+                                <label for="incoming_dlt_qty" />
+                                <div name="incoming_dlt_qty" class="o_row">
+                                    <field name="incoming_dlt_qty" class="oe_inline" />
+                                    <button
+                                        title="View Incoming Moves (Within DLT)"
+                                        name="action_view_supply_moves_inside_dlt_window"
+                                        icon="fa-search"
+                                        type="object"
+                                        invisible="incoming_dlt_qty == 0"
+                                    />
+                                </div>
+                                <label for="incoming_outside_dlt_qty" />
+                                <div name="incoming_outside_dlt_qty" class="o_row">
+                                    <field
+                                        name="incoming_outside_dlt_qty"
+                                        class="oe_inline"
+                                    />
+                                    <button
+                                        title="Some incoming qty is outside of the DLT Horizon and may require rescheduling.
+                                         Press this button to display the involved supply orders"
+                                        name="action_view_supply_moves_outside_dlt_window"
+                                        icon="fa-warning"
+                                        type="object"
+                                        invisible="incoming_outside_dlt_qty == 0"
+                                    />
+                                    <field name="rfq_outside_dlt_qty" invisible="1" />
+                                    <button
+                                        title="Some incoming RFQs are outside of the DLT Horizon and may require rescheduling.
+                                         Press this button to display the involved supply orders"
+                                        name="action_view_supply_rfq_outside_dlt_window"
+                                        icon="fa-warning"
+                                        type="object"
+                                        invisible="rfq_outside_dlt_qty == 0"
+                                    />
+                                </div>
+                                <label for="qualified_demand" />
+                                <div name="qualified_demand" class="o_row">
+                                    <field name="qualified_demand" class="oe_inline" />
+                                    <field
+                                        name="qualified_demand_stock_move_ids"
+                                        invisible="1"
+                                    />
+                                    <field
+                                        name="qualified_demand_mrp_move_ids"
+                                        invisible="1"
+                                    />
+                                    <button
+                                        title="View Qualified Demand from Moves"
+                                        name="action_view_qualified_demand_moves"
+                                        icon="fa-search"
+                                        type="object"
+                                        invisible="qualified_demand == 0 or qualified_demand_stock_move_ids == []"
+                                    />
+                                    <button
+                                        title="View Qualified Demand from MRP"
+                                        name="action_view_qualified_demand_mrp"
+                                        icon="fa-search"
+                                        type="object"
+                                        invisible="qualified_demand == 0 or qualified_demand_mrp_move_ids == []"
+                                    />
+                                    <field name="rfq_inside_dlt_qty" invisible="1" />
+                                    <button
+                                        title="Some RFQs are inside of the DLT Horizon and waiting validation to be accounted into the NFP.
+                                        Press this button to display them."
+                                        name="action_view_supply_rfq_inside_dlt_window"
+                                        icon="fa-warning"
+                                        type="object"
+                                        invisible="rfq_inside_dlt_qty == 0"
+                                    />
+                                </div>
+                                <field name="net_flow_position" />
+                                <label for="net_flow_position_percent" />
+                                <div name="net_flow_position_percent">
+                                    <field
+                                    name="net_flow_position_percent"
+                                    class="oe_inline"
+                                /> %
+                                </div>
+                            </group>
+                            <group />
+                            <group
+                                name="buffer_target"
+                                string="On Hand Target"
+                                colspan="2"
+                            >
+                                <label for="on_hand_target_position" />
+                                <div name="on_hand_target_position_uom" class="o_row">
+                                    <field name="on_hand_target_position" />
+                                </div>
+                                <label for="on_hand_target_min" />
+                                <div name="on_hand_target_range">
+                                    <field
+                                    name="on_hand_target_min"
+                                    class="oe_inline"
+                                /> -
+                                    <field
+                                    name="on_hand_target_max"
+                                    class="oe_inline"
+                                />
+                                </div>
+                            </group>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Supply &amp; Demand" name="demand_supply_bars">
+                            <group>
+                                <group string="Supply">
+                                    <div style="margin-top: 1em;">
+                                        <field
+                                            name="ddmrp_supply_chart"
+                                            style="height:400px"
+                                            widget="bokeh_chart"
+                                            nolabel="1"
+                                        />
+                                    </div>
+                                </group>
+                                <group string="Demand">
+                                    <div style="margin-top: 1em;">
+                                        <field
+                                            name="ddmrp_demand_chart"
+                                            style="height:400px"
+                                            widget="bokeh_chart"
+                                            nolabel="1"
+                                        />
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="zones_info" string="Zones Information">
+                            <group col="3">
+                                <group name="green_zone" string="Green zone">
+                                    <div class="no_print" colspan="2">
+                                        <p
+                                            class="oe_grey"
+                                        >The green zone determines the average order frequency and the order size. It is determined as the maximum of the following three factors: Minimum Order Cycle, Lead Time Factor and Minimum Order Quantity.</p>
+                                    </div>
+                                    <field name="green_zone_oc" />
+                                    <field name="green_zone_moq" />
+                                    <field name="green_zone_lt_factor" />
+                                    <label for="green_zone_qty" />
+                                    <div name="green_zone_qty_row" class="o_row">
+                                        <field name="green_zone_qty" />
+                                    </div>
+                                </group>
+                                <group name="yellow_zone" string="Yellow zone">
+                                    <div class="no_print" colspan="2">
+                                        <p
+                                            class="oe_grey"
+                                        >The yellow zone represents the stock required to cover a full lead time.</p>
+                                    </div>
+                                    <label for="yellow_zone_qty" />
+                                    <div name="yellow_zone_qty_row" class="o_row">
+                                        <field name="yellow_zone_qty" />
+                                    </div>
+                                </group>
+                                <group name="red_zone" string="Red zone">
+                                    <div class="no_print" colspan="2">
+                                        <p
+                                            class="oe_grey"
+                                        >The red zone is the embedded safety in the buffer. The larger the variability associated with the product, the larger the red zone will be. It is composed of two sub-zones: Red base and red safety.</p>
+                                    </div>
+                                    <field name="red_base_qty" />
+                                    <field name="red_safety_qty" />
+                                    <label for="red_zone_qty" />
+                                    <div name="red_zone_qty_row" class="o_row">
+                                        <field name="red_zone_qty" />
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="stock_buffer_search" model="ir.ui.view">
+        <field name="name">stock.buffer.search</field>
+        <field name="model">stock.buffer</field>
+        <field name="arch" type="xml">
+            <search>
+                <field
+                    name="name"
+                    string="Buffer"
+                    filter_domain="[
+                        '|', '|',
+                        ('name', 'ilike', self), ('product_id', 'ilike', self), ('location_id', 'ilike', self)]"
+                />
+                <field name="buffer_profile_id" />
+                <field
+                    name="warehouse_id"
+                    groups="stock.group_stock_multi_warehouses"
+                />
+                <field name="location_id" groups="stock.group_stock_multi_locations" />
+                <field name="main_supplier_id" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <field name="product_id" />
+                <field name="product_categ_id" />
+                <field name="dlt" />
+                <field name="order_cycle" />
+                <field name="minimum_order_quantity" />
+                <field name="planning_priority_level" />
+                <field name="execution_priority_level" />
+                <group name="planning_priority">
+                    <filter
+                        name="planning_priority_level_red"
+                        string="Red"
+                        domain="[('planning_priority_level', '=', '1_red')]"
+                    />
+                    <filter
+                        name="planning_priority_level_yellow"
+                        string="Yellow"
+                        domain="[('planning_priority_level', '=', '2_yellow')]"
+                    />
+                    <filter
+                        name="planning_priority_level_green"
+                        string="Green"
+                        domain="[('planning_priority_level', '=', '3_green')]"
+                    />
+                </group>
+                <separator />
+                <group name="execution_priority">
+                    <filter
+                        name="execution_priority_level_red"
+                        string="Red"
+                        domain="[('execution_priority_level', '=', '1_red')]"
+                    />
+                    <filter
+                        name="execution_priority_level_yellow"
+                        string="Yellow"
+                        domain="[('execution_priority_level', '=', '2_yellow')]"
+                    />
+                    <filter
+                        name="execution_priority_level_green"
+                        string="Green"
+                        domain="[('execution_priority_level', '=', '3_green')]"
+                    />
+                </group>
+                <separator />
+                <group name="item_type">
+                    <filter
+                        name="item_type_manufactured"
+                        string="Manufactured"
+                        domain="[('item_type', '=', 'manufactured')]"
+                    />
+                    <filter
+                        name="item_type_purchased"
+                        string="Purchased"
+                        domain="[('item_type', '=', 'purchased')]"
+                    />
+                    <filter
+                        name="item_type_distributed"
+                        string="Distributed"
+                        domain="[('item_type', '=', 'distributed')]"
+                    />
+                </group>
+                <separator />
+                <group name="procure_recommendation">
+                    <filter
+                        name="procure_recommended"
+                        string="Procurement recommended"
+                        domain="[('procure_recommended_qty', '>', 0.0)]"
+                    />
+                </group>
+                <separator />
+                <filter
+                    name="has_long_term_supply"
+                    string="Has Long Term Supply"
+                    domain="['|', ('incoming_outside_dlt_qty', '>', 0), ('rfq_outside_dlt_qty', '>', 0)]"
+                />
+                <separator />
+                <filter
+                    name="has_distributed_source_location_qty"
+                    string="Has Stock In Source Location"
+                    domain="[('distributed_source_location_qty', '>', 0)]"
+                />
+                <separator />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active','=',False)]"
+                />
+                <group>
+                    <filter
+                        string="Warehouse"
+                        name="warehouse"
+                        domain="[]"
+                        context="{'group_by':'warehouse_id'}"
+                        groups="stock.group_stock_multi_warehouses"
+                    />
+                    <filter
+                        string="Location"
+                        name="location"
+                        domain="[]"
+                        context="{'group_by':'location_id'}"
+                        groups="stock.group_stock_multi_locations"
+                    />
+                    <filter
+                        string="Main supplier"
+                        name="main_supplier_group_filter"
+                        domain="[]"
+                        context="{'group_by':'main_supplier_id'}"
+                    />
+                    <filter
+                        string="Product Category"
+                        name="product_categ_id"
+                        domain="[]"
+                        context="{'group_by': 'product_categ_id'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="action_stock_buffer" model="ir.actions.act_window">
+        <field name="name">Stock Buffers</field>
+        <field name="res_model">stock.buffer</field>
+        <field name="view_mode">list,form</field>
+        <field name="path">buffers</field>
+        <field name="context">{'location_id': False}</field>
+    </record>
+    <menuitem
+        id="menu_stock_buffer"
+        parent="stock.menu_stock_inventory_control"
+        action="action_stock_buffer"
+    />
+</odoo>

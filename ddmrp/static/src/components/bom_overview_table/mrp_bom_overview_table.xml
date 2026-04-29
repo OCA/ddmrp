@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="ddmrp.BomOverviewTable"
+        t-inherit="mrp.BomOverviewTable"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//th[@name='th_mrp_bom_h']" position="before">
+            <th t-if="showBuffered" class="text-center">Buffered</th>
+        </xpath>
+        <xpath
+            expr="//thead/tr/th[@t-if='forecastMode'][@title='Resupply lead time.']"
+            position="after"
+        >
+            <th
+                t-if="forecastMode"
+                class="text-end"
+                title="Decoupled Lead Time of the BoM."
+            >DLT</th>
+        </xpath>
+
+        <xpath expr="//td[@name='td_mrp_bom_f']" position="before">
+            <td t-if="showBuffered" />
+        </xpath>
+        <xpath expr="//tfoot/tr/td[strong]" position="before">
+            <td t-if="forecastMode" />
+        </xpath>
+
+        <xpath expr="//td[@name='td_mrp_bom_b']" position="before">
+            <td t-if="showBuffered" />
+        </xpath>
+        <xpath expr="//tfoot/t/tr/td[strong]" position="before">
+            <td t-if="forecastMode" />
+        </xpath>
+    </t>
+
+</templates>

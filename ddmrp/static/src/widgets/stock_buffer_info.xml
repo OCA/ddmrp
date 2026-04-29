@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<template id="template" xml:space="preserve">
+
+    <!-- TODO: rename this to QtyAtDate in master version -->
+    <t
+        t-name="ddmrp.StockBufferInfoWidget"
+        t-inherit="web.FloatField"
+        t-inherit-mode="primary"
+    >
+        <xpath expr="//span" position="attributes">
+            <attribute name="t-on-click">showPopup</attribute>
+            <attribute name="class">circle</attribute>
+            <attribute name="t-att-class">classFromDecoration</attribute>
+        </xpath>
+    </t>
+    <t t-name="ddmrp.StockBufferPopover">
+        <div class="stock-buffer-popover">
+            <t t-out="json_value.div" />
+            <script type="text/javascript" t-out="json_value.script" />
+        </div>
+    </t>
+
+</template>

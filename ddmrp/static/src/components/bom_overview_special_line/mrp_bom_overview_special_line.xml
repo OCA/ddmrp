@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="ddmrp.BomOverviewSpecialLine"
+        t-inherit="mrp.BomOverviewSpecialLine"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//td[@name='td_mrp_bom']" position="before">
+            <td t-if="showBuffered" />
+        </xpath>
+        <xpath expr="//td[@name='bom_cost']" position="before">
+            <td t-if="forecastMode" />
+        </xpath>
+    </t>
+
+</templates>

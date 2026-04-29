@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2017-20 ForgeFlow S.L. (http://www.forgeflow.com)
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="mrp_bom_form_view" model="ir.ui.view">
+        <field name="name">mrp.bom.form - ddmrp</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view" />
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="is_buffered" />
+                <field name="buffer_id" />
+                <label for="dlt" />
+                <div class="o_row" style="width: 60% !important">
+                    <field name="dlt" />
+                    <field
+                        name="context_location_id"
+                        options="{'no_open': True}"
+                        style="text-align: right;"
+                    />
+                    <button
+                        title="Change Location"
+                        name="action_change_context_location"
+                        icon="fa-exchange"
+                        type="object"
+                    />
+                </div>
+            </field>
+            <xpath
+                expr="//field[@name='bom_line_ids']/list/field[@name='product_uom_id']"
+                position="after"
+            >
+                <field name="is_buffered" />
+                <field name="buffer_id" />
+                <field name="dlt" />
+                <field name="context_location_id" />
+            </xpath>
+        </field>
+    </record>
+    <record id="mrp_bom_line_view_form" model="ir.ui.view">
+        <field name="name">mrp.bom.line.form</field>
+        <field name="model">mrp.bom.line</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_line_view_form" />
+        <field name="arch" type="xml">
+            <field name="parent_product_tmpl_id" position="after">
+                <field name="buffer_id" />
+            </field>
+        </field>
+    </record>
+</odoo>
