@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid ""
 "* New: The stock move is created but not confirmed.\n"
 "* Waiting Another Move: A linked stock move should be done before this one.\n"
-"* Waiting Availability: The stock move is confirmed but the product can't be reserved.\n"
+"* Waiting: The stock move is confirmed but the product can't be reserved.\n"
 "* Available: The product of the stock move is reserved.\n"
 "* Done: The product has been transferred and the transfer has been confirmed."
 msgstr ""
@@ -45,11 +45,6 @@ msgid "ADU calculation methods"
 msgstr ""
 
 #. module: ddmrp
-#: model:product.template,name:ddmrp.product_product_as01_product_template
-msgid "AS-01"
-msgstr ""
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__active
 msgid "Active"
 msgstr ""
@@ -57,6 +52,11 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
 msgid "Adds chatter and activities to stock buffers."
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__demand_stock_move_ids
+msgid "All demand stock moves for this buffer"
 msgstr ""
 
 #. module: ddmrp
@@ -469,16 +469,38 @@ msgid "Demand"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__demand_stock_move_ids
+msgid "Demand Stock Move"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_multi_level__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_production__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_product_product__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_product_template__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_report_mrp_report_bom_structure__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_res_company__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__display_name
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_rule__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -543,11 +565,6 @@ msgid "Extra lead time (for Sizing)"
 msgstr ""
 
 #. module: ddmrp
-#: model:product.template,name:ddmrp.product_product_fp01_product_template
-msgid "FP-01"
-msgstr ""
-
-#. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_warehouse__nfp_incoming_safety_factor
 msgid ""
 "Factor used to compute the number of days to look into the future for "
@@ -579,6 +596,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__source_future
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method_source_future
 msgid "Future Source"
 msgstr ""
 
@@ -663,11 +681,6 @@ msgstr ""
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
-msgid "Group By"
-msgstr ""
-
-#. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
 msgid "Has Long Term Supply"
 msgstr ""
 
@@ -691,12 +704,29 @@ msgstr ""
 #: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__id
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__id
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__id
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location__id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_multi_level__id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_production__id
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__id
+#: model:ir.model.fields,field_description:ddmrp.field_product_product__id
+#: model:ir.model.fields,field_description:ddmrp.field_product_template__id
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order__id
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:ddmrp.field_report_mrp_report_bom_structure__id
+#: model:ir.model.fields,field_description:ddmrp.field_res_company__id
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__id
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move_line__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_picking__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_rule__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint__id
 msgid "ID"
 msgstr ""
 
@@ -741,11 +771,13 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method__source_future
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__adu_calculation_method_source_future
 msgid "Information source used for future calculation."
 msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method__source_past
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__adu_calculation_method_source_past
 msgid "Information source used for past calculation."
 msgstr ""
 
@@ -1013,13 +1045,6 @@ msgid "Non-completed Moves"
 msgstr ""
 
 #. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_line_search
-#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
-#: model_terms:ir.ui.view,arch_db:ddmrp.view_mrp_production_filter
-msgid "On Hand Alert Zones"
-msgstr ""
-
-#. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "On Hand Target"
 msgstr ""
@@ -1084,6 +1109,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__source_past
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method_source_past
 msgid "Past Source"
 msgstr ""
 
@@ -1106,11 +1132,6 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__planning_priority_level
 msgid "Planning Priority Level"
-msgstr ""
-
-#. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
-msgid "Planning Priority Zones"
 msgstr ""
 
 #. module: ddmrp
@@ -1160,12 +1181,6 @@ msgid "Procure Recommendation"
 msgstr ""
 
 #. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
-msgid "Procurement"
-msgstr ""
-
-#. module: ddmrp
-#: model:ir.model,name:ddmrp.model_procurement_group
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__group_id
 msgid "Procurement Group"
 msgstr ""
@@ -1282,6 +1297,11 @@ msgid "Qualified Demand"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move__qualified_demand_buffer_ids
+msgid "Qualified Demand For Buffers"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__qualified_demand_mrp_move_ids
 msgid "Qualified Demand Mrp Move"
 msgstr ""
@@ -1330,16 +1350,6 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_total_qty
 msgid "RFQ Total Qty"
-msgstr ""
-
-#. module: ddmrp
-#: model:product.template,name:ddmrp.product_product_rm01_product_template
-msgid "RM-01"
-msgstr ""
-
-#. module: ddmrp
-#: model:product.template,name:ddmrp.product_product_rm02_product_template
-msgid "RM-02"
 msgstr ""
 
 #. module: ddmrp
@@ -1660,6 +1670,11 @@ msgid "Stock Rule"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__qualified_demand_stock_move_ids
+msgid "Stock moves considered qualified demand for this buffer"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_stock_buffer_capacity_limit
 msgid "Storage Capacity Limits"
 msgstr ""
@@ -1715,7 +1730,7 @@ msgstr ""
 #. module: ddmrp
 #: model:ir.model.constraint,message:ddmrp.constraint_stock_buffer_stock_buffer_uniq
 msgid ""
-"The product/location combination must be unique.Remember that the buffer "
+"The product/location combination must be unique. Remember that the buffer "
 "could be archived."
 msgstr ""
 
@@ -1774,13 +1789,12 @@ msgid "True when the product has an DDMRP buffer associated."
 msgstr ""
 
 #. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
-msgid "Type"
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_uom
+msgid "Unit"
 msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__uom_id
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_uom
 msgid "Unit of Measure"
 msgstr ""
 
@@ -1819,6 +1833,11 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "Used In"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__valid_uom_ids
+msgid "Valid Uom"
 msgstr ""
 
 #. module: ddmrp
@@ -1875,7 +1894,7 @@ msgstr ""
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
-msgid "View Qualified Demand from Pickings"
+msgid "View Qualified Demand from Moves"
 msgstr ""
 
 #. module: ddmrp
@@ -1978,8 +1997,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/ddmrp/models/stock_buffer.py:0
 msgid ""
-"You have to select a product unit of measure that is inthe same category "
-"than the default unit ofmeasure of the product"
+"You have to select a product unit of measure that is in the same category "
+"than the default unit of measure of the product"
 msgstr ""
 
 #. module: ddmrp
@@ -1993,12 +2012,36 @@ msgid "apply adjustments to dynamically alter buffers"
 msgstr ""
 
 #. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:0
+msgid "blended"
+msgstr ""
+
+#. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_form
 msgid "days"
 msgstr ""
 
 #. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:0
+msgid "future"
+msgstr ""
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
+msgid "id"
+msgstr ""
+
+#. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
+msgstr ""
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:0
+msgid "past"
 msgstr ""
