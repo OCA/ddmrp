@@ -21,13 +21,13 @@ DDMRP History
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fddmrp-lightgray.png?logo=github
-    :target: https://github.com/OCA/ddmrp/tree/18.0/ddmrp_history
+    :target: https://github.com/OCA/ddmrp/tree/19.0/ddmrp_history
     :alt: OCA/ddmrp
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/ddmrp-18-0/ddmrp-18-0-ddmrp_history
+    :target: https://translation.odoo-community.org/projects/ddmrp-19-0/ddmrp-19-0-ddmrp_history
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/ddmrp&target_branch=18.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/ddmrp&target_branch=19.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -59,21 +59,8 @@ form view, either by a planning or a execution perspective.
 Changelog
 =========
 
-13.0.1.0.0 (2020-06-16)
------------------------
-
-- Migration to v13.
-
-11.0.1.0.1 (2019-02-07)
------------------------
-
-- Make history charts responsive and remove NFP from execution chart.
-- Use user's language to format dates in the charts.
-
-11.0.1.0.0 (2018-08-01)
------------------------
-
-- Start of the history
+Follow the history of changes in `GitHub Pull
+Requests <https://github.com/OCA/ddmrp/pulls?q=is%3Apr+ddmrp_history+is%3Aclosed>`__.
 
 Bug Tracker
 ===========
@@ -81,7 +68,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/ddmrp/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/ddmrp/issues/new?body=module:%20ddmrp_history%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/ddmrp/issues/new?body=module:%20ddmrp_history%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -96,10 +83,10 @@ Authors
 Contributors
 ------------
 
-- Lois Rilo <lois.rilo@forgeflow.com>
-- Jordi Ballester <jordi.ballester@forgeflow.com>
-- Akim Juillerat <akim.juillerat@camptocamp.com>
-- Christopher Ormaza <chris.ormaza@forgeflow.com>
+-  Lois Rilo <lois.rilo@forgeflow.com>
+-  Jordi Ballester <jordi.ballester@forgeflow.com>
+-  Akim Juillerat <akim.juillerat@camptocamp.com>
+-  Christopher Ormaza <chris.ormaza@forgeflow.com>
 
 Other credits
 -------------
@@ -107,7 +94,7 @@ Other credits
 The initial development of this module has been financially supported
 by:
 
-- Aleph Objects, Inc.
+-  Aleph Objects, Inc.
 
 Maintainers
 -----------
@@ -133,6 +120,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-JordiBForgeFlow| |maintainer-LoisRForgeFlow| 
 
-This module is part of the `OCA/ddmrp <https://github.com/OCA/ddmrp/tree/18.0/ddmrp_history>`_ project on GitHub.
+This module is part of the `OCA/ddmrp <https://github.com/OCA/ddmrp/tree/19.0/ddmrp_history>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
