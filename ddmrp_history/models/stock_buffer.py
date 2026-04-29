@@ -5,7 +5,7 @@ import json
 import logging
 from math import pi
 
-from odoo import _, fields, models
+from odoo import fields, models
 
 _logger = logging.getLogger(__name__)
 try:
@@ -74,7 +74,7 @@ class StockBuffer(models.Model):
             if len(history) < 2:
                 rec.planning_history_chart = json.dumps(
                     {
-                        "div": _("Not enough data available."),
+                        "div": self.env._("Not enough data available."),
                         "script": "",
                     }
                 )
@@ -202,7 +202,7 @@ class StockBuffer(models.Model):
             if len(history) < 2:
                 rec.execution_history_chart = json.dumps(
                     {
-                        "div": _("Not enough data available."),
+                        "div": self.env._("Not enough data available."),
                         "script": "",
                     }
                 )
