@@ -67,12 +67,17 @@ class ReportDdmrpPartsPlanFlowIndex(models.Model):
         """
         return select_str
 
+    @api.model
+    def _sub_where(self):
+        return "WHERE active IS TRUE"
+
     @property
     def _table_query(self):
         return f"""
                 WITH a AS
                     (SELECT {self._sub_select()}
-                     FROM stock_buffer)
+                     FROM stock_buffer
+                     {self._sub_where()})
                 SELECT
                     {self._select()}
                 FROM a

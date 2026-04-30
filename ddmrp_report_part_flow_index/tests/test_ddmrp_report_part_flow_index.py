@@ -55,3 +55,12 @@ class TestDDMRPReportPartFlowIndex(TransactionCase):
             self.flow_index_group_2,
             "Flow index group was not updated correctly!",
         )
+
+    def test_02_archived_buffers_excluded(self):
+        """Archived buffers must not appear in the report"""
+        self.buffer.cron_actions()
+        report = self.env["report.ddmrp.part.plan.flow.index"]
+        self.assertTrue(report.search([("buffer_id", "=", self.buffer.id)]))
+        self.buffer.toggle_active()
+        self.env.invalidate_all()
+        self.assertFalse(report.search([("buffer_id", "=", self.buffer.id)]))
