@@ -617,6 +617,11 @@ class StockBuffer(models.Model):
 
     def _compute_ddmrp_chart_execution(self):
         for rec in self:
+            # On new records in v19, onchange triggers this before product_id is set,
+            # leaving product_uom empty (rounding=0.0).
+            if not rec.product_id:
+                rec.ddmrp_chart_execution = json.dumps({"div": "", "script": ""})
+                continue
             div, script = rec.get_ddmrp_chart_execution()
             json_data = json.dumps(
                 {
