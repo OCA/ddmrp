@@ -2,10 +2,12 @@
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
+import json
 from datetime import datetime, time, timedelta
 
 from odoo import fields
 from odoo.exceptions import ValidationError
+from odoo.tests import Form
 
 from .common import TestDdmrpCommon
 
@@ -1518,3 +1520,16 @@ class TestDdmrp(TestDdmrpCommon):
             action["context"].get("search_default_qualified_demand_buffer_ids"),
             self.buffer_a.name,
         )
+
+    def test_50_chart_execution_no_product_no_crash(self):
+        """Opening a new buffer form without product_id should not crash.
+
+        In v19, onchange fetches all view fields before product_id is set,
+        leaving product_uom empty (rounding=0.0).
+        """
+        # Before the fix this raised AssertionError: precision_rounding must be positive
+        form = Form(self.env["stock.buffer"], view="ddmrp.stock_buffer_view_form")
+        # Chart should be empty while no product is set
+        data = json.loads(form.ddmrp_chart_execution)
+        self.assertEqual(data["div"], "")
+        self.assertEqual(data["script"], "")
