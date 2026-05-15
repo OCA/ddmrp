@@ -29,7 +29,7 @@
         <field name="model">report.ddmrp.part.plan.flow.index</field>
         <field name="arch" type="xml">
             <tree name="Parts Plan Flow Index">
-                <field name="buffer_id" />
+                <field name="buffer_id" widget="many2one" />
                 <field name="product_id" />
                 <field name="location_id" />
                 <field name="green_zone_qty" />
