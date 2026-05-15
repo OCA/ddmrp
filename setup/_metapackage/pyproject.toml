@@ -1,8 +1,9 @@
 [project]
 name = "odoo-addons-oca-ddmrp"
-version = "19.0.20260429.0"
+version = "19.0.20260515.0"
 dependencies = [
     "odoo-addon-ddmrp==19.0.*",
+    "odoo-addon-ddmrp_history==19.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
