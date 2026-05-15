@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2017-19 ForgeFlow S.L. (https://www.forgeflow.com)
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="stock_buffer_view_form" model="ir.ui.view">
+        <field name="name">stock.buffer.form - ddmrp_history</field>
+        <field name="model">stock.buffer</field>
+        <field name="inherit_id" ref="ddmrp.stock_buffer_view_form" />
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="planning_history" string="Planning Chart">
+                    <div style="margin-top: 1em;">
+                        <field
+                            name="planning_history_chart"
+                            style="width:100%"
+                            widget="bokeh_chart"
+                            nolabel="1"
+                        />
+                    </div>
+                </page>
+                <page name="execution_history" string="Execution Chart">
+                    <div style="margin-top: 1em;">
+                        <field
+                            name="execution_history_chart"
+                            style="width:100%"
+                            widget="bokeh_chart"
+                            nolabel="1"
+                        />
+                    </div>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

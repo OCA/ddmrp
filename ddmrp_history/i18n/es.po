@@ -1,0 +1,169 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ddmrp_history
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-03-06 11:48+0000\n"
+"PO-Revision-Date: 2024-04-29 11:36+0000\n"
+"Last-Translator: Lois Rilo <lois.rilo@forgeflow.com>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__adu
+msgid "ADU"
+msgstr "CPD"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__adu
+msgid "Average Daily Usage"
+msgstr "Consumo Promedio Diario"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__buffer_id
+msgid "Buffer"
+msgstr "Búfer"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__company_id
+msgid "Company"
+msgstr ""
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: ddmrp_history
+#: model:ir.actions.act_window,name:ddmrp_history.action_ddmrp_history
+#: model:ir.ui.menu,name:ddmrp_history.menu_ddmrp_history
+msgid "DDMRP Buffer History"
+msgstr "Historia de Amortiguador DDMRP"
+
+#. module: ddmrp_history
+#: model:ir.model,name:ddmrp_history.model_ddmrp_history
+msgid "DDMRP History"
+msgstr "Historia DDMRP"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: ddmrp_history
+#: model_terms:ir.ui.view,arch_db:ddmrp_history.stock_buffer_view_form
+msgid "Execution Chart"
+msgstr "Gráfico de Ejecución"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_stock_buffer__execution_history_chart
+msgid "Execution Historical Chart"
+msgstr "Gráfico de Ejecución de Historia"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_stock_buffer__planning_history_chart
+msgid "Historical Chart"
+msgstr "Grafico Histórico"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__id
+msgid "ID"
+msgstr "ID"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__write_uid
+msgid "Last Updated by"
+msgstr "Última Actualización por"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__write_date
+msgid "Last Updated on"
+msgstr "Última Actualización en"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__net_flow_position
+msgid "NFP"
+msgstr "PFN"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__net_flow_position
+msgid "Net flow position"
+msgstr "Posición de flujo neto"
+
+#. module: ddmrp_history
+#. odoo-python
+#: code:addons/ddmrp_history/models/stock_buffer.py:0
+#, python-format
+msgid "Not enough data available."
+msgstr "No hay suficientes datos disponibles."
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__on_hand_position
+msgid "OHP"
+msgstr "PEM"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__on_hand_position
+msgid "On-Hand Position"
+msgstr "Posición En Mano"
+
+#. module: ddmrp_history
+#: model_terms:ir.ui.view,arch_db:ddmrp_history.stock_buffer_view_form
+msgid "Planning Chart"
+msgstr "Gráfico de Planificación"
+
+#. module: ddmrp_history
+#: model:ir.model,name:ddmrp_history.model_stock_buffer
+msgid "Stock Buffer"
+msgstr "Amortiguador de Inventario"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__top_of_green
+msgid "TOG"
+msgstr "TDV"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__top_of_red
+msgid "TOR"
+msgstr "TDR"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,field_description:ddmrp_history.field_ddmrp_history__top_of_yellow
+msgid "TOY"
+msgstr "TDA"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__top_of_green
+msgid "Top of Green"
+msgstr "Tope de Verde"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__top_of_red
+msgid "Top of Red"
+msgstr "Tope de Rojo"
+
+#. module: ddmrp_history
+#: model:ir.model.fields,help:ddmrp_history.field_ddmrp_history__top_of_yellow
+msgid "Top of Yellow"
+msgstr "Tope de Amarillo"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última Modificación en"

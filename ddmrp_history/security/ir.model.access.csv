@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+ddmrp_history_user,ddmrp.history.user,model_ddmrp_history,ddmrp.group_stock_buffer_maintainer,1,0,0,0
+ddmrp_history_manager,ddmrp.history.manager,model_ddmrp_history,ddmrp.group_ddmrp_manager,1,0,0,1
