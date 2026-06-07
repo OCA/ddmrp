@@ -5,6 +5,8 @@
 import json
 from datetime import datetime, time, timedelta
 
+from freezegun import freeze_time
+
 from odoo import fields
 from odoo.exceptions import ValidationError
 from odoo.tests import Form
@@ -95,6 +97,7 @@ class TestDdmrp(TestDdmrpCommon):
         to_assert_value = (20 + 20 + 10) / 6
         self.assertAlmostEqual(self.buffer_a.adu, to_assert_value, places=2)
 
+    @freeze_time("2020-12-10 10:00:00")
     def test_04_adu_calculation_window_past_calendar(self):
         """Test that the window considered to calculate the ADU is correct.
         (With working days set)."""
