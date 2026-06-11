@@ -1550,7 +1550,7 @@ class StockBuffer(models.Model):
         elif self.adu_calculation_method.source_future == "actual":
             domain = self._future_moves_domain(date_from, date_to, locations)
             for [total] in self.env["stock.move"]._read_group(
-                domain, aggregates=["product_uom_qty:sum"]
+                domain, aggregates=["product_qty:sum"]
             ):
                 qty += total or 0.0
         return qty / horizon
