@@ -1533,3 +1533,26 @@ class TestDdmrp(TestDdmrpCommon):
         data = json.loads(form.ddmrp_chart_execution)
         self.assertEqual(data["div"], "")
         self.assertEqual(data["script"], "")
+
+    def test_51_adu_calculation_future_actual_move_uom(self):
+        """Future actual demand is aggregated in the product UoM.
+
+        A move expressed in a secondary UoM (Dozen) must contribute its
+        product-UoM quantity to the ADU, not its move-UoM quantity.
+        """
+        method = self.aducalcmethodModel.create(
+            {
+                "name": "Future actual demand (120 days)",
+                "method": "future",
+                "source_future": "actual",
+                "horizon_future": 120,
+                "company_id": self.main_company.id,
+            }
+        )
+        self.buffer_a.adu_calculation_method = method.id
+        days = 30
+        date_move = self.calendar.plan_days(+1 * days + 1, datetime.today())
+        self.create_pickingoutA(date_move, 5, uom=self.dozen_unit)
+        self.bufferModel.cron_ddmrp_adu()
+        # 5 Dozen = 60 Units over the 120-day horizon
+        self.assertEqual(self.buffer_a.adu, 60 / 120)
