@@ -1556,3 +1556,13 @@ class TestDdmrp(TestDdmrpCommon):
         self.bufferModel.cron_ddmrp_adu()
         # 5 Dozen = 60 Units over the 120-day horizon
         self.assertEqual(self.buffer_a.adu, 60 / 120)
+
+    def test_55_purchase_line_form_no_newid_domain_warning(self):
+        """Editing a PO line in the UI must not search with NewId records."""
+        vendor = self.partner_model.create({"name": "Form Vendor"})
+        po_form = Form(self.env["purchase.order"])
+        po_form.partner_id = vendor
+        with self.assertNoLogs("odoo.domains", level="WARNING"):
+            with po_form.order_line.new() as line:
+                line.product_id = self.product_purchased
+        po_form.save()
