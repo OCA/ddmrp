@@ -20,7 +20,7 @@ class Buffer(models.Model):
     )
 
     def _generate_ddmrp_warnings(self):
-        definitions = self.env["ddmrp.warning.definition"].search([])
+        definitions = self.env["ddmrp.warning.definition"].search([])  # pylint: disable=no-search-all
         item_model = self.env["ddmrp.warning.item"]
         for rec in self:
             for d in definitions:
@@ -46,7 +46,7 @@ class Buffer(models.Model):
     @api.model
     def cron_generate_ddmrp_warnings(self, automatic=False):
         auto_commit = not getattr(threading.current_thread(), "testing", False)
-        buffer_ids = self.search([]).ids
+        buffer_ids = self.search([]).ids  # pylint: disable=no-search-all
         i = 0
         j = len(buffer_ids)
         for buffer_chunk_ids in split_every(self.CRON_DDMRP_CHUNKS, buffer_ids):
@@ -66,7 +66,7 @@ class Buffer(models.Model):
                     if not automatic:
                         raise
             if auto_commit:
-                self._cr.commit()  # pylint: disable=E8102
+                self.env.cr.commit()  # pylint: disable=E8102
         return True
 
     def write(self, vals):
