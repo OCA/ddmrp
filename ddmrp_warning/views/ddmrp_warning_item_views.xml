@@ -58,26 +58,24 @@
                 <field name="location_id" groups="stock.group_stock_multi_locations" />
                 <field name="severity" />
                 <separator />
-                <group expand="0" string="Group By">
-                    <filter
-                        string="Buffer"
-                        name="groupby_buffer"
-                        domain="[]"
-                        context="{'group_by':'buffer_id'}"
-                    />
-                    <filter
-                        string="Severity"
-                        name="groupby_severity"
-                        domain="[]"
-                        context="{'group_by':'severity'}"
-                    />
-                    <filter
-                        string="Definition"
-                        name="groupby_warning_definition_id"
-                        domain="[]"
-                        context="{'group_by':'warning_definition_id'}"
-                    />
-                </group>
+                <filter
+                    string="Buffer"
+                    name="groupby_buffer"
+                    domain="[]"
+                    context="{'group_by':'buffer_id'}"
+                />
+                <filter
+                    string="Severity"
+                    name="groupby_severity"
+                    domain="[]"
+                    context="{'group_by':'severity'}"
+                />
+                <filter
+                    string="Definition"
+                    name="groupby_warning_definition_id"
+                    domain="[]"
+                    context="{'group_by':'warning_definition_id'}"
+                />
             </search>
         </field>
     </record>

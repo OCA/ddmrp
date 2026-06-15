@@ -1,9 +1,9 @@
 # Copyright 2021 ForgeFlow S.L. (https://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from odoo import _, fields, models, tools
+from odoo import fields, models, tools
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -41,9 +41,7 @@ class DdmrpWarningDefinition(models.Model):
     def _eval_warning_domain(self, buffer, domain):
         buffer_domain = [("id", "=", buffer.id)]
         return bool(
-            self.env["stock.buffer"].search_count(
-                expression.AND([buffer_domain, domain])
-            )
+            self.env["stock.buffer"].search_count(Domain.AND([buffer_domain, domain]))
         )
 
     def _is_warning_applicable(self, buffer):
@@ -57,7 +55,7 @@ class DdmrpWarningDefinition(models.Model):
         try:
             res = safe_eval(
                 self.python_code,
-                globals_dict={
+                {
                     "buffer": buffer,
                     "time": tools.safe_eval.time,
                     "datetime": tools.safe_eval.datetime,
@@ -66,8 +64,11 @@ class DdmrpWarningDefinition(models.Model):
             )
         except Exception as error:
             raise UserError(
-                _("Error evaluating %(name)s.\n %(error)s")
-                % ({"name": self._name, "error": error})
+                self.env._(
+                    "Error evaluating %(name)s.\n %(error)s",
+                    name=self._name,
+                    error=error,
+                )
             ) from error
         return res
 
