@@ -3,7 +3,7 @@
 
 {
     "name": "DDMRP Coverage Days",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "summary": "Implements Coverage Days.",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "development_status": "Beta",

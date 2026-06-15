@@ -7,6 +7,7 @@ import odoo.tests.common as common
 class TestDdmrpCoverageDays(common.TransactionCase):
     def setUp(self):
         super().setUp()
+        self.env = self.env(context=dict(self.env.context, tracking_disable=True))
 
         # Models
         self.productModel = self.env["product.product"]
