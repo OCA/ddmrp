@@ -15,7 +15,3 @@ class DdmrpFlowIndexGroup(models.Model):
     lower_range = fields.Float(help="Lower range used to assign in stock buffer")
     upper_range = fields.Float(help="Upper range used to assign in stock buffer")
     sequence = fields.Integer(required=True)
-
-    def toggle_active(self):
-        for record in self:
-            record.active = not record.active

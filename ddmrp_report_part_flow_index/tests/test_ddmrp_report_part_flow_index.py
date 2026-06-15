@@ -7,6 +7,7 @@ from odoo.tests import TransactionCase
 class TestDDMRPReportPartFlowIndex(TransactionCase):
     def setUp(self):
         super().setUp()
+        self.env = self.env(context=dict(self.env.context, tracking_disable=True))
         self.buffer_profile_mmm = self.env.ref(
             "ddmrp.stock_buffer_profile_replenish_manufactured_medium_medium"
         )
@@ -61,6 +62,6 @@ class TestDDMRPReportPartFlowIndex(TransactionCase):
         self.buffer.cron_actions()
         report = self.env["report.ddmrp.part.plan.flow.index"]
         self.assertTrue(report.search([("buffer_id", "=", self.buffer.id)]))
-        self.buffer.toggle_active()
+        self.buffer.action_archive()
         self.env.invalidate_all()
         self.assertFalse(report.search([("buffer_id", "=", self.buffer.id)]))
