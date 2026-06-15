@@ -7,6 +7,7 @@ from odoo.tests import common
 class TestStockBufferRoute(common.TransactionCase):
     def setUp(self):
         super().setUp()
+        self.env = self.env(context=dict(self.env.context, tracking_disable=True))
 
         self.buffer_model = self.env["stock.buffer"]
         self.make_procurement_wiz = self.env["make.procurement.buffer"]
@@ -18,7 +19,7 @@ class TestStockBufferRoute(common.TransactionCase):
         )
         self.main_company = self.env.ref("base.main_company")
         self.warehouse = self.env.ref("stock.warehouse0")
-        self.categ_unit = self.env.ref("uom.product_uom_categ_unit")
+        self.uom_unit = self.env.ref("uom.product_uom_unit")
         self.virtual_loc = self.env.ref("stock.stock_location_customers")
         self.buffer_profile_pur = self.env.ref(
             "ddmrp.stock_buffer_profile_replenish_purchased_medium_medium"
@@ -67,9 +68,8 @@ class TestStockBufferRoute(common.TransactionCase):
         self.uom_dozen = self.env["uom.uom"].create(
             {
                 "name": "Test-DozenA",
-                "category_id": self.categ_unit.id,
-                "factor_inv": 12,
-                "uom_type": "bigger",
+                "relative_uom_id": self.uom_unit.id,
+                "relative_factor": 12,
                 "rounding": 0.001,
             }
         )
@@ -112,7 +112,7 @@ class TestStockBufferRoute(common.TransactionCase):
                     "password": "demo",
                     "login": name,
                     "email": "@".join([name, "@test.com"]),
-                    "groups_id": [(6, 0, group_ids)],
+                    "group_ids": [(6, 0, group_ids)],
                     "company_ids": [(6, 0, company_ids)],
                 }
             )
