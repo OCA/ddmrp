@@ -1,7 +1,7 @@
 # Copyright 2017-26 ForgeFlow S.L. (https://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 DAF_string = "DAF"
@@ -75,7 +75,7 @@ class DdmrpAdjustment(models.Model):
         for rec in self:
             if not rec.date_start or not rec.date_end:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "You must either set a Date Range or provide"
                         " manual Date From/Date To."
                     )
@@ -85,4 +85,4 @@ class DdmrpAdjustment(models.Model):
     def _check_value_positive(self):
         for rec in self:
             if rec.value < 0:
-                raise ValidationError(_("Adjustment value must be positive."))
+                raise ValidationError(self.env._("Adjustment value must be positive."))

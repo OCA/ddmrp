@@ -53,13 +53,12 @@
                     string="Not Expired"
                     domain="['|', ('date_end', '=', False), ('date_end', '&gt;', context_today().strftime('%Y-%m-%d'))]"
                 />
-                <group expand="1" string="Group By">
-                    <filter
-                        string="Buffer"
-                        name="group_buffer"
-                        context="{'group_by':'buffer_id'}"
-                    />
-                </group>
+                <separator />
+                <filter
+                    string="Buffer"
+                    name="group_buffer"
+                    context="{'group_by':'buffer_id'}"
+                />
             </search>
         </field>
     </record>

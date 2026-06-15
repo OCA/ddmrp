@@ -20,9 +20,7 @@ class TestAduAdjustment(TestDDMRPAdjustmentCommon):
         self.red_zone_qty_before = self.buffer.red_zone_qty
         self.yellow_zone_qty_before = self.buffer.yellow_zone_qty
         self.green_zone_qty_before = self.buffer.green_zone_qty
-        self.current_month = getattr(
-            self, "month_%i_%i" % (self.now.year, self.now.month)
-        )
+        self.current_month = getattr(self, f"month_{self.now.year}_{self.now.month}")
 
     def test_adu_adjustment(self):
         self.env["ddmrp.adjustment"].create(
