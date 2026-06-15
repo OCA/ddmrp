@@ -1,6 +1,10 @@
 # Copyright 2021 ForgeFlow S.L. (https://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
+import threading
+
+from odoo.exceptions import UserError
+
 from odoo.addons.ddmrp.tests.common import TestDdmrpCommon
 
 
@@ -59,3 +63,27 @@ class TestDDMRPWarning(TestDdmrpCommon):
         self.spike_warning.active = False
         self.assertFalse(self.spike_warning.ddmrp_warning_item_ids)
         self.assertFalse(self.buffer_warnings.ddmrp_warning_item_ids)
+
+    def test_04_cron_generates_warnings(self):
+        # Exercise the scheduled entry point (the other tests call the inner
+        # _generate_ddmrp_warnings directly, leaving the cron wrapper uncovered).
+        # The cron auto-commits unless the running thread is flagged as a test
+        # thread; set it so the cron body runs without the forbidden in-test
+        # commit, and restore it afterwards.
+        thread = threading.current_thread()
+        previous_testing = getattr(thread, "testing", False)
+        thread.testing = True
+        try:
+            self.buffer_warnings.cron_actions()
+            self.bufferModel.cron_generate_ddmrp_warnings()
+        finally:
+            thread.testing = previous_testing
+        self.assertTrue(self.buffer_warnings.ddmrp_warning_item_ids)
+
+    def test_05_invalid_expression_raises(self):
+        # A python_code expression that blows up surfaces as a UserError.
+        bad_definition = self.env["ddmrp.warning.definition"].create(
+            {"name": "Bad expression", "python_code": "buffer.does_not_exist"}
+        )
+        with self.assertRaises(UserError):
+            bad_definition.evaluate_definition(self.buffer_warnings)
