@@ -12,20 +12,20 @@ class StockBuffer(models.Model):
     )
 
     def _calc_flow_index_group_id(self):
-        flow_index_reports = self.env["report.ddmrp.part.plan.flow.index"].read_group(
-            domain=[("buffer_id", "in", self.ids)],
-            fields=["order_frequency_group"],
-            groupby=["buffer_id"],
-        )
-        flow_index_groups = self.env["ddmrp.flow.index.group"].search([])
-        for rec in self:
-            flow_index_report = list(
-                filter(lambda x: x["buffer_id"][0] == rec.id, flow_index_reports)
+        self.env["stock.buffer"].flush_model()
+        frequency_by_buffer = dict(
+            self.env["report.ddmrp.part.plan.flow.index"]._read_group(
+                domain=[("buffer_id", "in", self.ids)],
+                groupby=["buffer_id"],
+                aggregates=["order_frequency_group:sum"],
             )
-            if not flow_index_report:
+        )
+        flow_index_groups = self.env["ddmrp.flow.index.group"].search([])  # pylint: disable=no-search-all
+        for rec in self:
+            if rec not in frequency_by_buffer:
                 continue
 
-            frequency_group = flow_index_report[0]["order_frequency_group"]
+            frequency_group = frequency_by_buffer[rec]
             for index_group in flow_index_groups:
                 if index_group.upper_range and index_group.lower_range:
                     if (
