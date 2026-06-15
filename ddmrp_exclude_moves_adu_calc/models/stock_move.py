@@ -1,7 +1,7 @@
 # Copyright 2017-21 ForgeFlow (http://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from odoo import _, fields, models
+from odoo import fields, models
 from odoo.exceptions import UserError
 
 
@@ -19,7 +19,7 @@ class StockMove(models.Model):
     def _toggle_exclude_from_adu(self):
         if not self.env.user.has_group("ddmrp.group_stock_buffer_maintainer"):
             raise UserError(
-                _("Only buffer maintainers are allowed perform this action.")
+                self.env._("Only buffer maintainers are allowed perform this action.")
             )
         for rec in self:
             rec.exclude_from_adu = not rec.exclude_from_adu

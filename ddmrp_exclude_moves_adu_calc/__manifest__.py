@@ -4,7 +4,7 @@
 {
     "name": "DDMRP Exclude Moves ADU Calc",
     "summary": "Define additional rules to exclude certain moves from ADU calculation",
-    "version": "18.0.1.1.1",
+    "version": "19.0.1.0.0",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],
     "website": "https://github.com/OCA/ddmrp",

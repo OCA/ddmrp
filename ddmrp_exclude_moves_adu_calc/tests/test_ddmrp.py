@@ -10,6 +10,7 @@ import odoo.tests.common as common
 class TestDdmrp(common.TransactionCase):
     def setUp(self):
         super().setUp()
+        self.env = self.env(context=dict(self.env.context, tracking_disable=True))
 
         # Models
         self.productModel = self.env["product.product"]
@@ -25,7 +26,14 @@ class TestDdmrp(common.TransactionCase):
         self.main_company = self.env.ref("base.main_company")
         self.warehouse = self.env.ref("stock.warehouse0")
         self.stock_location = self.env.ref("stock.stock_location_stock")
-        self.location_shelf1 = self.env.ref("stock.stock_location_components")
+        self.location_shelf1 = self.locationModel.create(
+            {
+                "usage": "internal",
+                "name": "Test Shelf",
+                "location_id": self.stock_location.id,
+                "company_id": self.main_company.id,
+            }
+        )
         self.supplier_location = self.env.ref("stock.stock_location_suppliers")
         self.customer_location = self.env.ref("stock.stock_location_customers")
         self.uom_unit = self.env.ref("uom.product_uom_unit")
@@ -103,7 +111,7 @@ class TestDdmrp(common.TransactionCase):
                 "login": login,
                 "password": "demo",
                 "email": "test@yourcompany.com",
-                "groups_id": [(6, 0, group_ids)],
+                "group_ids": [(6, 0, group_ids)],
             }
         )
         return user
@@ -120,7 +128,6 @@ class TestDdmrp(common.TransactionCase):
                         0,
                         0,
                         {
-                            "name": "Test move",
                             "product_id": self.product_a.id,
                             "date": date_move,
                             "product_uom": self.product_a.uom_id.id,
@@ -145,7 +152,6 @@ class TestDdmrp(common.TransactionCase):
                         0,
                         0,
                         {
-                            "name": "Test move",
                             "product_id": self.product_a.id,
                             "date": date_move,
                             "product_uom": self.product_a.uom_id.id,
