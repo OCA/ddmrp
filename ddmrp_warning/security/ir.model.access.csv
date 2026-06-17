@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+ddmrp_warning_definition_user,ddmrp.warning.definition.user,model_ddmrp_warning_definition,ddmrp.group_stock_buffer_maintainer,1,0,0,0
+ddmrp_warning_definition_manager,ddmrp.warning.definition.manager,model_ddmrp_warning_definition,ddmrp.group_ddmrp_manager,1,1,1,1
+ddmrp_warning_item_user,ddmrp.warning.item.user,model_ddmrp_warning_item,ddmrp.group_stock_buffer_maintainer,1,0,1,1
+ddmrp_warning_item_manager,ddmrp.warning.item.manager,model_ddmrp_warning_item,ddmrp.group_ddmrp_manager,1,1,1,1

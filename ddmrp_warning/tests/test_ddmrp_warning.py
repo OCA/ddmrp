@@ -1,0 +1,89 @@
+# Copyright 2021 ForgeFlow S.L. (https://www.forgeflow.com)
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
+
+import threading
+
+from odoo.exceptions import UserError
+
+from odoo.addons.ddmrp.tests.common import TestDdmrpCommon
+
+
+class TestDDMRPWarning(TestDdmrpCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.warning_item_model = cls.env["ddmrp.warning.item"]
+        cls.spike_warning = cls.env.ref(
+            "ddmrp_warning.ddmrp_warning_definition_dlt_and_spike_horizon"
+        )
+
+        cls.buffer_warnings = cls.bufferModel.create(
+            {
+                "buffer_profile_id": cls.buffer_profile_mmm.id,
+                "product_id": cls.productA.id,
+                "location_id": cls.location_shelf1.id,
+                "warehouse_id": cls.warehouse.id,
+                "qty_multiple": 1.0,
+                "adu_calculation_method": cls.adu_fixed.id,
+                "adu_fixed": 5.0,
+                "lead_days": 10.0,
+                "order_spike_horizon": 0.0,
+            }
+        )
+
+    @classmethod
+    def _refresh_involved_buffers(cls):
+        cls.buffer_warnings.cron_actions()
+        cls.buffer_warnings._generate_ddmrp_warnings()
+
+    def test_01_buffer_with_warnings(self):
+        self._refresh_involved_buffers()
+        self.assertTrue(self.buffer_warnings.ddmrp_warning_item_ids)
+        prev_count = len(self.buffer_warnings.ddmrp_warning_item_ids)
+        spike_warning_item = self.buffer_warnings.ddmrp_warning_item_ids.filtered(
+            lambda w: w.warning_definition_id == self.spike_warning
+        )
+        self.assertTrue(spike_warning_item)
+        # Fix issue:
+        self.buffer_warnings.write({"order_spike_horizon": 10.0})
+        self._refresh_involved_buffers()
+        new_count = len(self.buffer_warnings.ddmrp_warning_item_ids)
+        self.assertEqual(prev_count - new_count, 1)
+
+    def test_02_buffer_archive(self):
+        self._refresh_involved_buffers()
+        self.assertTrue(self.buffer_warnings.ddmrp_warning_item_ids)
+        self.buffer_warnings.active = False
+        self.assertFalse(self.buffer_warnings.ddmrp_warning_item_ids)
+
+    def test_03_definition_archive(self):
+        self._refresh_involved_buffers()
+        self.assertTrue(self.spike_warning.ddmrp_warning_item_ids)
+        self.assertTrue(self.buffer_warnings.ddmrp_warning_item_ids)
+        self.spike_warning.active = False
+        self.assertFalse(self.spike_warning.ddmrp_warning_item_ids)
+        self.assertFalse(self.buffer_warnings.ddmrp_warning_item_ids)
+
+    def test_04_cron_generates_warnings(self):
+        # Exercise the scheduled entry point (the other tests call the inner
+        # _generate_ddmrp_warnings directly, leaving the cron wrapper uncovered).
+        # The cron auto-commits unless the running thread is flagged as a test
+        # thread; set it so the cron body runs without the forbidden in-test
+        # commit, and restore it afterwards.
+        thread = threading.current_thread()
+        previous_testing = getattr(thread, "testing", False)
+        thread.testing = True
+        try:
+            self.buffer_warnings.cron_actions()
+            self.bufferModel.cron_generate_ddmrp_warnings()
+        finally:
+            thread.testing = previous_testing
+        self.assertTrue(self.buffer_warnings.ddmrp_warning_item_ids)
+
+    def test_05_invalid_expression_raises(self):
+        # A python_code expression that blows up surfaces as a UserError.
+        bad_definition = self.env["ddmrp.warning.definition"].create(
+            {"name": "Bad expression", "python_code": "buffer.does_not_exist"}
+        )
+        with self.assertRaises(UserError):
+            bad_definition.evaluate_definition(self.buffer_warnings)
