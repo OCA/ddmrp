@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2017-26 ForgeFlow S.L. (https://www.forgeflow.com)
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="stock_buffer_view_form" model="ir.ui.view">
+        <field name="name">stock.buffer.form</field>
+        <field name="model">stock.buffer</field>
+        <field name="inherit_id" ref="ddmrp.stock_buffer_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    string="DAF Demand Allocation"
+                    name="action_view_demand_to_components"
+                    class="oe_stat_button"
+                    icon="fa-caret-square-o-down"
+                    type="object"
+                    invisible="count_ddmrp_adjustment_demand == 0"
+                />
+            </xpath>
+            <button name="action_view_future_adu_indirect_demand" position="after">
+                <button
+                    title="View DAFs Affecting Actual ADU"
+                    name="action_view_affecting_adu"
+                    type="object"
+                    invisible="daf_applied == -1"
+                >
+                    <field name="daf_text" readonly="1" />
+                </button>
+                <button
+                    title="View Demand from parent DAFs Affecting Actual ADU"
+                    name="action_view_parent_affecting_adu"
+                    type="object"
+                    invisible="parent_daf_applied == -1"
+                >
+                    <field name="parent_daf_text" readonly="1" />
+                </button>
+            </button>
+            <xpath expr="//div[@name='red_zone_qty_row']" position="inside">
+                <button
+                    title="View RZAFs Affecting Red Zone"
+                    name="action_view_affecting_red_zone"
+                    type="object"
+                    invisible="rzaf_applied == -1"
+                >
+                    <field name="rzaf_text" readonly="1" />
+                </button>
+            </xpath>
+            <xpath expr="//div[@name='yellow_zone_qty_row']" position="inside">
+                <button
+                    title="View YZAFs Affecting Yellow Zone"
+                    name="action_view_affecting_yellow_zone"
+                    type="object"
+                    invisible="yzaf_applied == -1"
+                >
+                    <field name="yzaf_text" readonly="1" />
+                </button>
+            </xpath>
+            <xpath expr="//div[@name='green_zone_qty_row']" position="inside">
+                <button
+                    title="View GZAFs Affecting Green Zone"
+                    name="action_view_affecting_green_zone"
+                    type="object"
+                    invisible="gzaf_applied == -1"
+                >
+                    <field name="gzaf_text" readonly="1" />
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>
