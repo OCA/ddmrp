@@ -45,6 +45,7 @@
                     name="hide_no_buffer"
                     string="Buffered"
                     domain="[('buffer_ids','!=',False), ('execution_priority_level','!=',False)]"
+                    groups="stock.group_stock_user"
                 />
                 <separator />
                 <group name="execution_priority">
@@ -79,6 +80,7 @@
         id="menu_pol_execution"
         action="po_line_execution_action"
         parent="purchase.menu_procurement_management"
+        groups="stock.group_stock_user"
         sequence="8"
     />
 </odoo>

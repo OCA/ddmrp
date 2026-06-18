@@ -15,6 +15,7 @@
                     class="oe_stat_button"
                     icon="fa-flask"
                     invisible="buffer_count == 0"
+                    groups="stock.group_stock_user"
                 >
                     <field
                         name="buffer_count"
@@ -41,6 +42,7 @@
                     class="oe_stat_button"
                     icon="fa-flask"
                     invisible="buffer_count == 0"
+                    groups="stock.group_stock_user"
                 >
                     <field
                         name="buffer_count"
