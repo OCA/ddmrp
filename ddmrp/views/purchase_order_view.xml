@@ -11,12 +11,17 @@
                 expr="//field[@name='order_line']//field[@name='date_planned']"
                 position="after"
             >
-                <field name="buffer_ids" column_invisible="1" />
+                <field
+                    name="buffer_ids"
+                    column_invisible="1"
+                    groups="stock.group_stock_user"
+                />
                 <field name="execution_priority_level" column_invisible="1" />
                 <field
                     name="on_hand_percent"
                     options='{"buffer_id": "buffer_ids", "color_from": "execution_priority_level", "field": "ddmrp_chart_execution"}'
                     widget="stock_buffer_info"
+                    groups="stock.group_stock_user"
                 />
             </xpath>
             <xpath
@@ -62,8 +67,10 @@
         <field name="inherit_id" ref="purchase.purchase_order_line_form2" />
         <field name="arch" type="xml">
             <field name="name" position="after">
-                <separator string="Stock Buffers" />
-                <field name="buffer_ids" />
+                <t groups="stock.group_stock_user">
+                    <separator string="Stock Buffers" />
+                    <field name="buffer_ids" />
+                </t>
             </field>
         </field>
     </record>
