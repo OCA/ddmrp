@@ -1,9 +1,10 @@
 [project]
 name = "odoo-addons-oca-ddmrp"
-version = "19.0.20260618.1"
+version = "19.0.20260619.0"
 dependencies = [
     "odoo-addon-ddmrp==19.0.*",
     "odoo-addon-ddmrp_adjustment==19.0.*",
+    "odoo-addon-ddmrp_chatter==19.0.*",
     "odoo-addon-ddmrp_coverage_days==19.0.*",
     "odoo-addon-ddmrp_exclude_moves_adu_calc==19.0.*",
     "odoo-addon-ddmrp_history==19.0.*",
