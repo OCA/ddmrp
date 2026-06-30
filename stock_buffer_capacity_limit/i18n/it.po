@@ -1,0 +1,43 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_buffer_capacity_limit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-11-23 18:35+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_buffer_capacity_limit
+#: model:ir.model.fields,field_description:stock_buffer_capacity_limit.field_stock_buffer__product_location_qty
+msgid "Quantity On Location"
+msgstr "Quantità nell'ubicazione"
+
+#. module: stock_buffer_capacity_limit
+#: model:ir.model,name:stock_buffer_capacity_limit.model_stock_buffer
+msgid "Stock Buffer"
+msgstr "Buffer di materiale"
+
+#. module: stock_buffer_capacity_limit
+#: model:ir.model.fields,field_description:stock_buffer_capacity_limit.field_stock_buffer__storage_capacity_limit
+msgid "Storage Capacity Limit"
+msgstr "Limite capactà stoccaggio"
+
+#. module: stock_buffer_capacity_limit
+#: model:ir.model.fields,help:stock_buffer_capacity_limit.field_stock_buffer__storage_capacity_limit
+msgid ""
+"The system will never propose a procurement that would move on-hand qty "
+"(considering short-term incoming qty as well) over this limit, even if this "
+"means that you have planning or execution alerts."
+msgstr ""
+"Il sistema non proporrà mai un approvvigionamento che muoverà q.tà "
+"disponibile (considerando q.tà in ingresso a breve) oltre questo limite, "
+"anche se qusto significa avere allerte pianificazion o esecuzione."

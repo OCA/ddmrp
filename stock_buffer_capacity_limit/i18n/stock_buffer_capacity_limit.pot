@@ -1,0 +1,37 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_buffer_capacity_limit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_buffer_capacity_limit
+#: model:ir.model.fields,field_description:stock_buffer_capacity_limit.field_stock_buffer__product_location_qty
+msgid "Quantity On Location"
+msgstr ""
+
+#. module: stock_buffer_capacity_limit
+#: model:ir.model,name:stock_buffer_capacity_limit.model_stock_buffer
+msgid "Stock Buffer"
+msgstr ""
+
+#. module: stock_buffer_capacity_limit
+#: model:ir.model.fields,field_description:stock_buffer_capacity_limit.field_stock_buffer__storage_capacity_limit
+msgid "Storage Capacity Limit"
+msgstr ""
+
+#. module: stock_buffer_capacity_limit
+#: model:ir.model.fields,help:stock_buffer_capacity_limit.field_stock_buffer__storage_capacity_limit
+msgid ""
+"The system will never propose a procurement that would move on-hand qty "
+"(considering short-term incoming qty as well) over this limit, even if this "
+"means that you have planning or execution alerts."
+msgstr ""
