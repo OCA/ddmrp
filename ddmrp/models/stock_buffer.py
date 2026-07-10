@@ -1601,6 +1601,11 @@ class StockBuffer(models.Model):
                     and not move.location_final_id.is_sublocation_of(self.location_id)
                 )
             )
+            # Make-to-order demand is served by its own pegged supply, not from
+            # the buffer, so it must not deflate the net flow position. This
+            # mirrors the supply side, which keeps the MTO purchase line out of
+            # the buffer (see purchase.order.line._find_buffer_link).
+            and not move._ddmrp_is_mto()
         )
         return moves
 
