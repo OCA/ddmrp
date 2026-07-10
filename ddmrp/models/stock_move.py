@@ -19,6 +19,20 @@ class StockMove(models.Model):
         string="Qualified Demand For Buffers",
     )
 
+    def _ddmrp_is_mto(self):
+        """Return True when this move is pegged to a make-to-order supply.
+
+        A move that raised a purchase to satisfy itself references the created
+        purchase line through ``created_purchase_line_ids``. This is the same
+        relation the supply side uses to keep MTO purchase lines out of MTS
+        buffers (``purchase.order.line._ddmrp_is_mto`` / ``_find_buffer_link``
+        rely on the inverse ``move_dest_ids``). Using one criterion on both
+        sides keeps the net flow position consistent: the MTO demand move and
+        the purchase line it pegs are excluded together.
+        """
+        self.ensure_one()
+        return bool(self.created_purchase_line_ids)
+
     def _prepare_procurement_values(self):
         res = super()._prepare_procurement_values()
         if self.buffer_ids:

@@ -76,14 +76,23 @@ class PurchaseOrderLine(models.Model):
             ("warehouse_id", "=", self.order_id.picking_type_id.warehouse_id.id),
         ]
 
+    def _ddmrp_is_mto(self):
+        """Return True when this purchase line was raised to satisfy a
+        make-to-order demand move.
+
+        ``move_dest_ids`` is the inverse of ``stock.move.created_purchase_line_ids``
+        (same relation), so this mirrors ``stock.move._ddmrp_is_mto`` on the
+        demand side. Keeping the criterion identical on both sides guarantees
+        that a pegged demand move and the purchase line it created are kept out
+        of the MTS buffer together, so the net flow position stays consistent.
+        """
+        self.ensure_one()
+        return bool(self.move_dest_ids)
+
     def _find_buffer_link(self):
         buffer_model = self.env["stock.buffer"]
-        move_model = self.env["stock.move"]
         for rec in self.filtered(lambda r: not r.buffer_ids):
-            mto_move = move_model.search(
-                [("created_purchase_line_ids", "in", rec.ids)], limit=1
-            )
-            if mto_move:
+            if rec._ddmrp_is_mto():
                 # MTO lines are not accounted in MTS stock buffers.
                 continue
             domain = rec._get_domain_buffer_link()
