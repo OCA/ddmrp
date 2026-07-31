@@ -4,6 +4,8 @@
 
 from datetime import datetime, time, timedelta
 
+from freezegun import freeze_time
+
 from odoo import fields
 from odoo.exceptions import ValidationError
 
@@ -1527,4 +1529,107 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(
             action["context"].get("search_default_qualified_demand_buffer_ids"),
             self.buffer_a.name,
+        )
+
+    def _receive_into(self, location, qty, date_move, done=True):
+        """Receive `qty` from the supplier straight into `location`."""
+        picking = self.pickingModel.with_user(self.user).create(
+            {
+                "picking_type_id": self.picking_type_in.id,
+                "location_id": self.supplier_location.id,
+                "location_dest_id": location.id,
+                "scheduled_date": date_move,
+                "move_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Test move",
+                            "product_id": self.productA.id,
+                            "date": date_move,
+                            "product_uom": self.productA.uom_id.id,
+                            "product_uom_qty": qty,
+                            "location_id": self.supplier_location.id,
+                            "location_dest_id": location.id,
+                        },
+                    )
+                ],
+            }
+        )
+        picking.action_confirm()
+        if done:
+            self._do_picking(picking, date_move)
+        return picking
+
+    def _incoming_after_order(
+        self, dlt_days, qty, arrival_working_days=0, safety_factor=1
+    ):
+        """Empty shelf, `qty` already travelling in, then an order for `qty`.
+
+        The supply on its way arrives in `arrival_working_days` whole working
+        days, counted on the warehouse calendar, and already covers the order. A
+        buffer that sees it stays idle and the total it expects to receive
+        stays at `qty`.
+
+        The buffer looks ahead `dlt_days * safety_factor` working days when
+        counting supply already on its way.
+
+        Returns that total.
+        """
+        assert isinstance(arrival_working_days, int), (
+            "Whole working days only: a fraction of a day would have to answer "
+            "e.g. how to handle past warehouse working hours / past midnight."
+        )
+        self.main_company.ddmrp_auto_update_nfp = False
+        self.warehouse.nfp_incoming_safety_factor = safety_factor
+        now = fields.Datetime.now()
+
+        # Empty the shelf.
+        self._do_picking(self.create_pickingoutA(now, 200), now)
+
+        # Zero zones plus procure-on-stockout: a pure fallback buffer.
+        self.bom_a.produce_delay = dlt_days
+        self.bom_a.invalidate_recordset(["dlt"])
+        self.buffer_a.write(
+            {
+                "adu_fixed": 0.0,
+                "auto_procure": True,
+                "auto_procure_option": "stockout",
+            }
+        )
+        self.buffer_a._compute_dlt()
+        self.assertEqual(self.buffer_a.dlt, dlt_days)
+
+        # `qty` is confirmed and on its way to Bin A, landing that many working
+        # days ahead on the warehouse calendar.
+        arrival = self.warehouse.wh_plan_days(now, arrival_working_days)
+        self._receive_into(self.binA, qty, arrival, done=False)
+
+        # A customer orders exactly that quantity.
+        self.create_pickingoutA(now, qty)
+        self.buffer_a.cron_actions()
+        return self.buffer_a.incoming_total_qty
+
+    @freeze_time("2026-06-10 08:00:00")
+    def test_50_supply_arriving_within_the_lead_time_is_counted(self):
+        """A one day lead time covers a delivery landing today, so the buffer
+        sees the incoming quantity and orders nothing on top of it."""
+        self.assertEqual(self._incoming_after_order(dlt_days=1, qty=55), 55)
+
+    @freeze_time("2026-06-10 08:00:00")
+    def test_51_supply_ignored_without_a_lead_time(self):
+        """With a zero lead time the buffer only counts supply arriving right
+        now, so it misses a delivery due the next working day and orders the
+        same quantity a second time."""
+        self.assertEqual(
+            self._incoming_after_order(dlt_days=0, qty=55, arrival_working_days=1), 110
+        )
+
+    @freeze_time("2026-06-10 08:00:00")
+    def test_52_supply_arriving_after_the_lead_time_is_ignored(self):
+        """A lead time of two working days does not cover a delivery landing
+        three working days out, so the buffer misses it and orders the same
+        quantity a second time."""
+        self.assertEqual(
+            self._incoming_after_order(dlt_days=2, qty=55, arrival_working_days=3), 110
         )
