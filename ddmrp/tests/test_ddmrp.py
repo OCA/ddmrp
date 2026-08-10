@@ -1349,3 +1349,71 @@ class TestDdmrp(TestDdmrpCommon):
             self.buffer_a.name,
         )
         self.assertTrue(action["context"].get("show_reserved_availability"))
+
+    def test_48_adu_calculation_window_past_calendar_leave(self):
+        """Test that the window considered to calculate the ADU is correct.
+        (Same as test_04, with a leave set in the working days)."""
+        self.warehouse.calendar_id = self.calendar
+        method = self.aducalcmethodModel.create(
+            {
+                "name": "Past actual demand (6 days)",
+                "method": "past",
+                "source_past": "actual",
+                "horizon_past": 6,
+                "company_id": self.main_company.id,
+            }
+        )
+        self.buffer_a.adu_calculation_method = method.id
+        # Today should be excluded
+        date_move_1 = datetime.today()
+        picking_1 = self.create_pickingoutA(date_move_1, 20)
+        self._do_picking(picking_1, date_move_1)
+        # The next moves should be considered
+        today = datetime.today()
+        # 8:00 AM is the start of working time for today.
+        # 7:59 AM will make odoo to use the start of woking time for previous
+        # days, which is 1:00 PM of yesterday.
+        day_dt = datetime.combine(today.date(), time(8, 0, 0))
+        # The leave is not a working day, so it does not count towards the
+        # window and every move below is shifted one day back.
+        leave_dt = self.calendar.plan_days(-4, day_dt)
+        self.env["resource.calendar.leaves"].create(
+            {
+                "name": "Test leave",
+                "calendar_id": self.calendar.id,
+                "resource_id": False,
+                "date_from": leave_dt.replace(hour=0, minute=0, second=0),
+                "date_to": leave_dt.replace(hour=23, minute=59, second=59),
+                "time_type": "leave",
+            }
+        )
+        days = 2
+        date_move_2 = self.calendar.plan_days(
+            -1 * days - 1, day_dt, compute_leaves=True
+        )
+        picking_2 = self.create_pickingoutA(date_move_2, 20)
+        self._do_picking(picking_2, date_move_2)
+        days = 4
+        date_move_3 = self.calendar.plan_days(
+            -1 * days - 1, day_dt, compute_leaves=True
+        )
+        picking_3 = self.create_pickingoutA(date_move_3, 20)
+        self._do_picking(picking_3, date_move_3)
+        days = 6
+        date_move_4 = self.calendar.plan_days(
+            -1 * days - 1, day_dt, compute_leaves=True
+        )
+        picking_4 = self.create_pickingoutA(date_move_4, 10)
+        self._do_picking(picking_4, date_move_4)
+        # This move should be ignored
+        days = 7
+        date_move_5 = self.calendar.plan_days(
+            -1 * days - 1, datetime.today(), compute_leaves=True
+        )
+        picking_5 = self.create_pickingoutA(date_move_5, 12)
+        self._do_picking(picking_5, date_move_5)
+
+        # Check ADU:
+        self.buffer_a._calc_adu()
+        to_assert_value = (20 + 20 + 10) / 6
+        self.assertAlmostEqual(self.buffer_a.adu, to_assert_value, places=2)
