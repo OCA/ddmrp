@@ -823,7 +823,7 @@ class StockBuffer(models.Model):
                 continue
 
             # Prepare data:
-            demand_data = rec._get_demand_by_days(rec.qualified_demand_stock_move_ids)
+            demand_data = rec._get_demand_by_days(rec.demand_stock_move_ids)
             mrp_data = rec._get_qualified_mrp_moves(rec.qualified_demand_mrp_move_ids)
             supply_data = rec._get_incoming_by_days()
             width = timedelta(days=0.4)
