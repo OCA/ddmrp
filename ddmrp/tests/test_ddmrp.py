@@ -2,6 +2,7 @@
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
+import json
 from datetime import datetime, time, timedelta
 
 from odoo import fields
@@ -1388,3 +1389,24 @@ class TestDdmrp(TestDdmrpCommon):
             action["context"].get("search_default_qualified_demand_buffer_ids"),
             self.buffer_a.name,
         )
+
+    def test_50_demand_chart_shows_all_demand_moves(self):
+        """The demand chart must plot every demand move (demand_stock_move_ids),
+        not only the ones that qualify as qualified demand. A move within the
+        order spike horizon but below the threshold is demand yet never
+        qualifies, so it must still show up in the chart."""
+        threshold = self.buffer_a.order_spike_threshold
+        date_within_horizon = datetime.today() + timedelta(
+            days=self.buffer_a.order_spike_horizon - 1
+        )
+        self.create_pickingoutA(date_within_horizon, threshold - 1)
+        self.buffer_a.cron_actions()
+        # The move is demand but does not qualify as qualified demand.
+        self.assertTrue(self.buffer_a.demand_stock_move_ids)
+        self.assertFalse(self.buffer_a.qualified_demand_stock_move_ids)
+        self.assertEqual(self.buffer_a.qualified_demand, 0.0)
+        # If the chart were built from qualified_demand_stock_move_ids (the
+        # regression), there would be no demand data to plot at all.
+        chart_data = json.loads(self.buffer_a.ddmrp_demand_chart)
+        self.assertNotIn("No demand detected", chart_data["div"])
+        self.assertTrue(chart_data["script"])
