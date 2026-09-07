@@ -81,34 +81,23 @@ class StockMove(models.Model):
         # outgoing and `in_buffers` as incoming.
         out_buffers = in_buffers = self.env["stock.buffer"]
         for move in self:
-            out_buffers |= move.mapped("product_id.buffer_ids").filtered(
-                lambda buffer, move=move: (
-                    move.location_id.is_sublocation_of(buffer.location_id)
-                    and (
-                        not move.location_dest_id.is_sublocation_of(buffer.location_id)
-                        or (
-                            move.location_final_id
-                            and not move.location_final_id.is_sublocation_of(
-                                buffer.location_id
-                            )
-                        )
-                    )
+            for buffer in move.product_id.buffer_ids:
+                location = buffer.location_id
+                src_in_buffer = move.location_id.is_sublocation_of(location)
+                dest_in_buffer = move.location_dest_id.is_sublocation_of(location)
+                has_final = bool(move.location_final_id)
+                final_in_buffer = (
+                    has_final and move.location_final_id.is_sublocation_of(location)
                 )
-            )
-            in_buffers |= move.mapped("product_id.buffer_ids").filtered(
-                lambda buffer, move=move: (
-                    not move.location_id.is_sublocation_of(buffer.location_id)
-                    and (
-                        move.location_dest_id.is_sublocation_of(buffer.location_id)
-                        or (
-                            move.location_final_id
-                            and move.location_final_id.is_sublocation_of(
-                                buffer.location_id
-                            )
-                        )
-                    )
-                )
-            )
+                # NOTE: Ignore the following cases:
+                # - moves entirely within the buffer location (including final location)
+                # - moves not related to the buffer at all
+                if src_in_buffer and (
+                    not dest_in_buffer or (has_final and not final_in_buffer)
+                ):
+                    out_buffers |= buffer
+                if not src_in_buffer and (dest_in_buffer or final_in_buffer):
+                    in_buffers |= buffer
         return out_buffers, in_buffers
 
     def _update_ddmrp_nfp(self):
