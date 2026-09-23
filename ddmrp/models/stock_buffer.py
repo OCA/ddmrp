@@ -2102,12 +2102,14 @@ class StockBuffer(models.Model):
         if not only_nfp or only_nfp == "in":
             self._calc_incoming_dlt_qty()
         self._calc_net_flow_position()
-        self._calc_distributed_source_location()
         self._calc_planning_priority()
         self._calc_execution_priority()
         self.mrp_production_ids._calc_execution_priority()
         self.mapped("purchase_line_ids")._calc_execution_priority()
         if not only_nfp:
+            # The source location only changes when the stock rules change, so
+            # walking them on every partial refresh is a pure cost.
+            self._calc_distributed_source_location()
             # re-compoute red to force in cascade the recalculation of zones.
             self._compute_red_zone()
         self.do_auto_procure()

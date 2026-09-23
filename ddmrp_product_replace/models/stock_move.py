@@ -7,8 +7,8 @@ from odoo import models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    def _find_buffers_to_update_nfp(self):
-        out_buffers, in_buffers = super()._find_buffers_to_update_nfp()
+    def _find_buffers_affected_by_moves(self):
+        out_buffers, in_buffers = super()._find_buffers_affected_by_moves()
         new_out_buffers = out_buffers
         while new_out_buffers:
             new_out_buffers = new_out_buffers.mapped("replaced_by_id")

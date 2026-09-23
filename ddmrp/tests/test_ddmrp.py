@@ -1348,7 +1348,7 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(move.location_dest_id, self.warehouse.wh_input_stock_loc_id)
         self.assertEqual(move.location_final_id, self.warehouse.lot_stock_id)
         self.assertEqual(move.product_qty, 225)
-        _ob, in_buffers = move._find_buffers_to_update_nfp()
+        _ob, in_buffers = move._find_buffers_affected_by_moves()
         self.assertIn(
             self.buffer_purchase,
             in_buffers,
@@ -1421,7 +1421,7 @@ class TestDdmrp(TestDdmrpCommon):
         # Validating should generate the next picking.
         self.assertFalse(move.move_dest_ids)
         picking_1 = move.picking_id
-        out_buffers, _ib = move._find_buffers_to_update_nfp()
+        out_buffers, _ib = move._find_buffers_affected_by_moves()
         self.assertIn(
             self.buffer_purchase,
             out_buffers,
