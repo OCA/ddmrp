@@ -1855,9 +1855,13 @@ class StockBuffer(models.Model):
             return 0
         return qty_to_order
 
-    def do_auto_procure(self):
+    def do_auto_procure(self, skip_nfp_refresh=False):
         if not self.auto_procure:
             return False
+        if not skip_nfp_refresh:
+            # Procuring is irreversible, so it must never weigh one fresh
+            # figure against one inherited from an earlier partial refresh.
+            self._recompute_nfp()
         rounding = self.product_uom.rounding
         qty_to_order = self._procure_qty_to_order()
         if float_compare(qty_to_order, 0.0, precision_rounding=rounding) > 0 and (
@@ -2084,9 +2088,8 @@ class StockBuffer(models.Model):
         self.cron_actions(only_nfp=False)
         return True
 
-    def cron_actions(self, only_nfp=False):
-        """This method is meant to be inherited by other modules in order to
-        enhance extensibility."""
+    def _recompute_nfp(self, only_nfp=False):
+        """Refresh the buffer figures, without deciding whether to procure."""
         self.ensure_one()
         self.invalidate_recordset(
             fnames=[
@@ -2110,7 +2113,14 @@ class StockBuffer(models.Model):
         if not only_nfp:
             # re-compoute red to force in cascade the recalculation of zones.
             self._compute_red_zone()
-        self.do_auto_procure()
+        return True
+
+    def cron_actions(self, only_nfp=False):
+        """This method is meant to be inherited by other modules in order to
+        enhance extensibility."""
+        self._recompute_nfp(only_nfp=only_nfp)
+        if not only_nfp:
+            self.do_auto_procure(skip_nfp_refresh=True)
         return True
 
     @api.model
