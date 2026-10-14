@@ -1,7 +1,7 @@
 # Copyright 2019-21 ForgeFlow S.L. (https://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -59,7 +59,7 @@ class StockBuffer(models.Model):
     def _check_replaced_by_id(self):
         if self._has_cycle(field_name="replaced_by_id"):
             raise ValidationError(
-                _('You cannot create recursive "Replaced by" chains.')
+                self.env._('You cannot create recursive "Replaced by" chains.')
             )
 
     @api.constrains("demand_product_ids")
@@ -67,15 +67,15 @@ class StockBuffer(models.Model):
         for rec in self:
             if rec.demand_product_ids and rec.product_id not in rec.demand_product_ids:
                 raise ValidationError(
-                    _("Buffered product must be considered as demand.")
+                    self.env._("Buffered product must be considered as demand.")
                 )
 
     def _compute_replaced_by_alert_text(self):
         for rec in self:
             if rec.replaced_by_id:
-                rec.replaced_by_alert_text = (
-                    _("This product is replaced by %s.")
-                    % rec.replaced_by_id.product_id.display_name
+                rec.replaced_by_alert_text = self.env._(
+                    "This product is replaced by %s.",
+                    rec.replaced_by_id.product_id.display_name,
                 )
             else:
                 rec.replaced_by_alert_text = ""
@@ -182,6 +182,6 @@ class StockBuffer(models.Model):
 
     def action_view_buffers_replaced(self):
         result = self.env["ir.actions.actions"]._for_xml_id("ddmrp.action_stock_buffer")
-        result["name"] = _("Buffers Replaced")
+        result["name"] = self.env._("Buffers Replaced")
         result["domain"] = [("id", "in", self.replacement_for_ids.ids)]
         return result

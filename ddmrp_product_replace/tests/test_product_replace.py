@@ -4,6 +4,8 @@
 
 from datetime import datetime, timedelta
 
+from odoo import Command
+
 from odoo.addons.ddmrp.tests.common import TestDdmrpCommon
 
 
@@ -11,21 +13,29 @@ class TestDDMRPProductReplace(TestDdmrpCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.buffer = cls.env.ref("ddmrp.stock_buffer_rm01")
-        cls.old_product = cls.env.ref("ddmrp.product_product_rm01")
+        cls.buffer = cls.buffer_rm01
+        cls.old_product = cls.product_rm01
         cls.put_away_rule_obj = cls.env["stock.putaway.rule"]
+        cls.uom_pack_6 = cls.env["uom.uom"].create(
+            {
+                "name": "Pack of 6",
+                "relative_factor": 6.0,
+                "relative_uom_id": cls.uom_unit.id,
+            }
+        )
         cls.old_product.write(
             {
                 "route_ids": [
-                    (6, 0, [cls.env.ref("mrp.route_warehouse0_manufacture").id])
+                    Command.set([cls.env.ref("mrp.route_warehouse0_manufacture").id])
                 ],
+                "uom_ids": [Command.set(cls.uom_pack_6.ids)],
             }
         )
         cls.old_product_putaway = cls.put_away_rule_obj.create(
             {
                 "product_id": cls.old_product.id,
                 "location_in_id": cls.env.ref("stock.stock_location_stock").id,
-                "location_out_id": cls.env.ref("stock.stock_location_components").id,
+                "location_out_id": cls.location_shelf1.id,
             }
         )
         # Change adu method:
@@ -45,7 +55,7 @@ class TestDDMRPProductReplace(TestDdmrpCommon):
         wiz = self.env["ddmrp.product.replace"].create(
             {
                 "mode": "use_existing",
-                "old_product_ids": [(6, 0, self.buffer.product_id.ids)],
+                "old_product_ids": [Command.set(self.buffer.product_id.ids)],
                 "use_existing": "new",
                 "new_product_name": "RM-01 Replacement",
                 "new_product_default_code": "ABCDE012345",
@@ -60,6 +70,7 @@ class TestDDMRPProductReplace(TestDdmrpCommon):
         self.assertEqual(new_product.name, "RM-01 Replacement")
         self.assertEqual(new_product.default_code, "ABCDE012345")
         self.assertEqual(new_product.route_ids, self.old_product.route_ids)
+        self.assertFalse(new_product.uom_ids)
 
         new_product_putaway = self.put_away_rule_obj.search(
             [("product_id", "=", new_product.id)]
@@ -96,7 +107,7 @@ class TestDDMRPProductReplace(TestDdmrpCommon):
         wiz = self.env["ddmrp.product.replace"].create(
             {
                 "mode": "new_buffer",
-                "old_product_ids": [(6, 0, self.buffer.product_id.ids)],
+                "old_product_ids": [Command.set(self.buffer.product_id.ids)],
                 "use_existing": "new",
                 "new_product_name": "RM-01 Replacement 2",
                 "new_product_default_code": "ABC000222",
@@ -144,3 +155,32 @@ class TestDDMRPProductReplace(TestDdmrpCommon):
         self.assertEqual(self.buffer.qualified_demand, 11)
         new_buffer.cron_actions()
         self.assertEqual(new_buffer.qualified_demand, 11)
+
+    def test_03_product_replace_copy_packaging(self):
+        wiz = self.env["ddmrp.product.replace"].create(
+            {
+                "mode": "use_existing",
+                "old_product_ids": [Command.set(self.buffer.product_id.ids)],
+                "use_existing": "new",
+                "new_product_name": "RM-01 Replacement 3",
+                "copy_packaging": True,
+            }
+        )
+        new_product_id = wiz.button_validate().get("res_id")
+        new_product = self.env["product.product"].browse(new_product_id)
+        self.assertEqual(new_product.uom_ids, self.uom_pack_6)
+        existing_product = self.productModel.create(
+            {"name": "RM-01 Existing Replacement", "is_storable": True}
+        )
+        wiz = self.env["ddmrp.product.replace"].create(
+            {
+                "mode": "use_existing",
+                "old_product_ids": [Command.set(new_product.ids)],
+                "use_existing": "existing",
+                "new_product_id": existing_product.id,
+                "copy_packaging": True,
+            }
+        )
+        wiz.button_validate()
+        self.assertEqual(existing_product.uom_ids, self.uom_pack_6)
+        self.assertEqual(self.buffer.product_id, existing_product)
