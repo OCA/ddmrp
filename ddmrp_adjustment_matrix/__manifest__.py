@@ -4,7 +4,7 @@
 {
     "name": "DDMRP Adjustment Matrix",
     "summary": "Wizard to manage DDMRP Adjustments with a 2D matrix.",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "development_status": "Beta",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],

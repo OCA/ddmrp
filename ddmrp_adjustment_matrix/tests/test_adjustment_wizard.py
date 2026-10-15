@@ -5,6 +5,7 @@ import datetime
 
 from dateutil.relativedelta import relativedelta
 
+from odoo import Command
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 from odoo.addons.ddmrp_adjustment.tests.test_common import TestDDMRPAdjustmentCommon
@@ -23,7 +24,7 @@ class TestAdjustmentWizard(TestDDMRPAdjustmentCommon):
                 "date_range_type_id": self.month_date_range_type.id,
             }
         )
-        wiz.buffer_ids = [(4, self.buffer.id, False)]
+        wiz.buffer_ids = [Command.link(self.buffer.id)]
         wiz.action_refresh()
         return wiz
 
@@ -39,17 +40,17 @@ class TestAdjustmentWizard(TestDDMRPAdjustmentCommon):
         following_month = self.now + relativedelta(months=2)
         values = {
             "DAF": {
-                getattr(self, "month_%i_%i" % (self.now.year, self.now.month)): 1.5,
-                getattr(self, "month_%i_%i" % (next_month.year, next_month.month)): 2,
+                getattr(self, f"month_{self.now.year}_{self.now.month}"): 1.5,
+                getattr(self, f"month_{next_month.year}_{next_month.month}"): 2,
                 getattr(
-                    self, "month_%i_%i" % (following_month.year, following_month.month)
+                    self, f"month_{following_month.year}_{following_month.month}"
                 ): 1.8,
             },
             "LTAF": {
-                getattr(self, "month_%i_%i" % (self.now.year, self.now.month)): 2,
-                getattr(self, "month_%i_%i" % (next_month.year, next_month.month)): 2.5,
+                getattr(self, f"month_{self.now.year}_{self.now.month}"): 2,
+                getattr(self, f"month_{next_month.year}_{next_month.month}"): 2.5,
                 getattr(
-                    self, "month_%i_%i" % (following_month.year, following_month.month)
+                    self, f"month_{following_month.year}_{following_month.month}"
                 ): 2,
             },
         }

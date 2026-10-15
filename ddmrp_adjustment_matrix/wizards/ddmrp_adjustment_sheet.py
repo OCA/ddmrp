@@ -1,7 +1,7 @@
 # Copyright 2026 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, fields, models
+from odoo import Command, api, fields, models
 from odoo.exceptions import ValidationError
 
 from odoo.addons.ddmrp_adjustment.models.ddmrp_adjustment import (
@@ -66,7 +66,7 @@ class DdmrpAdjustmentSheet(models.TransientModel):
         for period in periods:
             for factor in factors:
                 vals = self._prepare_line(period, factor)
-                items.append((0, 0, vals))
+                items.append(Command.create(vals))
         return items
 
     @api.constrains("date_start", "date_end")
@@ -74,7 +74,7 @@ class DdmrpAdjustmentSheet(models.TransientModel):
         for rec in self:
             if rec.date_start > rec.date_end:
                 raise ValidationError(
-                    _("The start date cannot be later than the end date.")
+                    self.env._("The start date cannot be later than the end date.")
                 )
 
     date_start = fields.Date(string="Date From", required=True)
@@ -95,10 +95,10 @@ class DdmrpAdjustmentSheet(models.TransientModel):
     def button_validate(self):
         self.ensure_one()
         if not self.buffer_ids:
-            raise ValidationError(_("You must select at least one buffer."))
+            raise ValidationError(self.env._("You must select at least one buffer."))
 
         if not self.line_ids.mapped("factor"):
-            raise ValidationError(_("You must apply at least one factor"))
+            raise ValidationError(self.env._("You must apply at least one factor"))
 
         res = []
         for b in self.buffer_ids:
@@ -108,8 +108,7 @@ class DdmrpAdjustmentSheet(models.TransientModel):
                 res.append(estimate.id)
         action = {
             "domain": [("id", "in", res)],
-            "name": _("DDMRP Buffer Adjustment"),
-            "src_model": "ddmrp.adjustment.sheet",
+            "name": self.env._("DDMRP Buffer Adjustment"),
             "view_mode": "list",
             "res_model": "ddmrp.adjustment",
             "type": "ir.actions.act_window",
@@ -117,7 +116,7 @@ class DdmrpAdjustmentSheet(models.TransientModel):
         return action
 
     def action_refresh(self):
-        self.line_ids = [(6, 0, [])]
+        self.line_ids = [Command.clear()]
         if not (
             self.date_range_type_id
             and self.date_start
