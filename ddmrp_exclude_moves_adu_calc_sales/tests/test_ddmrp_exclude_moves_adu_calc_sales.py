@@ -3,6 +3,7 @@
 
 
 import odoo.tests.common as common
+from odoo import Command
 
 
 class TestDdmrp(common.TransactionCase):
@@ -44,13 +45,13 @@ class TestDdmrp(common.TransactionCase):
             {
                 "partner_id": self.customer.id,
                 "order_line": [
-                    (0, 0, ope)
+                    Command.create(ope)
                     for ope in [
                         {
                             "name": p.name,
                             "product_id": p.id,
                             "product_uom_qty": 2,
-                            "product_uom": p.uom_id.id,
+                            "product_uom_id": p.uom_id.id,
                             "price_unit": 10,
                         }
                         for p in self.product_a
