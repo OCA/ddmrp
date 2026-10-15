@@ -1,6 +1,8 @@
 # Copyright 2020 Camptocamp (https://www.camptocamp.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
+import functools
+
 from odoo import models
 
 from odoo.addons.queue_job.job import identity_exact
@@ -24,18 +26,16 @@ class Buffer(models.Model):
         }
 
     def _register_hook(self):
-        self._patch_method(
-            "cron_actions",
-            self._patch_job_auto_delay(
-                "cron_actions", context_key="auto_delay_ddmrp_cron_actions"
-            ),
+        patched = self._patch_job_auto_delay(
+            "cron_actions", context_key="auto_delay_ddmrp_cron_actions"
         )
-        self._patch_method(
-            "_calc_adu",
-            self._patch_job_auto_delay(
-                "_calc_adu", context_key="auto_delay_ddmrp_calc_adu"
-            ),
+        type(self).cron_actions = functools.update_wrapper(
+            patched, type(self).cron_actions
         )
+        patched = self._patch_job_auto_delay(
+            "_calc_adu", context_key="auto_delay_ddmrp_calc_adu"
+        )
+        type(self)._calc_adu = functools.update_wrapper(patched, type(self)._calc_adu)
         return super()._register_hook()
 
     def cron_ddmrp(self, automatic=False, domain=None):
