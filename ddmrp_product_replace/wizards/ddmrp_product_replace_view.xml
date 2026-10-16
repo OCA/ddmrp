@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2017-21 ForgeFlow S.L. (https://www.forgeflow.com)
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html). -->
+<odoo>
+    <record id="view_ddmrp_adjustment_sheet_wizard_form" model="ir.ui.view">
+        <field name="name">ddmrp.product.replace.form</field>
+        <field name="model">ddmrp.product.replace</field>
+        <field name="arch" type="xml">
+            <form string="Product Replacement Tool">
+                <group>
+                    <field name="mode" />
+                </group>
+                <group name="old_product" string="Select Replaced Products">
+                    <field
+                        name="old_product_ids"
+                        widget="many2many_tags"
+                        options="{'no_create': True}"
+                    />
+                    <div invisible="not multi_product" colspan="2">
+                        <p> <i class="fa fa-info-circle" style="margin-right:5px" />
+                            When there are more than one product replaced, only the buffer(s) of the primary product in
+                            this list will be used to create the buffer(s) and/or product(s) for replacement.
+                        </p>
+                    </div>
+                    <field
+                        name="primary_old_product_id"
+                        invisible="not multi_product"
+                    />
+                    <field name="buffer_ids">
+                        <list decoration-danger="replaced_by_id">
+                            <field name="name" />
+                            <field name="warehouse_id" />
+                            <field name="location_id" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                            <field name="replaced_by_id" optional="hide" />
+                        </list>
+                    </field>
+                </group>
+                <group name="new_product" string="Select Replacing Product">
+                    <field name="use_existing" />
+                    <field
+                        name="new_product_id"
+                        invisible="use_existing != 'existing'"
+                    />
+                    <field
+                        name="new_product_default_code"
+                        invisible="use_existing != 'new'"
+                    />
+                    <field name="new_product_name" invisible="use_existing != 'new'" />
+                    <field name="copy_route" />
+                    <field name="copy_putaway" />
+                    <field name="copy_packaging" />
+                    <field name="consider_past_demand" />
+                </group>
+                <footer>
+                    <button
+                        name="button_validate"
+                        string="Validate"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <span class="mx-2 text-muted">or</span>
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_ddmrp_product_replace_wizard">
+        <field name="name">Product Replacement Tool</field>
+        <field name="res_model">ddmrp.product.replace</field>
+        <field name="binding_model_id" ref="model_ddmrp_product_replace" />
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem
+        id="menu_ddmrp_product_replace"
+        parent="ddmrp.menu_ddmrp_config"
+        action="action_ddmrp_product_replace_wizard"
+        groups="stock.group_stock_manager"
+    />
+</odoo>

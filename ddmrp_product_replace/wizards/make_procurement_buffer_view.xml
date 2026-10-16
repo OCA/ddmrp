@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="view_make_procurement_buffer_wizard" model="ir.ui.view">
+        <field name="name">Request Procurement</field>
+        <field name="model">make.procurement.buffer</field>
+        <field name="inherit_id" ref="ddmrp.view_make_procurement_buffer_wizard" />
+        <field name="arch" type="xml">
+            <xpath expr="//p[hasclass('oe_gray')][last()]" position="after">
+                <div
+                    class="alert alert-danger"
+                    role="alert"
+                    invisible="not has_replaced_buffers"
+                    style="margin-bottom:0px;"
+                >
+                    <p>
+                        <span
+                            class="fa fa-info-circle"
+                            title="fa fa-info-circle"
+                            style="margin-right:5px"
+                        />
+                        <field name="replaced_by_alert_text" style="display:inline;" />
+                    </p>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
