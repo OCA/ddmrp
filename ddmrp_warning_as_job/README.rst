@@ -1,3 +1,7 @@
+.. image:: https://odoo-community.org/readme-banner-image
+   :target: https://odoo-community.org/get-involved?utm_source=readme
+   :alt: Odoo Community Association
+
 ====================
 DDMRP Warning as job
 ====================
@@ -13,31 +17,50 @@ DDMRP Warning as job
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/license-LGPL--3-blue.png
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fddmrp-lightgray.png?logo=github
-    :target: https://github.com/OCA/ddmrp/tree/18.0/ddmrp_warning_as_job
+    :target: https://github.com/OCA/ddmrp/tree/19.0/ddmrp_warning_as_job
     :alt: OCA/ddmrp
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/ddmrp-18-0/ddmrp-18-0-ddmrp_warning_as_job
+    :target: https://translation.odoo-community.org/projects/ddmrp-19-0/ddmrp-19-0-ddmrp_warning_as_job
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/ddmrp&target_branch=18.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/ddmrp&target_branch=19.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-DDMRP Warning calculations are now run with Queue Jobs.
+This module makes the scheduled action *DDMRP Buffer Warning
+calculation* (provided by **ddmrp_warning**) enqueue one queue job per
+stock buffer instead of computing the warnings of all the buffers in a
+single transaction. The jobs run in the ``root.ddmrp`` channel (provided
+by **ddmrp_cron_actions_as_job**) and, thanks to identity keys, only one
+pending job exists at a time for the same buffer.
 
-The ``<stock.buffer>._generate_ddmrp_warnings`` method is automatically
-delayed when the context contains
-``auto_delay_ddmrp_generate_ddmrp_warnings=True``.
+Technically, the ``<stock.buffer>._generate_ddmrp_warnings`` method is
+automatically delayed when the context contains
+``auto_delay_ddmrp_generate_ddmrp_warnings=True``. The scheduled action
+sets this key; the **Refresh Warnings** button of the buffer form does
+not, so a manual refresh is still computed immediately.
 
 **Table of contents**
 
 .. contents::
    :local:
+
+Usage
+=====
+
+1. The scheduled action *DDMRP Buffer Warning calculation* runs as usual
+   (daily by default) and creates a job named *DDMRP Warning calculation
+   (buffer name)* for every buffer.
+2. Go to *Job Queue > Queue > Jobs* to follow these jobs. When a job is
+   done, the warnings of its buffer are up to date.
+3. Check the results as described in **ddmrp_warning**: use the *With
+   Warnings* filter on the stock buffers, or open the *Warnings* tab of
+   a buffer.
 
 Bug Tracker
 ===========
@@ -45,7 +68,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/ddmrp/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/ddmrp/issues/new?body=module:%20ddmrp_warning_as_job%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/ddmrp/issues/new?body=module:%20ddmrp_warning_as_job%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -60,7 +83,10 @@ Authors
 Contributors
 ------------
 
-David Jiménez david.jimenez@forgeflow.com
+-  `ForgeFlow <https://www.forgeflow.com>`__:
+
+   -  David Jiménez <david.jimenez@forgeflow.com>
+   -  Lois Rilo Antelo <lois.rilo@forgeflow.com>
 
 Maintainers
 -----------
@@ -75,6 +101,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/ddmrp <https://github.com/OCA/ddmrp/tree/18.0/ddmrp_warning_as_job>`_ project on GitHub.
+This module is part of the `OCA/ddmrp <https://github.com/OCA/ddmrp/tree/19.0/ddmrp_warning_as_job>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

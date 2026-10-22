@@ -35,3 +35,18 @@ class TestDdmrpWarningAsJob(TestDdmrpCommon):
             delay_args, delay_kwargs = delayable._generate_ddmrp_warnings.call_args
             self.assertEqual(delay_args, ())
             self.assertDictEqual(delay_kwargs, {})
+
+    def test_cron_generate_ddmrp_warnings_delay_jobs(self):
+        buffer_model = self.bufferModel.with_context(test_queue_job_no_delay=False)
+        buffer_count = buffer_model.search_count([])
+        self.assertTrue(buffer_count)
+        with mock_with_delay() as (delayable_cls, delayable):
+            buffer_model.cron_generate_ddmrp_warnings()
+            self.assertEqual(delayable_cls.call_count, buffer_count)
+            self.assertEqual(
+                delayable._generate_ddmrp_warnings.call_count, buffer_count
+            )
+            delayed_buffers = self.bufferModel.browse(
+                [call.args[0].id for call in delayable_cls.call_args_list]
+            )
+            self.assertIn(self.buffer_a, delayed_buffers)

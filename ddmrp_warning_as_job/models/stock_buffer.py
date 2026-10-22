@@ -1,6 +1,8 @@
 # Copyright 2024 ForgeFlow (https://www.camptocamp.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
+import functools
+
 from odoo import models
 
 from odoo.addons.queue_job.job import identity_exact
@@ -17,12 +19,12 @@ class Buffer(models.Model):
         }
 
     def _register_hook(self):
-        self._patch_method(
+        patched = self._patch_job_auto_delay(
             "_generate_ddmrp_warnings",
-            self._patch_job_auto_delay(
-                "_generate_ddmrp_warnings",
-                context_key="auto_delay_ddmrp_generate_ddmrp_warnings",
-            ),
+            context_key="auto_delay_ddmrp_generate_ddmrp_warnings",
+        )
+        type(self)._generate_ddmrp_warnings = functools.update_wrapper(
+            patched, type(self)._generate_ddmrp_warnings
         )
         return super()._register_hook()
 
