@@ -6,7 +6,7 @@ from odoo.tests import tagged
 
 from odoo.addons.ddmrp.tests.common import TestDdmrpCommon
 from odoo.addons.queue_job.job import identity_exact
-from odoo.addons.queue_job.tests.common import mock_with_delay
+from odoo.addons.queue_job.tests.common import mock_with_delay, trap_jobs
 
 
 @tagged("post_install", "-at_install")
@@ -62,3 +62,13 @@ class TestDdmrpCronActionsAsJob(TestDdmrpCommon):
             delay_args, delay_kwargs = delayable._calc_adu.call_args
             self.assertEqual(delay_args, ())
             self.assertDictEqual(delay_kwargs, {})
+
+    def test_procurement_delays_buffer_refresh(self):
+        with trap_jobs() as trap:
+            self.create_buffer_procurement(self.buffer_a)
+            refresh_jobs = [
+                job
+                for job in trap.enqueued_jobs
+                if job.method_name == "cron_actions" and job.recordset == self.buffer_a
+            ]
+        self.assertEqual(len(refresh_jobs), 1)
