@@ -2,9 +2,8 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 import logging
-import threading
 
-from odoo import api, fields, models
+from odoo import api, fields, models, modules
 from odoo.tools.misc import split_every
 
 _logger = logging.getLogger(__name__)
@@ -45,7 +44,7 @@ class Buffer(models.Model):
 
     @api.model
     def cron_generate_ddmrp_warnings(self, automatic=False):
-        auto_commit = not getattr(threading.current_thread(), "testing", False)
+        auto_commit = not modules.module.current_test
         buffer_ids = self.search([]).ids  # pylint: disable=no-search-all
         i = 0
         j = len(buffer_ids)
