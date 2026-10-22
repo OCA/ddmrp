@@ -47,7 +47,8 @@ class StockRule(models.Model):
         for procurement, _rule in procurements:
             buffer = procurement.values.get("buffer_id")
             if buffer:
-                buffer.sudo().cron_actions()
+                # Use the rule's context so callers can tune the refresh
+                buffer.with_context(**self.env.context).sudo().cron_actions()
         return True
 
     # TODO: stock_orderpoint_move_link: tests!
