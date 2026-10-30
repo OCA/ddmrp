@@ -25,3 +25,8 @@ msgstr "Buffer di materiale"
 #: model:ir.model,name:ddmrp_cron_actions_as_job.model_stock_move
 msgid "Stock Move"
 msgstr "Movimento di magazzino"
+
+#. module: ddmrp_cron_actions_as_job
+#: model:ir.model,name:ddmrp_cron_actions_as_job.model_stock_rule
+msgid "Stock Rule"
+msgstr ""
