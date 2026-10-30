@@ -16,12 +16,14 @@ msgstr ""
 #. module: ddmrp_cron_actions_as_job
 #: model:ir.model.fields,field_description:ddmrp_cron_actions_as_job.field_stock_buffer__display_name
 #: model:ir.model.fields,field_description:ddmrp_cron_actions_as_job.field_stock_move__display_name
+#: model:ir.model.fields,field_description:ddmrp_cron_actions_as_job.field_stock_rule__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: ddmrp_cron_actions_as_job
 #: model:ir.model.fields,field_description:ddmrp_cron_actions_as_job.field_stock_buffer__id
 #: model:ir.model.fields,field_description:ddmrp_cron_actions_as_job.field_stock_move__id
+#: model:ir.model.fields,field_description:ddmrp_cron_actions_as_job.field_stock_rule__id
 msgid "ID"
 msgstr ""
 
@@ -33,4 +35,9 @@ msgstr ""
 #. module: ddmrp_cron_actions_as_job
 #: model:ir.model,name:ddmrp_cron_actions_as_job.model_stock_move
 msgid "Stock Move"
+msgstr ""
+
+#. module: ddmrp_cron_actions_as_job
+#: model:ir.model,name:ddmrp_cron_actions_as_job.model_stock_rule
+msgid "Stock Rule"
 msgstr ""
