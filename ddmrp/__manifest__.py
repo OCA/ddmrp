@@ -5,7 +5,7 @@
 {
     "name": "DDMRP",
     "summary": "Demand Driven Material Requirements Planning",
-    "version": "18.0.1.10.2",
+    "version": "18.0.1.10.3",
     "license": "LGPL-3",
     "development_status": "Production/Stable",
     "author": "ForgeFlow, " "Odoo Community Association (OCA)",
