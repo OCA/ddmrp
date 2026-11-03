@@ -21,6 +21,8 @@ class TestDdmrpCronActionsAsJob(TestDdmrpCommon):
         buffer_a = self.buffer_a.with_context(**context)
 
         with mock_with_delay() as (delayable_cls, delayable):
+            # True is not a valid value, we use it as a marker
+            # to trace if anything is changed
             buffer_a.cron_actions(only_nfp=True)
 
             # check 'with_delay()' part:
@@ -35,7 +37,7 @@ class TestDdmrpCronActionsAsJob(TestDdmrpCommon):
             self.assertEqual(delayable.cron_actions.call_count, 1)
             delay_args, delay_kwargs = delayable.cron_actions.call_args
             self.assertEqual(delay_args, ())
-            self.assertDictEqual(delay_kwargs, {"only_nfp": True})
+            self.assertDictEqual(delay_kwargs, {"only_nfp": False})
 
     def test_calc_adu_delay_job(self):
         context = dict(self.env.context, auto_delay_ddmrp_calc_adu=True)
