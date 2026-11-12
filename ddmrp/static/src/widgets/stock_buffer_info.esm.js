@@ -28,7 +28,7 @@ export class StockBufferPopover extends Component {
                     }
                 } else {
                     // Assume m2o
-                    bufferId = this.props.record.data[bufferField][0];
+                    bufferId = this.props.record.data[bufferField].id;
                 }
             } else if (bufferField) {
                 // Relation is blank, no buffer.
