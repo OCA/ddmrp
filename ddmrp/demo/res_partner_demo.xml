@@ -12,7 +12,7 @@
         <field name="country_id" ref="base.es" />
         <field
             name="image_1920"
-            type="base64"
+            type="bytes"
             file="ddmrp/static/img/res_partner_forgeflow-image.png"
         />
     </record>

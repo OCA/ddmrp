@@ -8,13 +8,3 @@ patch(BomOverviewTable.prototype, {
         return this.props.showOptions.is_buffered;
     },
 });
-
-patch(BomOverviewTable, {
-    props: {
-        ...BomOverviewTable.props,
-        showOptions: {
-            ...BomOverviewTable.showOptions,
-            is_buffered: Boolean,
-        },
-    },
-});

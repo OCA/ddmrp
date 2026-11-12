@@ -57,7 +57,7 @@ class MrpBom(models.Model):
     @api.depends("buffer_id")
     def _compute_is_buffered(self):
         for bom in self:
-            bom.is_buffered = True if bom.buffer_id else False
+            bom.is_buffered = bool(bom.buffer_id)
 
     @api.depends_context("location_id")
     def _compute_context_location(self):
@@ -180,7 +180,7 @@ class MrpBomLine(models.Model):
             domain = line._get_search_buffer_domain()
             buffer = self.env["stock.buffer"].search(domain, limit=1)
             line.buffer_id = buffer
-            line.is_buffered = True if buffer else False
+            line.is_buffered = bool(buffer)
 
     @api.depends("product_id")
     def _compute_dlt(self):

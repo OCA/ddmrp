@@ -2,8 +2,8 @@
 # Copyright 2016 Aleph Objects, Inc. (https://www.alephobjects.com/)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from datetime import datetime
 
+from odoo import fields
 from odoo.tests import common
 
 
@@ -126,7 +126,6 @@ class TestDdmrpCommon(common.TransactionCase):
         vendor = cls.partner_model.create({"name": "Test Vendor 1"})
 
         # Create products and BoM's:
-        manufacture_route = cls.env.ref("mrp.route_warehouse0_manufacture")
         cls.productA = cls.productModel.create(
             {
                 "name": "product A",
@@ -134,7 +133,6 @@ class TestDdmrpCommon(common.TransactionCase):
                 "is_storable": True,
                 "uom_id": cls.uom_unit.id,
                 "default_code": "A",
-                "route_ids": [(6, 0, manufacture_route.ids)],
             }
         )
         cls.component_a1 = cls.productModel.create(
@@ -191,7 +189,6 @@ class TestDdmrpCommon(common.TransactionCase):
         cls.quant.action_apply_inventory()
 
         # Product B (purchased):
-        buy_route = cls.env.ref("purchase_stock.route_warehouse0_buy")
         cls.product_purchased = cls.productModel.create(
             {
                 "name": "product Purchased",
@@ -199,7 +196,6 @@ class TestDdmrpCommon(common.TransactionCase):
                 "is_storable": True,
                 "uom_id": cls.uom_unit.id,
                 "default_code": "B",
-                "route_ids": [(6, 0, buy_route.ids)],
             }
         )
         cls.product_purchased_2 = cls.productModel.create(
@@ -209,7 +205,6 @@ class TestDdmrpCommon(common.TransactionCase):
                 "is_storable": True,
                 "uom_id": cls.uom_unit.id,
                 "default_code": "B2",
-                "route_ids": [(6, 0, buy_route.ids)],
             }
         )
         cls.supinfo_model.create(
@@ -227,7 +222,6 @@ class TestDdmrpCommon(common.TransactionCase):
                 "is_storable": True,
                 "uom_id": cls.uom_unit.id,
                 "default_code": "C",
-                "route_ids": [(6, 0, buy_route.ids)],
             }
         )
         cls.color_attribute = cls.env["product.attribute"].create(
@@ -297,7 +291,6 @@ class TestDdmrpCommon(common.TransactionCase):
                 "name": "FP-01",
                 "is_storable": True,
                 "uom_id": cls.uom_unit.id,
-                "route_ids": [(6, 0, manufacture_route.ids)],
             }
         )
         cls.product_as01 = cls.productModel.create(
@@ -305,7 +298,6 @@ class TestDdmrpCommon(common.TransactionCase):
                 "name": "AS-01",
                 "is_storable": True,
                 "uom_id": cls.uom_unit.id,
-                "route_ids": [(6, 0, manufacture_route.ids)],
             }
         )
         cls.product_rm01 = cls.productModel.create(
@@ -313,7 +305,6 @@ class TestDdmrpCommon(common.TransactionCase):
                 "name": "RM-01",
                 "is_storable": True,
                 "uom_id": cls.uom_unit.id,
-                "route_ids": [(6, 0, buy_route.ids)],
             }
         )
         cls.product_rm02 = cls.productModel.create(
@@ -321,7 +312,6 @@ class TestDdmrpCommon(common.TransactionCase):
                 "name": "RM-02",
                 "is_storable": True,
                 "uom_id": cls.uom_unit.id,
-                "route_ids": [(6, 0, buy_route.ids)],
             }
         )
         cls.supinfo_model.create(
@@ -345,7 +335,7 @@ class TestDdmrpCommon(common.TransactionCase):
         cls.bom_fp01 = cls.bomModel.create(
             {
                 "product_tmpl_id": cls.product_fp01.product_tmpl_id.id,
-                "product_uom_id": cls.uom_unit.id,
+                "uom_id": cls.uom_unit.id,
                 "produce_delay": 2.0,
             }
         )
@@ -359,7 +349,7 @@ class TestDdmrpCommon(common.TransactionCase):
         cls.bom_as01 = cls.bomModel.create(
             {
                 "product_tmpl_id": cls.product_as01.product_tmpl_id.id,
-                "product_uom_id": cls.uom_unit.id,
+                "uom_id": cls.uom_unit.id,
                 "produce_delay": 6.0,
             }
         )
@@ -465,9 +455,9 @@ class TestDdmrpCommon(common.TransactionCase):
         )
 
         # dates for a period of 120 days for estimates.
-        cls.estimate_date_from = cls.calendar.plan_days(1, datetime.today()).date()
+        cls.estimate_date_from = cls.calendar.plan_days(1, fields.Datetime.now()).date()
         days = 119
-        dt = cls.calendar.plan_days(+1 * days + 1, datetime.today())
+        dt = cls.calendar.plan_days(+1 * days + 1, fields.Datetime.now())
         cls.estimate_date_to = dt.date()
 
         # Run cron jobs:
@@ -507,7 +497,7 @@ class TestDdmrpCommon(common.TransactionCase):
                         {
                             "product_id": self.productA.id,
                             "date": date_move,
-                            "product_uom": uom.id,
+                            "uom_id": uom.id,
                             "product_uom_qty": qty,
                             "location_id": source_location.id,
                             "location_dest_id": self.customer_location.id,
@@ -534,7 +524,7 @@ class TestDdmrpCommon(common.TransactionCase):
                             "product_id": self.productA.id,
                             "date": date_move,
                             "date_deadline": date_move,
-                            "product_uom": self.productA.uom_id.id,
+                            "uom_id": self.productA.uom_id.id,
                             "product_uom_qty": qty,
                             "location_id": self.supplier_location.id,
                             "location_dest_id": self.binA.id,
@@ -560,7 +550,7 @@ class TestDdmrpCommon(common.TransactionCase):
                         {
                             "product_id": self.productA.id,
                             "date": date_move,
-                            "product_uom": self.productA.uom_id.id,
+                            "uom_id": self.productA.uom_id.id,
                             "product_uom_qty": qty,
                             "location_id": self.binA.id,
                             "location_dest_id": self.binB.id,
@@ -588,7 +578,7 @@ class TestDdmrpCommon(common.TransactionCase):
                         {
                             "product_id": product.id,
                             "date": date_move,
-                            "product_uom": product.uom_id.id,
+                            "uom_id": product.uom_id.id,
                             "product_uom_qty": qty,
                             "location_id": source_location.id,
                             "location_dest_id": self.customer_location.id,
@@ -614,7 +604,7 @@ class TestDdmrpCommon(common.TransactionCase):
                         {
                             "product_id": product.id,
                             "date": date_move,
-                            "product_uom": product.uom_id.id,
+                            "uom_id": product.uom_id.id,
                             "product_uom_qty": qty,
                             "location_id": self.supplier_location.id,
                             "location_dest_id": self.binA.id,
@@ -657,7 +647,7 @@ class TestDdmrpCommon(common.TransactionCase):
             {
                 "product_id": self.productA.id,
                 "date": date_move,
-                "product_uom": self.productA.uom_id.id,
+                "uom_id": self.productA.uom_id.id,
                 "product_uom_qty": qty,
                 "location_id": self.binA.id,
                 "location_dest_id": self.inventory_location.id,

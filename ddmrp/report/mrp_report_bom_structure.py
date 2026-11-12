@@ -9,9 +9,7 @@ class BomStructureReport(models.AbstractModel):
 
     def _get_pdf_doc(self, bom_id, data, quantity, product_variant_id=None):
         doc = super()._get_pdf_doc(bom_id, data, quantity, product_variant_id)
-        doc["show_buffered"] = (
-            True if data and data.get("show_buffered") == "true" else False
-        )
+        doc["show_buffered"] = bool(data and data.get("show_buffered") == "true")
         return doc
 
     @api.model

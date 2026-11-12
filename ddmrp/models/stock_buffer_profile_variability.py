@@ -13,5 +13,4 @@ class StockBufferProfileVariability(models.Model):
     factor = fields.Float(string="Variability Factor", required=True)
     company_id = fields.Many2one(
         "res.company",
-        "Company",
     )

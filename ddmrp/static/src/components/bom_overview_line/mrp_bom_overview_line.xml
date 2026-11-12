@@ -8,7 +8,7 @@
     >
         <xpath expr="//td[@name='td_mrp_bom']" position="before">
             <td
-                t-if="props.showOptions.is_buffered and data.is_buffered"
+                t-if="this.props.showOptions.is_buffered and this.data.is_buffered"
                 class="text-center"
             >
                 <span>
@@ -18,15 +18,15 @@
                     />
                 </span>
             </td>
-            <td t-if="props.showOptions.is_buffered and !data.is_buffered" />
+            <td t-if="this.props.showOptions.is_buffered and !this.data.is_buffered" />
         </xpath>
         <xpath
-            expr="//td[@t-if='forecastMode'][span[@t-if='hasLeadTime']]"
+            expr="//td[@t-if='this.forecastMode'][span[@t-if='this.hasLeadTime']]"
             position="after"
         >
-            <td t-if="forecastMode" class="text-end">
+            <td t-if="this.forecastMode" class="text-end">
                 <t
-                t-esc="data.dlt"
+                t-out="this.data.dlt"
                 t-options='{"widget": "float", "decimal_precision": "Lead Time"}'
             /> Days
             </td>

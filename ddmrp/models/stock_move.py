@@ -84,12 +84,12 @@ class StockMove(models.Model):
         for move in self:
             out_buffers |= move.mapped("product_id.buffer_ids").filtered(
                 lambda buffer, move=move: (
-                    move.location_id.is_sublocation_of(buffer.location_id)
+                    move.location_id._child_of(buffer.location_id)
                     and (
-                        not move.location_dest_id.is_sublocation_of(buffer.location_id)
+                        not move.location_dest_id._child_of(buffer.location_id)
                         or (
-                            move.location_final_id
-                            and not move.location_final_id.is_sublocation_of(
+                            move.forecasted_location_id
+                            and not move.forecasted_location_id._child_of(
                                 buffer.location_id
                             )
                         )
@@ -98,12 +98,12 @@ class StockMove(models.Model):
             )
             in_buffers |= move.mapped("product_id.buffer_ids").filtered(
                 lambda buffer, move=move: (
-                    not move.location_id.is_sublocation_of(buffer.location_id)
+                    not move.location_id._child_of(buffer.location_id)
                     and (
-                        move.location_dest_id.is_sublocation_of(buffer.location_id)
+                        move.location_dest_id._child_of(buffer.location_id)
                         or (
-                            move.location_final_id
-                            and move.location_final_id.is_sublocation_of(
+                            move.forecasted_location_id
+                            and move.forecasted_location_id._child_of(
                                 buffer.location_id
                             )
                         )

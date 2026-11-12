@@ -11,7 +11,7 @@
                 <button
                     title="Go to Source"
                     name="action_open_stock_move_source"
-                    icon="fa-arrow-right"
+                    icon="arrow_forward"
                     type="object"
                 />
             </field>

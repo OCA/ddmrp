@@ -8,13 +8,3 @@ patch(BomOverviewDisplayFilter.prototype, {
         this.displayOptions.is_buffered = _t("Buffered");
     },
 });
-
-patch(BomOverviewDisplayFilter, {
-    props: {
-        ...BomOverviewDisplayFilter.props,
-        showOptions: {
-            ...BomOverviewDisplayFilter.showOptions,
-            is_buffered: Boolean,
-        },
-    },
-});

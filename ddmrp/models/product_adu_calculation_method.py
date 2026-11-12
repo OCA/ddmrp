@@ -64,7 +64,6 @@ class ProductAduCalculationMethod(models.Model):
     )
     company_id = fields.Many2one(
         comodel_name="res.company",
-        string="Company",
     )
 
     @api.constrains("method", "horizon_past", "horizon_future")

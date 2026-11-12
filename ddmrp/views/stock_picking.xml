@@ -11,7 +11,7 @@
                     type="object"
                     string="Product Buffers"
                     class="oe_stat_button"
-                    icon="fa-tasks"
+                    icon="checklist"
                 />
             </div>
         </field>

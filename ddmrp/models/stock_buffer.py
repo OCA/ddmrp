@@ -6,7 +6,7 @@ import json
 import logging
 import operator as py_operator
 from collections import defaultdict
-from datetime import datetime, timedelta
+from datetime import timedelta
 from math import pi
 
 from odoo import api, exceptions, fields, models, modules
@@ -80,19 +80,16 @@ class StockBuffer(models.Model):
     active = fields.Boolean(default=True)
     warehouse_id = fields.Many2one(
         comodel_name="stock.warehouse",
-        string="Warehouse",
         ondelete="cascade",
         required=True,
     )
     location_id = fields.Many2one(
         comodel_name="stock.location",
-        string="Location",
         ondelete="cascade",
         required=True,
     )
     product_id = fields.Many2one(
         comodel_name="product.product",
-        string="Product",
         domain=[("is_storable", "=", True)],
         ondelete="cascade",
         required=True,
@@ -140,7 +137,6 @@ class StockBuffer(models.Model):
     )
     company_id = fields.Many2one(
         comodel_name="res.company",
-        string="Company",
         required=True,
         default=lambda self: self.env.company,
     )
@@ -168,7 +164,7 @@ class StockBuffer(models.Model):
         for buffer in self:
             polines = buffer._get_rfq_dlt(dlt_interval=None)
             for line in polines:
-                res[buffer.id] += line.product_uom_id._compute_quantity(
+                res[buffer.id] += line.uom_id._compute_quantity(
                     line.product_qty, buffer.product_uom, round=False
                 )
         return res
@@ -359,8 +355,8 @@ class StockBuffer(models.Model):
         lines = self.env["stock.move.line"].search(domain)
         lines = lines.filtered(
             lambda line: (
-                line.location_id.is_sublocation_of(self.location_id)
-                and not line.location_dest_id.is_sublocation_of(self.location_id)
+                line.location_id._child_of(self.location_id)
+                and not line.location_dest_id._child_of(self.location_id)
             )
         )
         return sum(lines.mapped("quantity_product_uom"))
@@ -431,21 +427,21 @@ class StockBuffer(models.Model):
         "buffer_profile_id.lead_time_id.factor",
         "red_override",
         "buffer_profile_id.variability_id.factor",
-        "product_uom.rounding",
         "lead_days",
         "product_id.seller_ids.delay",
     )
     def _compute_red_zone(self):
+        digits = self.env["decimal.precision"].precision_get("Product Unit")
         for rec in self:
             if rec.product_id and rec.replenish_method in ["replenish", "min_max"]:
                 dlt = rec.dlt + rec.extra_lead_time
                 rec.red_base_qty = float_round(
                     dlt * rec.adu * rec.buffer_profile_id.lead_time_id.factor,
-                    precision_rounding=rec.product_uom.rounding,
+                    precision_digits=digits,
                 )
                 rec.red_safety_qty = float_round(
                     rec.red_base_qty * rec.buffer_profile_id.variability_id.factor,
-                    precision_rounding=rec.product_uom.rounding,
+                    precision_digits=digits,
                 )
                 rec.red_zone_qty = rec.red_base_qty + rec.red_safety_qty
             elif rec.product_id and rec.replenish_method == "replenish_override":
@@ -460,28 +456,28 @@ class StockBuffer(models.Model):
         "buffer_profile_id.lead_time_id.factor",
         "order_cycle",
         "minimum_order_quantity",
-        "product_uom.rounding",
         "green_override",
         "top_of_yellow",
     )
     def _compute_green_zone(self):
+        digits = self.env["decimal.precision"].precision_get("Product Unit")
         for rec in self:
             if rec.product_id and rec.replenish_method in ["replenish", "min_max"]:
                 # Using imposed or desired minimum order cycle
                 rec.green_zone_oc = float_round(
                     rec.order_cycle * rec.adu,
-                    precision_rounding=rec.product_uom.rounding,
+                    precision_digits=digits,
                 )
                 # Using lead time factor
                 dlt = rec.dlt + rec.extra_lead_time
                 rec.green_zone_lt_factor = float_round(
                     dlt * rec.adu * rec.buffer_profile_id.lead_time_id.factor,
-                    precision_rounding=rec.product_uom.rounding,
+                    precision_digits=digits,
                 )
                 # Using minimum order quantity
                 rec.green_zone_moq = float_round(
                     rec.minimum_order_quantity,
-                    precision_rounding=rec.product_uom.rounding,
+                    precision_digits=digits,
                 )
 
                 # The biggest option of the above will be used as the green
@@ -504,18 +500,18 @@ class StockBuffer(models.Model):
         "buffer_profile_id.replenish_method",
         "order_cycle",
         "minimum_order_quantity",
-        "product_uom.rounding",
         "yellow_override",
         "red_zone_qty",
     )
     def _compute_yellow_zone(self):
+        digits = self.env["decimal.precision"].precision_get("Product Unit")
         for rec in self:
             if rec.product_id and rec.replenish_method == "min_max":
                 rec.yellow_zone_qty = 0
             elif rec.product_id and rec.replenish_method == "replenish":
                 dlt = rec.dlt + rec.extra_lead_time
                 rec.yellow_zone_qty = float_round(
-                    dlt * rec.adu, precision_rounding=rec.product_uom.rounding
+                    dlt * rec.adu, precision_digits=digits
                 )
             elif rec.product_id and rec.replenish_method == "replenish_override":
                 rec.yellow_zone_qty = rec.yellow_override
@@ -529,7 +525,6 @@ class StockBuffer(models.Model):
         "qty_multiple",
         "product_uom",
         "procure_uom_id",
-        "product_uom.rounding",
     )
     def _compute_procure_recommended_qty(self):
         subtract_qty = self.sudo()._quantity_in_progress()
@@ -574,13 +569,12 @@ class StockBuffer(models.Model):
         # If there is a procure UoM we apply it before anything.
         # This means max, min and multiple quantities are relative to
         # the procure UoM.
+        digits = self.env["decimal.precision"].precision_get("Product Unit")
         if self.procure_uom_id:
-            rounding = self.procure_uom_id.rounding
             adjusted_qty = self.product_id.uom_id._compute_quantity(
                 qty, self.procure_uom_id
             )
         else:
-            rounding = self.product_uom.rounding
             adjusted_qty = qty
 
         # Apply qty multiple and minimum quantity (maximum quantity
@@ -589,17 +583,12 @@ class StockBuffer(models.Model):
         multiple_tolerance = self.qty_multiple * (
             self.company_id.ddmrp_qty_multiple_tolerance / 100
         )
-        if (
-            float_compare(remainder, multiple_tolerance, precision_rounding=rounding)
-            > 0
-        ):
+        if float_compare(remainder, multiple_tolerance, precision_digits=digits) > 0:
             adjusted_qty += self.qty_multiple - remainder
-        elif float_compare(remainder, 0.0, precision_rounding=rounding) > 0:
+        elif float_compare(remainder, 0.0, precision_digits=digits) > 0:
             adjusted_qty -= remainder
         if (
-            float_compare(
-                adjusted_qty, self.procure_min_qty, precision_rounding=rounding
-            )
+            float_compare(adjusted_qty, self.procure_min_qty, precision_digits=digits)
             < 0
         ):
             adjusted_qty = self.procure_min_qty
@@ -620,7 +609,7 @@ class StockBuffer(models.Model):
     def _compute_ddmrp_chart_execution(self):
         for rec in self:
             # On new records in v19, onchange triggers this before product_id is set,
-            # leaving product_uom empty (rounding=0.0).
+            # leaving product_uom empty.
             if not rec.product_id:
                 rec.ddmrp_chart_execution = json.dumps({"div": "", "script": ""})
                 continue
@@ -720,19 +709,20 @@ class StockBuffer(models.Model):
         p = figure(frame_width=300, frame_height=400, y_axis_label="Quantity")
         p.xaxis.visible = False
         p.toolbar.logo = None
+        digits = self.env["decimal.precision"].precision_get("Product Unit")
         tor_exec = float_round(
             self.top_of_red / 2,
-            precision_rounding=self.product_uom.rounding,
+            precision_digits=digits,
         )
         toy_exec = self.top_of_red
         tog_exec = float_round(
             self.top_of_red + self.green_zone_qty,
-            precision_rounding=self.product_uom.rounding,
+            precision_digits=digits,
         )
         tor2_exec = self.top_of_green
         toy2_exec = float_round(
             (tor2_exec + tog_exec) / 2,
-            precision_rounding=self.product_uom.rounding,
+            precision_digits=digits,
         )
         hex_colors = self._get_colors_hex_map(pallete="execution")
         red = p.vbar(
@@ -839,9 +829,9 @@ class StockBuffer(models.Model):
 
             # Plot demand data:
             if demand_data or mrp_data:
-                x_demand = list(convert_datetime_type(x) for x in demand_data.keys())
+                x_demand = [convert_datetime_type(x) for x in demand_data]
                 y_demand = list(demand_data.values())
-                x_mrp = list(convert_datetime_type(x) for x in mrp_data.keys())
+                x_mrp = [convert_datetime_type(x) for x in mrp_data]
                 y_mrp = list(mrp_data.values())
 
                 p = figure(
@@ -875,8 +865,8 @@ class StockBuffer(models.Model):
                     )
                 p.line(
                     [
-                        datetime.today() - timedelta(days=1),
-                        datetime.today() + timedelta(days=rec.order_spike_horizon),
+                        fields.Datetime.now() - timedelta(days=1),
+                        fields.Datetime.now() + timedelta(days=rec.order_spike_horizon),
                     ],
                     [rec.order_spike_threshold, rec.order_spike_threshold],
                     line_width=2,
@@ -907,7 +897,7 @@ class StockBuffer(models.Model):
 
             # Plot supply data:
             if supply_data:
-                x_supply = list(convert_datetime_type(x) for x in supply_data.keys())
+                x_supply = [convert_datetime_type(x) for x in supply_data]
                 y_supply = list(supply_data.values())
 
                 p = figure(
@@ -929,8 +919,8 @@ class StockBuffer(models.Model):
                 # White line to have similar proportion to demand chart.
                 p.line(
                     [
-                        datetime.today() - timedelta(days=1),
-                        datetime.today() + timedelta(days=rec.order_spike_horizon),
+                        fields.Datetime.now() - timedelta(days=1),
+                        fields.Datetime.now() + timedelta(days=rec.order_spike_horizon),
                     ],
                     [rec.order_spike_threshold, rec.order_spike_threshold],
                     line_width=2,
@@ -1044,10 +1034,10 @@ class StockBuffer(models.Model):
                 rec.product_vendor_code = False
                 continue
             supplier_info = rec._get_product_sellers().filtered(
-                lambda r: (
-                    r.partner_id == rec.main_supplier_id  # noqa: B023
+                lambda r, rec=rec: (
+                    r.partner_id == rec.main_supplier_id
                     and (not r.product_id or r.product_id == rec.product_id)
-                )  # noqa: B023
+                )
             )
             rec.product_vendor_code = (
                 supplier_info[0].product_code if supplier_info else False
@@ -1055,7 +1045,6 @@ class StockBuffer(models.Model):
 
     buffer_profile_id = fields.Many2one(
         comodel_name="stock.buffer.profile",
-        string="Buffer Profile",
         required=True,
     )
     replenish_method = fields.Selection(
@@ -1066,7 +1055,6 @@ class StockBuffer(models.Model):
     )
     main_supplier_id = fields.Many2one(
         comodel_name="res.partner",
-        string="Main Supplier",
         help=(
             "The main supplier is the first listed supplier defined "
             "on the product that is valid for this product variant. "
@@ -1427,10 +1415,10 @@ class StockBuffer(models.Model):
 
     def _get_dates_adu_past_demand(self, horizon):
         date_from = fields.Date.to_string(
-            self.warehouse_id.wh_plan_days(datetime.now(), -1 * horizon)
+            self.warehouse_id.wh_plan_days(fields.Datetime.now(), -1 * horizon)
         )
         date_to = fields.Date.to_string(
-            self.warehouse_id.wh_plan_days(datetime.now(), -1)
+            self.warehouse_id.wh_plan_days(fields.Datetime.now(), -1)
         )
         return date_from, date_to
 
@@ -1453,13 +1441,13 @@ class StockBuffer(models.Model):
             ("location_dest_id", "not in", locations.ids),
             "|",
             ("location_dest_id.usage", "!=", "inventory"),
-            ("scrap_id", "!=", False),
+            ("is_scrap", "=", True),
             ("product_id", "=", self.product_id.id),
             ("date", ">=", date_from),
             ("date", "<=", date_to),
         ]
         if not self.env.company.ddmrp_adu_calc_include_scrap:
-            domain.append(("scrap_id", "=", False))
+            domain.append(("is_scrap", "=", False))
         return domain
 
     def _calc_adu_past_demand(self):
@@ -1524,13 +1512,13 @@ class StockBuffer(models.Model):
             ("location_dest_id", "not in", locations.ids),
             "|",
             ("location_dest_id.usage", "!=", "inventory"),
-            ("scrap_id", "!=", False),
+            ("is_scrap", "=", True),
             ("product_id", "=", self.product_id.id),
             ("date", ">=", date_from),
             ("date", "<=", date_to),
         ]
         if not self.env.company.ddmrp_adu_calc_include_scrap:
-            domain.append(("scrap_id", "=", False))
+            domain.append(("is_scrap", "=", False))
         return domain
 
     def _calc_adu_future_demand(self):
@@ -1582,7 +1570,7 @@ class StockBuffer(models.Model):
     def _search_stock_moves_qualified_demand_domain(self):
         self.ensure_one()
         horizon = self.order_spike_horizon
-        date_to = self.warehouse_id.wh_plan_days(datetime.now(), horizon)
+        date_to = self.warehouse_id.wh_plan_days(fields.Datetime.now(), horizon)
         return [
             ("product_id", "=", self.product_id.id),
             (
@@ -1598,14 +1586,12 @@ class StockBuffer(models.Model):
         moves = self.env["stock.move"].search(domain)
         moves = moves.filtered(
             lambda move: (
-                move.location_id.is_sublocation_of(self.location_id)
+                move.location_id._child_of(self.location_id)
                 and (
-                    not move.location_dest_id.is_sublocation_of(self.location_id)
+                    not move.location_dest_id._child_of(self.location_id)
                     or (
-                        move.location_final_id
-                        and not move.location_final_id.is_sublocation_of(
-                            self.location_id
-                        )
+                        move.forecasted_location_id
+                        and not move.forecasted_location_id._child_of(self.location_id)
                     )
                 )
                 # Make-to-order demand is served by its own pegged supply, not from
@@ -1641,12 +1627,12 @@ class StockBuffer(models.Model):
         moves = self.env["stock.move"].search(domain)
         moves = moves.filtered(
             lambda move: (
-                not move.location_id.is_sublocation_of(self.location_id)
+                not move.location_id._child_of(self.location_id)
                 and (
-                    move.location_dest_id.is_sublocation_of(self.location_id)
+                    move.location_dest_id._child_of(self.location_id)
                     or (
-                        move.location_final_id
-                        and move.location_final_id.is_sublocation_of(self.location_id)
+                        move.forecasted_location_id
+                        and move.forecasted_location_id._child_of(self.location_id)
                     )
                 )
             )
@@ -1673,18 +1659,15 @@ class StockBuffer(models.Model):
             demand_by_days[move_date] = 0.0
         for move in moves:
             date = move.date.date()
-            demand_by_days[date] += (
-                move.product_qty
-                - move.product_uom._compute_quantity(
-                    move.quantity, move.product_id.uom_id
-                )
+            demand_by_days[date] += move.product_qty - move.uom_id._compute_quantity(
+                move.quantity, move.product_id.uom_id
             )
         return demand_by_days
 
     def _search_mrp_moves_qualified_demand_domain(self):
         self.ensure_one()
         horizon = self.order_spike_horizon
-        date_to = self.warehouse_id.wh_plan_days(datetime.now(), horizon)
+        date_to = self.warehouse_id.wh_plan_days(fields.Datetime.now(), horizon)
         return [
             ("product_id", "=", self.product_id.id),
             ("mrp_type", "=", "d"),
@@ -1695,9 +1678,7 @@ class StockBuffer(models.Model):
         domain = self._search_mrp_moves_qualified_demand_domain()
         moves = self.env["mrp.move"].search(domain)
         moves = moves.filtered(
-            lambda move: move.mrp_area_id.location_id.is_sublocation_of(
-                self.location_id
-            )
+            lambda move: move.mrp_area_id.location_id._child_of(self.location_id)
         )
         return moves
 
@@ -1841,7 +1822,7 @@ class StockBuffer(models.Model):
 
     def _procure_qty_to_order(self):
         qty_to_order = self.procure_recommended_qty
-        rounding = self.procure_uom_id.rounding or self.product_uom.rounding
+        digits = self.env["decimal.precision"].precision_get("Product Unit")
         qty_in_progress = self._quantity_in_progress()[self._origin.id]
         if (
             self.item_type == "distributed"
@@ -1853,7 +1834,7 @@ class StockBuffer(models.Model):
                 float_compare(
                     self.distributed_source_location_qty,
                     self.procure_min_qty,
-                    precision_rounding=rounding,
+                    precision_digits=digits,
                 )
                 < 0
             ):
@@ -1864,9 +1845,9 @@ class StockBuffer(models.Model):
                 # move only what we have in stock
                 return min(qty_to_order, self.distributed_source_location_qty)
         elif (
-            float_compare(qty_in_progress, 0, precision_rounding=rounding) > 0
+            float_compare(qty_in_progress, 0, precision_digits=digits) > 0
             and float_compare(
-                qty_to_order, self.green_zone_qty, precision_rounding=rounding
+                qty_to_order, self.green_zone_qty, precision_digits=digits
             )
             < 0
         ):
@@ -1878,14 +1859,12 @@ class StockBuffer(models.Model):
     def do_auto_procure(self):
         if not self.auto_procure:
             return False
-        rounding = self.product_uom.rounding
+        digits = self.env["decimal.precision"].precision_get("Product Unit")
         qty_to_order = self._procure_qty_to_order()
-        if float_compare(qty_to_order, 0.0, precision_rounding=rounding) > 0 and (
+        if float_compare(qty_to_order, 0.0, precision_digits=digits) > 0 and (
             (
                 self.auto_procure_option == "stockout"
-                and float_compare(
-                    self.net_flow_position, 0.0, precision_rounding=rounding
-                )
+                and float_compare(self.net_flow_position, 0.0, precision_digits=digits)
                 < 0
             )
             or self.auto_procure_option == "standard"

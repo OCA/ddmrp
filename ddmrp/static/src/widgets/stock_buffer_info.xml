@@ -8,15 +8,15 @@
         t-inherit-mode="primary"
     >
         <xpath expr="//span" position="attributes">
-            <attribute name="t-on-click">showPopup</attribute>
+            <attribute name="t-on-click">this.showPopup</attribute>
             <attribute name="class">circle</attribute>
-            <attribute name="t-att-class">classFromDecoration</attribute>
+            <attribute name="t-att-class">this.classFromDecoration</attribute>
         </xpath>
     </t>
     <t t-name="ddmrp.StockBufferPopover">
         <div class="stock-buffer-popover">
-            <t t-out="json_value.div" />
-            <script type="text/javascript" t-out="json_value.script" />
+            <t t-out="this.json_value.div" />
+            <script type="text/javascript" t-out="this.json_value.script" />
         </div>
     </t>
 

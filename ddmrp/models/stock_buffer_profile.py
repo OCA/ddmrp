@@ -55,7 +55,6 @@ class StockBufferProfile(models.Model):
     )
     company_id = fields.Many2one(
         "res.company",
-        "Company",
     )
 
     replenish_distributed_limit_to_free_qty = fields.Boolean(

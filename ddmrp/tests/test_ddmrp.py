@@ -33,13 +33,13 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_a.adu, 0)
         # Create past moves and process them.
         days = 30
-        date_move = self.calendar.plan_days(-1 * days - 1, datetime.today())
+        date_move = self.calendar.plan_days(-1 * days - 1, fields.Datetime.now())
         move_inv_loss = self.create_inventorylossA(date_move, 10)
         self._do_move(move_inv_loss, date_move)
         pick_out_1 = self.create_pickingoutA(date_move, 60)
         self._do_picking(pick_out_1, date_move)
         days = 60
-        date_move = self.calendar.plan_days(-1 * days - 1, datetime.today())
+        date_move = self.calendar.plan_days(-1 * days - 1, fields.Datetime.now())
         pick_out_2 = self.create_pickingoutA(date_move, 60)
         self._do_picking(pick_out_2, date_move)
         # Compute ADU again and check result.
@@ -48,7 +48,7 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_a.adu, to_assert_value)
         # Create one more move in a different UoM but do not validate it fully
         days = 90
-        date_move = self.calendar.plan_days(-1 * days - 1, datetime.today())
+        date_move = self.calendar.plan_days(-1 * days - 1, fields.Datetime.now())
         pick_out_3 = self.create_pickingoutA(date_move, 5, uom=self.dozen_unit)
         self.assertEqual(pick_out_3.move_ids.product_uom_qty, 5.0)
         self.assertEqual(pick_out_3.move_ids.product_qty, 60.0)
@@ -74,21 +74,21 @@ class TestDdmrp(TestDdmrpCommon):
         )
         self.buffer_a.adu_calculation_method = method.id
         # Today should be excluded
-        date_move_1 = datetime.today()
+        date_move_1 = fields.Datetime.now()
         picking_1 = self.create_pickingoutA(date_move_1, 20)
         self._do_picking(picking_1, date_move_1)
         # The next moves should be considered
-        date_move_2 = datetime.today() - timedelta(days=1)
+        date_move_2 = fields.Datetime.now() - timedelta(days=1)
         picking_2 = self.create_pickingoutA(date_move_2, 20)
         self._do_picking(picking_2, date_move_2)
-        date_move_3 = datetime.today() - timedelta(days=4)
+        date_move_3 = fields.Datetime.now() - timedelta(days=4)
         picking_3 = self.create_pickingoutA(date_move_3, 20)
         self._do_picking(picking_3, date_move_3)
-        date_move_4 = datetime.today() - timedelta(days=6)
+        date_move_4 = fields.Datetime.now() - timedelta(days=6)
         picking_4 = self.create_pickingoutA(date_move_4, 10)
         self._do_picking(picking_4, date_move_4)
         # This move should be ignored
-        date_move_5 = datetime.today() - timedelta(days=7)
+        date_move_5 = fields.Datetime.now() - timedelta(days=7)
         picking_5 = self.create_pickingoutA(date_move_5, 12)
         self._do_picking(picking_5, date_move_5)
 
@@ -113,11 +113,11 @@ class TestDdmrp(TestDdmrpCommon):
         )
         self.buffer_a.adu_calculation_method = method.id
         # Today should be excluded
-        date_move_1 = datetime.today()
+        date_move_1 = fields.Datetime.now()
         picking_1 = self.create_pickingoutA(date_move_1, 20)
         self._do_picking(picking_1, date_move_1)
         # The next moves should be considered
-        today = datetime.today()
+        today = fields.Datetime.now()
         # Use 8:00:01 AM to ensure today is included in the working interval
         # (In Odoo 19, the interval [8:00-12:00] has exclusive boundary at 8:00:00)
         day_dt = datetime.combine(today.date(), time(8, 0, 1))
@@ -135,7 +135,7 @@ class TestDdmrp(TestDdmrpCommon):
         self._do_picking(picking_4, date_move_4)
         # This move should be ignored
         days = 7
-        date_move_5 = self.calendar.plan_days(-1 * days - 1, datetime.today())
+        date_move_5 = self.calendar.plan_days(-1 * days - 1, fields.Datetime.now())
         picking_5 = self.create_pickingoutA(date_move_5, 12)
         self._do_picking(picking_5, date_move_5)
 
@@ -153,10 +153,10 @@ class TestDdmrp(TestDdmrpCommon):
 
         pickingInternals = self.pickingModel
         days = 30
-        date_move = self.calendar.plan_days(-1 * days - 1, datetime.today())
+        date_move = self.calendar.plan_days(-1 * days - 1, fields.Datetime.now())
         pickingInternals += self.create_pickinginternalA(date_move, 60)
         days = 60
-        date_move = self.calendar.plan_days(-1 * days - 1, datetime.today())
+        date_move = self.calendar.plan_days(-1 * days - 1, fields.Datetime.now())
         pickingInternals += self.create_pickinginternalA(date_move, 60)
         for picking in pickingInternals:
             picking.action_assign()
@@ -184,12 +184,12 @@ class TestDdmrp(TestDdmrpCommon):
 
         pickingOuts = self.pickingModel
         days = 30
-        date_move = self.calendar.plan_days(+1 * days + 1, datetime.today())
+        date_move = self.calendar.plan_days(+1 * days + 1, fields.Datetime.now())
         move_inv_loss = self.create_inventorylossA(date_move, 10)
         self._do_move(move_inv_loss, date_move)
         pickingOuts += self.create_pickingoutA(date_move, 60)
         days = 60
-        date_move = self.calendar.plan_days(+1 * days + 1, datetime.today())
+        date_move = self.calendar.plan_days(+1 * days + 1, fields.Datetime.now())
         pickingOuts += self.create_pickingoutA(date_move, 60)
 
         self.bufferModel.cron_ddmrp_adu()
@@ -198,7 +198,7 @@ class TestDdmrp(TestDdmrpCommon):
 
         # Create a move more than 120 days in the future
         days = 150
-        date_move = self.calendar.plan_days(+1 * days + 1, datetime.today())
+        date_move = self.calendar.plan_days(+1 * days + 1, fields.Datetime.now())
         pickingOuts += self.create_pickingoutA(date_move, 1)
 
         # The extra move should not affect to the average ADU
@@ -240,11 +240,11 @@ class TestDdmrp(TestDdmrpCommon):
 
         # Past. Generate past moves: 360 units / 120 days = 3 unit/day
         days = 30
-        date_move = self.calendar.plan_days(-1 * days - 1, datetime.today())
+        date_move = self.calendar.plan_days(-1 * days - 1, fields.Datetime.now())
         pick_out_1 = self.create_pickingoutA(date_move, 180)
         self._do_picking(pick_out_1, date_move)
         days = 60
-        date_move = self.calendar.plan_days(-1 * days - 1, datetime.today())
+        date_move = self.calendar.plan_days(-1 * days - 1, fields.Datetime.now())
         pick_out_2 = self.create_pickingoutA(date_move, 180)
         self._do_picking(pick_out_2, date_move)
 
@@ -327,7 +327,7 @@ class TestDdmrp(TestDdmrpCommon):
     def test_10_qualified_demand_1(self):
         """Moves within order spike horizon, outside the threshold but past
         or today's demand."""
-        date_move = datetime.today()
+        date_move = fields.Datetime.now()
         expected_result = self.buffer_a.order_spike_threshold * 2
         self.create_pickingoutA(date_move, expected_result)
         # Test domain in cron by skipping the buffer being checked:
@@ -339,7 +339,7 @@ class TestDdmrp(TestDdmrpCommon):
     def test_11_qualified_demand_2(self):
         """Moves within order spike horizon, below threshold. Should have no
         effect on the qualified demand."""
-        date_move = datetime.today() + timedelta(days=10)
+        date_move = fields.Datetime.now() + timedelta(days=10)
         self.create_pickingoutA(date_move, self.buffer_a.order_spike_threshold - 1)
         self.bufferModel.cron_ddmrp()
         expected_result = 0.0
@@ -348,7 +348,7 @@ class TestDdmrp(TestDdmrpCommon):
     def test_12_qualified_demand_3(self):
         """Moves within order spike horizon, above threshold. Should have an
         effect on the qualified demand"""
-        date_move = datetime.today() + timedelta(days=10)
+        date_move = fields.Datetime.now() + timedelta(days=10)
         self.create_pickingoutA(date_move, self.buffer_a.order_spike_threshold * 2)
         self.bufferModel.cron_ddmrp()
         expected_result = self.buffer_a.order_spike_threshold * 2
@@ -357,7 +357,7 @@ class TestDdmrp(TestDdmrpCommon):
     def test_13_qualified_demand_4(self):
         """Moves outside of order spike horizon, above threshold. Should
         have no effect on the qualified demand"""
-        date_move = datetime.today() + timedelta(days=100)
+        date_move = fields.Datetime.now() + timedelta(days=100)
         self.create_pickingoutA(date_move, self.buffer_a.order_spike_threshold * 2)
         self.bufferModel.cron_ddmrp()
         expected_result = 0.0
@@ -366,21 +366,21 @@ class TestDdmrp(TestDdmrpCommon):
     def test_14_qualified_demand_5(self):
         """Internal moves within the zone designated by the buffer
         should not be considered demand."""
-        date_move = datetime.today()
+        date_move = fields.Datetime.now()
         expected_result = 0
         self.create_pickinginternalA(date_move, expected_result)
         self.bufferModel.cron_ddmrp()
         self.assertEqual(self.buffer_a.qualified_demand, expected_result)
 
     def test_15_incoming_quantity_1(self):
-        date_move = datetime.today() + timedelta(days=5)
+        date_move = fields.Datetime.now() + timedelta(days=5)
         self.create_pickinginA(date_move, 20)
         self.bufferModel.cron_ddmrp()
         self.assertEqual(self.buffer_a.incoming_dlt_qty, 20.0)
 
     def test_16_incoming_quantity_2(self):
         """Moves outside the DLT horizon are ignored as supply"""
-        date_move = datetime.today() + timedelta(days=100)
+        date_move = fields.Datetime.now() + timedelta(days=100)
         self.create_pickinginA(date_move, 20)
         self.bufferModel.cron_ddmrp()
         self.assertEqual(self.buffer_a.incoming_dlt_qty, 0.0)
@@ -389,7 +389,7 @@ class TestDdmrp(TestDdmrpCommon):
     def test_17_on_hand_qty_1(self):
         """Outgoing moves should be ignored once reserved as well as the
         reserved qty."""
-        date_move = datetime.today()
+        date_move = fields.Datetime.now()
         outgoing_qty = 50
         picking = self.create_pickingoutA(date_move, outgoing_qty)
         self.buffer_a.cron_actions()
@@ -413,7 +413,7 @@ class TestDdmrp(TestDdmrpCommon):
     def test_18_on_hand_qty_2(self):
         """Internal moves should not affect in any way the on hand position of
         a buffer."""
-        date_move = datetime.today()
+        date_move = fields.Datetime.now()
         internal_qty = 50
         picking = self.create_pickinginternalA(date_move, internal_qty)
         self.buffer_a.cron_actions()
@@ -436,7 +436,7 @@ class TestDdmrp(TestDdmrpCommon):
     def test_19_qualified_demand_6_uom(self):
         """Delivery spike in a secondary UoM and partially reserved, only
         unreserved part should be considered."""
-        date_move = datetime.today() + timedelta(days=10)
+        date_move = fields.Datetime.now() + timedelta(days=10)
         picking = self.create_pickingoutA(date_move, 20, uom=self.dozen_unit)
         available_qty = self.buffer_a.product_location_qty_available_not_res
         picking.action_assign()
@@ -532,7 +532,7 @@ class TestDdmrp(TestDdmrpCommon):
         self.buffer_a._calc_adu()
         self.bufferModel.cron_ddmrp()
         # Now we prepare the shipment of 150
-        date_move = datetime.today()
+        date_move = fields.Datetime.now()
         pickingOut = self.create_pickingoutA(date_move, 150)
         pickingOut.move_ids.quantity = 150
         pickingOut._action_done()
@@ -669,7 +669,7 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_a.procure_recommended_qty, expected_value)
 
         # Now we prepare the shipment of 150
-        date_move = datetime.today()
+        date_move = fields.Datetime.now()
         pickingOut = self.create_pickingoutA(date_move, 150)
 
         self.bufferModel.cron_ddmrp()
@@ -795,7 +795,7 @@ class TestDdmrp(TestDdmrpCommon):
         initial_nfp = self.buffer_purchase.net_flow_position
         self.assertEqual(initial_nfp, 0)
         # Provoke an stockout:
-        date_move = datetime.today()
+        date_move = fields.Datetime.now()
         p_out_1 = self.create_picking_out(self.product_purchased, date_move, 10)
         self._do_picking(p_out_1, date_move)
         # A RFQ should have been created.
@@ -820,7 +820,7 @@ class TestDdmrp(TestDdmrpCommon):
                 "red_override": 10.0,
             }
         )
-        date_move = datetime.today()
+        date_move = fields.Datetime.now()
         self.create_picking_out(self.product_purchased, date_move, 2)
         self.buffer_purchase.cron_actions()
         self.assertEqual(self.buffer_purchase.net_flow_position, -2.0)
@@ -914,7 +914,7 @@ class TestDdmrp(TestDdmrpCommon):
         initial_nfp = self.buffer_a.net_flow_position
         self.assertEqual(initial_nfp, 200)
         self.assertEqual(self.buffer_a.product_location_qty_available_not_res, 200)
-        date_move = datetime.today()
+        date_move = fields.Datetime.now()
         self.create_pickingoutA(date_move, 120)
         # NFP hasn't been updated.
         self.assertEqual(self.buffer_a.net_flow_position, initial_nfp)
@@ -931,7 +931,7 @@ class TestDdmrp(TestDdmrpCommon):
         initial_nfp = self.buffer_a.net_flow_position
         self.assertEqual(initial_nfp, 200)
         self.assertEqual(self.buffer_a.product_location_qty_available_not_res, 200)
-        date_move = datetime.today()
+        date_move = fields.Datetime.now()
         self.create_pickingoutA(date_move, 120)
         # NFP has been updated after picking confirmation.
         self.assertEqual(self.buffer_a.net_flow_position, 80)
@@ -1054,7 +1054,7 @@ class TestDdmrp(TestDdmrpCommon):
 
     def test_40_bokeh_charts(self):
         """Check bokeh chart computation."""
-        date_move = datetime.today()
+        date_move = fields.Datetime.now()
         self.create_pickingoutA(date_move, 150)
         self.create_pickinginA(date_move, 150)
         self.buffer_a.cron_actions()
@@ -1209,9 +1209,9 @@ class TestDdmrp(TestDdmrpCommon):
         # Past.
         # create estimate: 120 units / 120 days = 1 unit/day
         # create mrp move: 120 units / 120 days = 1 unit/day
-        dt = self.calendar.plan_days(-1 * 120, datetime.today())
+        dt = self.calendar.plan_days(-1 * 120, fields.Datetime.now())
         estimate_date_from = dt.date()
-        estimate_date_to = self.calendar.plan_days(-1 * 2, datetime.today())
+        estimate_date_to = self.calendar.plan_days(-1 * 2, fields.Datetime.now())
         self.estimateModel.create(
             {
                 "manual_date_from": estimate_date_from,
@@ -1294,7 +1294,7 @@ class TestDdmrp(TestDdmrpCommon):
         )
         self.assertFalse(op_nbp)
         # Create a negative projection for both products:
-        date_move = datetime.today()
+        date_move = fields.Datetime.now()
         self.create_pickingoutA(date_move, 500, source_location=self.stock_location)
         self.create_picking_out(
             nbp, date_move, 500, source_location=self.stock_location
@@ -1340,7 +1340,7 @@ class TestDdmrp(TestDdmrpCommon):
         )
         self.assertEqual(len(move), 1)
         self.assertEqual(move.location_dest_id, self.warehouse.wh_input_stock_loc_id)
-        self.assertEqual(move.location_final_id, self.warehouse.lot_stock_id)
+        self.assertEqual(move.forecasted_location_id, self.warehouse.lot_stock_id)
         self.assertEqual(move.product_qty, 225)
         _ob, in_buffers = move._find_buffers_to_update_nfp()
         self.assertIn(
@@ -1353,32 +1353,32 @@ class TestDdmrp(TestDdmrpCommon):
         # Validating should generate the next picking.
         self.assertFalse(move.move_dest_ids)
         picking_1 = move.picking_id
-        self._do_picking(picking_1, datetime.today())
+        self._do_picking(picking_1, fields.Datetime.now())
         self.assertEqual(len(move.move_dest_ids), 1)
         picking_2 = move.move_dest_ids.picking_id
         move_2 = picking_2.move_ids
         self.assertEqual(len(move_2), 1)
         self.assertEqual(move_2.location_dest_id, self.warehouse.wh_qc_stock_loc_id)
-        self.assertEqual(move_2.location_final_id, self.warehouse.lot_stock_id)
+        self.assertEqual(move_2.forecasted_location_id, self.warehouse.lot_stock_id)
         self.buffer_purchase.cron_actions()
         # Incoming qty should be the same.
         self.assertEqual(self.buffer_purchase.incoming_dlt_qty, 225.0)
 
         # Validating once again to generate the last picking.
         self.assertFalse(move_2.move_dest_ids)
-        self._do_picking(picking_2, datetime.today())
+        self._do_picking(picking_2, fields.Datetime.now())
         self.assertEqual(len(move.move_dest_ids), 1)
         picking_3 = move_2.move_dest_ids.picking_id
         move_3 = picking_3.move_ids
         self.assertEqual(len(move_3), 1)
         self.assertEqual(move_3.location_dest_id, self.warehouse.lot_stock_id)
-        self.assertEqual(move_3.location_final_id, self.warehouse.lot_stock_id)
+        self.assertEqual(move_3.forecasted_location_id, self.warehouse.lot_stock_id)
         self.buffer_purchase.cron_actions()
         # Incoming qty should be the same.
         self.assertEqual(self.buffer_purchase.incoming_dlt_qty, 225.0)
         # Validate last step should finally fill the buffer
         self.assertEqual(self.buffer_purchase.product_location_qty_available_not_res, 0)
-        self._do_picking(picking_3, datetime.today())
+        self._do_picking(picking_3, fields.Datetime.now())
         self.buffer_purchase.cron_actions()
         self.assertEqual(self.buffer_purchase.incoming_dlt_qty, 0)
         self.assertEqual(
@@ -1408,7 +1408,7 @@ class TestDdmrp(TestDdmrpCommon):
         )
         self.assertEqual(len(move), 1)
         self.assertEqual(move.location_dest_id, self.warehouse.wh_pack_stock_loc_id)
-        self.assertEqual(move.location_final_id, self.customer_location)
+        self.assertEqual(move.forecasted_location_id, self.customer_location)
         self.assertEqual(move.product_qty, 10)
         self.buffer_purchase.cron_actions()
         self.assertEqual(self.buffer_purchase.qualified_demand, 10.0)
@@ -1421,13 +1421,13 @@ class TestDdmrp(TestDdmrpCommon):
             out_buffers,
             "Buffer won't be found for auto-NFP update",
         )
-        self._do_picking(picking_1, datetime.today())
+        self._do_picking(picking_1, fields.Datetime.now())
         self.assertEqual(len(move.move_dest_ids), 1)
         picking_2 = move.move_dest_ids.picking_id
         move_2 = picking_2.move_ids
         self.assertEqual(len(move_2), 1)
         self.assertEqual(move_2.location_dest_id, self.warehouse.wh_output_stock_loc_id)
-        self.assertEqual(move_2.location_final_id, self.customer_location)
+        self.assertEqual(move_2.forecasted_location_id, self.customer_location)
         move_2._do_unreserve()  # reserved moves are ignored by the buffer.
         self.assertEqual(move_2.state, "confirmed")
         self.buffer_purchase.cron_actions()
@@ -1435,13 +1435,13 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_purchase.qualified_demand, 10.0)
         # Validating once again to generate the last picking.
         self.assertFalse(move_2.move_dest_ids)
-        self._do_picking(picking_2, datetime.today())
+        self._do_picking(picking_2, fields.Datetime.now())
         self.assertEqual(len(move.move_dest_ids), 1)
         picking_3 = move_2.move_dest_ids.picking_id
         move_3 = picking_3.move_ids
         self.assertEqual(len(move_3), 1)
         self.assertEqual(move_3.location_dest_id, self.customer_location)
-        self.assertEqual(move_3.location_final_id, self.customer_location)
+        self.assertEqual(move_3.forecasted_location_id, self.customer_location)
         move_3._do_unreserve()
         self.assertEqual(move_3.state, "confirmed")
         self.buffer_purchase.cron_actions()
@@ -1449,7 +1449,7 @@ class TestDdmrp(TestDdmrpCommon):
         self.assertEqual(self.buffer_purchase.qualified_demand, 10.0)
         # Validate last step should finally deplete the buffer
         self.assertEqual(self.buffer_purchase.product_location_qty_available_not_res, 0)
-        self._do_picking(picking_3, datetime.today())
+        self._do_picking(picking_3, fields.Datetime.now())
         self.buffer_purchase.cron_actions()
         self.assertEqual(self.buffer_purchase.qualified_demand, 0)
         self.assertEqual(
@@ -1462,7 +1462,7 @@ class TestDdmrp(TestDdmrpCommon):
         = 12 units) and stock is reserved, the on-hand-unreserved position must
         be reduced by the equivalent in product UoM (units), not by the raw
         move-line quantity stored in dozens."""
-        date_move = datetime.today()
+        date_move = fields.Datetime.now()
         dozens_qty = 5
         units_qty = dozens_qty * 12  # 60 units
         # Product A UoM is units; we create an outgoing picking in dozens.
@@ -1491,9 +1491,11 @@ class TestDdmrp(TestDdmrpCommon):
         domain and pre-activates the qualified-demand filter via context."""
         threshold = self.buffer_a.order_spike_threshold
         # Move today: always qualified regardless of quantity.
-        picking_qualified = self.create_pickingoutA(datetime.today(), threshold * 2)
+        picking_qualified = self.create_pickingoutA(
+            fields.Datetime.now(), threshold * 2
+        )
         # Move within horizon but below threshold: demand but not qualified.
-        date_within_horizon = datetime.today() + timedelta(
+        date_within_horizon = fields.Datetime.now() + timedelta(
             days=self.buffer_a.order_spike_horizon - 1
         )
         picking_demand_only = self.create_pickingoutA(
@@ -1554,7 +1556,7 @@ class TestDdmrp(TestDdmrpCommon):
         )
         self.buffer_a.adu_calculation_method = method.id
         days = 30
-        date_move = self.calendar.plan_days(+1 * days + 1, datetime.today())
+        date_move = self.calendar.plan_days(+1 * days + 1, fields.Datetime.now())
         self.create_pickingoutA(date_move, 5, uom=self.dozen_unit)
         self.bufferModel.cron_ddmrp_adu()
         # 5 Dozen = 60 Units over the 120-day horizon
@@ -1565,9 +1567,11 @@ class TestDdmrp(TestDdmrpCommon):
         vendor = self.partner_model.create({"name": "Form Vendor"})
         po_form = Form(self.env["purchase.order"])
         po_form.partner_id = vendor
-        with self.assertNoLogs("odoo.domains", level="WARNING"):
-            with po_form.order_line.new() as line:
-                line.product_id = self.product_purchased
+        with (
+            self.assertNoLogs("odoo.domains", level="WARNING"),
+            po_form.order_line.new() as line,
+        ):
+            line.product_id = self.product_purchased
         po_form.save()
 
     def test_56_demand_chart_shows_all_demand_moves(self):
@@ -1576,7 +1580,7 @@ class TestDdmrp(TestDdmrpCommon):
         order spike horizon but below the threshold is demand yet never
         qualifies, so it must still show up in the chart."""
         threshold = self.buffer_a.order_spike_threshold
-        date_within_horizon = datetime.today() + timedelta(
+        date_within_horizon = fields.Datetime.now() + timedelta(
             days=self.buffer_a.order_spike_horizon - 1
         )
         self.create_pickingoutA(date_within_horizon, threshold - 1)

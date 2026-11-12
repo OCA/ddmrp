@@ -1,7 +1,8 @@
 # Copyright 2026 ForgeFlow S.L. (https://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from datetime import datetime
+
+from odoo import fields
 
 from .common import TestDdmrpCommon
 
@@ -15,7 +16,7 @@ class TestExcludeMtoDemand(TestDdmrpCommon):
         buffer = self.buffer_purchase
         product = buffer.product_id
         qty = 30.0
-        date_move = datetime.today()
+        date_move = fields.Datetime.now()
 
         # Make-to-stock demand: a plain outgoing delivery from the buffer.
         mts_pick = self.create_picking_out(
@@ -39,7 +40,7 @@ class TestExcludeMtoDemand(TestDdmrpCommon):
                 "product_id": product.id,
                 "name": product.display_name,
                 "product_qty": qty,
-                "product_uom_id": product.uom_id.id,
+                "uom_id": product.uom_id.id,
                 "price_unit": 1.0,
                 "date_planned": date_move,
                 "move_dest_ids": [(6, 0, mto_move.ids)],

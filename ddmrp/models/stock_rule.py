@@ -103,9 +103,9 @@ class StockRule(models.Model):
                 buffer = procurement.values.get("buffer_id")
                 if (
                     buffer.procure_uom_id
-                    and procurement.product_uom != buffer.procure_uom_id
+                    and procurement.uom_id != buffer.procure_uom_id
                 ):
-                    new_product_qty = procurement.product_uom._compute_quantity(
+                    new_product_qty = procurement.uom_id._compute_quantity(
                         procurement.product_qty, buffer.procure_uom_id
                     )
                     new_product_uom = buffer.procure_uom_id

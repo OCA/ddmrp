@@ -1,11 +1,24 @@
-import {Component, markup, onWillStart} from "@odoo/owl";
-import {FloatField, floatField} from "@web/views/fields/float/float_field";
+import {Component, markup, onWillStart, t, useProps} from "@odoo/owl";
+import {
+    FloatField,
+    floatField,
+    floatFieldProps,
+} from "@web/views/fields/float/float_field";
 import {loadBokehLibraries} from "@web_widget_bokeh_chart/js/web_widget_bokeh_chart.esm";
 import {registry} from "@web/core/registry";
 import {usePopover} from "@web/core/popover/popover_hook";
 import {useService} from "@web/core/utils/hooks";
 
 export class StockBufferPopover extends Component {
+    static template = "ddmrp.StockBufferPopover";
+    props = useProps({
+        record: t.object(),
+        field: t.string().optional(),
+        color_from: t.string().optional(),
+        buffer_id: t.string().optional(),
+        close: t.function().optional(),
+    });
+
     setup() {
         this.actionService = useService("action");
         this.orm = useService("orm");
@@ -54,18 +67,17 @@ export class StockBufferPopover extends Component {
         }
     }
 }
-StockBufferPopover.template = "ddmrp.StockBufferPopover";
-
 export class StockBufferInfoWidget extends FloatField {
+    static template = "ddmrp.StockBufferInfoWidget";
     static components = {
         Popover: StockBufferPopover,
     };
-    static props = {
-        ...FloatField.props,
-        color_from: {type: String, optional: true},
-        field: {type: String, optional: true},
-        buffer_id: {type: String, optional: true},
-    };
+    props = useProps({
+        ...floatFieldProps,
+        color_from: t.string().optional(),
+        field: t.string().optional(),
+        buffer_id: t.string().optional(),
+    });
 
     setup() {
         super.setup();
@@ -100,7 +112,6 @@ export class StockBufferInfoWidget extends FloatField {
     }
 }
 
-StockBufferInfoWidget.template = "ddmrp.StockBufferInfoWidget";
 export const stockBufferInfoWidget = {
     ...floatField,
     component: StockBufferInfoWidget,

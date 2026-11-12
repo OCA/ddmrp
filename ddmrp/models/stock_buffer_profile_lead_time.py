@@ -13,5 +13,4 @@ class StockBufferProfileLeadTime(models.Model):
     factor = fields.Float(string="Lead Time Factor", required=True)
     company_id = fields.Many2one(
         "res.company",
-        "Company",
     )

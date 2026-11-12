@@ -49,6 +49,7 @@ class MakeProcurementBuffer(models.TransientModel):
         assert active_model == "stock.buffer", "Bad context propagation"
 
         items = []
+        digits = self.env["decimal.precision"].precision_get("Product Unit")
         for line in buffer_obj.browse(buffer_ids):
             max_order = line.procure_max_qty
             qty_to_order = line._procure_qty_to_order()
@@ -59,9 +60,6 @@ class MakeProcurementBuffer(models.TransientModel):
                     if qty_to_order > max_order:
                         qty = max_order
                     else:
-                        rounding = (
-                            line.procure_uom_id.rounding or line.product_uom.rounding
-                        )
                         profile = line.buffer_profile_id
                         limit_to_free_qty = (
                             line.item_type == "distributed"
@@ -72,7 +70,7 @@ class MakeProcurementBuffer(models.TransientModel):
                                 float_compare(
                                     qty_to_order,
                                     line.procure_min_qty,
-                                    precision_rounding=rounding,
+                                    precision_digits=digits,
                                 )
                                 < 0
                             ):
@@ -170,17 +168,14 @@ class MakeProcurementBufferItem(models.TransientModel):
         readonly=False,
     )
     product_id = fields.Many2one(
-        string="Product",
         comodel_name="product.product",
         readonly=True,
     )
     warehouse_id = fields.Many2one(
-        string="Warehouse",
         comodel_name="stock.warehouse",
         readonly=True,
     )
     location_id = fields.Many2one(
-        string="Location",
         comodel_name="stock.location",
         readonly=True,
     )

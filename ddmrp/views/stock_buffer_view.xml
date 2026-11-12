@@ -47,7 +47,7 @@
                 <button
                     title="Refresh Buffer"
                     name="refresh_buffer"
-                    icon="fa-refresh"
+                    icon="refresh"
                     type="object"
                 />
                 <field name="incoming_dlt_qty" string="Incoming Within DLT" />
@@ -64,7 +64,7 @@
                 <button
                     title="Total Incoming"
                     name="action_view_supply_moves"
-                    icon="fa-exchange"
+                    icon="swap_horiz"
                     type="object"
                 />
                 <field name="qualified_demand" />
@@ -74,13 +74,13 @@
                 <button
                     title="Create Procurement"
                     name="%(ddmrp.act_make_procurement_from_buffer)d"
-                    icon="fa-cogs"
+                    icon="settings_applications"
                     type="action"
                 />
                 <button
                     title="Some incoming quantities are outside of the DLT Horizon and may require rescheduling. Press this button to display the involved supply orders"
                     name="action_view_supply_moves_outside_dlt_window"
-                    icon="fa-warning"
+                    icon="warning"
                     type="object"
                     invisible="incoming_outside_dlt_qty == 0"
                 />
@@ -90,7 +90,7 @@
                     title="Some RFQ quantities are outside of the DLT Horizon and may require rescheduling.
                     Press this button to display the involved RFQs"
                     name="action_view_supply_rfq_outside_dlt_window"
-                    icon="fa-warning"
+                    icon="warning"
                     type="object"
                     invisible="rfq_outside_dlt_qty == 0"
                 />
@@ -99,14 +99,14 @@
                     title="Some RFQs are inside of the DLT Horizon and waiting validation to be accounted into the NFP.
                     Press this button to display them."
                     name="action_view_supply_rfq_inside_dlt_window"
-                    icon="fa-warning"
+                    icon="warning"
                     type="object"
                     invisible="rfq_inside_dlt_qty == 0"
                 />
                 <button
                     title="No stock available in source location for distributed buffer"
                     name="action_dummy"
-                    icon="fa-warning"
+                    icon="warning"
                     type="object"
                     invisible="distributed_source_location_id == False or distributed_source_location_qty > 0"
                 />
@@ -131,7 +131,7 @@
                     <button
                         string="Refresh Buffer"
                         name="refresh_buffer"
-                        icon="fa-refresh"
+                        icon="refresh"
                         type="object"
                     />
                 </header>
@@ -142,14 +142,14 @@
                             name="action_view_yearly_consumption"
                             class="oe_stat_button"
                             string="Consumption"
-                            icon="fa-fire"
+                            icon="whatshot"
                         />
                         <button
                             type="object"
                             name="action_view_stock_demand_estimates"
                             class="oe_stat_button"
                             string="Estimates"
-                            icon="fa-signal"
+                            icon="signal_cellular_4_bar"
                             invisible="adu_calculation_method_type != 'future'"
                         />
                         <button
@@ -157,7 +157,7 @@
                             name="action_view_bom"
                             class="oe_stat_button"
                             string="Bill of Materials"
-                            icon="fa-flask"
+                            icon="science"
                             invisible="item_type != 'manufactured'"
                         />
                         <button
@@ -165,7 +165,7 @@
                             name="action_view_mrp_productions"
                             class="oe_stat_button"
                             string="Manufacturing Orders"
-                            icon="fa-wrench"
+                            icon="build"
                             invisible="item_type != 'manufactured'"
                         />
                         <button
@@ -173,7 +173,7 @@
                             name="action_view_purchase"
                             class="oe_stat_button"
                             string="Purchase Orders"
-                            icon="fa-credit-card"
+                            icon="credit_card"
                             invisible="item_type != 'purchased'"
                         />
                         <button
@@ -181,7 +181,7 @@
                             name="action_used_in_bom"
                             type="object"
                             invisible="product_type not in ['product', 'consu'] or used_in_bom_count == 0"
-                            icon="fa-level-up"
+                            icon="subdirectory_arrow_left"
                         >
                             <field
                                 string="Used In"
@@ -273,28 +273,28 @@
                                     <button
                                         title="View ADU (Past - Direct Demand)"
                                         name="action_view_past_adu_direct_demand"
-                                        icon="fa-search"
+                                        icon="search"
                                         type="object"
                                         invisible="adu_calculation_method_type in ['fixed', 'future'] or adu == 0"
                                     />
                                     <button
                                         title="View ADU (Past - Indirect Demand)"
                                         name="action_view_past_adu_indirect_demand"
-                                        icon="fa-search"
+                                        icon="search"
                                         type="object"
                                         invisible="adu_calculation_method_type in ['fixed', 'future'] or adu_calculation_method_source_past != 'estimates_mrp' or used_in_bom_count == 0 or adu == 0"
                                     />
                                     <button
                                         title="View ADU (Future - Direct Demand)"
                                         name="action_view_future_adu_direct_demand"
-                                        icon="fa-search"
+                                        icon="search"
                                         type="object"
                                         invisible="adu_calculation_method_type in ['fixed', 'past'] or adu == 0"
                                     />
                                     <button
                                         title="View ADU (Future - Indirect Demand)"
                                         name="action_view_future_adu_indirect_demand"
-                                        icon="fa-search"
+                                        icon="search"
                                         type="object"
                                         invisible="adu_calculation_method_type in ['fixed', 'past'] or adu_calculation_method_source_future != 'estimates_mrp' or used_in_bom_count == 0 or adu == 0"
                                     />
@@ -440,7 +440,7 @@
                                     <button
                                         title="View Incoming Moves (Within DLT)"
                                         name="action_view_supply_moves_inside_dlt_window"
-                                        icon="fa-search"
+                                        icon="search"
                                         type="object"
                                         invisible="incoming_dlt_qty == 0"
                                     />
@@ -455,7 +455,7 @@
                                         title="Some incoming qty is outside of the DLT Horizon and may require rescheduling.
                                          Press this button to display the involved supply orders"
                                         name="action_view_supply_moves_outside_dlt_window"
-                                        icon="fa-warning"
+                                        icon="warning"
                                         type="object"
                                         invisible="incoming_outside_dlt_qty == 0"
                                     />
@@ -464,7 +464,7 @@
                                         title="Some incoming RFQs are outside of the DLT Horizon and may require rescheduling.
                                          Press this button to display the involved supply orders"
                                         name="action_view_supply_rfq_outside_dlt_window"
-                                        icon="fa-warning"
+                                        icon="warning"
                                         type="object"
                                         invisible="rfq_outside_dlt_qty == 0"
                                     />
@@ -483,14 +483,14 @@
                                     <button
                                         title="View Qualified Demand from Moves"
                                         name="action_view_qualified_demand_moves"
-                                        icon="fa-search"
+                                        icon="search"
                                         type="object"
                                         invisible="qualified_demand == 0 or qualified_demand_stock_move_ids == []"
                                     />
                                     <button
                                         title="View Qualified Demand from MRP"
                                         name="action_view_qualified_demand_mrp"
-                                        icon="fa-search"
+                                        icon="search"
                                         type="object"
                                         invisible="qualified_demand == 0 or qualified_demand_mrp_move_ids == []"
                                     />
@@ -499,7 +499,7 @@
                                         title="Some RFQs are inside of the DLT Horizon and waiting validation to be accounted into the NFP.
                                         Press this button to display them."
                                         name="action_view_supply_rfq_inside_dlt_window"
-                                        icon="fa-warning"
+                                        icon="warning"
                                         type="object"
                                         invisible="rfq_inside_dlt_qty == 0"
                                     />

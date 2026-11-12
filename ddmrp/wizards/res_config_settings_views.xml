@@ -96,7 +96,8 @@
                         <setting>
                             <label for="ddmrp_qty_multiple_tolerance" />
                             <span
-                                class="fa fa-lg fa-building-o"
+                                class="oi oi-lg"
+                                data-icon="business"
                                 title="Values set here are company-specific."
                                 role="img"
                                 aria-label="Values set here are company-specific."

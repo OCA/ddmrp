@@ -7,31 +7,31 @@
         t-inherit-mode="extension"
     >
         <xpath expr="//th[@name='th_mrp_bom_h']" position="before">
-            <th t-if="showBuffered" class="text-center">Buffered</th>
+            <th t-if="this.showBuffered" class="text-center">Buffered</th>
         </xpath>
         <xpath
-            expr="//thead/tr/th[@t-if='forecastMode'][@title='Resupply lead time.']"
+            expr="//thead/tr/th[@t-if='this.forecastMode'][@title='Resupply lead time.']"
             position="after"
         >
             <th
-                t-if="forecastMode"
+                t-if="this.forecastMode"
                 class="text-end"
                 title="Decoupled Lead Time of the BoM."
             >DLT</th>
         </xpath>
 
         <xpath expr="//td[@name='td_mrp_bom_f']" position="before">
-            <td t-if="showBuffered" />
+            <td t-if="this.showBuffered" />
         </xpath>
         <xpath expr="//tfoot/tr/td[strong]" position="before">
-            <td t-if="forecastMode" />
+            <td t-if="this.forecastMode" />
         </xpath>
 
         <xpath expr="//td[@name='td_mrp_bom_b']" position="before">
-            <td t-if="showBuffered" />
+            <td t-if="this.showBuffered" />
         </xpath>
         <xpath expr="//tfoot/t/tr/td[strong]" position="before">
-            <td t-if="forecastMode" />
+            <td t-if="this.forecastMode" />
         </xpath>
     </t>
 

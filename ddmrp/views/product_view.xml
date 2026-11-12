@@ -13,7 +13,7 @@
                     type="object"
                     name="action_view_stock_buffers"
                     class="oe_stat_button"
-                    icon="fa-flask"
+                    icon="science"
                     invisible="buffer_count == 0"
                     groups="stock.group_stock_user"
                 >
@@ -40,7 +40,7 @@
                     type="object"
                     name="action_view_stock_buffers"
                     class="oe_stat_button"
-                    icon="fa-flask"
+                    icon="science"
                     invisible="buffer_count == 0"
                     groups="stock.group_stock_user"
                 >

@@ -21,13 +21,13 @@
                     <button
                         title="Change Location"
                         name="action_change_context_location"
-                        icon="fa-exchange"
+                        icon="swap_horiz"
                         type="object"
                     />
                 </div>
             </field>
             <xpath
-                expr="//field[@name='bom_line_ids']/list/field[@name='product_uom_id']"
+                expr="//field[@name='bom_line_ids']/list/field[@name='uom_id']"
                 position="after"
             >
                 <field name="is_buffered" />
