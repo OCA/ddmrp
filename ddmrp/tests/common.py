@@ -4,7 +4,7 @@
 
 from datetime import datetime
 
-import odoo.tests.common as common
+from odoo.tests import common
 
 
 class TestDdmrpCommon(common.TransactionCase):

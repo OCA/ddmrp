@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <record model="ir.ui.view" id="view_stock_buffer_profile_variability_form">
+    <record id="view_stock_buffer_profile_variability_form" model="ir.ui.view">
         <field name="name">stock.buffer.profile.variability.form</field>
         <field name="model">stock.buffer.profile.variability</field>
         <field name="arch" type="xml">
@@ -24,7 +24,7 @@
             </form>
         </field>
     </record>
-    <record model="ir.ui.view" id="view_stock_buffer_profile_variability_tree">
+    <record id="view_stock_buffer_profile_variability_tree" model="ir.ui.view">
         <field name="name">stock.buffer.profile.variability.tree</field>
         <field name="model">stock.buffer.profile.variability</field>
         <field name="arch" type="xml">
@@ -47,8 +47,8 @@
         </field>
     </record>
     <record
-        model="ir.actions.act_window"
         id="stock_buffer_profile_variability_form_action"
+        model="ir.actions.act_window"
     >
         <field name="name">Buffer Profile Variability Factor</field>
         <field name="type">ir.actions.act_window</field>

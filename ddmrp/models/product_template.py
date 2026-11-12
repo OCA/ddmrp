@@ -27,9 +27,11 @@ class ProductTemplate(models.Model):
             )
             uom_id = rec.uom_id
             incompatible = buffers.filtered(
-                lambda b, uom_id=uom_id: b.procure_uom_id
-                and not b.procure_uom_id._compute_quantity(
-                    1.0, uom_id, raise_if_failure=False
+                lambda b, uom_id=uom_id: (
+                    b.procure_uom_id
+                    and not b.procure_uom_id._compute_quantity(
+                        1.0, uom_id, raise_if_failure=False
+                    )
                 )
             )
             if incompatible:

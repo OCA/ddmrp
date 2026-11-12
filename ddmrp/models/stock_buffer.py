@@ -358,8 +358,10 @@ class StockBuffer(models.Model):
         ]
         lines = self.env["stock.move.line"].search(domain)
         lines = lines.filtered(
-            lambda line: line.location_id.is_sublocation_of(self.location_id)
-            and not line.location_dest_id.is_sublocation_of(self.location_id)
+            lambda line: (
+                line.location_id.is_sublocation_of(self.location_id)
+                and not line.location_dest_id.is_sublocation_of(self.location_id)
+            )
         )
         return sum(lines.mapped("quantity_product_uom"))
 
@@ -1042,8 +1044,10 @@ class StockBuffer(models.Model):
                 rec.product_vendor_code = False
                 continue
             supplier_info = rec._get_product_sellers().filtered(
-                lambda r: r.partner_id == rec.main_supplier_id  # noqa: B023
-                and (not r.product_id or r.product_id == rec.product_id)  # noqa: B023
+                lambda r: (
+                    r.partner_id == rec.main_supplier_id  # noqa: B023
+                    and (not r.product_id or r.product_id == rec.product_id)
+                )  # noqa: B023
             )
             rec.product_vendor_code = (
                 supplier_info[0].product_code if supplier_info else False
@@ -1593,19 +1597,23 @@ class StockBuffer(models.Model):
         domain = self._search_stock_moves_qualified_demand_domain()
         moves = self.env["stock.move"].search(domain)
         moves = moves.filtered(
-            lambda move: move.location_id.is_sublocation_of(self.location_id)
-            and (
-                not move.location_dest_id.is_sublocation_of(self.location_id)
-                or (
-                    move.location_final_id
-                    and not move.location_final_id.is_sublocation_of(self.location_id)
+            lambda move: (
+                move.location_id.is_sublocation_of(self.location_id)
+                and (
+                    not move.location_dest_id.is_sublocation_of(self.location_id)
+                    or (
+                        move.location_final_id
+                        and not move.location_final_id.is_sublocation_of(
+                            self.location_id
+                        )
+                    )
                 )
+                # Make-to-order demand is served by its own pegged supply, not from
+                # the buffer, so it must not deflate the net flow position. This
+                # mirrors the supply side, which keeps the MTO purchase line out of
+                # the buffer (see purchase.order.line._find_buffer_link).
+                and not move._ddmrp_is_mto()
             )
-            # Make-to-order demand is served by its own pegged supply, not from
-            # the buffer, so it must not deflate the net flow position. This
-            # mirrors the supply side, which keeps the MTO purchase line out of
-            # the buffer (see purchase.order.line._find_buffer_link).
-            and not move._ddmrp_is_mto()
         )
         return moves
 
@@ -1632,12 +1640,14 @@ class StockBuffer(models.Model):
         domain = self._search_stock_moves_incoming_domain(outside_dlt=outside_dlt)
         moves = self.env["stock.move"].search(domain)
         moves = moves.filtered(
-            lambda move: not move.location_id.is_sublocation_of(self.location_id)
-            and (
-                move.location_dest_id.is_sublocation_of(self.location_id)
-                or (
-                    move.location_final_id
-                    and move.location_final_id.is_sublocation_of(self.location_id)
+            lambda move: (
+                not move.location_id.is_sublocation_of(self.location_id)
+                and (
+                    move.location_dest_id.is_sublocation_of(self.location_id)
+                    or (
+                        move.location_final_id
+                        and move.location_final_id.is_sublocation_of(self.location_id)
+                    )
                 )
             )
         )
@@ -1909,13 +1919,17 @@ class StockBuffer(models.Model):
         po_states = self._get_unconfirmed_po_states()
         if dlt_interval == "inside":
             pols = self.purchase_line_ids.filtered(
-                lambda line: line.date_planned <= fields.Datetime.to_datetime(cut_date)
-                and line.state in po_states
+                lambda line: (
+                    line.date_planned <= fields.Datetime.to_datetime(cut_date)
+                    and line.state in po_states
+                )
             )
         elif dlt_interval == "outside":
             pols = self.purchase_line_ids.filtered(
-                lambda line: line.date_planned > fields.Datetime.to_datetime(cut_date)
-                and line.state in po_states
+                lambda line: (
+                    line.date_planned > fields.Datetime.to_datetime(cut_date)
+                    and line.state in po_states
+                )
             )
         else:
             pols = self.purchase_line_ids.filtered(lambda line: line.state in po_states)

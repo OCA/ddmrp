@@ -1,8 +1,8 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo noupdate="1">
     <record id="module_category_ddmrp" model="ir.module.category">
         <field name="name">DDMRP</field>
-        <field name="sequence">40</field>
+        <field name="sequence" eval="40" />
     </record>
     <record id="group_change_buffer_procure_qty" model="res.groups">
         <field

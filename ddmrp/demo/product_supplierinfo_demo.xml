@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo noupdate="1">
     <record id="product_supplierinfo_rm01" model="product.supplierinfo">
         <field name="product_tmpl_id" ref="product_product_rm01_product_template" />

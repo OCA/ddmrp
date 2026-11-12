@@ -53,8 +53,9 @@ class StockMove(models.Model):
                 self.sudo()._update_ddmrp_nfp()
             elif "location_id" in vals or "location_dest_id" in vals:
                 self.sudo().filtered(
-                    lambda m: m.state
-                    in ("confirmed", "partially_available", "assigned")
+                    lambda m: (
+                        m.state in ("confirmed", "partially_available", "assigned")
+                    )
                 )._update_ddmrp_nfp()
         return res
 

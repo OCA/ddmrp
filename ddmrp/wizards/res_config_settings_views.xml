@@ -76,9 +76,9 @@
                         </setting>
                     </block>
                     <block
+                        id="ddmrp_settings"
                         class="row mt16 o_settings_container"
                         title="Company Settings"
-                        id="ddmrp_settings"
                     >
                         <setting
                             id="ddmrp_auto_update_nfp"

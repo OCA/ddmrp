@@ -93,9 +93,11 @@ class BomStructureReport(models.AbstractModel):
         for component in data.get("components", []):
             bom_line = next(
                 filter(
-                    lambda line: line.get("bom_id", False) == component["bom_id"]
-                    and line.get("name", False) == component["name"]
-                    and line.get("level", False) == component["level"],
+                    lambda line: (
+                        line.get("bom_id", False) == component["bom_id"]
+                        and line.get("name", False) == component["name"]
+                        and line.get("level", False) == component["level"]
+                    ),
                     lines,
                 )
             )

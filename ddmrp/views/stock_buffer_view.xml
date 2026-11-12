@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="stock_buffer_view_tree" model="ir.ui.view">
         <field name="name">stock.buffer.tree</field>
         <field name="model">stock.buffer</field>
-        <field name="priority">50</field>
+        <field name="priority" eval="50" />
         <field name="arch" type="xml">
             <list decoration-danger="procure_recommended_qty &gt; 0">
                 <header>
