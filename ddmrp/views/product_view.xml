@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="product_normal_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.product.form.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//div[@name='button_box']/button[@name='action_view_mrp_area_parameters']"
+                position="after"
+            >
+                <button
+                    type="object"
+                    name="action_view_stock_buffers"
+                    class="oe_stat_button"
+                    icon="science"
+                    invisible="buffer_count == 0"
+                    groups="stock.group_stock_user"
+                >
+                    <field
+                        name="buffer_count"
+                        widget="statinfo"
+                        string="Stock Buffers"
+                    />
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_only_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.product.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//div[@name='button_box']/button[@name='action_view_mrp_area_parameters']"
+                position="after"
+            >
+                <button
+                    type="object"
+                    name="action_view_stock_buffers"
+                    class="oe_stat_button"
+                    icon="science"
+                    invisible="buffer_count == 0"
+                    groups="stock.group_stock_user"
+                >
+                    <field
+                        name="buffer_count"
+                        widget="statinfo"
+                        string="Stock Buffers"
+                    />
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <record
+        id="lead_time_decimal_precision"
+        forcecreate="True"
+        model="decimal.precision"
+    >
+        <field name="name">Lead Time</field>
+        <field name="digits" eval="0" />
+    </record>
+    <record
+        id="average_daily_usage_decimal_precision"
+        forcecreate="True"
+        model="decimal.precision"
+    >
+        <field name="name">Average Daily Usage</field>
+        <field name="digits" eval="3" />
+    </record>
+</odoo>

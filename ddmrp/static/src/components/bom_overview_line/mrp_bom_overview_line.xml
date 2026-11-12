@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="ddmrp.BomOverviewLine"
+        t-inherit="mrp.BomOverviewLine"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//td[@name='td_mrp_bom']" position="before">
+            <td
+                t-if="this.props.showOptions.is_buffered and this.data.is_buffered"
+                class="text-center"
+            >
+                <span>
+                    <img
+                        src='/ddmrp/static/img/is_buffered.png'
+                        style="width:30px;height:30px;padding:5px"
+                    />
+                </span>
+            </td>
+            <td t-if="this.props.showOptions.is_buffered and !this.data.is_buffered" />
+        </xpath>
+        <xpath
+            expr="//td[@t-if='this.forecastMode'][span[@t-if='this.hasLeadTime']]"
+            position="after"
+        >
+            <td t-if="this.forecastMode" class="text-end">
+                <t
+                t-out="this.data.dlt"
+                t-options='{"widget": "float", "decimal_precision": "Lead Time"}'
+            /> Days
+            </td>
+        </xpath>
+    </t>
+
+</templates>
