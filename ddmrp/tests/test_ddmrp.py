@@ -1615,3 +1615,17 @@ class TestDdmrp(TestDdmrpCommon):
         pol = self.pol_model.search([("product_id", "=", self.product_purchased.id)])
         self.assertEqual(len(pol), 1)
         self.assertEqual(pol.order_id.partner_id, vendor_2)
+
+    def test_58_procurement_reference(self):
+        """Procurements of a buffer with a reference are linked to it."""
+        reference = self.env["stock.reference"].create({"name": "DDMRP-REF"})
+        self.buffer_purchase.reference_id = reference
+        wizard = self.make_procurement_wiz.with_context(
+            active_model="stock.buffer",
+            active_ids=self.buffer_purchase.ids,
+            active_id=self.buffer_purchase.id,
+        ).create({})
+        wizard.make_procurement()
+        pol = self.pol_model.search([("product_id", "=", self.product_purchased.id)])
+        self.assertEqual(len(pol), 1)
+        self.assertEqual(pol.order_id.reference_ids, reference)
