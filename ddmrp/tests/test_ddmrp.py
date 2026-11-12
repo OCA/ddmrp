@@ -1590,3 +1590,24 @@ class TestDdmrp(TestDdmrpCommon):
         chart_data = json.loads(self.buffer_a.ddmrp_demand_chart)
         self.assertNotIn("No demand detected", chart_data["div"])
         self.assertTrue(chart_data["script"])
+
+    def test_57_procurement_wizard_vendor(self):
+        """The vendor chosen in the procurement wizard is the one used for
+        the purchase order, not the first seller of the product."""
+        vendor_2 = self.partner_model.create({"name": "Test Vendor 2"})
+        self.supinfo_model.create(
+            {
+                "product_tmpl_id": self.product_purchased.product_tmpl_id.id,
+                "partner_id": vendor_2.id,
+                "delay": 20.0,
+            }
+        )
+        wizard = self.make_procurement_wiz.with_context(
+            active_model="stock.buffer",
+            active_ids=self.buffer_purchase.ids,
+            active_id=self.buffer_purchase.id,
+        ).create({"partner_id": vendor_2.id})
+        wizard.make_procurement()
+        pol = self.pol_model.search([("product_id", "=", self.product_purchased.id)])
+        self.assertEqual(len(pol), 1)
+        self.assertEqual(pol.order_id.partner_id, vendor_2)
