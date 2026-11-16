@@ -27,6 +27,6 @@ class StockMove(models.Model):
     def write(self, vals):
         res = super().write(vals)
         if "exclude_from_adu" in vals:
-            out_buffers, in_buffers = self._find_buffers_to_update_nfp()
+            out_buffers, in_buffers = self._find_buffers_affected_by_moves()
             (out_buffers + in_buffers)._calc_adu()
         return res
