@@ -1,0 +1,26 @@
+id,name,model_id,group_id/id,operation,domain
+access_product_adu_calculation_method,product.adu.calculation.method,product.adu.calculation.method,stock.group_stock_user,r,
+access_product_adu_calculation_method_system,product.adu.calculation.method system,product.adu.calculation.method,ddmrp.group_ddmrp_manager,crud,
+product_adu_calculation_method_comp_rule,Product ADU calculation method multi-company,product.adu.calculation.method,,crud,"['|',('company_id','=',False),('company_id', 'in', company_ids)]"
+access_stock_buffer_profile,stock.buffer.profile,stock.buffer.profile,stock.group_stock_user,r,
+access_stock_buffer_profile_system,stock.buffer.profile system,stock.buffer.profile,ddmrp.group_ddmrp_manager,crud,
+stock_buffer_profile_comp_rule,Buffer Profile multi-company,stock.buffer.profile,,crud,"['|',('company_id','=',False),('company_id', 'in', company_ids)]"
+access_stock_buffer_profile_lead_time,stock.buffer.profile.lead.time stock user,stock.buffer.profile.lead.time,stock.group_stock_user,r,
+access_stock_buffer_profile_lead_time_manager,stock.buffer.profile.lead.time stock user,stock.buffer.profile.lead.time,ddmrp.group_ddmrp_manager,crud,
+stock_buffer_profile_variability_lead_time_comp_rule,Buffer Profile Lead Time multi-company,stock.buffer.profile.lead.time,,crud,"['|',('company_id','=',False),('company_id', 'in', company_ids)]"
+access_stock_buffer_profile_variability,stock.buffer.profile.variability stock user,stock.buffer.profile.variability,stock.group_stock_user,r,
+access_stock_buffer_profile_variability_manager,stock.buffer.profile.variability stock manager,stock.buffer.profile.variability,ddmrp.group_ddmrp_manager,crud,
+stock_buffer_profile_variability_comp_rule,Buffer Profile Variability multi-company,stock.buffer.profile.variability,,crud,"['|',('company_id','=',False),('company_id', 'in', company_ids)]"
+access_stock_buffer,stock.buffer.user,stock.buffer,stock.group_stock_user,r,
+access_stock_buffer_manager,stock.buffer.manager,stock.buffer,ddmrp.group_stock_buffer_maintainer,crud,
+stock_buffer_comp_rule,Stock Buffer multi-company,stock.buffer,,crud,"['|',('company_id','=',False),('company_id', 'in', company_ids)]"
+access_stock_buffer_procurements,stock.buffer.procurements.user,make.procurement.buffer,stock.group_stock_user,r,
+access_stock_buffer_procurements_manager,stock.buffer.procurements.manager,make.procurement.buffer,stock.group_stock_manager,crud,
+access_stock_buffer_procurements_item,stock.buffer.procurements.item.user,make.procurement.buffer.item,stock.group_stock_user,r,
+access_stock_buffer_procurements_item_manager,stock.buffer.procurements.item.manager,make.procurement.buffer.item,stock.group_stock_manager,crud,
+access_ddmrp_duplicate_buffer,ddmrp.duplicate.buffer,ddmrp.duplicate.buffer,stock.group_stock_user,r,
+access_ddmrp_duplicate_buffer_manager,ddmrp.duplicate.buffer,ddmrp.duplicate.buffer,ddmrp.group_stock_buffer_maintainer,crud,
+access_mrp_bom_change_location_manager,mrp.bom.change.location,mrp.bom.change.location,stock.group_stock_user,crud,
+ddmrp_access_run,ddmrp.run,ddmrp.run,stock.group_stock_user,r,
+ddmrp_access_run_manager,ddmrp.run.manager,ddmrp.run,stock.group_stock_manager,crud,
+access_ddmrp_mrp_move,mrp.move ddmrp,mrp.move,stock.group_stock_user,r,

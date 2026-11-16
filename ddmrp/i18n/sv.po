@@ -1,0 +1,2164 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ddmrp
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-07-08 16:46+0000\n"
+"Last-Translator: Laura V <laura.valls@forgeflow.com>\n"
+"Language-Team: none\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__used_in_bom_count
+msgid "# BoM Where Used"
+msgstr "# Struktur används i"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_move_line__state
+msgid ""
+"* New: The stock move is created but not confirmed.\n"
+"* Waiting Another Move: A linked stock move should be done before this one.\n"
+"* Waiting: The stock move is confirmed but the product can't be reserved.\n"
+"* Available: The product of the stock move is reserved.\n"
+"* Done: The product has been transferred and the transfer has been confirmed."
+msgstr ""
+"* Ny: Lagerflytten är skapad men inte bekräftad.\n"
+"* Väntar på annan flytt: En kopplad lagerflytt bör vara klar innan denna.\n"
+"* Väntar: Lagerflytten är bekräftad men produkten kan inte reserveras.\n"
+"* Tillgänglig: Produkten för lagerflytten är reserverad.\n"
+"* Klar: Produkten har överförts och överföringen har bekräftats."
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu
+msgid "ADU"
+msgstr "ADU"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method
+msgid "ADU calculation method"
+msgstr "ADU-beräkningsmetod"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.product_adu_calculation_method_form_action
+#: model:ir.ui.menu,name:ddmrp.menu_product_adu_calculation_method
+msgid "ADU calculation methods"
+msgstr "ADU-beräkningsmetoder"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__active
+msgid "Active"
+msgstr "Aktiv"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Adds chatter and activities to stock buffers."
+msgstr "Lägger till chatt och aktiviteter till lagerbuffertar."
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__demand_stock_move_ids
+msgid "All demand stock moves for this buffer"
+msgstr "Alla efterfrågelagerflyttar för denna buffert"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid ""
+"Apply adjustments to dynamically alter stock buffers to respond to planned "
+"or anticipated events."
+msgstr ""
+"Tillämpa justeringar för att dynamiskt ändra lagerbuffertar som svar på "
+"planerade eller förväntade händelser."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Archived"
+msgstr "Arkiverad"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/product_template.py:0
+msgid ""
+"At least one stock buffer for this product has a different Procurement unit "
+"of measure category."
+msgstr ""
+"Minst en lagerbuffert för denna produkt har en annan "
+"anskaffningsmåttenhetskategori."
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__auto_procure
+msgid "Auto Procure"
+msgstr "Automatisk anskaffning"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__auto_procure_option
+msgid "Auto Procure Option"
+msgstr "Inställning för automatisk anskaffning"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Auto update Net Flow Position"
+msgstr "Uppdatera nettoflödesposition automatiskt"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__adu
+msgid "Average Daily Usage"
+msgstr "Genomsnittlig daglig förbrukning"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__on_hand_target_position
+msgid "Avg On Hand Target Position"
+msgstr "Gen. mållagerposition"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_report_mrp_report_bom_structure
+msgid "BOM Overview Report"
+msgstr "Översiktsrapport för strukturer"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_mrp_bom
+msgid "Bill of Material"
+msgstr "Struktur"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_mrp_bom_line
+msgid "Bill of Material Line"
+msgstr "Strukturrad"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Bill of Materials"
+msgstr "Strukturer"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:0
+msgid "Blended"
+msgstr "Blandad"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Buffer"
+msgstr "Buffert"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_product__buffer_count
+#: model:ir.model.fields,field_description:ddmrp.field_product_template__buffer_count
+msgid "Buffer Count"
+msgstr "Antal buffertar"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Buffer Information"
+msgstr "Buffertinformation"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_production__execution_priority_level
+msgid "Buffer On-Hand Alert Level"
+msgstr "Buffertens larmnivå för lagerbehållning"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line__execution_priority_level
+msgid "Buffer On-Hand Status Level"
+msgstr "Buffertens statusnivå för lagerbehållning"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__buffer_profile_id
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_form
+msgid "Buffer Profile"
+msgstr "Buffertprofil"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.stock_buffer_profile_lead_time_form_action
+#: model:ir.ui.menu,name:ddmrp.menu_stock_buffer_profile_lead_time
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_lead_time_form
+msgid "Buffer Profile Lead Time Factor"
+msgstr "Buffertprofilens ledtidsfaktor"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.stock_buffer_profile_variability_form_action
+#: model:ir.ui.menu,name:ddmrp.menu_stock_buffer_profile_variability
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_variability_form
+msgid "Buffer Profile Variability Factor"
+msgstr "Buffertprofilens variabilitetsfaktor"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.stock_buffer_profile_form_action
+#: model:ir.ui.menu,name:ddmrp.menu_stock_buffer_profile_mgt
+msgid "Buffer Profiles"
+msgstr "Buffertprofiler"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Buffer summary"
+msgstr "Buffertöversikt"
+
+#. module: ddmrp
+#. odoo-javascript
+#: code:addons/ddmrp/static/src/components/bom_overview_display_filter/mrp_bom_overview_display_filter.esm.js:0
+#: code:addons/ddmrp/static/src/components/bom_overview_table/mrp_bom_overview_table.xml:0
+#: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_line_search
+#: model_terms:ir.ui.view,arch_db:ddmrp.report_mrp_bom_inherit_ddmrp
+msgid "Buffered"
+msgstr "Buffertstyrd"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__is_buffered
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__is_buffered
+msgid "Buffered?"
+msgstr "Buffertstyrd?"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_line_execution_tree
+msgid "Buffers"
+msgstr "Buffertar"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
+msgid ""
+"By default, the qty is equal to the recommended quantity.\n"
+"                    For distributed buffers, when the option on the profile is active,\n"
+"                    the quantity is limited to the free quantity."
+msgstr ""
+"Som standard är antalet lika med det rekommenderade antalet.\n"
+"                    För distribuerade buffertar, när inställningen på "
+"profilen är aktiv,\n"
+"                    begränsas antalet till det fria antalet."
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__method
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method_type
+msgid "Calculation method"
+msgstr "Beräkningsmetod"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
+msgid "Cancel"
+msgstr "Avbryt"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.mrp_bom_change_location_wizard
+msgid "Change"
+msgstr "Ändra"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.mrp_bom_change_location_wizard
+msgid "Change Bom Location"
+msgstr "Ändra strukturplats"
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__ddmrp_duplicate_buffer__type__location
+#: model_terms:ir.ui.view,arch_db:ddmrp.mrp_bom_form_view
+msgid "Change Location"
+msgstr "Ändra plats"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/mrp_bom.py:0
+msgid "Change MRP BoM Location"
+msgstr "Ändra MRP-strukturplats"
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__ddmrp_duplicate_buffer__type__product
+msgid "Change Product"
+msgstr "Ändra produkt"
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__ddmrp_duplicate_buffer__type__both
+msgid "Change both values"
+msgstr "Ändra båda värdena"
+
+#. module: ddmrp
+#: model:res.groups,name:ddmrp.group_change_buffer_procure_qty
+msgid "Change quantity in manual procurements from Stock Buffers"
+msgstr "Ändra antal i manuella anskaffningar från lagerbuffertar"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.mrp_bom_change_location_wizard
+msgid ""
+"Change the inventory location that it is considered to compute when a product is buffered or not.\n"
+"                    This can potentially change the Decoupled Lead Time (DLT) value.\n"
+"                    This change is only informative and won't affect any process or buffer size or recommendations."
+msgstr ""
+"Ändra den lagerplats som beaktas vid beräkning av om en produkt är "
+"buffertstyrd eller inte.\n"
+"                    Detta kan potentiellt ändra värdet för Decoupled Lead "
+"Time (DLT).\n"
+"                    Denna ändring är endast informativ och påverkar ingen "
+"process, buffertstorlek eller rekommendationer."
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_chatter
+msgid "Chatter in Stock Buffers"
+msgstr "Chatt i lagerbuffertar"
+
+#. module: ddmrp
+#: model_terms:ir.actions.act_window,help:ddmrp.stock_buffer_profile_form_action
+msgid "Click to start a new buffer profile"
+msgstr "Klicka för att skapa en ny buffertprofil"
+
+#. module: ddmrp
+#: model_terms:ir.actions.act_window,help:ddmrp.stock_buffer_profile_lead_time_form_action
+msgid "Click to start a new buffer profile lead time factor"
+msgstr "Klicka för att skapa en ny ledtidsfaktor för buffertprofil"
+
+#. module: ddmrp
+#: model_terms:ir.actions.act_window,help:ddmrp.stock_buffer_profile_variability_form_action
+msgid "Click to start a new buffer profile variability factor"
+msgstr "Klicka för att skapa en ny variabilitetsfaktor för buffertprofil"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_res_company
+msgid "Companies"
+msgstr "Företag"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__company_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__company_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__company_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__company_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__company_id
+msgid "Company"
+msgstr "Företag"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Company Settings"
+msgstr "Företagsinställningar"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_res_config_settings
+msgid "Config Settings"
+msgstr "Inställningar"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_warning
+msgid "Configuration Warnings in Stock Buffers"
+msgstr "Konfigurationsvarningar i lagerbuffertar"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Consumption"
+msgstr "Förbrukning"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.ddmrp_duplicate_buffer_wizard
+msgid "Copy Ddmrp Stock Buffer"
+msgstr "Kopiera DDMRP-lagerbuffert"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid "Create Procurement"
+msgstr "Skapa anskaffning"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__create_uid
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__create_uid
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__create_uid
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__create_uid
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location__create_uid
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__create_uid
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__create_uid
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__create_uid
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__create_uid
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__create_uid
+msgid "Created by"
+msgstr "Skapad av"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__create_date
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__create_date
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__create_date
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__create_date
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location__create_date
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__create_date
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__create_date
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__create_date
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__create_date
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__create_date
+msgid "Created on"
+msgstr "Skapad den"
+
+#. module: ddmrp
+#: model:ir.module.category,name:ddmrp.module_category_ddmrp
+#: model:ir.ui.menu,name:ddmrp.menu_ddmrp_config
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_warehouse
+msgid "DDMRP"
+msgstr "DDMRP"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "DDMRP Adjustments"
+msgstr "DDMRP-justeringar"
+
+#. module: ddmrp
+#: model:ir.actions.server,name:ddmrp.ir_cron_ddmrp_adu_calculation_scheduler_action_ir_actions_server
+msgid "DDMRP Buffer ADU calculation"
+msgstr "DDMRP-buffertens ADU-beräkning"
+
+#. module: ddmrp
+#: model:ir.actions.server,name:ddmrp.ir_cron_ddmrp_calculation_scheduler_action_ir_actions_server
+msgid "DDMRP Buffer calculation"
+msgstr "DDMRP-buffertberäkning"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__ddmrp_chart
+msgid "DDMRP Chart"
+msgstr "DDMRP-diagram"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__ddmrp_demand_chart
+msgid "DDMRP Demand Chart"
+msgstr "DDMRP-efterfrågediagram"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_ddmrp_duplicate_buffer
+msgid "DDMRP Duplicate Buffer"
+msgstr "Duplicera DDMRP-buffert"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__ddmrp_chart_execution
+msgid "DDMRP Execution Chart"
+msgstr "DDMRP-genomförandediagram"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "DDMRP History"
+msgstr "DDMRP-historik"
+
+#. module: ddmrp
+#: model:res.groups,name:ddmrp.group_ddmrp_manager
+msgid "DDMRP Manager"
+msgstr "DDMRP-ansvarig"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_ddmrp_run
+msgid "DDMRP Manual Run Wizard"
+msgstr "Guide för manuell DDMRP-körning"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__ddmrp_supply_chart
+msgid "DDMRP Supply Chart"
+msgstr "DDMRP-försörjningsdiagram"
+
+#. module: ddmrp
+#. odoo-javascript
+#: code:addons/ddmrp/static/src/components/bom_overview_table/mrp_bom_overview_table.xml:0
+msgid "DLT"
+msgstr "DLT"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__dlt
+msgid "DLT (days)"
+msgstr "DLT (dagar)"
+
+#. module: ddmrp
+#. odoo-javascript
+#: code:addons/ddmrp/static/src/components/bom_overview_line/mrp_bom_overview_line.xml:0
+msgid "Days"
+msgstr "Dagar"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__dlt
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__dlt
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__dlt
+msgid "Decoupled Lead Time (days)"
+msgstr "Decoupled Lead Time (dagar)"
+
+#. module: ddmrp
+#. odoo-javascript
+#: code:addons/ddmrp/static/src/components/bom_overview_table/mrp_bom_overview_table.xml:0
+msgid "Decoupled Lead Time of the BoM."
+msgstr "Decoupled Lead Time för strukturen."
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__product_uom
+msgid "Default unit of measure used for all stock operations."
+msgstr "Standardmåttenhet som används för alla lagertransaktioner."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Demand"
+msgstr "Efterfrågan"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__demand_stock_move_ids
+msgid "Demand Stock Move"
+msgstr "Efterfrågelagerflytt"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_multi_level__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_product_product__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_product_template__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_report_mrp_report_bom_structure__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_res_company__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_rule__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse__display_name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint__display_name
+msgid "Display Name"
+msgstr "Visningsnamn"
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer_profile__item_type__distributed
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Distributed"
+msgstr "Distribuerad"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.ddmrp_duplicate_buffer_wizard
+msgid "Duplicate"
+msgstr "Duplicera"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.action_server_ddmrp_duplicate_buffer
+msgid "Duplicate Buffer"
+msgstr "Duplicera buffert"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
+msgid "Duplicated Buffers"
+msgstr "Duplicerade buffertar"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__type
+msgid "Duplication Type"
+msgstr "Dupliceringstyp"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/stock_buffer.py:0
+msgid ""
+"Error: The product default Unit of Measure and the procurement Unit of "
+"Measure must be in the same category."
+msgstr ""
+"Fel: Produktens standardmåttenhet och anskaffningsmåttenheten måste vara i "
+"samma kategori."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Estimates"
+msgstr "Uppskattningar"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
+msgid "Execute"
+msgstr "Utför"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Execution"
+msgstr "Genomförande"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Extensions"
+msgstr "Tillägg"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__extra_lead_time
+msgid "Extra lead time (for Sizing)"
+msgstr "Extra ledtid (för dimensionering)"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_warehouse__nfp_incoming_safety_factor
+msgid ""
+"Factor used to compute the number of days to look into the future for "
+"incoming shipments for the purposes of the Net Flow position calculation."
+msgstr ""
+"Faktor som används för att beräkna antalet dagar att se framåt för "
+"inkommande leveranser vid beräkning av nettoflödespositionen."
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:0
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_fixed
+msgid "Fixed ADU"
+msgstr "Fast ADU"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order__ddmrp_comment
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line__ddmrp_comment
+msgid "Follow-up Notes"
+msgstr "Uppföljningsanteckningar"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__factor_future
+msgid "Future Factor"
+msgstr "Framtidsfaktor"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__horizon_future
+msgid "Future Horizon"
+msgstr "Framtidshorisont"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__source_future
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method_source_future
+msgid "Future Source"
+msgstr "Framtidskälla"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:0
+msgid "Future-looking"
+msgstr "Framåtblickande"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Get configuration warnings for stock buffers."
+msgstr "Hämta konfigurationsvarningar för lagerbuffertar."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_move_tree
+msgid "Go to Source"
+msgstr "Gå till källa"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__product_type
+msgid ""
+"Goods are tangible materials and merchandise you provide.\n"
+"A service is a non-material product you provide."
+msgstr ""
+"Varor är materiella material och handelsvaror som du tillhandahåller.\n"
+"En tjänst är en icke-materiell produkt som du tillhandahåller."
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__mrp_production__execution_priority_level__3_green
+#: model:ir.model.fields.selection,name:ddmrp.selection__purchase_order_line__execution_priority_level__3_green
+#: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer__execution_priority_level__3_green
+#: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer__planning_priority_level__3_green
+#: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_line_search
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_mrp_production_filter
+msgid "Green"
+msgstr "Grön"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__green_override
+msgid "Green Zone (Override)"
+msgstr "Grön zon (åsidosättning)"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__green_zone_lt_factor
+msgid "Green Zone Lead Time Factor"
+msgstr "Grön zons ledtidsfaktor"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__green_zone_moq
+msgid "Green Zone Minimum Order Quantity"
+msgstr "Grön zons minsta orderkvantitet"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__green_zone_oc
+msgid "Green Zone Order Cycle"
+msgstr "Grön zons ordercykel"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__green_zone_qty
+msgid "Green Zone Qty"
+msgstr "Grön zons antal"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Green zone"
+msgstr "Grön zon"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__green_zone_lt_factor
+msgid "Green zone Lead Time Factor"
+msgstr "Grön zons ledtidsfaktor"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__green_zone_oc
+msgid "Green zone qty option considering desired Order Cycle"
+msgstr "Grön zons antalsalternativ baserat på önskad ordercykel"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__green_zone_moq
+msgid "Green zone qty option considering minimum order quantity"
+msgstr "Grön zons antalsalternativ baserat på minsta orderkvantitet"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Has Long Term Supply"
+msgstr "Har långsiktig försörjning"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Has Stock In Source Location"
+msgstr "Har lager på källplats"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_purchase_hide_onhand_status
+msgid "Hide Purchase On-Hand Status"
+msgstr "Dölj inköpslagerstatus"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Hides on-hand status from purchase order line."
+msgstr "Döljer lagerstatus från inköpsorderraden."
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__id
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__id
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__id
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location__id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_multi_level__id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_production__id
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__id
+#: model:ir.model.fields,field_description:ddmrp.field_product_product__id
+#: model:ir.model.fields,field_description:ddmrp.field_product_template__id
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order__id
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:ddmrp.field_report_mrp_report_bom_structure__id
+#: model:ir.model.fields,field_description:ddmrp.field_res_company__id
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move_line__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_picking__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_rule__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse__id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse_orderpoint__id
+msgid "ID"
+msgstr "ID"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_make_procurement_buffer__partner_id
+msgid "If set, will be used as preferred vendor for purchase routes."
+msgstr "Om angiven används som föredragen leverantör för inköpsrutter."
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:0
+msgid ""
+"In blended method, past and future factors must be positive and sum exactly "
+"1,0."
+msgstr ""
+"I den blandade metoden måste dåtids- och framtidsfaktorerna vara positiva "
+"och summera till exakt 1,0."
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_company__ddmrp_adu_calc_include_scrap
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__ddmrp_adu_calc_include_scrap
+msgid "Include scrap locations in ADU calculation"
+msgstr "Inkludera skrotplatser i ADU-beräkningen"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__incoming_outside_dlt_qty
+msgid "Incoming (Outside DLT)"
+msgstr "Inkommande (utanför DLT)"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__incoming_dlt_qty
+msgid "Incoming (Within DLT)"
+msgstr "Inkommande (inom DLT)"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid "Incoming Outside DLT"
+msgstr "Inkommande utanför DLT"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid "Incoming Within DLT"
+msgstr "Inkommande inom DLT"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method__source_future
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__adu_calculation_method_source_future
+msgid "Information source used for future calculation."
+msgstr "Informationskälla som används för framtidsberäkning."
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method__source_past
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__adu_calculation_method_source_past
+msgid "Information source used for past calculation."
+msgstr "Informationskälla som används för dåtidsberäkning."
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__on_hand_target_max
+msgid "It denotes how far you are on average from the target"
+msgstr "Anger hur långt du i genomsnitt är från målet"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__on_hand_target_position
+msgid ""
+"It denotes what the target stock on hand is. The computation is: OH Target ="
+" TOR + Green Zone / 2 "
+msgstr ""
+"Anger vad mållagerbehållningen är. Beräkningen är: Mållager = TOR + Grön "
+"zon / 2 "
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__on_hand_target_min
+msgid "It denotes what the target stock on hand range is."
+msgstr "Anger vad mållagerbehållningsintervallet är."
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__item_type
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__item_type
+msgid "Item Type"
+msgstr "Objekttyp"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__item_ids
+msgid "Items"
+msgstr "Poster"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__write_uid
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__write_uid
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__write_uid
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__write_uid
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location__write_uid
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__write_uid
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__write_uid
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__write_uid
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__write_uid
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__write_uid
+msgid "Last Updated by"
+msgstr "Senast uppdaterad av"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__write_date
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_run__write_date
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__write_date
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__write_date
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location__write_date
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__write_date
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__write_date
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__write_date
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__write_date
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__write_date
+msgid "Last Updated on"
+msgstr "Senast uppdaterad den"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__lead_days
+msgid "Lead Time (Distributed)"
+msgstr "Ledtid (distribuerad)"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__lead_time_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__factor
+msgid "Lead Time Factor"
+msgstr "Ledtidsfaktor"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__lead_days
+msgid "Lead time for distributed products."
+msgstr "Ledtid för distribuerade produkter."
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method__horizon_future
+msgid "Length-of-period horizon in days looking forward."
+msgstr "Periodlängdshorisont i dagar framåt."
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method__horizon_past
+msgid "Length-of-period horizon in days looking past."
+msgstr "Periodlängdshorisont i dagar bakåt."
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__replenish_distributed_limit_to_free_qty
+msgid "Limit replenishment to free quantity"
+msgstr "Begränsa påfyllning till fritt antal"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move__buffer_ids
+msgid "Linked Stock Buffers"
+msgstr "Kopplade lagerbuffertar"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__location_id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_change_location__location_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__location_id
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Location"
+msgstr "Plats"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_mrp_bom_change_location
+msgid "MRP Bom Change Location"
+msgstr "MRP-strukturens platsändring"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Main Buffer size factors"
+msgstr "Primära buffertstorleksfaktorer"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__main_supplier_id
+msgid "Main Supplier"
+msgstr "Huvudleverantör"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Main supplier"
+msgstr "Huvudleverantör"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_make_procurement_buffer_item
+msgid "Make Procurements from Stock Buffer Item"
+msgstr "Gör anskaffningar från lagerbuffertobjekt"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_make_procurement_buffer
+msgid "Make Procurements from Stock Buffers"
+msgstr "Gör anskaffningar från lagerbuffertar"
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer_profile__item_type__manufactured
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Manufactured"
+msgstr "Tillverkad"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_mrp_production
+msgid "Manufacturing Order"
+msgstr "Tillverkningsorder"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__mrp_production_ids
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Manufacturing Orders"
+msgstr "Tillverkningsorder"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__procure_max_qty
+msgid "Maximum Procure Batch"
+msgstr "Maximal anskaffningsbatch"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__procure_max_qty
+msgid "Maximum qty for a single procurement"
+msgstr "Maximalt antal för en enskild anskaffning"
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer_profile__replenish_method__min_max
+msgid "Min-max"
+msgstr "Min-max"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_warehouse_orderpoint
+msgid "Minimum Inventory Rule"
+msgstr "Minimilagerregel"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__order_cycle
+msgid "Minimum Order Cycle (days)"
+msgstr "Minsta ordercykel (dagar)"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__minimum_order_quantity
+msgid "Minimum Order Quantity"
+msgstr "Minsta orderkvantitet"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__procure_min_qty
+msgid "Minimum Procure Batch"
+msgstr "Minimal anskaffningsbatch"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__procure_min_qty
+msgid "Minimum qty for a single procurement"
+msgstr "Minimalt antal för en enskild anskaffning"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__group_id
+msgid ""
+"Moves created through this buffer will be put in this procurement group. If "
+"none is given, the moves generated by stock rules will be grouped into one "
+"big picking."
+msgstr ""
+"Flyttar som skapas via denna buffert placeras i denna anskaffningsgrupp. Om "
+"ingen anges grupperas flyttarna som genereras av lagerregler i en stor "
+"plockning."
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_mrp_multi_level
+msgid "Multi Level MRP"
+msgstr "Flernivå-MRP"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_lead_time__name
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__name
+msgid "Name"
+msgstr "Namn"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__net_flow_position
+msgid "Net Flow Position"
+msgstr "Nettoflödesposition"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_warehouse__nfp_incoming_safety_factor
+msgid "Net Flow Position Incoming Safety Factor"
+msgstr "Nettoflödespositionens säkerhetsfaktor för inkommande"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__net_flow_position_percent
+msgid "Net flow position (% of TOG)"
+msgstr "Nettoflödesposition (% av TOG)"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__location_id
+msgid "New Location"
+msgstr "Ny plats"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_ddmrp_duplicate_buffer__product_id
+msgid "New Product"
+msgstr "Ny produkt"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/stock_buffer.py:0
+msgid "No demand detected."
+msgstr "Ingen efterfrågan upptäckt."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid "No stock available in source location for distributed buffer"
+msgstr "Inget lager tillgängligt på källplatsen för distribuerad buffert"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/wizards/make_procurement_buffer.py:0
+msgid "No stock buffer found."
+msgstr "Ingen lagerbuffert hittades."
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/stock_buffer.py:0
+msgid "No supply detected."
+msgstr "Ingen försörjning upptäckt."
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/stock_buffer.py:0
+msgid "Non-completed Moves"
+msgstr "Ej slutförda flyttar"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "On Hand Target"
+msgstr "Mållagerbehållning"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__on_hand_target_min
+msgid "On Hand Target Range"
+msgstr "Mållagerbehållningsintervall"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_production__on_hand_percent
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line__on_hand_percent
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__on_hand_percent
+msgid "On Hand/TOR (%)"
+msgstr "Lagerbehållning/TOR (%)"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid "On-Hand"
+msgstr "Lagerbehållning"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__execution_priority_level
+msgid "On-Hand Alert Level"
+msgstr "Larmnivå för lagerbehållning"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_purchase_order_filter
+msgid "On-Hand Alert: Red"
+msgstr "Lagerbehållningslarm: Röd"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_purchase_order_filter
+msgid "On-Hand Alert: Yellow"
+msgstr "Lagerbehållningslarm: Gul"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__order_spike_horizon
+msgid "Order Spike Horizon"
+msgstr "Horisont för orderspikar"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__order_spike_threshold
+msgid "Order Spike Threshold"
+msgstr "Tröskel för orderspikar"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.po_line_execution_action
+#: model:ir.ui.menu,name:ddmrp.menu_pol_execution
+msgid "PO lines On-Hand Status"
+msgstr "Inköpsorderraders lagerstatus"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__factor_past
+msgid "Past Factor"
+msgstr "Dåtidsfaktor"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__horizon_past
+msgid "Past Horizon"
+msgstr "Dåtidshorisont"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_product_adu_calculation_method__source_past
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_calculation_method_source_past
+msgid "Past Source"
+msgstr "Dåtidskälla"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:0
+msgid "Past-looking"
+msgstr "Bakåtblickande"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__date_planned
+msgid "Planned Date"
+msgstr "Planerat datum"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Planning"
+msgstr "Planering"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__planning_priority_level
+msgid "Planning Priority Level"
+msgstr "Planeringsprioritetsnivå"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:0
+msgid "Please indicate a Future Horizon."
+msgstr "Ange en framtidshorisont."
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:0
+msgid "Please indicate a Future Source."
+msgstr "Ange en framtidskälla."
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:0
+msgid "Please indicate a Past Horizon."
+msgstr "Ange en dåtidshorisont."
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:0
+msgid "Please indicate a Past Source."
+msgstr "Ange en dåtidskälla."
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
+msgid "Please select a New Location."
+msgstr "Välj en ny plats."
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
+msgid "Please select a New Product."
+msgstr "Välj en ny produkt."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid "Procure"
+msgstr "Anskaffa"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__procure_recommended_qty
+msgid "Procure Recommendation"
+msgstr "Anskaffningsrekommendation"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__group_id
+msgid "Procurement Group"
+msgstr "Anskaffningsgrupp"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
+msgid "Procurement Request"
+msgstr "Anskaffningsbegäran"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Procurement Settings"
+msgstr "Anskaffningsinställningar"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__procure_uom_id
+msgid "Procurement UoM"
+msgstr "Anskaffningsenhet"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Procurement recommended"
+msgstr "Anskaffning rekommenderad"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_product_template
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__product_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_id
+msgid "Product"
+msgstr "Produkt"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_product_adu_calculation_method
+msgid "Product Average Daily Usage calculation method"
+msgstr "Beräkningsmetod för produktens genomsnittliga dagliga förbrukning"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_picking_form
+msgid "Product Buffers"
+msgstr "Produktbuffertar"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_categ_id
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Product Category"
+msgstr "Produktkategori"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Produktflyttar (lagerflyttrad)"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_type
+msgid "Product Type"
+msgstr "Produkttyp"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_product_product
+msgid "Product Variant"
+msgstr "Produktvariant"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_purchase_order
+msgid "Purchase Order"
+msgstr "Inköpsorder"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Inköpsorderrad"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__purchase_line_ids
+msgid "Purchase Order Lines"
+msgstr "Inköpsorderrader"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Purchase Orders"
+msgstr "Inköpsorder"
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer_profile__item_type__purchased
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Purchased"
+msgstr "Inköpt"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__qty
+msgid "Qty"
+msgstr "Antal"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__qty_multiple
+msgid "Qty Multiple"
+msgstr "Antalsmultipel"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_company__ddmrp_qty_multiple_tolerance
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__ddmrp_qty_multiple_tolerance
+msgid "Qty Multiple Tolerance"
+msgstr "Tolerans för antalsmultipel"
+
+#. module: ddmrp
+#: model:ir.model.constraint,message:ddmrp.constraint_stock_buffer_qty_multiple_check
+msgid "Qty Multiple must be greater than or equal to zero."
+msgstr "Antalsmultipel måste vara större än eller lika med noll."
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__qualified_demand
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Qualified Demand"
+msgstr "Kvalificerad efterfrågan"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move__qualified_demand_buffer_ids
+msgid "Qualified Demand For Buffers"
+msgstr "Kvalificerad efterfrågan för buffertar"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__qualified_demand_mrp_move_ids
+msgid "Qualified Demand Mrp Move"
+msgstr "Kvalificerad efterfrågan MRP-flytt"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__qualified_demand_stock_move_ids
+msgid "Qualified Demand Stock Move"
+msgstr "Kvalificerad efterfrågan lagerflytt"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_location_qty_available_not_res
+msgid "Quantity On Hand (Unreserved)"
+msgstr "Lagerbehållning (ej reserverad)"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__product_location_qty_available_not_res
+msgid ""
+"Quantity available in this stock buffer, this is the total quantity on hand "
+"minus the outgoing reservations."
+msgstr ""
+"Tillgängligt antal i denna lagerbuffert, detta är den totala "
+"lagerbehållningen minus de utgående reservationerna."
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__distributed_source_location_qty
+msgid ""
+"Quantity free for distributed buffer in the source location. When a "
+"procurement is requested, if the option is active on the profile, it will be"
+" limited to this quantity."
+msgstr ""
+"Fritt antal för distribuerad buffert på källplatsen. När en anskaffning "
+"begärs kommer den, om inställningen är aktiv på profilen, att begränsas till "
+"detta antal."
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/wizards/make_procurement_buffer.py:0
+msgid "Quantity must be positive."
+msgstr "Antal måste vara positivt."
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_inside_dlt_qty
+msgid "RFQ Qty (Inside DLT)"
+msgstr "Offertförfrågningsantal (inom DLT)"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_outside_dlt_qty
+msgid "RFQ Qty (Outside DLT)"
+msgstr "Offertförfrågningsantal (utanför DLT)"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_total_qty
+msgid "RFQ Total Qty"
+msgstr "Totalt offertförfrågningsantal"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__distributed_reschedule_max_proc_time
+msgid "Re-Schedule Procurement Max Proc. Time (minutes)"
+msgstr "Max. anskaffningstid för omschemaläggning av anskaffning (minuter)"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__recommended_qty
+msgid "Recommended Qty"
+msgstr "Rekommenderat antal"
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__mrp_production__execution_priority_level__1_red
+#: model:ir.model.fields.selection,name:ddmrp.selection__purchase_order_line__execution_priority_level__1_red
+#: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer__execution_priority_level__1_red
+#: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer__planning_priority_level__1_red
+#: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_line_search
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_mrp_production_filter
+msgid "Red"
+msgstr "Röd"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__red_base_qty
+msgid "Red Base Qty"
+msgstr "Röd grundantal"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__red_safety_qty
+msgid "Red Safety Qty"
+msgstr "Röd säkerhetsantal"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__red_override
+msgid "Red Zone (Override)"
+msgstr "Röd zon (åsidosättning)"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__red_zone_qty
+msgid "Red Zone Qty"
+msgstr "Röd zons antal"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Red zone"
+msgstr "Röd zon"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid "Refresh Buffer"
+msgstr "Uppdatera buffert"
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer_profile__replenish_method__replenish
+msgid "Replenished"
+msgstr "Påfylld"
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer_profile__replenish_method__replenish_override
+msgid "Replenished Override"
+msgstr "Påfyllning åsidosättning"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__distributed_source_location_id
+msgid "Replenishment Location"
+msgstr "Påfyllningsplats"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__replenish_method
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__replenish_method
+msgid "Replenishment method"
+msgstr "Påfyllningsmetod"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.act_make_procurement_from_buffer
+msgid "Request Procurement"
+msgstr "Begär anskaffning"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__rfq_total_qty
+msgid "Request for Quotation total quantity that is planned"
+msgstr "Totalt planerat antal för offertförfrågan"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__rfq_inside_dlt_qty
+msgid ""
+"Request for Quotation total quantity that is planned inside of the DLT "
+"horizon."
+msgstr "Totalt planerat antal för offertförfrågan inom DLT-horisonten."
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__rfq_outside_dlt_qty
+msgid ""
+"Request for Quotation total quantity that is planned outside of the DLT "
+"horizon."
+msgstr "Totalt planerat antal för offertförfrågan utanför DLT-horisonten."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
+msgid "Run ADU calculation"
+msgstr "Kör ADU-beräkning"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.action_ddmrp_run
+#: model:ir.ui.menu,name:ddmrp.ddmrp_run_menu
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
+msgid "Run DDMRP"
+msgstr "Kör DDMRP"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
+msgid "Run DDMRP Buffer calculation"
+msgstr "Kör DDMRP-buffertberäkning"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_search
+msgid "Search ADU Calculatiion methods"
+msgstr "Sök ADU-beräkningsmetoder"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_lead_time_search
+msgid "Search Buffer Profile Lead Time"
+msgstr "Sök buffertprofilens ledtid"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_variability_search
+msgid "Search Buffer Profile Variability"
+msgstr "Sök buffertprofilens variabilitet"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_stock_buffer_profile_search
+msgid "Search Buffer Profiles"
+msgstr "Sök buffertprofiler"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Secondary Buffer size factors"
+msgstr "Sekundära buffertstorleksfaktorer"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid ""
+"Set a tolerance value to apply to quantity multiple in stock buffers.\n"
+"                                    If the quantity needed is below this tolerance threshold, the recommended\n"
+"                                    quantity will be reduced a bit instead of adding another bucket.\n"
+"                                    The value is a percentage of the quantity multiple."
+msgstr ""
+"Ange ett toleransvärde som ska tillämpas på antalsmultipel i "
+"lagerbuffertar.\n"
+"                                    Om det behövda antalet är under denna "
+"toleranströskel kommer det rekommenderade\n"
+"                                    antalet att minskas något istället för "
+"att lägga till ytterligare en enhet.\n"
+"                                    Värdet är en procentandel av "
+"antalsmultipeln."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Set an storage capacity limit on stock buffers."
+msgstr "Ange en lagringskapacitetsgräns på lagerbuffertar."
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.action_ddmrp_config
+msgid "Settings"
+msgstr "Inställningar"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Show Coverage Days in Stock Buffers"
+msgstr "Visa täckningsdagar i lagerbuffertar"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__show_execution_chart
+msgid "Show Execution Chart"
+msgstr "Visa genomförandediagram"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_coverage_days
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid ""
+"Shows the current on-hand for stock buffers expressed as coverage days."
+msgstr ""
+"Visar den aktuella lagerbehållningen för lagerbuffertar uttryckt som "
+"täckningsdagar."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid ""
+"Some RFQ quantities are outside of the DLT Horizon and may require "
+"rescheduling.                     Press this button to display the involved "
+"RFQs"
+msgstr ""
+"Vissa offertförfrågningsantal ligger utanför DLT-horisonten och kan kräva "
+"omschemaläggning.                     Tryck på denna knapp för att visa de "
+"berörda offertförfrågningarna"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid ""
+"Some RFQs are inside of the DLT Horizon and waiting validation to be "
+"accounted into the NFP.                                         Press this "
+"button to display them."
+msgstr ""
+"Vissa offertförfrågningar ligger inom DLT-horisonten och väntar på "
+"validering för att räknas in i NFP.                                         "
+"Tryck på denna knapp för att visa dem."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid ""
+"Some RFQs are inside of the DLT Horizon and waiting validation to be "
+"accounted into the NFP.                     Press this button to display "
+"them."
+msgstr ""
+"Vissa offertförfrågningar ligger inom DLT-horisonten och väntar på "
+"validering för att räknas in i NFP.                     Tryck på denna knapp "
+"för att visa dem."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid ""
+"Some incoming RFQs are outside of the DLT Horizon and may require "
+"rescheduling.                                          Press this button to "
+"display the involved supply orders"
+msgstr ""
+"Vissa inkommande offertförfrågningar ligger utanför DLT-horisonten och kan "
+"kräva omschemaläggning.                                          Tryck på "
+"denna knapp för att visa de berörda försörjningsordrarna"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid ""
+"Some incoming qty is outside of the DLT Horizon and may require "
+"rescheduling.                                          Press this button to "
+"display the involved supply orders"
+msgstr ""
+"Visst inkommande antal ligger utanför DLT-horisonten och kan kräva "
+"omschemaläggning.                                          Tryck på denna "
+"knapp för att visa de berörda försörjningsordrarna"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid ""
+"Some incoming quantities are outside of the DLT Horizon and may require "
+"rescheduling. Press this button to display the involved supply orders"
+msgstr ""
+"Vissa inkommande kvantiteter ligger utanför DLT-horisonten och kan kräva "
+"omschemaläggning. Tryck på denna knapp för att visa de berörda "
+"försörjningsordrarna"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__distributed_source_location_qty
+msgid "Source Location Free Quantity (distributed)"
+msgstr "Källplatsens fria antal (distribuerad)"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__distributed_source_location_id
+msgid ""
+"Source location from where goods will be replenished. Computed when buffer "
+"is refreshed from following the Stock Rules."
+msgstr ""
+"Källplats varifrån varor fylls på. Beräknas när bufferten uppdateras enligt "
+"lagerreglerna."
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_move_line__state
+msgid "Status"
+msgstr "Status"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_buffer
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__buffer_id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__buffer_id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__buffer_id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_production__buffer_id
+msgid "Stock Buffer"
+msgstr "Lagerbuffert"
+
+#. module: ddmrp
+#: model:res.groups,name:ddmrp.group_stock_buffer_maintainer
+msgid "Stock Buffer Maintainer"
+msgstr "Lagerbuffertansvarig"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_buffer_profile
+msgid "Stock Buffer Profile"
+msgstr "Lagerbuffertprofil"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_buffer_profile_lead_time
+msgid "Stock Buffer Profile Lead Time Factor"
+msgstr "Lagerbuffertprofilens ledtidsfaktor"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_buffer_profile_variability
+msgid "Stock Buffer Profile Variability Factor"
+msgstr "Lagerbuffertprofilens variabilitetsfaktor"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.action_stock_buffer
+#: model:ir.model.fields,field_description:ddmrp.field_product_product__buffer_ids
+#: model:ir.model.fields,field_description:ddmrp.field_purchase_order_line__buffer_ids
+#: model:ir.ui.menu,name:ddmrp.menu_stock_buffer
+#: model_terms:ir.ui.view,arch_db:ddmrp.product_normal_form_view_inherit
+#: model_terms:ir.ui.view,arch_db:ddmrp.product_template_only_form_view_inherit
+#: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_form
+#: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_line_form2
+msgid "Stock Buffers"
+msgstr "Lagerbuffertar"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Stock Buffers & Packagings"
+msgstr "Lagerbuffertar och förpackningar"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom__context_location_id
+#: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__context_location_id
+msgid "Stock Location"
+msgstr "Lagerplats"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_move
+msgid "Stock Move"
+msgstr "Lagerflytt"
+
+#. module: ddmrp
+#: model:ir.actions.act_window,name:ddmrp.stock_move_year_consumption_action
+msgid "Stock Move Last Year Consumption"
+msgstr "Lagerflyttens förbrukning förra året"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/stock_move.py:0
+msgid "Stock Move Source"
+msgstr "Lagerflyttens källa"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_move_consumption_pivot
+msgid "Stock Moves Yearly Consumption"
+msgstr "Lagerflyttars årliga förbrukning"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_rule
+msgid "Stock Rule"
+msgstr "Lagerregel"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__qualified_demand_stock_move_ids
+msgid "Stock moves considered qualified demand for this buffer"
+msgstr "Lagerflyttar betraktade som kvalificerad efterfrågan för denna buffert"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_stock_buffer_capacity_limit
+msgid "Storage Capacity Limits"
+msgstr "Lagringskapacitetsgränser"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_history
+msgid "Store historical data from stock buffers"
+msgstr "Spara historiska data från lagerbuffertar"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Store historical data from stock buffers."
+msgstr "Spara historiska data från lagerbuffertar."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Supply"
+msgstr "Försörjning"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Supply & Demand"
+msgstr "Försörjning och efterfrågan"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__on_hand_target_max
+msgid "Target On Hand (Max)"
+msgstr "Mållagerbehållning (max)"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid ""
+"The green zone determines the average order frequency and the order size. It"
+" is determined as the maximum of the following three factors: Minimum Order "
+"Cycle, Lead Time Factor and Minimum Order Quantity."
+msgstr ""
+"Den gröna zonen bestämmer den genomsnittliga orderfrekvensen och "
+"orderstorleken. Den fastställs som det maximala av följande tre faktorer: "
+"Minsta ordercykel, ledtidsfaktor och minsta orderkvantitet."
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__main_supplier_id
+msgid ""
+"The main supplier is the first listed supplier defined on the product that "
+"is valid for this product variant. Any date restrictions are not taken into "
+"account."
+msgstr ""
+"Huvudleverantören är den först listade leverantören som definierats på "
+"produkten och som är giltig för denna produktvariant. Eventuella "
+"datumbegränsningar beaktas inte."
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__qty_multiple
+msgid ""
+"The procurement quantity will be rounded up to this multiple. If it is 0, "
+"the exact quantity will be used."
+msgstr ""
+"Anskaffningsantalet avrundas uppåt till denna multipel. Om det är 0 används "
+"det exakta antalet."
+
+#. module: ddmrp
+#: model:ir.model.constraint,message:ddmrp.constraint_stock_buffer_stock_buffer_uniq
+msgid ""
+"The product/location combination must be unique. Remember that the buffer "
+"could be archived."
+msgstr ""
+"Kombinationen produkt/plats måste vara unik. Kom ihåg att bufferten kan vara "
+"arkiverad."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid ""
+"The red zone is the embedded safety in the buffer. The larger the "
+"variability associated with the product, the larger the red zone will be. It"
+" is composed of two sub-zones: Red base and red safety."
+msgstr ""
+"Den röda zonen är den inbyggda säkerheten i bufferten. Ju större "
+"variabilitet som är förknippad med produkten, desto större blir den röda "
+"zonen. Den består av två underzoner: Röd grund och röd säkerhet."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid ""
+"The yellow zone represents the stock required to cover a full lead time."
+msgstr ""
+"Den gula zonen representerar det lager som krävs för att täcka en full "
+"ledtid."
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_green
+msgid "Top Of Green"
+msgstr "Topp av grön"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_red
+msgid "Top Of Red"
+msgstr "Topp av röd"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_yellow
+msgid "Top Of Yellow"
+msgstr "Topp av gul"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__incoming_total_qty
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid "Total Incoming"
+msgstr "Totalt inkommande"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_picking
+msgid "Transfer"
+msgstr "Överföring"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_res_company__ddmrp_auto_update_nfp
+#: model:ir.model.fields,help:ddmrp.field_res_config_settings__ddmrp_auto_update_nfp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid ""
+"Transfer status changes can trigger the update of relevant buffer's NFP."
+msgstr ""
+"Statusändringar för överföringar kan utlösa uppdatering av den berörda "
+"buffertens NFP."
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_mrp_bom__is_buffered
+#: model:ir.model.fields,help:ddmrp.field_mrp_bom_line__is_buffered
+msgid "True when the product has an DDMRP buffer associated."
+msgstr "Sant när produkten har en kopplad DDMRP-buffert."
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_uom
+msgid "Unit"
+msgstr "Enhet"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__uom_id
+msgid "Unit of Measure"
+msgstr "Måttenhet"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/stock_buffer.py:0
+msgid "Unsupported operator %s"
+msgstr "Operatorn stöds inte: %s"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid "UoM"
+msgstr "Enhet"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_company__ddmrp_auto_update_nfp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__ddmrp_auto_update_nfp
+msgid "Update NFP on Stock Buffers on relevant events."
+msgstr "Uppdatera NFP på lagerbuffertar vid relevanta händelser."
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_packaging
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Use packagings on stock buffers."
+msgstr "Använd förpackningar på lagerbuffertar."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_make_procurement_buffer_wizard
+msgid ""
+"Use this assistant to generate a procurement request for this\n"
+"                    stock buffer. According to the product configuration,\n"
+"                    this may trigger a draft purchase order, a manufacturing\n"
+"                    order or a transfer picking."
+msgstr ""
+"Använd denna assistent för att skapa en anskaffningsbegäran för denna\n"
+"                    lagerbuffert. Beroende på produktkonfigurationen\n"
+"                    kan detta utlösa en utkastinköpsorder, en "
+"tillverkningsorder\n"
+"                    eller en överföringsplockning."
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Used In"
+msgstr "Används i"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__valid_uom_ids
+msgid "Valid Uom"
+msgstr "Giltig enhet"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.res_config_settings_view_form
+msgid "Values set here are company-specific."
+msgstr "Värden som anges här är företagsspecifika."
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile__variability_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer_profile_variability__factor
+msgid "Variability Factor"
+msgstr "Variabilitetsfaktor"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer__partner_id
+#: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_line_execution_tree
+msgid "Vendor"
+msgstr "Leverantör"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_vendor_code
+msgid "Vendor Code"
+msgstr "Leverantörskod"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "View ADU (Future - Direct Demand)"
+msgstr "Visa ADU (framtid - direkt efterfrågan)"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "View ADU (Future - Indirect Demand)"
+msgstr "Visa ADU (framtid - indirekt efterfrågan)"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "View ADU (Past - Direct Demand)"
+msgstr "Visa ADU (dåtid - direkt efterfrågan)"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "View ADU (Past - Indirect Demand)"
+msgstr "Visa ADU (dåtid - indirekt efterfrågan)"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "View Incoming Moves (Within DLT)"
+msgstr "Visa inkommande flyttar (inom DLT)"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "View Qualified Demand from MRP"
+msgstr "Visa kvalificerad efterfrågan från MRP"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "View Qualified Demand from Moves"
+msgstr "Visa kvalificerad efterfrågan från flyttar"
+
+#. module: ddmrp
+#: model:ir.model,name:ddmrp.model_stock_warehouse
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__warehouse_id
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__warehouse_id
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+msgid "Warehouse"
+msgstr "Lagerlokal"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer_profile__replenish_distributed_limit_to_free_qty
+msgid ""
+"When activated, the recommended quantity will be maxed at the quantity "
+"available in the replenishment source location."
+msgstr ""
+"När aktiverad kommer det rekommenderade antalet att maximeras till det "
+"tillgängliga antalet på påfyllningskällplatsen."
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__extra_lead_time
+msgid ""
+"When defined, this lead time will be added to the decoupled lead time for the computation of the zones size (it won't affect planned date for procurements).\n"
+"This is particularly useful in situations of infrequent but periodic demand. E.g. We receive a large order every 30 days, whereas the supplier takes 10 days to supply. \n"
+"In this case the yellow zone must cover for the entire cycle of 30 days of demand.\n"
+"In situations with infrequent demand the ADU tends to be very small, and every new order would be treated as a spike, when \n"
+"in reality this is not an exceptional situation."
+msgstr ""
+"När angiven läggs denna ledtid till den frikopplade ledtiden vid beräkningen "
+"av zonstorleken (den påverkar inte det planerade datumet för anskaffningar)"
+".\n"
+"Detta är särskilt användbart i situationer med sällan förekommande men "
+"periodisk efterfrågan. T.ex. vi tar emot en stor order var 30:e dag, medan "
+"leverantören tar 10 dagar på sig att leverera. \n"
+"I detta fall måste den gula zonen täcka hela cykeln på 30 dagars "
+"efterfrågan.\n"
+"I situationer med sällan förekommande efterfrågan tenderar ADU att vara "
+"mycket liten, och varje ny order skulle behandlas som en spik, \n"
+"trots att detta i verkligheten inte är en exceptionell situation."
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer__auto_procure_option__stockout
+msgid "When in stockout"
+msgstr "Vid lagerbrist"
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer__auto_procure_option__standard
+msgid "When recommended (NFP below TOY)"
+msgstr "När rekommenderad (NFP under TOY)"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method__factor_future
+msgid ""
+"When using a blended method, this is the relative weight assigned to the "
+"future part of the combination."
+msgstr ""
+"Vid användning av en blandad metod är detta den relativa vikt som tilldelas "
+"framtidsdelen av kombinationen."
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_product_adu_calculation_method__factor_past
+msgid ""
+"When using a blended method, this is the relative weight assigned to the "
+"past part of the combination."
+msgstr ""
+"Vid användning av en blandad metod är detta den relativa vikt som tilldelas "
+"dåtidsdelen av kombinationen."
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer_profile__distributed_reschedule_max_proc_time
+msgid ""
+"When you request procurement from a buffer, their scheduled date is "
+"rescheduled to now + this procurement time (in minutes). Their scheduled "
+"date represents the latest the transfers should be done, and therefore, past"
+" this timestamp, considered late."
+msgstr ""
+"När du begär anskaffning från en buffert omschemaläggs deras planerade datum "
+"till nu + denna anskaffningstid (i minuter). Deras planerade datum "
+"representerar den senaste tidpunkten då överföringarna bör vara klara, och "
+"därför betraktas de som försenade efter denna tidpunkt."
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__auto_procure
+msgid ""
+"Whenever the buffer is recomputed, if this option is set, it will procure "
+"automatically if needed."
+msgstr ""
+"När bufferten omberäknas kommer den, om denna inställning är angiven, att "
+"anskaffa automatiskt om det behövs."
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__wiz_id
+msgid "Wizard"
+msgstr "Guide"
+
+#. module: ddmrp
+#: model:ir.model.fields.selection,name:ddmrp.selection__mrp_production__execution_priority_level__2_yellow
+#: model:ir.model.fields.selection,name:ddmrp.selection__purchase_order_line__execution_priority_level__2_yellow
+#: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer__execution_priority_level__2_yellow
+#: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer__planning_priority_level__2_yellow
+#: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_line_search
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_mrp_production_filter
+msgid "Yellow"
+msgstr "Gul"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__yellow_override
+msgid "Yellow Zone (Override)"
+msgstr "Gul zon (åsidosättning)"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__yellow_zone_qty
+msgid "Yellow Zone Qty"
+msgstr "Gul zons antal"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Yellow zone"
+msgstr "Gul zon"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/stock_buffer.py:0
+msgid ""
+"You have to select a product unit of measure that is in the same category "
+"than the default unit of measure of the product"
+msgstr ""
+"Du måste välja en produktmåttenhet som är i samma kategori som produktens "
+"standardmåttenhet"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid "Zones Information"
+msgstr "Zoninformation"
+
+#. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_adjustment
+msgid "apply adjustments to dynamically alter buffers"
+msgstr "tillämpa justeringar för att dynamiskt ändra buffertar"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:0
+msgid "blended"
+msgstr "blandad"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_product_adu_calculation_method_form
+msgid "days"
+msgstr "dagar"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:0
+msgid "future"
+msgstr "framtid"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
+msgid "id"
+msgstr "id"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
+msgid "or"
+msgstr "eller"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/product_adu_calculation_method.py:0
+msgid "past"
+msgstr "dåtid"
