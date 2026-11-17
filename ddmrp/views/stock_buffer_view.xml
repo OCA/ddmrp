@@ -401,7 +401,7 @@
                                 <field name="procure_min_qty" />
                                 <field name="procure_max_qty" />
                                 <field
-                                    name="group_id"
+                                    name="reference_id"
                                     groups="stock.group_adv_location"
                                 />
                                 <field

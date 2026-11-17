@@ -197,4 +197,6 @@ class MakeProcurementBufferItem(models.TransientModel):
         values.update(
             {"date_planned": self.date_planned, "supplier_id": self.wiz_id.partner_id}
         )
+        if self.wiz_id.partner_id:
+            values["supplierinfo_name"] = self.wiz_id.partner_id
         return values
