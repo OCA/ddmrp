@@ -196,8 +196,7 @@ class StockBuffer(models.Model):
                 domain, order="on_hand_position asc", limit=1
             )
             start_stack = history.on_hand_position
-            if start_stack >= 0.0:
-                start_stack = 0.0
+            start_stack = min(0.0, start_stack)
             history = history_model.search(domain, order="date")
             if len(history) < 2:
                 rec.execution_history_chart = json.dumps(

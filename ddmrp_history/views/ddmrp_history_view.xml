@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2017 ForgeFlow S.L. (https://www.forgeflow.com)
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
 <odoo>
@@ -39,9 +39,9 @@
         <field name="view_mode">list,pivot,graph</field>
     </record>
     <menuitem
+        id="menu_ddmrp_history"
         name="DDMRP Buffer History"
         parent="stock.menu_warehouse_report"
         action="action_ddmrp_history"
-        id="menu_ddmrp_history"
     />
 </odoo>
