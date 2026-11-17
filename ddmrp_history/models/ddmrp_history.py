@@ -10,7 +10,6 @@ class DdmrpHistory(models.Model):
 
     buffer_id = fields.Many2one(
         comodel_name="stock.buffer",
-        string="Buffer",
         ondelete="cascade",
         index=True,
     )
@@ -32,19 +31,19 @@ class DdmrpHistory(models.Model):
     )
     net_flow_position = fields.Float(
         string="NFP",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
         help="Net flow position",
         aggregator="avg",
     )
     on_hand_position = fields.Float(
         string="OHP",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
         help="On-Hand Position",
         aggregator="avg",
     )
     adu = fields.Float(
         string="ADU",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
         aggregator="avg",
         help="Average Daily Usage",
     )

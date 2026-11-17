@@ -4,7 +4,7 @@
 {
     "name": "DDMRP History",
     "summary": "Allow to store historical data of DDMRP buffers.",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "development_status": "Production/Stable",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],
@@ -12,8 +12,7 @@
     "category": "Warehouse Management",
     "depends": ["ddmrp"],
     "data": [
-        "security/ir.model.access.csv",
-        "security/security.xml",
+        "security/ir.access.csv",
         "views/ddmrp_history_view.xml",
         "views/stock_buffer_view.xml",
     ],

@@ -2,7 +2,7 @@
 # Copyright 2019 ForgeFlow S.L. (https://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from odoo import fields
 
@@ -21,7 +21,7 @@ class TestDDMRPHistory(TestDdmrpCommon):
         self.assertTrue(history_today)
         self.assertAlmostEqual(
             fields.Datetime.from_string(history_today.date),
-            datetime.today(),
+            fields.Datetime.now(),
             delta=timedelta(seconds=1),
         )
         self.assertEqual(history_today.top_of_red, self.buffer_purchase.top_of_red)

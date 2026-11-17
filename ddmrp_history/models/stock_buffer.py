@@ -69,7 +69,7 @@ class StockBuffer(models.Model):
         ]
         for rec in self:
             history = self.env["ddmrp.history"].search(
-                [("buffer_id", "=", rec.id)], order="date"
+                [("buffer_id", "=", rec._origin.id)], order="date"
             )
             if len(history) < 2:
                 rec.planning_history_chart = json.dumps(
@@ -181,7 +181,7 @@ class StockBuffer(models.Model):
         ]
         history_model = self.env["ddmrp.history"]
         for rec in self:
-            domain = [("buffer_id", "=", rec.id)]
+            domain = [("buffer_id", "=", rec._origin.id)]
             history_oh = history_model.search(
                 domain, order="on_hand_position desc", limit=1
             )
