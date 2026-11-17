@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2021 ForgeFlow S.L. (https://www.forgeflow.com)
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
  -->
@@ -85,9 +85,9 @@
         <field name="view_mode">list,form</field>
     </record>
     <menuitem
+        id="menu_ddmrp_warning_item"
         name="DDMRP Warnings"
         parent="stock.menu_warehouse_report"
-        id="menu_ddmrp_warning_item"
         action="action_ddmrp_warning_item"
         sequence="150"
     />
