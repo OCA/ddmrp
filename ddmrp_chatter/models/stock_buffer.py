@@ -6,7 +6,7 @@ from odoo import fields, models
 
 class Buffer(models.Model):
     _name = "stock.buffer"
-    _inherit = ["stock.buffer", "mail.thread", "mail.activity.mixin"]
+    _inherit = ["stock.buffer", "mail.thread", "mail.activity.mixin"]  # noqa: RUF012
 
     active = fields.Boolean(tracking=True)
     buffer_profile_id = fields.Many2one(tracking=True)
