@@ -3,7 +3,7 @@
 
 {
     "name": "DDMRP Warning",
-    "version": "19.0.1.0.1",
+    "version": "20.0.1.0.0",
     "summary": "Adds configuration warnings on stock buffers.",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "development_status": "Production/Stable",
@@ -12,8 +12,7 @@
     "category": "Warehouse Management",
     "depends": ["ddmrp"],
     "data": [
-        "security/ir.model.access.csv",
-        "security/ddmrp_warning_rules.xml",
+        "security/ir.access.csv",
         "views/ddmrp_buffer_view.xml",
         "views/ddmrp_warning_definition_views.xml",
         "views/ddmrp_warning_item_views.xml",

@@ -13,7 +13,7 @@
                     <button
                         string="Refresh Warnings"
                         name="action_generate_warnings"
-                        icon="fa-refresh"
+                        icon="refresh"
                         type="object"
                         colspan="2"
                     />

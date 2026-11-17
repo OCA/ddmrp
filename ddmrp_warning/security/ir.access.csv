@@ -1,0 +1,6 @@
+id,name,model_id,group_id/id,operation,domain
+ddmrp_warning_definition_user,ddmrp.warning.definition.user,ddmrp.warning.definition,ddmrp.group_stock_buffer_maintainer,r,
+ddmrp_warning_definition_manager,ddmrp.warning.definition.manager,ddmrp.warning.definition,ddmrp.group_ddmrp_manager,crud,
+ddmrp_warning_item_user,ddmrp.warning.item.user,ddmrp.warning.item,ddmrp.group_stock_buffer_maintainer,crd,
+ddmrp_warning_item_manager,ddmrp.warning.item.manager,ddmrp.warning.item,ddmrp.group_ddmrp_manager,crud,
+warning_item_comp_rule,Warning Item multi-company,ddmrp.warning.item,,crud,"['|',('company_id','=',False),('company_id', 'in', company_ids)]"
