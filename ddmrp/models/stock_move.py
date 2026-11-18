@@ -115,10 +115,10 @@ class StockMove(models.Model):
         if self.env.context.get("no_ddmrp_auto_update_nfp"):
             return True
         out_buffers, in_buffers = self._find_buffers_to_update_nfp()
-        for buffer in out_buffers.with_context(no_ddmrp_history=True):
-            buffer.cron_actions(only_nfp="out")
-        for buffer in in_buffers.with_context(no_ddmrp_history=True):
-            buffer.cron_actions(only_nfp="in")
+        # Procuring is irreversible, so it must never weigh one fresh figure
+        # against one inherited: refresh both sides before deciding.
+        for buffer in (out_buffers | in_buffers).with_context(no_ddmrp_history=True):
+            buffer.cron_actions()
 
     def _get_all_linked_moves(self):
         """Retrieve all linked moves both origin and destination recursively."""
