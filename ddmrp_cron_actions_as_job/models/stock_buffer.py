@@ -1,11 +1,9 @@
 # Copyright 2020 Camptocamp (https://www.camptocamp.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-import functools
-
 from odoo import models
 
-from odoo.addons.queue_job.job import identity_exact
+from odoo.addons.queue_job.job import Job, identity_exact
 
 
 class Buffer(models.Model):
@@ -32,10 +30,6 @@ class Buffer(models.Model):
                 "cron_actions", context_key="auto_delay_ddmrp_cron_actions"
             ),
         )
-        # Patch _patch_job_auto_delay to control the job key
-        # every job gets the same arguments, hence the same identity key.
-        self._patch_method("cron_actions", self._patch_cron_actions_full_nfp())
-
         self._patch_method(
             "_calc_adu",
             self._patch_job_auto_delay(
@@ -44,18 +38,26 @@ class Buffer(models.Model):
         )
         return super()._register_hook()
 
-    def _patch_cron_actions_full_nfp(self):
-        """Never delay a partial refresh: each job procures, so procuring
-        after refreshing only the demand or only the supply would weigh a
-        fresh figure against a stale one, whatever the order of the jobs.
-        """
+    def cron_actions(self, only_nfp=False):
+        if only_nfp in ("in", "out") and self._has_pending_nfp_job(
+            "out" if only_nfp == "in" else "in"
+        ):
+            only_nfp = False
+        return super().cron_actions(only_nfp=only_nfp)
 
-        def full_nfp_wrapper(self, only_nfp=False):
-            if self.env.context.get("auto_delay_ddmrp_cron_actions"):
-                only_nfp = False
-            return full_nfp_wrapper.origin(self, only_nfp=only_nfp)
-
-        return functools.update_wrapper(full_nfp_wrapper, self.cron_actions)
+    def _has_pending_nfp_job(self, only_nfp):
+        """Whether a job refreshing the other side of the net flow position
+        is still waiting: procuring now would weigh a fresh figure against a
+        stale one, so the refresh must cover both sides."""
+        identity_key = self.cron_actions_job_options(only_nfp=only_nfp).get(
+            "identity_key"
+        )
+        if not identity_key:
+            return False
+        job = Job(
+            self.cron_actions, kwargs={"only_nfp": only_nfp}, identity_key=identity_key
+        )
+        return bool(job.job_record_with_same_identity_key())
 
     def cron_ddmrp(self, automatic=False, domain=None):
         return super(

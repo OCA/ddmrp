@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from datetime import datetime
+from unittest.mock import patch
 
 from odoo.tests import tagged
 
@@ -93,3 +94,29 @@ class TestUpdateNfpJobs(TestDdmrpCommon):
             self.assertEqual(buffer.incoming_dlt_qty, qty)
             self.assertEqual(buffer.net_flow_position, 0.0)
             self.assertFalse(self._purchase_lines())
+
+    def test_partial_refresh_without_pending_job(self):
+        buffer = self.buffer_purchase
+        self.main_company.ddmrp_auto_update_nfp = True
+        buffer.cron_actions()
+        picking_out = self._picking(
+            self.picking_type_out,
+            self.binA,
+            self.customer_location,
+            10.0,
+            datetime.today(),
+        )
+        buffer_cls = type(buffer)
+        with trap_jobs() as trap:
+            picking_out.action_confirm()
+            jobs = trap.enqueued_jobs
+            self.assertEqual([job.kwargs for job in jobs], [{"only_nfp": "out"}])
+            with patch.object(
+                buffer_cls,
+                "_calc_incoming_dlt_qty",
+                autospec=True,
+                side_effect=buffer_cls._calc_incoming_dlt_qty,
+            ) as calc_incoming:
+                jobs[0].perform()
+        calc_incoming.assert_not_called()
+        self.assertEqual(buffer.qualified_demand, 10.0)
