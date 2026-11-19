@@ -66,7 +66,7 @@ class DdmrpWarningDefinition(models.Model):
             raise UserError(
                 self.env._(
                     "Error evaluating %(name)s.\n %(error)s",
-                    name=self._name,
+                    name=self.display_name,
                     error=error,
                 )
             ) from error

@@ -74,5 +74,5 @@ class TestDDMRPWarning(TestDdmrpCommon):
         bad_definition = self.env["ddmrp.warning.definition"].create(
             {"name": "Bad expression", "python_code": "buffer.does_not_exist"}
         )
-        with self.assertRaises(UserError):
+        with self.assertRaisesRegex(UserError, "Bad expression"):
             bad_definition.evaluate_definition(self.buffer_warnings)
