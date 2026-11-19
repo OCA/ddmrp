@@ -1,0 +1,4 @@
+id,name,model_id,group_id/id,operation,domain
+ddmrp_history_user,ddmrp.history.user,ddmrp.history,ddmrp.group_stock_buffer_maintainer,r,
+ddmrp_history_manager,ddmrp.history.manager,ddmrp.history,ddmrp.group_ddmrp_manager,rd,
+ddmrp_history_multicompany,DDMRP History Multi-Company,ddmrp.history,,crud,"[('company_id', 'in', company_ids)]"
