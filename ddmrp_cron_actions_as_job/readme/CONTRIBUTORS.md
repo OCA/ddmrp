@@ -1,1 +1,2 @@
 - Guewen Baconnier \<<guewen.baconnier@camptocamp.com>\>
+- Lois Rilo Antelo \<<lois.rilo@forgeflow.com>\>
