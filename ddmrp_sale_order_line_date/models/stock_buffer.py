@@ -7,8 +7,8 @@ from odoo import models
 class StockBuffer(models.Model):
     _inherit = "stock.buffer"
 
-    def _search_sales_qualified_demand_domain(self):
-        domain = super()._search_sales_qualified_demand_domain()
+    def _search_sales_qualified_demand_base_domain(self):
+        domain = super()._search_sales_qualified_demand_base_domain()
         new_domain = []
         for leaf in domain:
             if (

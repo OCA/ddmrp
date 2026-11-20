@@ -377,6 +377,9 @@ ul.auto-toc {
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html"><img alt="License: LGPL-3" src="https://img.shields.io/badge/license-LGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/ddmrp/tree/16.0/ddmrp_sale"><img alt="OCA/ddmrp" src="https://img.shields.io/badge/github-OCA%2Fddmrp-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/ddmrp-16-0/ddmrp-16-0-ddmrp_sale"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/ddmrp&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>DDMRP integration with Sales app. With this module, Sales quotations are
 considered by buffers as incoming demand.</p>
+<p>Confirmed sales order lines are also considered as demand for the quantity
+not covered by stock moves yet, for example when the delivery is blocked
+and the picking has not been created.</p>
 <p>A new field <em>Can Serve Sales</em> will identify which buffers will consider
 quotations as demand.</p>
 <p><strong>Table of contents</strong></p>
