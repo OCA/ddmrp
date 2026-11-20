@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from datetime import datetime as dt, timedelta as td
+from unittest.mock import patch
 
 from odoo.addons.ddmrp.tests.common import TestDdmrpCommon
 
@@ -179,3 +180,67 @@ class TestDDMRPSale(TestDdmrpCommon):
         self.assertEqual(
             buffer_internal_prev_nfp - self.buffer_internal.net_flow_position, 17
         )
+
+    def _create_so(self, qty, uom=None):
+        line_vals = {
+            "product_id": self.productA.id,
+            "name": "cool product",
+            "price_unit": 100.0,
+            "product_uom_qty": qty,
+        }
+        if uom:
+            line_vals["product_uom"] = uom.id
+        return self.so_model.create(
+            {
+                "partner_id": self.customer.id,
+                "partner_invoice_id": self.customer.id,
+                "partner_shipping_id": self.customer.id,
+                "commitment_date": dt.today() + td(days=2),
+                "order_line": [(0, 0, line_vals)],
+            }
+        )
+
+    def _skip_stock_rule(self):
+        return patch.object(
+            type(self.env["sale.order.line"]),
+            "_action_launch_stock_rule",
+            return_value=True,
+        )
+
+    def _get_qualified_demand_diff(self):
+        self._refresh_involved_buffers()
+        return self.buffer_a.qualified_demand - self.buffer_internal.qualified_demand
+
+    def test_05_confirmed_without_moves_included_as_demand(self):
+        self.assertAlmostEqual(self._get_qualified_demand_diff(), 0)
+        so = self._create_so(17)
+        with self._skip_stock_rule():
+            so.action_confirm()
+        self.assertEqual(so.state, "sale")
+        self.assertFalse(so.order_line.move_ids)
+        self.assertAlmostEqual(self._get_qualified_demand_diff(), 17)
+        self.assertIn(so.order_line, self.buffer_a.qualified_demand_sale_order_line_ids)
+        buffer_a_prev_nfp = self.buffer_a.net_flow_position
+        so.order_line._action_launch_stock_rule()
+        self.assertTrue(so.picking_ids)
+        self._refresh_involved_buffers()
+        self.assertNotIn(
+            so.order_line, self.buffer_a.qualified_demand_sale_order_line_ids
+        )
+        self.assertEqual(self.buffer_a.net_flow_position, buffer_a_prev_nfp)
+
+    def test_06_confirmed_partially_covered(self):
+        so = self._create_so(2, uom=self.uom_dozen)
+        so.action_confirm()
+        self.assertAlmostEqual(self._get_qualified_demand_diff(), 0)
+        with self._skip_stock_rule():
+            so.order_line.product_uom_qty = 4
+        self.assertAlmostEqual(self._get_qualified_demand_diff(), 24)
+
+    def test_07_locked_order_not_included_as_demand(self):
+        so = self._create_so(17)
+        with self._skip_stock_rule():
+            so.action_confirm()
+        so.action_done()
+        self.assertEqual(so.state, "done")
+        self.assertAlmostEqual(self._get_qualified_demand_diff(), 0)
