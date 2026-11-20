@@ -14,7 +14,7 @@ class TestDdmrpWarningAsJob(TestDdmrpCommon):
         context = dict(self.env.context, auto_delay_ddmrp_generate_ddmrp_warnings=True)
         context.update(
             {
-                "test_queue_job_no_delay": False,
+                "queue_job__no_delay": False,
             }
         )
         buffer_a = self.buffer_a.with_context(**context)
