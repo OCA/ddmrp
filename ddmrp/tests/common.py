@@ -18,7 +18,7 @@ class TestDdmrpCommon(common.TransactionCase):
                 tracking_disable=True,
                 # compatibility with ddmrp_cron_actions_as_job,
                 # that would delay calls to "cron_actions" in these tests
-                test_queue_job_no_delay=True,
+                queue_job__no_delay=True,
             )
         )
 
