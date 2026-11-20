@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import api, fields, models
+from odoo.tools import float_compare
 
 
 class StockBuffer(models.Model):
@@ -50,25 +51,46 @@ class StockBuffer(models.Model):
                 [loc.is_sublocation_of(rec.location_id) for loc in locs]
             )
 
-    def _search_sales_qualified_demand_domain(self):
+    def _search_sales_qualified_demand_base_domain(self):
         self.ensure_one()
         horizon = self.order_spike_horizon
         date_to = self.warehouse_id.wh_plan_days(fields.Datetime.now(), horizon)
         return [
             ("product_id", "=", self.product_id.id),
-            (
-                "state",
-                "in",
-                ["draft", "sent"],
-            ),
             ("order_id.commitment_date", "<=", date_to),
             ("order_id.warehouse_id", "=", self.warehouse_id.id),
         ]
 
+    def _search_sales_qualified_demand_domain(self):
+        return self._search_sales_qualified_demand_base_domain() + [
+            ("state", "in", ["draft", "sent"]),
+        ]
+
+    def _search_confirmed_sales_qualified_demand_domain(self):
+        return self._search_sales_qualified_demand_base_domain() + [
+            ("state", "=", "sale"),
+        ]
+
     def _search_sales_qualified_demand(self):
-        domain = self._search_sales_qualified_demand_domain()
-        so_lines = self.env["sale.order.line"].search(domain)
-        return so_lines
+        sol_model = self.env["sale.order.line"]
+        so_lines = sol_model.search(self._search_sales_qualified_demand_domain())
+        confirmed_lines = sol_model.search(
+            self._search_confirmed_sales_qualified_demand_domain()
+        ).filtered(
+            lambda sol: float_compare(
+                self._get_sol_qualified_demand_qty(sol),
+                0.0,
+                precision_rounding=self.product_uom.rounding,
+            )
+            > 0
+        )
+        return so_lines | confirmed_lines
+
+    def _get_sol_qualified_demand_qty(self, sol):
+        qty = sol.product_uom_qty
+        if sol.state == "sale":
+            qty -= sol._get_qty_procurement(previous_product_uom_qty=False)
+        return sol.product_uom._compute_quantity(qty, sol.product_id.uom_id)
 
     def _get_sol_date(self, sol):
         """Return the date to use for a sale order line in DDMRP demand calculation."""
@@ -82,9 +104,7 @@ class StockBuffer(models.Model):
                 so_lines_by_days[d] = 0.0
         for sol in so_lines:
             date = self._get_sol_date(sol).date()
-            so_lines_by_days[date] += sol.product_uom._compute_quantity(
-                sol.product_uom_qty, sol.product_id.uom_id
-            )
+            so_lines_by_days[date] += self._get_sol_qualified_demand_qty(sol)
         return so_lines_by_days
 
     def _calc_qualified_demand(self, current_date=False):

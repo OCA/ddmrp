@@ -10,7 +10,7 @@
     "maintainers": ["LoisRForgeFlow"],
     "website": "https://github.com/OCA/ddmrp",
     "category": "Warehouse Management",
-    "depends": ["ddmrp", "sale"],
+    "depends": ["ddmrp", "sale_stock"],
     "data": ["views/stock_buffer_view.xml"],
     "license": "LGPL-3",
     "installable": True,
