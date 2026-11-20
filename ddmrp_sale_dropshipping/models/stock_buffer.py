@@ -7,8 +7,8 @@ from odoo import models
 class StockBuffer(models.Model):
     _inherit = "stock.buffer"
 
-    def _search_sales_qualified_demand_domain(self):
-        res = super()._search_sales_qualified_demand_domain()
+    def _search_sales_qualified_demand_base_domain(self):
+        res = super()._search_sales_qualified_demand_base_domain()
         dropship_pick_types = self.env["stock.picking.type"].search(
             [
                 ("default_location_src_id.usage", "=", "supplier"),
