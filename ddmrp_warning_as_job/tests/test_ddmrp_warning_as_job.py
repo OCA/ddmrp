@@ -14,7 +14,7 @@ class TestDdmrpWarningAsJob(TestDdmrpCommon):
         context = dict(self.env.context, auto_delay_ddmrp_generate_ddmrp_warnings=True)
         context.update(
             {
-                "test_queue_job_no_delay": False,
+                "queue_job__no_delay": False,
             }
         )
         buffer_a = self.buffer_a.with_context(**context)
@@ -37,7 +37,7 @@ class TestDdmrpWarningAsJob(TestDdmrpCommon):
             self.assertDictEqual(delay_kwargs, {})
 
     def test_cron_generate_ddmrp_warnings_delay_jobs(self):
-        buffer_model = self.bufferModel.with_context(test_queue_job_no_delay=False)
+        buffer_model = self.bufferModel.with_context(queue_job__no_delay=False)
         buffer_count = buffer_model.search_count([])
         self.assertTrue(buffer_count)
         with mock_with_delay() as (delayable_cls, delayable):
