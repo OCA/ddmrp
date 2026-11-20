@@ -242,6 +242,6 @@ class TestDDMRPSale(TestDdmrpCommon):
         so = self._create_so(17)
         with self._skip_stock_rule():
             so.action_confirm()
-        so.action_done()
-        self.assertEqual(so.state, "done")
+        so.action_lock()
+        self.assertTrue(so.locked)
         self.assertAlmostEqual(self._get_qualified_demand_diff(), 0)

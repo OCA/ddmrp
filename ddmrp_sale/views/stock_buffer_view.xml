@@ -18,7 +18,7 @@
                     name="action_view_qualified_demand_so_lines"
                     icon="fa-search"
                     type="object"
-                    attrs="{'invisible': [('qualified_demand_sale_order_line_ids', '=', [])]}"
+                    invisible="not qualified_demand_sale_order_line_ids"
                 />
             </xpath>
             <field name="company_id" position="after">

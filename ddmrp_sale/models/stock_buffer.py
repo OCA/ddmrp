@@ -69,6 +69,7 @@ class StockBuffer(models.Model):
     def _search_confirmed_sales_qualified_demand_domain(self):
         return self._search_sales_qualified_demand_base_domain() + [
             ("state", "=", "sale"),
+            ("order_id.locked", "=", False),
         ]
 
     def _search_sales_qualified_demand(self):
@@ -124,7 +125,8 @@ class StockBuffer(models.Model):
                         qualified_demand += so_lines_by_days.get(date, 0.0)
                     else:
                         lines = lines.filtered(
-                            lambda x: rec._get_sol_date(x).date() != date
+                            lambda x, rec=rec, date=date: rec._get_sol_date(x).date()
+                            != date
                         )
                 rec.qualified_demand += qualified_demand
                 rec.qualified_demand_sale_order_line_ids = lines
@@ -132,8 +134,7 @@ class StockBuffer(models.Model):
 
     def action_view_qualified_demand_so_lines(self):
         lines = self.qualified_demand_sale_order_line_ids
-        action = self.env.ref("sale.action_quotations")
-        result = action.read()[0]
+        result = self.env["ir.actions.actions"]._for_xml_id("sale.action_quotations")
         result["context"] = {}
         result["domain"] = [("id", "in", lines.mapped("order_id.id"))]
         return result
