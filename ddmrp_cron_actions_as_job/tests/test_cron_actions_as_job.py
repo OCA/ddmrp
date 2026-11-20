@@ -15,7 +15,7 @@ class TestDdmrpCronActionsAsJob(TestDdmrpCommon):
         context = dict(self.env.context, auto_delay_ddmrp_cron_actions=True)
         context.update(
             {
-                "test_queue_job_no_delay": False,
+                "queue_job__no_delay": False,
             }
         )
         buffer_a = self.buffer_a.with_context(**context)
@@ -41,7 +41,7 @@ class TestDdmrpCronActionsAsJob(TestDdmrpCommon):
         context = dict(self.env.context, auto_delay_ddmrp_calc_adu=True)
         context.update(
             {
-                "test_queue_job_no_delay": False,
+                "queue_job__no_delay": False,
             }
         )
         buffer_a = self.buffer_a.with_context(**context)
@@ -64,8 +64,13 @@ class TestDdmrpCronActionsAsJob(TestDdmrpCommon):
             self.assertDictEqual(delay_kwargs, {})
 
     def test_procurement_delays_buffer_refresh(self):
+        self.make_procurement_wiz = self.make_procurement_wiz.with_context(
+            queue_job__no_delay=False
+        )
+        wizard = self.create_buffer_procurement(self.buffer_a, make_procurement=False)
+        wizard.item_ids.qty = 10.0
         with trap_jobs() as trap:
-            self.create_buffer_procurement(self.buffer_a)
+            wizard.make_procurement()
             refresh_jobs = [
                 job
                 for job in trap.enqueued_jobs
