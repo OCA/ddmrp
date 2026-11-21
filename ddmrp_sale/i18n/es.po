@@ -1,0 +1,37 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ddmrp_sale
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-03-20 20:35+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: ddmrp_sale
+#: model:ir.model.fields,field_description:ddmrp_sale.field_stock_buffer__can_serve_sales
+msgid "Can Serve Sales"
+msgstr "Puede Servir Ventas"
+
+#. module: ddmrp_sale
+#: model:ir.model.fields,field_description:ddmrp_sale.field_stock_buffer__qualified_demand_sale_order_line_ids
+msgid "Qualified Demand Sale Order Line"
+msgstr "Línea de Orden de Venta a la Demanda Cualificada"
+
+#. module: ddmrp_sale
+#: model:ir.model,name:ddmrp_sale.model_stock_buffer
+msgid "Stock Buffer"
+msgstr "Amortiguador de Inventario"
+
+#. module: ddmrp_sale
+#: model_terms:ir.ui.view,arch_db:ddmrp_sale.stock_buffer_view_form
+msgid "View Qualified Demand from SO Lines"
+msgstr "Ver la Demanda Cualificada de las Líneas SO"
