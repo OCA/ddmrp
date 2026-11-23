@@ -4,7 +4,7 @@
 {
     "name": "Glue module for DDMRP Sale and Dropshipping",
     "summary": "Ignore qualified demand of sale quotes that are dropshipped.",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.1.0",
     "development_status": "Beta",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "maintainers": ["JordiMForgeFlow"],

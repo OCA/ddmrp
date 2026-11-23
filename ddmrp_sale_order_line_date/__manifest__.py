@@ -4,7 +4,7 @@
 {
     "name": "DDMRP Sale Order Line Date",
     "summary": "DDMRP Sale integration considering commitment date per order line.",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.1.0",
     "development_status": "Beta",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "maintainers": ["LoisRForgeFlow"],
