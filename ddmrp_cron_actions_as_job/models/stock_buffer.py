@@ -3,7 +3,7 @@
 
 from odoo import models
 
-from odoo.addons.queue_job.job import identity_exact
+from odoo.addons.queue_job.job import Job, identity_exact
 
 
 class Buffer(models.Model):
@@ -37,6 +37,27 @@ class Buffer(models.Model):
             ),
         )
         return super()._register_hook()
+
+    def cron_actions(self, only_nfp=False):
+        if only_nfp in ("in", "out") and self._has_pending_nfp_job(
+            "out" if only_nfp == "in" else "in"
+        ):
+            only_nfp = False
+        return super().cron_actions(only_nfp=only_nfp)
+
+    def _has_pending_nfp_job(self, only_nfp):
+        """Whether a job refreshing the other side of the net flow position
+        is still waiting: procuring now would weigh a fresh figure against a
+        stale one, so the refresh must cover both sides."""
+        identity_key = self.cron_actions_job_options(only_nfp=only_nfp).get(
+            "identity_key"
+        )
+        if not identity_key:
+            return False
+        job = Job(
+            self.cron_actions, kwargs={"only_nfp": only_nfp}, identity_key=identity_key
+        )
+        return bool(job.job_record_with_same_identity_key())
 
     def cron_ddmrp(self, automatic=False, domain=None):
         return super(
