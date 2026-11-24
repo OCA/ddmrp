@@ -69,9 +69,9 @@ class TestUpdateNfpJobs(TestDdmrpCommon):
 
         # Trapped jobs only run when the test performs them.
         with trap_jobs() as trap:
-            picking_out.action_confirm()
+            picking_out.with_context(queue_job__no_delay=False).action_confirm()
             demand_jobs = list(trap.enqueued_jobs)
-            picking_in.action_confirm()
+            picking_in.with_context(queue_job__no_delay=False).action_confirm()
             supply_jobs = [j for j in trap.enqueued_jobs if j not in demand_jobs]
 
             # Run the delivery's jobs while the receipt's are pending:
