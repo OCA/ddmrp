@@ -57,6 +57,8 @@ class StockBuffer(models.Model):
 
     @api.constrains("replaced_by_id")
     def _check_replaced_by_id(self):
+        if self._fields["replaced_by_id"].comodel_name != self._name:
+            return
         if self._has_cycle(field_name="replaced_by_id"):
             raise ValidationError(
                 _('You cannot create recursive "Replaced by" chains.')

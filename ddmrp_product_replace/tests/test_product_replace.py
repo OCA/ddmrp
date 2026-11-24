@@ -4,6 +4,8 @@
 
 from datetime import datetime, timedelta
 
+from odoo.exceptions import ValidationError
+
 from odoo.addons.ddmrp.tests.common import TestDdmrpCommon
 
 
@@ -144,3 +146,8 @@ class TestDDMRPProductReplace(TestDdmrpCommon):
         self.assertEqual(self.buffer.qualified_demand, 11)
         new_buffer.cron_actions()
         self.assertEqual(new_buffer.qualified_demand, 11)
+
+    def test_03_recursive_replacement_not_allowed(self):
+        self.buffer_a.write({"replaced_by_id": self.buffer_purchase.id})
+        with self.assertRaises(ValidationError):
+            self.buffer_purchase.write({"replaced_by_id": self.buffer_a.id})
