@@ -2110,6 +2110,13 @@ class StockBuffer(models.Model):
         if not only_nfp:
             # re-compoute red to force in cascade the recalculation of zones.
             self._compute_red_zone()
+        if only_nfp and self.auto_procure and self.procure_recommended_qty > 0.0:
+            if only_nfp == "out":
+                self._calc_incoming_dlt_qty()
+            else:
+                self._calc_qualified_demand()
+            self._calc_net_flow_position()
+            self._calc_planning_priority()
         self.do_auto_procure()
         return True
 
