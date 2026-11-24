@@ -2,7 +2,6 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import fields, models
-from odoo.tools import float_round
 
 
 class Buffer(models.Model):
@@ -15,9 +14,8 @@ class Buffer(models.Model):
     def _compute_coverage_days(self):
         for rec in self:
             if rec.adu != 0:
-                rec.coverage_days = float_round(
-                    rec.product_location_qty_available_not_res / rec.adu,
-                    precision_rounding=rec.product_id.uom_id.rounding,
+                rec.coverage_days = rec.product_id.uom_id.round(
+                    rec.product_location_qty_available_not_res / rec.adu
                 )
             else:
                 rec.coverage_days = 0
