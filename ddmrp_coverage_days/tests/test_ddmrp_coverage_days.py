@@ -1,7 +1,7 @@
 # Copyright 2020 ForgeFlow S.L. (https://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-import odoo.tests.common as common
+from odoo.tests import common
 
 
 class TestDdmrpCoverageDays(common.TransactionCase):
