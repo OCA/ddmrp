@@ -65,3 +65,27 @@ class TestDDMRPReportPartFlowIndex(TransactionCase):
         self.buffer.action_archive()
         self.env.invalidate_all()
         self.assertFalse(report.search([("buffer_id", "=", self.buffer.id)]))
+
+    def test_03_frequency_group_count_per_company(self):
+        """Buffers of other companies are not counted in the frequency group"""
+        company_2 = self.env["res.company"].create({"name": "Company 2"})
+        warehouse_2 = self.env["stock.warehouse"].search(
+            [("company_id", "=", company_2.id)], limit=1
+        )
+        self.env["stock.buffer"].with_company(company_2).create(
+            {
+                "buffer_profile_id": self.buffer_profile_mmm.id,
+                "product_id": self.product.id,
+                "location_id": warehouse_2.lot_stock_id.id,
+                "warehouse_id": warehouse_2.id,
+                "company_id": company_2.id,
+                "adu_calculation_method": self.adu_fixed.id,
+                "adu_fixed": 4.0,
+                "order_cycle": 5,
+            }
+        )
+        self.env.invalidate_all()
+        line = self.env["report.ddmrp.part.plan.flow.index"].search(
+            [("buffer_id", "=", self.buffer.id)]
+        )
+        self.assertEqual(line.order_frequency_group_count, 1)

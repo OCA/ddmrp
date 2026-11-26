@@ -64,6 +64,7 @@ class ReportDdmrpPartsPlanFlowIndex(models.Model):
     def _join_select(self):
         return SQL(
             """
+            company_id,
             order_frequency_group,
             count(*) AS order_frequency_group_count
             """
@@ -87,9 +88,10 @@ class ReportDdmrpPartsPlanFlowIndex(models.Model):
                 JOIN (SELECT
                         %s
                        FROM a
-                       GROUP BY order_frequency_group
+                       GROUP BY company_id, order_frequency_group
                       ) AS b
                 ON a.order_frequency_group = b.order_frequency_group
+                AND a.company_id IS NOT DISTINCT FROM b.company_id
             )""",
             self._sub_select(),
             self._sub_where(),
