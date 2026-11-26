@@ -7,9 +7,7 @@ from odoo import fields, models
 class StockBuffer(models.Model):
     _inherit = "stock.buffer"
 
-    flow_index_group_id = fields.Many2one(
-        "ddmrp.flow.index.group", string="Flow Index Group", readonly=True
-    )
+    flow_index_group_id = fields.Many2one("ddmrp.flow.index.group", readonly=True)
 
     def _calc_flow_index_group_id(self):
         self.env["stock.buffer"].flush_model()
@@ -39,10 +37,12 @@ class StockBuffer(models.Model):
                     if index_group.upper_range >= frequency_group:
                         rec.flow_index_group_id = index_group
                         break
-                elif index_group.lower_range:
-                    if frequency_group >= index_group.lower_range:
-                        rec.flow_index_group_id = index_group
-                        break
+                elif (
+                    index_group.lower_range
+                    and frequency_group >= index_group.lower_range
+                ):
+                    rec.flow_index_group_id = index_group
+                    break
 
     def cron_actions(self, only_nfp=False):
         res = super().cron_actions(only_nfp=only_nfp)
