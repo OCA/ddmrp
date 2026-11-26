@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2024 ForgeFlow S.L. (https://www.forgeflow.com)
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
 <odoo>
@@ -64,9 +64,9 @@
     </record>
 
     <menuitem
+        id="menu_ddmrp_flow_index_group"
         name="Flow Index Group"
         parent="ddmrp.menu_ddmrp_config"
         action="action_ddmrp_flow_index_group"
-        id="menu_ddmrp_flow_index_group"
     />
 </odoo>
